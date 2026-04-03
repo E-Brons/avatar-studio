@@ -33,9 +33,8 @@ from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
 from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-_DATA_DIR = _PROJECT_ROOT / "data"
-_EXPRESSIONS_YML = _DATA_DIR / "expressions.yml"
-_STYLES_YML = _DATA_DIR / "styles.yml"
+_EXPRESSIONS_YML = _PROJECT_ROOT / "assets" / "expressions" / "expressions.yml"
+_STYLES_YML = _PROJECT_ROOT / "assets" / "styles" / "styles.yml"
 
 # Public aliases for importers
 EXPRESSIONS_YML = _EXPRESSIONS_YML

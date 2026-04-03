@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from avatar_studio.pipeline.step_a_randomise_person import (
+    _AGE_GROUPS,
     _pick_diverse_demographics,
     _pool_by_gender,
 )
@@ -708,20 +709,17 @@ def test_diverse_demographics_gender_coverage():
 
 
 def test_diverse_demographics_age_group_coverage():
-    """At least 3 distinct age groups are represented."""
+    """At least 3 distinct age groups (from settings) are represented."""
     result = _pick_diverse_demographics(4)
-    age_groups = set()
-    for d in result:
-        age = d["age"]
-        if 25 <= age <= 35:
-            age_groups.add("25-35")
-        elif 36 <= age <= 45:
-            age_groups.add("36-45")
-        elif 46 <= age <= 55:
-            age_groups.add("46-55")
-        elif 56 <= age <= 70:
-            age_groups.add("56-70")
-    assert len(age_groups) >= 3
+
+    def age_to_group(age):
+        for lo, hi in _AGE_GROUPS:
+            if lo <= age <= hi:
+                return (lo, hi)
+        return None
+
+    groups = {age_to_group(d["age"]) for d in result}
+    assert len(groups) >= 3
 
 
 def test_diverse_demographics_skin_tones_distinct():
