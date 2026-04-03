@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Git pre-push hook — blocks push if ruff finds lint errors or formatting issues.
+# Installed automatically by scripts/install.sh via: git config core.hooksPath .githooks
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+RUFF="$ROOT/.venv/bin/ruff"
+
+if [ ! -x "$RUFF" ]; then
+  echo "pre-push: ruff not found in .venv — run ./scripts/install.sh first."
+  exit 1
+fi
+
+echo "pre-push: running ruff check …"
+"$RUFF" check src/ tests/
+
+echo "pre-push: running ruff format --check …"
+"$RUFF" format --check src/ tests/
+
+echo "pre-push: all checks passed."

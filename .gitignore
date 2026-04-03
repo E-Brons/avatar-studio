@@ -1,34 +1,42 @@
-# Avatar Studio
-
 # Python
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-*.egg-info/
-*.egg
-.eggs/
-dist/
-build/
+*.so
+
+# Virtual environments
 .venv/
 venv/
-*.so
-*.dylib
+env/
 
-# Test / coverage artifacts
+# Build / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Test / coverage
 .pytest_cache/
 .coverage
 htmlcov/
-.tox/
+coverage.xml
 
 # Generated images and session artifacts
 tmp/
-/tmp/avatar_studio/
+
+# User-local config (never commit)
+local/
 
 # macOS
 .DS_Store
+**/.DS_Store
 
-# IDE
+# Claude Code project files (keep settings.json)
+.claude/*
+!.claude/settings.json
+
+# IDEs
 .idea/
 .vscode/
 *.swp

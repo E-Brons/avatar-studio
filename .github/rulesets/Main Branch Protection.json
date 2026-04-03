@@ -1,0 +1,42 @@
+{
+  "id": null,
+  "name": "Main Branch Protection",
+  "target": "branch",
+  "source_type": "Repository",
+  "source": "E-Brons/avatar-studio",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "exclude": [],
+      "include": [
+        "refs/heads/main"
+      ]
+    }
+  },
+  "rules": [
+    {
+      "type": "deletion"
+    },
+    {
+      "type": "non_fast_forward"
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": false,
+        "do_not_enforce_on_create": false,
+        "required_status_checks": [
+          {
+            "context": "Lint",
+            "integration_id": 15368
+          },
+	  {
+            "context": "Backend · Avatar Studio",
+            "integration_id": 15368
+          }
+        ]
+      }
+    }
+  ],
+  "bypass_actors": []
+}

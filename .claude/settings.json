@@ -1,0 +1,16 @@
+{
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true
+  },
+  "model": "opusplan",
+  "temperature": 0.2,
+  "top_p": 0.9,
+  "max_tokens": 16384,
+  "verbosity": "low",
+  "system_prompt": "You are a senior-level software engineer. Prioritize correctness, clarity, and maintainability. Be concise. The requirements should all be documented. Do not speculate; Ask for clarification if necessary.",
+  "code_style": {
+    "prefer_diff": true,
+    "follow_existing_style": true,
+    "explain_changes": true
+  }
+}
