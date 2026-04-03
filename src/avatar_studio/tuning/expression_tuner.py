@@ -136,8 +136,7 @@ def _generate_for_expression(
     gender: str,
     seed: int,
     *,
-    ollama_url: str,
-    image_model: str,
+    gateway_url: str,
     width: int,
     height: int,
     out_path: Path,
@@ -174,8 +173,7 @@ def _generate_for_expression(
         persona_path,
         style={"name": style["id"], "bg_color": bg_color, "styles_yml": STYLES_YML},
         expression={"name": expression_id, "expressions_yml": EXPRESSIONS_YML},
-        ollama_url=ollama_url,
-        model=image_model,
+        gateway_url=gateway_url,
         width=width,
         height=height,
         seed=seed,
@@ -310,7 +308,7 @@ def _resolve_options(
 def _generate_diverse_personas(
     genders: list[str],
     base_seed: int | None,
-    text_model: str,
+    gateway_url: str,
     tmp_dir: Path,
     *,
     advisor_role: str = "Financial Advisor",
@@ -332,13 +330,13 @@ def _generate_diverse_personas(
                 cv = generate_advisor_profile(
                     advisor_role,
                     demographics,
-                    ollama_text_model=text_model,
+                    gateway_url=gateway_url,
                 )
                 advisor = {**advisor, **cv}
                 features = select_features(
                     demographics,
                     advisor,
-                    ollama_text_model=text_model,
+                    gateway_url=gateway_url,
                     hard_type_gender=hard_type_gender,
                 )
             except Exception as exc:
@@ -377,10 +375,7 @@ def _run_tuning_pass(
     *,
     styles: list[dict],
     random_style: bool = False,
-    ollama_url: str,
-    image_model: str,
-    visual_model: str,
-    text_model: str,
+    gateway_url: str,
     genders: list[str],
     random_gender: bool = False,
     random_expression: bool = False,
@@ -463,8 +458,7 @@ def _run_tuning_pass(
                         style,
                         gender,
                         seed=run_seed,
-                        ollama_url=ollama_url,
-                        image_model=image_model,
+                        gateway_url=gateway_url,
                         width=width,
                         height=height,
                         out_path=out_path,
@@ -486,8 +480,7 @@ def _run_tuning_pass(
                 try:
                     classification = classify_image_expression(
                         img_bytes,
-                        model=visual_model,
-                        ollama_url=ollama_url,
+                        gateway_url=gateway_url,
                     )
                 except Exception as exc:
                     print(f"  classification FAILED — {exc}", file=sys.stderr)
@@ -516,8 +509,7 @@ def _run_tuning_pass(
                         sem_score = semantic_effective_score(
                             classification.scores,
                             expr_label,
-                            model=text_model,
-                            ollama_url=ollama_url,
+                            gateway_url=gateway_url,
                         )
                     except Exception as exc:
                         logger.warning("[ExprTuner] semantic score failed: %s", exc)
@@ -710,7 +702,7 @@ def main() -> None:
     gender_personas = _generate_diverse_personas(
         _all_genders,
         args.seed,
-        text_model,
+        args.ollama_url,
         tmp_dir,
         hard_type_gender=args.hard_type_gender,
     )
@@ -769,10 +761,7 @@ def main() -> None:
             all_expression_labels,
             styles=target_styles,
             random_style=random_style,
-            ollama_url=args.ollama_url,
-            image_model=image_model,
-            visual_model=visual_model,
-            text_model=text_model,
+            gateway_url=args.ollama_url,
             genders=genders,
             random_gender=random_gender,
             random_expression=random_expression,
