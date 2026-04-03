@@ -84,6 +84,7 @@ def generate_avatar_image(
     gateway_url: str = "http://127.0.0.1:4096",
     width: int = _DEFAULT_IMAGE_SIZE,
     height: int = _DEFAULT_IMAGE_SIZE,
+    optimize: str = "normal",
     seed: int | None = None,
     out_path: Path,
     session_dir: Path | None = None,
@@ -219,6 +220,7 @@ def generate_avatar_image(
         full_prompt,
         width=width,
         height=height,
+        optimize=optimize,
         seed=seed,
         reference_images_b64=[base64.b64encode(reference_image.read_bytes()).decode()]
         if reference_image
