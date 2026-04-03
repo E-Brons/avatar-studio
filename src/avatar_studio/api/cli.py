@@ -20,19 +20,19 @@ from avatar_studio.api.server import (
     _DEFAULT_IMAGE_MODEL,
     _DEFAULT_TEXT_MODEL,
     _GENDERS,
+    _PROJECT_ROOT,
+    DEFAULT_SIZE,
     _build_avatar_charachter,
     _build_avatar_prompt,
     _build_demographics_for_gender,
     _load_styles,
+    _marshal_avatar_persona,
     _ollama_available_models,
     _ollama_generate_image,
     _pick_demographics,
-    _PROJECT_ROOT,
     _resolve_default_model,
     _select_features,
-    _marshal_avatar_persona,
     process_advisor,
-    DEFAULT_SIZE,
 )
 
 logger = logging.getLogger(__name__)
@@ -73,11 +73,9 @@ def _run_stage_b(args) -> None:
     # Validation summary
     name = persona.get("personal", {}).get("name")
     appearance = persona.get("appearance", {})
-    print(f"--- Validation ---")
+    print("--- Validation ---")
     print(f"Name:       {name or 'MISSING'}")
-    print(
-        f"Appearance: {len(appearance)} keys {'OK' if appearance else 'EMPTY — Stage B FAILED'}"
-    )
+    print(f"Appearance: {len(appearance)} keys {'OK' if appearance else 'EMPTY — Stage B FAILED'}")
     if not name or not appearance:
         sys.exit(1)
     print("Stage B OK")
@@ -144,11 +142,11 @@ def _run_gen_examples(args) -> None:
             out_path = examples_dir / f"avatar_style_{style_id}_{gender_slug}.png"
 
             if out_path.exists() and not args.overwrite:
-                print(f"  [{done+1}/{total}] skip {out_path.name} (exists)")
+                print(f"  [{done + 1}/{total}] skip {out_path.name} (exists)")
                 done += 1
                 continue
 
-            print(f"  [{done+1}/{total}] {style_id} / {gender} → {out_path.name}")
+            print(f"  [{done + 1}/{total}] {style_id} / {gender} → {out_path.name}")
 
             demo = _build_demographics_for_gender(gender)
             avatar = _build_avatar_charachter(advisor, demo)
@@ -205,12 +203,8 @@ def main() -> None:
     group = gen.add_mutually_exclusive_group(required=True)
     group.add_argument("--advisor", help="Path to a single advisor YAML file")
     group.add_argument("--advisors-dir", help="Directory containing advisor YAML files")
-    gen.add_argument(
-        "--out-dir", required=True, help="Output directory for generated PNGs"
-    )
-    gen.add_argument(
-        "--size", type=int, default=DEFAULT_SIZE, help="Avatar size in pixels"
-    )
+    gen.add_argument("--out-dir", required=True, help="Output directory for generated PNGs")
+    gen.add_argument("--size", type=int, default=DEFAULT_SIZE, help="Avatar size in pixels")
     gen.add_argument(
         "--expressions",
         nargs="*",
@@ -226,9 +220,7 @@ def main() -> None:
         default=None,
         help=f"Ollama image generation model (default: {_DEFAULT_IMAGE_MODEL} if available in Ollama)",
     )
-    gen.add_argument(
-        "--width", type=int, default=128, help="Generated image width (default: 128)"
-    )
+    gen.add_argument("--width", type=int, default=128, help="Generated image width (default: 128)")
     gen.add_argument(
         "--height", type=int, default=128, help="Generated image height (default: 128)"
     )
@@ -272,9 +264,7 @@ def main() -> None:
         metavar="MODEL",
         help="Ollama image model name",
     )
-    gex.add_argument(
-        "--width", type=int, default=512, help="Image width in pixels (default: 512)"
-    )
+    gex.add_argument("--width", type=int, default=512, help="Image width in pixels (default: 512)")
     gex.add_argument(
         "--height", type=int, default=512, help="Image height in pixels (default: 512)"
     )

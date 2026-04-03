@@ -49,7 +49,7 @@ def create_abbreviation_avatar(
     font_size = big // 3
     try:
         font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", font_size)
-    except (OSError, IOError):
+    except OSError, IOError:
         font = ImageFont.load_default(size=font_size)
 
     bbox = draw.textbbox((0, 0), initials, font=font)
@@ -84,9 +84,9 @@ def apply_circle_frame(image_bytes: bytes, frame_bg_color: str, size: int) -> by
     Background removal uses rembg (u2net ML model) to cleanly separate the
     portrait subject from its background before compositing.
     """
-    _CIRCLE_R_RATIO   = 0.33   # background circle radius / size
-    _PORTRAIT_H_RATIO = 0.80   # portrait height / size
-    _BORDER_PX        = 6      # white sticker border width
+    _CIRCLE_R_RATIO = 0.33  # background circle radius / size
+    _PORTRAIT_H_RATIO = 0.80  # portrait height / size
+    _BORDER_PX = 6  # white sticker border width
 
     # ── Load & remove background with rembg (u2net model) ────────────────
     # rembg returns RGBA PNG bytes with the background made transparent.
@@ -101,7 +101,7 @@ def apply_circle_frame(image_bytes: bytes, frame_bg_color: str, size: int) -> by
 
     # ── Build canvas ──────────────────────────────────────────────────────
     result = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-    draw   = ImageDraw.Draw(result)
+    draw = ImageDraw.Draw(result)
 
     cx = cy = size // 2
     circle_r = int(size * _CIRCLE_R_RATIO)
@@ -125,7 +125,7 @@ def apply_circle_frame(image_bytes: bytes, frame_bg_color: str, size: int) -> by
     paste_y = (size - target_h) // 2
     result.alpha_composite(portrait, (paste_x, paste_y))
 
-    out  = io.BytesIO()
+    out = io.BytesIO()
     meta = PngImagePlugin.PngInfo()
     meta.add_text("Generator", "PIL circle frame sticker (rembg)")
     result.save(out, format="PNG", pnginfo=meta)

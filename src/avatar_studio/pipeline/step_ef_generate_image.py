@@ -11,26 +11,26 @@ Both steps are driven by the same function. The only differences are:
   - expression.name  (neutral vs any)
   - reference_image  (None vs path to neutral portrait)
 """
+
 from __future__ import annotations
 
 import base64
 import io
 import logging
+import random
+import re
 import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
-
-import random
-import re
 
 import yaml
 from PIL import Image, PngImagePlugin
 
 from avatar_studio.config.config import SETTINGS as _SETTINGS
 from avatar_studio.config.gateway import GatewayClient
-from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
 from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
+from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 _DATA_DIR = _PROJECT_ROOT / "data"
@@ -64,6 +64,7 @@ EXPRESSION_IDS = _load_expression_ids()
 def make_session_dir(name: str) -> Path:
     """Create and return a timestamped session folder for one pipeline run."""
     from avatar_studio.config.config import _name_to_filename
+
     slug = _name_to_filename(name)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     session_root = Path("/tmp/avatar_studio") / slug / ts
@@ -83,7 +84,8 @@ def generate_avatar_image(
     reference_image: Path | None = None,
     gateway_url: str = "http://127.0.0.1:4096",
     width: int = _DEFAULT_IMAGE_SIZE,
-    height: int = _DEFAULT_IMAGE_SIZE,    seed: int | None = None,
+    height: int = _DEFAULT_IMAGE_SIZE,
+    seed: int | None = None,
     out_path: Path,
     session_dir: Path | None = None,
 ) -> Path:
@@ -124,7 +126,10 @@ def generate_avatar_image(
 
     logger.info(
         "[Step %s] START — generate_avatar_image expression=%s style=%s gateway_url=%s",
-        step, expr_name, style_name, gateway_url,
+        step,
+        expr_name,
+        style_name,
+        gateway_url,
     )
 
     # --- Load inputs from provided paths ---
@@ -140,16 +145,17 @@ def generate_avatar_image(
 
     with open(expression["expressions_yml"]) as f:
         expr_data = yaml.safe_load(f)
-    expr_entry = (
-        {e.get("id") or e["expression"].lower(): e for e in expr_data["expressions"]}.get(expr_name)
-        or {"expression": expr_name}
-    )
+    expr_entry = {e.get("id") or e["expression"].lower(): e for e in expr_data["expressions"]}.get(
+        expr_name
+    ) or {"expression": expr_name}
 
     # --- Build prompt ---
     # Strip the 'style' key — it holds post-processing metadata (bg_color, fg_color)
     # for Step G and is not visual identity data for the image model.
     persona_for_prompt = {k: v for k, v in persona.items() if k != "style"}
-    persona_yaml = yaml.dump(persona_for_prompt, default_flow_style=False, sort_keys=False, allow_unicode=True)
+    persona_yaml = yaml.dump(
+        persona_for_prompt, default_flow_style=False, sort_keys=False, allow_unicode=True
+    )
     # Extract only image-relevant fields from the expression entry.
     facs = _resolve_unilateral(expr_entry.get("facs_action_units", ""))
     expr_for_prompt = {
@@ -157,7 +163,9 @@ def generate_avatar_image(
         "FACS": facs,
         "Description": expr_entry.get("description", ""),
     }
-    expr_yaml = yaml.dump(expr_for_prompt, default_flow_style=False, sort_keys=False, allow_unicode=True)
+    expr_yaml = yaml.dump(
+        expr_for_prompt, default_flow_style=False, sort_keys=False, allow_unicode=True
+    )
 
     user_prompt = f"persona profile:\n{persona_yaml}\nexpression:\n{expr_yaml}"
     if reference_image is not None:
@@ -173,8 +181,12 @@ def generate_avatar_image(
         "STYLE DIRECTIVE:\n%s\n\n"
         "PERSONA:\n%s\n"
         "EXPRESSION:\n%s\n"
-        "PROMPT:\n\"\"\"\n%s\n\"\"\"\n%s",
-        _SEP, step, gateway_url, style_name, expr_name,
+        'PROMPT:\n"""\n%s\n"""\n%s',
+        _SEP,
+        step,
+        gateway_url,
+        style_name,
+        expr_name,
         str(reference_image) if reference_image else "none",
         style_directive or "(none)",
         persona_yaml,
@@ -189,9 +201,13 @@ def generate_avatar_image(
             session_dir.mkdir(parents=True, exist_ok=True)
             (session_dir / "prompt.txt").write_text(full_prompt)
             with open(session_dir / "style.yml", "w") as f:
-                yaml.dump(style_entry, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
+                yaml.dump(
+                    style_entry, f, default_flow_style=False, sort_keys=False, allow_unicode=True
+                )
             with open(session_dir / "expression.yml", "w") as f:
-                yaml.dump(expr_entry, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
+                yaml.dump(
+                    expr_entry, f, default_flow_style=False, sort_keys=False, allow_unicode=True
+                )
             if reference_image is not None and reference_image.exists():
                 shutil.copy2(reference_image, session_dir / "reference_person.png")
             logger.info("[Step %s] Writing session artifacts to %s", step, session_dir)
@@ -205,7 +221,9 @@ def generate_avatar_image(
         width=width,
         height=height,
         seed=seed,
-        reference_images_b64=[base64.b64encode(reference_image.read_bytes()).decode()] if reference_image else None,
+        reference_images_b64=[base64.b64encode(reference_image.read_bytes()).decode()]
+        if reference_image
+        else None,
     )
 
     # --- Embed inputs + prompt into PNG metadata and save ---
@@ -218,7 +236,10 @@ def generate_avatar_image(
     meta.add_text("UserPrompt", user_prompt)
     meta.add_text("Prompt", full_prompt)
     meta.add_text("PersonaYaml", persona_yaml)
-    meta.add_text("StyleYaml", yaml.dump(style_entry, default_flow_style=False, sort_keys=False, allow_unicode=True))
+    meta.add_text(
+        "StyleYaml",
+        yaml.dump(style_entry, default_flow_style=False, sort_keys=False, allow_unicode=True),
+    )
     meta.add_text("ExpressionYaml", expr_yaml)
     img.save(str(out_path), pnginfo=meta)
 
@@ -240,7 +261,8 @@ def create_face_avatar(
     *,
     gateway_url: str = "http://127.0.0.1:4096",
     width: int = _DEFAULT_IMAGE_SIZE,
-    height: int = _DEFAULT_IMAGE_SIZE,    seed: int | None = None,
+    height: int = _DEFAULT_IMAGE_SIZE,
+    seed: int | None = None,
 ) -> tuple[dict[str, str | None], dict]:
     """Generate face avatars: neutral portrait (Step E) then expression variants (Step F).
 
@@ -267,7 +289,13 @@ def create_face_avatar(
     avatar = build_avatar_charachter(advisor, demographics, features)
     persona_path = session_root / "persona.yml"
     with open(persona_path, "w") as f:
-        yaml.dump(avatar["avatar_persona"], f, default_flow_style=False, sort_keys=False, allow_unicode=True)
+        yaml.dump(
+            avatar["avatar_persona"],
+            f,
+            default_flow_style=False,
+            sort_keys=False,
+            allow_unicode=True,
+        )
 
     style_arg = {
         "name": demographics.get("style", "random"),

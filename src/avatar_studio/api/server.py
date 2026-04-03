@@ -10,32 +10,16 @@ from pathlib import Path
 import requests
 import yaml
 
-from avatar_studio.config.config import SETTINGS, _slug, _name_to_filename
-from avatar_studio.pipeline.step_b_generate_cv import generate_advisor_profile as _generate_advisor_profile
+from avatar_studio.config.config import SETTINGS, _slug
+from avatar_studio.pipeline.step_a_randomise_person import pick_demographics as _pick_demographics
+from avatar_studio.pipeline.step_d_make_abbreviation import (
+    DEFAULT_SIZE,
+    create_abbreviation_avatar,
+)
 from avatar_studio.pipeline.step_ef_generate_image import (
     EXPRESSION_IDS,
-    _DATA_DIR,
-    _PROJECT_ROOT,
-    make_session_dir as _make_session_dir,
+    create_face_avatar,
 )
-from avatar_studio.pipeline.step_d_make_abbreviation import DEFAULT_SIZE, apply_circle_frame, create_abbreviation_avatar
-from avatar_studio.pipeline.step_c_select_features import (
-    build_avatar_charachter as _build_avatar_charachter,
-    _marshal_avatar_persona,
-    _parse_color_value,
-)
-from avatar_studio.pipeline.step_a_randomise_person import pick_demographics as _pick_demographics, _pick_diverse_demographics
-from avatar_studio.pipeline.step_c_select_features import (
-    _SIMPLE_FIELDS,
-    _build_feature_prompt,
-    _format_profile,
-    _load_user_prompt_options,
-    _parse_feature_response,
-    _select_feature_field,
-    select_features as _select_features,
-    _warmup_model,
-)
-from avatar_studio.pipeline.step_ef_generate_image import create_face_avatar
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +60,7 @@ def _resolve_default_model(
 
 def _load_expression_ids() -> list[str]:
     from avatar_studio.pipeline.step_ef_generate_image import _load_expression_ids as _lei
+
     return _lei()
 
 
@@ -146,16 +131,10 @@ def process_advisor(
     }
 
     with open(advisor_path, "w") as f:
-        yaml.dump(
-            advisor, f, default_flow_style=False, sort_keys=False, allow_unicode=True
-        )
+        yaml.dump(advisor, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
 
     print(f"  Updated {advisor_path}")
 
 
 # Re-exports for backward compatibility
-from avatar_studio.pipeline.step_a_randomise_person import pick_demographics as _pick_demographics, _pick_diverse_demographics
-from avatar_studio.pipeline.step_b_generate_cv import generate_advisor_profile as _generate_advisor_profile
-from avatar_studio.pipeline.step_c_select_features import select_features as _select_features, _build_feature_prompt, _format_profile, _load_user_prompt_options, _parse_feature_response, _select_feature_field, _warmup_model, _SIMPLE_FIELDS, build_avatar_charachter as _build_avatar_charachter, _marshal_avatar_persona, _parse_color_value
-from avatar_studio.pipeline.step_d_make_abbreviation import DEFAULT_SIZE, apply_circle_frame, create_abbreviation_avatar
-from avatar_studio.pipeline.step_ef_generate_image import EXPRESSION_IDS, _DATA_DIR, _PROJECT_ROOT, make_session_dir as _make_session_dir, EXPRESSIONS_YML, STYLES_YML
+from avatar_studio.pipeline.step_d_make_abbreviation import DEFAULT_SIZE  # noqa: E402

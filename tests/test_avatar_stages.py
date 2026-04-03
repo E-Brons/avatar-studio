@@ -8,20 +8,20 @@ Covers:
 """
 
 import io
+import random as _random
 import re
 import tempfile
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 from PIL import Image
 
 from avatar_studio.config.config import (
-    PALETTE,
-    SETTINGS,
-    VALID_BG_PALETTE,
     _FRAME_FG_COLOR,
     _WCAG_MIN_CONTRAST,
+    PALETTE,
+    VALID_BG_PALETTE,
     _color_for_name,
     _contrast_ratio,
     _darken_hex,
@@ -30,7 +30,6 @@ from avatar_studio.config.config import (
     _relative_luminance,
     _slug,
 )
-from avatar_studio.pipeline.step_d_make_abbreviation import apply_circle_frame, create_abbreviation_avatar
 from avatar_studio.pipeline.step_a_randomise_person import (
     _GENDERS,
     _HAIR_COLORS,
@@ -40,6 +39,11 @@ from avatar_studio.pipeline.step_a_randomise_person import (
     _pick_demographics,
     _pick_name,
 )
+from avatar_studio.pipeline.step_d_make_abbreviation import (
+    apply_circle_frame,
+    create_abbreviation_avatar,
+)
+from avatar_studio.pipeline.step_ef_generate_image import create_face_avatar
 
 pytestmark = pytest.mark.avatar
 
@@ -63,9 +67,7 @@ def test_relative_luminance_midgrey():
 
 
 def test_relative_luminance_ignores_hash_case():
-    assert _relative_luminance("#aabbcc") == pytest.approx(
-        _relative_luminance("#AABBCC")
-    )
+    assert _relative_luminance("#aabbcc") == pytest.approx(_relative_luminance("#AABBCC"))
 
 
 # ---------------------------------------------------------------------------
@@ -103,9 +105,7 @@ def test_valid_bg_palette_all_pass_wcag():
     the frame foreground color."""
     for color in VALID_BG_PALETTE:
         ratio = _contrast_ratio(color, _FRAME_FG_COLOR)
-        assert ratio >= _WCAG_MIN_CONTRAST, (
-            f"{color} contrast {ratio:.2f} < {_WCAG_MIN_CONTRAST}"
-        )
+        assert ratio >= _WCAG_MIN_CONTRAST, f"{color} contrast {ratio:.2f} < {_WCAG_MIN_CONTRAST}"
 
 
 def test_valid_bg_palette_non_empty():
@@ -218,8 +218,6 @@ def test_color_for_name_in_palette():
 # avatar_studio.pipeline.step_a_randomise_person — _pick_name
 # ---------------------------------------------------------------------------
 
-import random as _random
-
 
 def test_pick_name_male_returns_two_words():
     rng = _random.Random(42)
@@ -303,8 +301,16 @@ def test_pick_colors_brows_derived_from_hair():
 def test_pick_demographics_returns_required_keys():
     d = _pick_demographics()
     for key in (
-        "gender", "age", "name", "style", "bg_color", "fg_color",
-        "SKIN_TONE", "HAIR_COLOR", "EYE_COLOR", "BROWS_COLOR",
+        "gender",
+        "age",
+        "name",
+        "style",
+        "bg_color",
+        "fg_color",
+        "SKIN_TONE",
+        "HAIR_COLOR",
+        "EYE_COLOR",
+        "BROWS_COLOR",
     ):
         assert key in d, f"Missing key: {key}"
 
@@ -336,9 +342,7 @@ def test_pick_demographics_bg_color_passes_wcag():
     for seed in range(20):
         d = _pick_demographics(seed=seed)
         ratio = _contrast_ratio(d["bg_color"], d["fg_color"])
-        assert ratio >= _WCAG_MIN_CONTRAST, (
-            f"seed={seed}: {d['bg_color']} contrast {ratio:.2f}"
-        )
+        assert ratio >= _WCAG_MIN_CONTRAST, f"seed={seed}: {d['bg_color']} contrast {ratio:.2f}"
 
 
 def test_pick_demographics_style_propagated():
@@ -486,8 +490,6 @@ def test_apply_circle_frame_png_magic_bytes():
 # avatar_studio.pipeline.step_ef_generate_image — create_face_avatar
 # ---------------------------------------------------------------------------
 
-from avatar_studio.pipeline.step_ef_generate_image import create_face_avatar
-
 
 def _make_png_bytes(size: int = 64) -> bytes:
     return _make_test_image_bytes(size=size)
@@ -540,7 +542,10 @@ def test_create_face_avatar_success_returns_filenames():
     with (
         patch("avatar_studio.pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
         patch("avatar_studio.pipeline.step_ef_generate_image.select_features") as mock_feat,
-        patch("avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image", side_effect=fake_generate_image),
+        patch(
+            "avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image",
+            side_effect=fake_generate_image,
+        ),
     ):
         mock_demo.return_value = {
             "gender": "female",
@@ -587,7 +592,10 @@ def test_create_face_avatar_expression_failure_sets_none():
     with (
         patch("avatar_studio.pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
         patch("avatar_studio.pipeline.step_ef_generate_image.select_features") as mock_feat,
-        patch("avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image", side_effect=fake_generate_image),
+        patch(
+            "avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image",
+            side_effect=fake_generate_image,
+        ),
     ):
         mock_demo.return_value = {
             "gender": "male",
@@ -627,7 +635,10 @@ def test_create_face_avatar_feature_failure_does_not_abort():
     with (
         patch("avatar_studio.pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
         patch("avatar_studio.pipeline.step_ef_generate_image.select_features") as mock_feat,
-        patch("avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image", side_effect=fake_generate_image),
+        patch(
+            "avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image",
+            side_effect=fake_generate_image,
+        ),
     ):
         mock_demo.return_value = {
             "gender": "male",
@@ -665,7 +676,10 @@ def test_create_face_avatar_returns_demographics():
     with (
         patch("avatar_studio.pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
         patch("avatar_studio.pipeline.step_ef_generate_image.select_features") as mock_feat,
-        patch("avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image", side_effect=fake_generate_image),
+        patch(
+            "avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image",
+            side_effect=fake_generate_image,
+        ),
     ):
         expected_demo = {
             "gender": "female",

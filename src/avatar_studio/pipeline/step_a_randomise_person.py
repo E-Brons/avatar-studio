@@ -4,9 +4,9 @@ import logging
 import random
 
 from avatar_studio.config.config import (
+    _FRAME_FG_COLOR,
     SETTINGS,
     VALID_BG_PALETTE,
-    _FRAME_FG_COLOR,
     _darken_hex,
 )
 
@@ -96,8 +96,8 @@ def _pick_colors(rng: random.Random | None = None) -> dict:
         rng = random.Random()
 
     skin_tone = rng.choice(_SKIN_TONES)
-    hair_color = rng.choice(_HAIR_COLORS)   # "#BASE #SHADOW"
-    eye_color = rng.choice(_EYE_COLORS)     # "#IRIS #PUPIL"
+    hair_color = rng.choice(_HAIR_COLORS)  # "#BASE #SHADOW"
+    eye_color = rng.choice(_EYE_COLORS)  # "#IRIS #PUPIL"
 
     hair_base_hex = hair_color.split()[0]
     brows_color = _darken_hex(hair_base_hex, factor=0.7)
@@ -117,7 +117,9 @@ def _pick_colors(rng: random.Random | None = None) -> dict:
     }
 
 
-def pick_demographics(seed: int | None = None, style: str = _DEFAULT_STYLE, *, hard_type_gender: bool = False) -> dict:
+def pick_demographics(
+    seed: int | None = None, style: str = _DEFAULT_STYLE, *, hard_type_gender: bool = False
+) -> dict:
     """Random demographics, optionally seeded for reproducibility.
 
     All categories use uniform random selection — no group is weighted above
@@ -146,13 +148,21 @@ def pick_demographics(seed: int | None = None, style: str = _DEFAULT_STYLE, *, h
         "fg_color": _FRAME_FG_COLOR,
     }
     demo.update(_pick_colors(rng))  # adds SKIN_TONE, HAIR_COLOR, EYE_COLOR, BROWS_COLOR
-    demo.update({
-        "EYE_SHAPE":    rng.choice(_EYE_SHAPES),
-        "BROWS_STYLE":  rng.choice(_pool_by_gender(_BROWS_STYLES, gender, hard_type=hard_type_gender)),
-        "NOSE_SHAPE":   rng.choice(_NOSE_SHAPES),
-        "CHIN_SHAPE":   rng.choice(_pool_by_gender(_CHIN_SHAPES, gender, hard_type=hard_type_gender)),
-        "CHEEKS_SHAPE": rng.choice(_pool_by_gender(_CHEEKS_SHAPES, gender, hard_type=hard_type_gender)),
-    })
+    demo.update(
+        {
+            "EYE_SHAPE": rng.choice(_EYE_SHAPES),
+            "BROWS_STYLE": rng.choice(
+                _pool_by_gender(_BROWS_STYLES, gender, hard_type=hard_type_gender)
+            ),
+            "NOSE_SHAPE": rng.choice(_NOSE_SHAPES),
+            "CHIN_SHAPE": rng.choice(
+                _pool_by_gender(_CHIN_SHAPES, gender, hard_type=hard_type_gender)
+            ),
+            "CHEEKS_SHAPE": rng.choice(
+                _pool_by_gender(_CHEEKS_SHAPES, gender, hard_type=hard_type_gender)
+            ),
+        }
+    )
     logger.info("[Step A] DONE  — gender=%s, age=%s", demo.get("gender"), demo.get("age"))
     return demo
 

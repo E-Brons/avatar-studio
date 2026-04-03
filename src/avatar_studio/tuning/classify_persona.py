@@ -15,17 +15,17 @@ Usage
     print(f"score={report.score:.0%}")   # e.g. "score=87%"
     print(report.failures())             # list of unmatched properties
 """
+
 from __future__ import annotations
 
 import logging
 import re
 from dataclasses import dataclass, field
-from typing import Any
 
 import yaml
 
-from avatar_studio.config.gateway import GatewayClient
 from avatar_studio.config.config import SETTINGS
+from avatar_studio.config.gateway import GatewayClient
 
 logger = logging.getLogger(__name__)
 
@@ -35,9 +35,7 @@ _DEFAULT_VISUAL_DESC_MODEL: str = SETTINGS["default_visual_desc_model"]
 # Color properties — pass/fail is determined by YCbCr distance, not LLM binary
 # ---------------------------------------------------------------------------
 
-_COLOR_PROPERTIES: frozenset[str] = frozenset(
-    {"skin_tone", "hair_color", "eye_color", "clothing"}
-)
+_COLOR_PROPERTIES: frozenset[str] = frozenset({"skin_tone", "hair_color", "eye_color", "clothing"})
 
 # Maximum Euclidean distance in YCbCr space to consider a color "matching".
 # ≈55 permits shade/lighting variation typical of diffusion models while
@@ -56,9 +54,9 @@ def _hex_to_rgb(hex_color: str) -> tuple[int, int, int] | None:
 
 
 def _rgb_to_ycbcr(r: int, g: int, b: int) -> tuple[float, float, float]:
-    y  =  0.299    * r + 0.587    * g + 0.114    * b
-    cb = 128 - 0.168736 * r - 0.331264 * g + 0.5      * b
-    cr = 128 + 0.5      * r - 0.418688 * g - 0.081312 * b
+    y = 0.299 * r + 0.587 * g + 0.114 * b
+    cb = 128 - 0.168736 * r - 0.331264 * g + 0.5 * b
+    cr = 128 + 0.5 * r - 0.418688 * g - 0.081312 * b
     return y, cb, cr
 
 
@@ -82,7 +80,10 @@ def _within_color_tolerance(observed_hex: str, expected_desc: str) -> bool | Non
     min_dist = min(_ycbcr_distance(observed_hex, h) for h in expected_hexes)
     logger.debug(
         "_within_color_tolerance: observed=%s expected=%s min_dist=%.1f threshold=%.1f",
-        observed_hex, expected_hexes, min_dist, _YCBCR_THRESHOLD,
+        observed_hex,
+        expected_hexes,
+        min_dist,
+        _YCBCR_THRESHOLD,
     )
     return min_dist <= _YCBCR_THRESHOLD
 
@@ -159,6 +160,7 @@ def _color_desc(hex_color: str, table: dict[str, str]) -> str:
 # ---------------------------------------------------------------------------
 # Persona → property descriptions
 # ---------------------------------------------------------------------------
+
 
 def _describe_properties(persona: dict) -> dict[str, str]:
     """Convert an avatar_persona dict to a flat dict of checkable descriptions.
@@ -249,6 +251,7 @@ def _describe_properties(persona: dict) -> dict[str, str]:
 # CategoryReport
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class PropertyResult:
     property_name: str
@@ -280,9 +283,7 @@ class CategoryReport:
     def __repr__(self) -> str:
         pct = f"{self.score:.0%}"
         return (
-            f"CategoryReport(score={pct}, "
-            f"pass={len(self.passes())}, "
-            f"fail={len(self.failures())})"
+            f"CategoryReport(score={pct}, pass={len(self.passes())}, fail={len(self.failures())})"
         )
 
 
@@ -319,9 +320,7 @@ def categorize_avatar_image(
 
     checklist = "\n".join(f"  {name}: {desc}" for name, desc in props.items())
 
-    color_fmt = (
-        "\n  observed_hex: '#RRGGBB'  # report the color you observe"
-    )
+    color_fmt = "\n  observed_hex: '#RRGGBB'  # report the color you observe"
     response_template = "\n".join(
         f"{name}:\n  visible: true  # or false"
         + (color_fmt if name in _COLOR_PROPERTIES else "")
@@ -375,8 +374,10 @@ def _parse_categorizer_response(raw: str, props: dict[str, str]) -> CategoryRepo
         entry = parsed.get(prop_name, {})
         if isinstance(entry, dict):
             visible_raw = entry.get("visible", False)
-            visible = visible_raw if isinstance(visible_raw, bool) else (
-                str(visible_raw).lower().strip() == "true"
+            visible = (
+                visible_raw
+                if isinstance(visible_raw, bool)
+                else (str(visible_raw).lower().strip() == "true")
             )
             note = str(entry.get("note", "")).strip()
 
@@ -389,17 +390,22 @@ def _parse_categorizer_response(raw: str, props: dict[str, str]) -> CategoryRepo
                         visible = color_ok
                         logger.debug(
                             "YCbCr override: %s observed=%s expected=%s → visible=%s",
-                            prop_name, observed_hex, expected_desc, visible,
+                            prop_name,
+                            observed_hex,
+                            expected_desc,
+                            visible,
                         )
         else:
             visible = False
             note = ""
 
-        results.append(PropertyResult(
-            property_name=prop_name,
-            expected=expected_desc,
-            visible=visible,
-            note=note,
-        ))
+        results.append(
+            PropertyResult(
+                property_name=prop_name,
+                expected=expected_desc,
+                visible=visible,
+                note=note,
+            )
+        )
 
     return CategoryReport(results=results)

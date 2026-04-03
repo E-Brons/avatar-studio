@@ -65,22 +65,20 @@ def generate_advisor_profile(
         try:
             content = client.text_gen(messages, max_retries=max_retries)
             if not content or not content.strip():
-                logger.warning(
-                    "Profile gen attempt %d/%d: empty response", attempt, max_retries
-                )
+                logger.warning("Profile gen attempt %d/%d: empty response", attempt, max_retries)
                 continue
 
             # Strip code fences
-            cleaned = re.sub(
-                r"^```(?:ya?ml)?\s*\n?", "", content.strip(), flags=re.MULTILINE
-            )
+            cleaned = re.sub(r"^```(?:ya?ml)?\s*\n?", "", content.strip(), flags=re.MULTILINE)
             cleaned = re.sub(r"\n?```\s*$", "", cleaned.strip())
 
             parsed = yaml.safe_load(cleaned)
             if not isinstance(parsed, dict):
                 logger.warning(
                     "Profile gen attempt %d/%d: expected dict, got %s",
-                    attempt, max_retries, type(parsed).__name__,
+                    attempt,
+                    max_retries,
+                    type(parsed).__name__,
                 )
                 continue
 
@@ -92,7 +90,11 @@ def generate_advisor_profile(
             if not education or not experience or not traits:
                 logger.warning(
                     "Profile gen attempt %d/%d: missing fields (edu=%d, exp=%d, traits=%d)",
-                    attempt, max_retries, len(education), len(experience), len(traits),
+                    attempt,
+                    max_retries,
+                    len(education),
+                    len(experience),
+                    len(traits),
                 )
                 continue
 
@@ -109,13 +111,9 @@ def generate_advisor_profile(
         except Exception as exc:
             if attempt == max_retries:
                 raise
-            logger.warning(
-                "Profile gen attempt %d/%d failed: %s", attempt, max_retries, exc
-            )
+            logger.warning("Profile gen attempt %d/%d failed: %s", attempt, max_retries, exc)
 
-    raise ValueError(
-        f"Failed to generate advisor profile after {max_retries} attempts"
-    )
+    raise ValueError(f"Failed to generate advisor profile after {max_retries} attempts")
 
 
 # Backward-compat alias

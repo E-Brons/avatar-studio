@@ -5,9 +5,9 @@ http://127.0.0.1:4096 and verifies the outputs are structurally valid.
 
 Skips automatically if the gateway is unreachable.
 """
+
 from __future__ import annotations
 
-import base64
 import tempfile
 from pathlib import Path
 
@@ -33,6 +33,7 @@ _PASS_THRESHOLD = 0.75
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _run_pipeline(
     role: str,
@@ -82,9 +83,11 @@ def _run_pipeline(
 # Tests
 # ---------------------------------------------------------------------------
 
+
 def test_gateway_health(gateway):
     """Gateway is reachable and healthy."""
     import requests
+
     r = requests.get(f"{gateway.base_url}/health", timeout=5)
     assert r.status_code == 200
 
@@ -92,9 +95,7 @@ def test_gateway_health(gateway):
 def test_step_b_generates_valid_profile(gateway):
     """Step B: generate_advisor_profile returns education/experience/traits."""
     demo = pick_demographics(seed=42)
-    profile = generate_advisor_profile(
-        "Financial Advisor", demo, gateway_url=gateway.base_url
-    )
+    profile = generate_advisor_profile("Financial Advisor", demo, gateway_url=gateway.base_url)
     assert isinstance(profile.get("education"), list) and profile["education"]
     assert isinstance(profile.get("experience"), list) and profile["experience"]
     assert isinstance(profile.get("traits"), list) and profile["traits"]
@@ -103,7 +104,12 @@ def test_step_b_generates_valid_profile(gateway):
 def test_step_c_selects_features(gateway):
     """Step C: select_features returns a non-empty feature dict."""
     demo = pick_demographics(seed=99)
-    advisor = {"role": "Wealth Manager", "traits": ["analytical"], "education": [], "experience": []}
+    advisor = {
+        "role": "Wealth Manager",
+        "traits": ["analytical"],
+        "education": [],
+        "experience": [],
+    }
     features = select_features(demo, advisor, gateway_url=gateway.base_url)
     assert features
     assert "HAIR_STYLE" in features

@@ -3,10 +3,10 @@
 All LLM calls in the pipeline route through this client.
 Default gateway URL: http://127.0.0.1:4096
 """
+
 from __future__ import annotations
 
 import logging
-from pathlib import Path
 
 import requests
 
