@@ -42,7 +42,7 @@ jobs:
   integration-avatar:
     name: Integration · Avatar Studio
     runs-on: ubuntu-latest
-    if: ${{ vars.OLLAMA_URL \!= '' }}
+    if: ${{ vars.OLLAMA_URL != '' }}
     steps:
       - uses: actions/checkout@v4
 
