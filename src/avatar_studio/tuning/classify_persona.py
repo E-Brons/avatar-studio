@@ -1,7 +1,7 @@
 """Standalone LLM-based categorizer for avatar visual property verification.
 
 Can be imported by any integration or unit test.  The only requirement is a
-running Ollama (or any litellm-compatible) server with a vision-capable model.
+running LLM Gateway server with a vision-capable model.
 
 Usage
 -----
@@ -10,23 +10,21 @@ Usage
     report = categorize_avatar_image(
         image_bytes,
         persona,
-        model="ollama/llava:latest",
-        ollama_url="http://127.0.0.1:4096",
+        gateway_url="http://127.0.0.1:4096",
     )
     print(f"score={report.score:.0%}")   # e.g. "score=87%"
     print(report.failures())             # list of unmatched properties
 """
 from __future__ import annotations
 
-import base64
 import logging
 import re
 from dataclasses import dataclass, field
 from typing import Any
 
-import litellm
 import yaml
 
+from avatar_studio.config.gateway import GatewayClient
 from avatar_studio.config.config import SETTINGS
 
 logger = logging.getLogger(__name__)
@@ -34,8 +32,63 @@ logger = logging.getLogger(__name__)
 _DEFAULT_VISUAL_DESC_MODEL: str = SETTINGS["default_visual_desc_model"]
 
 # ---------------------------------------------------------------------------
-# Color → human-readable label tables
-# (hex values that appear in avatar_studio_settings.json)
+# Color properties — pass/fail is determined by YCbCr distance, not LLM binary
+# ---------------------------------------------------------------------------
+
+_COLOR_PROPERTIES: frozenset[str] = frozenset(
+    {"skin_tone", "hair_color", "eye_color", "clothing"}
+)
+
+# Maximum Euclidean distance in YCbCr space to consider a color "matching".
+# ≈55 permits shade/lighting variation typical of diffusion models while
+# still catching genuinely wrong color families (e.g. dark brown vs blue).
+_YCBCR_THRESHOLD: float = 55.0
+
+
+def _hex_to_rgb(hex_color: str) -> tuple[int, int, int] | None:
+    h = hex_color.lstrip("#")
+    if len(h) != 6:
+        return None
+    try:
+        return int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    except ValueError:
+        return None
+
+
+def _rgb_to_ycbcr(r: int, g: int, b: int) -> tuple[float, float, float]:
+    y  =  0.299    * r + 0.587    * g + 0.114    * b
+    cb = 128 - 0.168736 * r - 0.331264 * g + 0.5      * b
+    cr = 128 + 0.5      * r - 0.418688 * g - 0.081312 * b
+    return y, cb, cr
+
+
+def _ycbcr_distance(hex1: str, hex2: str) -> float:
+    """Euclidean distance in YCbCr space between two hex colors."""
+    rgb1 = _hex_to_rgb(hex1)
+    rgb2 = _hex_to_rgb(hex2)
+    if rgb1 is None or rgb2 is None:
+        return float("inf")
+    ycc1 = _rgb_to_ycbcr(*rgb1)
+    ycc2 = _rgb_to_ycbcr(*rgb2)
+    return sum((a - b) ** 2 for a, b in zip(ycc1, ycc2)) ** 0.5
+
+
+def _within_color_tolerance(observed_hex: str, expected_desc: str) -> bool | None:
+    """Return True/False if observed_hex is within YCbCr threshold of any hex in
+    expected_desc, or None when expected_desc contains no hex values."""
+    expected_hexes = re.findall(r"#[0-9A-Fa-f]{6}", expected_desc)
+    if not expected_hexes:
+        return None
+    min_dist = min(_ycbcr_distance(observed_hex, h) for h in expected_hexes)
+    logger.debug(
+        "_within_color_tolerance: observed=%s expected=%s min_dist=%.1f threshold=%.1f",
+        observed_hex, expected_hexes, min_dist, _YCBCR_THRESHOLD,
+    )
+    return min_dist <= _YCBCR_THRESHOLD
+
+
+# ---------------------------------------------------------------------------
+# Color → human-readable label tables (with hex preserved in description)
 # ---------------------------------------------------------------------------
 
 _SKIN_TONE_LABELS: dict[str, str] = {
@@ -77,8 +130,30 @@ _EYE_IRIS_LABELS: dict[str, str] = {
 
 
 def _hex_label(hex_color: str, table: dict[str, str]) -> str:
-    """Return a label from *table* or fall back to the raw hex."""
-    return table.get(hex_color.upper(), hex_color)
+    """Return label from *table*, nearest-color label if not found exactly."""
+    result = table.get(hex_color.upper())
+    if result:
+        return result
+    if not table:
+        return hex_color
+    rgb = _hex_to_rgb(hex_color)
+    if rgb is None:
+        return hex_color
+    best_label, best_dist = hex_color, float("inf")
+    for entry_hex, label in table.items():
+        entry_rgb = _hex_to_rgb(entry_hex)
+        if entry_rgb is None:
+            continue
+        dist = sum((a - b) ** 2 for a, b in zip(rgb, entry_rgb)) ** 0.5
+        if dist < best_dist:
+            best_dist, best_label = dist, label
+    return best_label
+
+
+def _color_desc(hex_color: str, table: dict[str, str]) -> str:
+    """Return '<label> (<hex>)' so the LLM has both semantic and numeric reference."""
+    label = _hex_label(hex_color.upper(), table)
+    return f"{label} ({hex_color.upper()})"
 
 
 # ---------------------------------------------------------------------------
@@ -88,8 +163,8 @@ def _hex_label(hex_color: str, table: dict[str, str]) -> str:
 def _describe_properties(persona: dict) -> dict[str, str]:
     """Convert an avatar_persona dict to a flat dict of checkable descriptions.
 
-    Returns {property_name: human_readable_description}.  Only properties that
-    are directly visible in a portrait are included.
+    Color properties include the expected hex in parentheses so the LLM can
+    report an ``observed_hex`` that the code checks against in YCbCr space.
     """
     props: dict[str, str] = {}
     personal = persona.get("personal", {})
@@ -98,12 +173,17 @@ def _describe_properties(persona: dict) -> dict[str, str]:
     # ── demographic / visible ────────────────────────────────────────────
     gender = personal.get("gender", "")
     if gender:
-        props["gender"] = gender
+        # "non-binary" is not a visually distinct category — describe the
+        # presentation style the image model actually renders instead.
+        if gender.lower() == "non-binary":
+            props["gender"] = "gender-neutral or androgynous appearance"
+        else:
+            props["gender"] = gender
 
     # ── skin tone ────────────────────────────────────────────────────────
     skin_hex = appearance.get("skin_tone", "")
     if skin_hex:
-        props["skin_tone"] = _hex_label(skin_hex.upper(), _SKIN_TONE_LABELS)
+        props["skin_tone"] = _color_desc(skin_hex, _SKIN_TONE_LABELS)
 
     # ── hair ─────────────────────────────────────────────────────────────
     hair_style = appearance.get("hair_style", "")
@@ -114,11 +194,11 @@ def _describe_properties(persona: dict) -> dict[str, str]:
     if isinstance(hair_color, dict):
         base_hex = hair_color.get("hex_base", "")
         if base_hex:
-            props["hair_color"] = _hex_label(base_hex.upper(), _HAIR_BASE_LABELS)
+            props["hair_color"] = _color_desc(base_hex, _HAIR_BASE_LABELS)
     elif isinstance(hair_color, str) and hair_color:
         first_hex = re.search(r"#[0-9A-Fa-f]{6}", hair_color)
         if first_hex:
-            props["hair_color"] = _hex_label(first_hex.group().upper(), _HAIR_BASE_LABELS)
+            props["hair_color"] = _color_desc(first_hex.group(), _HAIR_BASE_LABELS)
 
     # ── eyes ─────────────────────────────────────────────────────────────
     eye_shape = appearance.get("eye_shape", "")
@@ -129,30 +209,27 @@ def _describe_properties(persona: dict) -> dict[str, str]:
     if isinstance(eye_color, dict):
         iris_hex = eye_color.get("hex_iris", "")
         if iris_hex:
-            props["eye_color"] = _hex_label(iris_hex.upper(), _EYE_IRIS_LABELS)
+            props["eye_color"] = _color_desc(iris_hex, _EYE_IRIS_LABELS)
     elif isinstance(eye_color, str) and eye_color:
         first_hex = re.search(r"#[0-9A-Fa-f]{6}", eye_color)
         if first_hex:
-            props["eye_color"] = _hex_label(first_hex.group().upper(), _EYE_IRIS_LABELS)
+            props["eye_color"] = _color_desc(first_hex.group(), _EYE_IRIS_LABELS)
 
     # ── eyebrows ─────────────────────────────────────────────────────────
     brows = appearance.get("brows_style", "")
     if brows:
         props["brows_style"] = brows
 
-    # ── facial structure (harder, lower-weight) ───────────────────────
+    # ── facial structure ─────────────────────────────────────────────────
     for key in ("nose_shape", "chin_shape", "cheeks_shape"):
         val = appearance.get(key, "")
         if val:
             props[key] = val
 
-    # ── clothing ─────────────────────────────────────────────────────────
+    # ── clothing — garment name + expected hex ────────────────────────────
     clothing = appearance.get("clothing", {})
     if isinstance(clothing, dict) and clothing:
-        items = []
-        for garment, color_hex in clothing.items():
-            label = _hex_label(str(color_hex).upper(), {})
-            items.append(f"{garment} ({color_hex})")
+        items = [f"{garment} ({hex_val})" for garment, hex_val in clothing.items()]
         props["clothing"] = ", ".join(items)
     elif isinstance(clothing, str) and clothing:
         props["clothing"] = clothing
@@ -195,11 +272,9 @@ class CategoryReport:
         return sum(1 for r in self.results if r.visible) / len(self.results)
 
     def failures(self) -> list[str]:
-        """Property names that were NOT found."""
         return [r.property_name for r in self.results if not r.visible]
 
     def passes(self) -> list[str]:
-        """Property names that WERE found."""
         return [r.property_name for r in self.results if r.visible]
 
     def __repr__(self) -> str:
@@ -221,8 +296,11 @@ _CATEGORIZER_SYSTEM = (
     "Reply ONLY as YAML. For each property key, output:\n"
     "  visible: true  # or false\n"
     "  note: <one-sentence observation>\n"
-    "Be strict but fair: 'visible: true' means the property is clearly identifiable "
-    "in the image. Subtle or ambiguous cases should be 'false'."
+    "For color properties (skin_tone, hair_color, eye_color, clothing), also output:\n"
+    "  observed_hex: '#RRGGBB'  # the dominant color you observe for this property\n"
+    "Be strict but fair for structural properties. "
+    "For color properties, always report observed_hex — pass/fail is computed "
+    "programmatically from the YCbCr distance between expected and observed."
 )
 
 
@@ -230,41 +308,26 @@ def categorize_avatar_image(
     image_bytes: bytes,
     persona: dict,
     *,
-    model: str = _DEFAULT_VISUAL_DESC_MODEL,
-    ollama_url: str = "http://127.0.0.1:4096",
+    gateway_url: str = "http://127.0.0.1:4096",
     timeout: int = 60,
 ) -> CategoryReport:
-    """Ask a vision LLM to verify which avatar persona properties are visible.
-
-    Parameters
-    ----------
-    image_bytes:
-        Raw PNG/JPEG bytes of the generated avatar image.
-    persona:
-        The ``avatar_persona`` dict from the rand/image pipeline.
-    model:
-        litellm model string, e.g. ``"ollama/llava:latest"`` or
-        ``"ollama/llava-llama3"``.
-    ollama_url:
-        Base URL of the Ollama server.
-    timeout:
-        Request timeout in seconds.
-
-    Returns
-    -------
-    CategoryReport
-        Per-property visibility results and an aggregate score.
-    """
+    """Ask a vision LLM to verify which avatar persona properties are visible."""
     props = _describe_properties(persona)
     if not props:
         logger.warning("categorize_avatar_image: no checkable properties in persona")
         return CategoryReport()
 
-    # Build the property checklist
-    checklist_lines = []
-    for name, description in props.items():
-        checklist_lines.append(f"  {name}: {description}")
-    checklist = "\n".join(checklist_lines)
+    checklist = "\n".join(f"  {name}: {desc}" for name, desc in props.items())
+
+    color_fmt = (
+        "\n  observed_hex: '#RRGGBB'  # report the color you observe"
+    )
+    response_template = "\n".join(
+        f"{name}:\n  visible: true  # or false"
+        + (color_fmt if name in _COLOR_PROPERTIES else "")
+        + "\n  note: ..."
+        for name in props
+    )
 
     user_text = (
         "Examine this portrait image carefully.\n\n"
@@ -272,40 +335,13 @@ def categorize_avatar_image(
         "Expected properties:\n"
         f"{checklist}\n\n"
         "Reply as YAML only, using the exact property names as keys:\n"
-        + "\n".join(
-            f"{name}:\n  visible: true  # or false\n  note: ..."
-            for name in props
-        )
+        f"{response_template}"
     )
 
-    b64 = base64.b64encode(image_bytes).decode()
-    messages = [
-        {"role": "system", "content": _CATEGORIZER_SYSTEM},
-        {
-            "role": "user",
-            "content": [
-                {
-                    "type": "image_url",
-                    "image_url": {"url": f"data:image/png;base64,{b64}"},
-                },
-                {"type": "text", "text": user_text},
-            ],
-        },
-    ]
-
-    kwargs: dict[str, Any] = {
-        "model": model,
-        "messages": messages,
-        "temperature": 0.1,
-        "max_tokens": 1024,
-        "timeout": timeout,
-    }
-    if "ollama" in model.lower():
-        kwargs["api_base"] = ollama_url
-
     try:
-        response = litellm.completion(**kwargs)
-        raw = response.choices[0].message.content or ""
+        raw = GatewayClient(gateway_url).image_inspector(
+            image_bytes, _CATEGORIZER_SYSTEM, user_text, timeout=timeout
+        )
     except Exception as exc:
         logger.error("categorize_avatar_image: LLM call failed: %s", exc)
         raise
@@ -316,8 +352,12 @@ def categorize_avatar_image(
 
 
 def _parse_categorizer_response(raw: str, props: dict[str, str]) -> CategoryReport:
-    """Parse the LLM YAML response into a CategoryReport."""
-    # Strip code fences
+    """Parse the LLM YAML response into a CategoryReport.
+
+    For color properties: if the LLM reports an ``observed_hex``, the
+    ``visible`` flag is overridden by a YCbCr distance check against the
+    expected hex(es) embedded in the property description string.
+    """
     cleaned = re.sub(r"^```(?:ya?ml)?\s*\n?", "", raw.strip(), flags=re.MULTILINE)
     cleaned = re.sub(r"\n?```\s*$", "", cleaned.strip())
 
@@ -335,12 +375,22 @@ def _parse_categorizer_response(raw: str, props: dict[str, str]) -> CategoryRepo
         entry = parsed.get(prop_name, {})
         if isinstance(entry, dict):
             visible_raw = entry.get("visible", False)
-            # Accept both boolean and string "true"/"false"
-            if isinstance(visible_raw, bool):
-                visible = visible_raw
-            else:
-                visible = str(visible_raw).lower().strip() == "true"
+            visible = visible_raw if isinstance(visible_raw, bool) else (
+                str(visible_raw).lower().strip() == "true"
+            )
             note = str(entry.get("note", "")).strip()
+
+            # For color properties, override with objective YCbCr distance check.
+            if prop_name in _COLOR_PROPERTIES:
+                observed_hex = str(entry.get("observed_hex", "")).strip()
+                if re.match(r"^#[0-9A-Fa-f]{6}$", observed_hex):
+                    color_ok = _within_color_tolerance(observed_hex, expected_desc)
+                    if color_ok is not None:
+                        visible = color_ok
+                        logger.debug(
+                            "YCbCr override: %s observed=%s expected=%s → visible=%s",
+                            prop_name, observed_hex, expected_desc, visible,
+                        )
         else:
             visible = False
             note = ""

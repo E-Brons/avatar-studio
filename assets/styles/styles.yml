@@ -17,7 +17,6 @@
 #                           are added programmatically by the pipeline.
 #                           null = no style override (model decides).
 #   example_images        — paths relative to project root (assets/avatar_styles/)
-
 styles:
   - id: random
     name: Random

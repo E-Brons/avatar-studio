@@ -6,13 +6,27 @@ import hashlib
 import json
 from pathlib import Path
 
-_SETTINGS_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "avatar_studio_settings.json"
+_ROOT = Path(__file__).resolve().parent.parent.parent.parent
+_SETTINGS_FILES = [
+    _ROOT / "settings.json",
+    _ROOT / "assets" / "persona" / "phenotype_settings.json",
+    _ROOT / "assets" / "persona" / "cv_settings.json",
+    _ROOT / "assets" / "persona" / "presentation_settings.json",
+]
 
 
 def _load_settings() -> dict:
-    """Load avatar studio settings from the JSON file."""
-    with open(_SETTINGS_PATH) as f:
-        return json.load(f)
+    """Load and merge avatar studio settings from the four settings files."""
+    merged: dict = {}
+    for path in _SETTINGS_FILES:
+        with open(path) as f:
+            data = json.load(f)
+        # Strip comment-only keys (prefixed with _ or __)
+        merged.update({k: v for k, v in data.items() if not k.startswith("_")})
+    # Expose presentation schema under the step_c namespace expected by step_c code.
+    if "schema" in merged:
+        merged["step_c"] = {"schema": merged.pop("schema")}
+    return merged
 
 
 SETTINGS = _load_settings()

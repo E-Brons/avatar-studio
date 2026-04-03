@@ -20,8 +20,9 @@ import logging
 import re
 from dataclasses import dataclass, field
 
-import requests
 import yaml
+
+from avatar_studio.config.gateway import GatewayClient
 
 logger = logging.getLogger(__name__)
 
@@ -97,71 +98,23 @@ class ExpressionClassificationResult:
 
 
 def _call_vision_model(
-    model: str,
+    gateway_url: str,
     system: str,
     prompt: str,
-    image_b64: str,
-    ollama_url: str,
+    image_bytes_decoded: bytes,
     timeout: int,
 ) -> str:
-    """Call a vision-capable LLM and return the raw text response.
-
-    Routing by model prefix:
-    - ``ollama/*``  → Ollama REST API directly (avoids litellm Transfer-Encoding bug)
-    - ``cli/*``     → not supported in standalone package; raises NotImplementedError
-    - anything else → litellm (API-key provider: OpenAI, Anthropic, etc.)
-    """
-    if "ollama" in model.lower():
-        bare = model.removeprefix("ollama/")
-        payload = {
-            "model": bare,
-            "system": system,
-            "prompt": prompt,
-            "images": [image_b64],
-            "stream": False,
-            "options": {"temperature": 0.1},
-        }
-        resp = requests.post(
-            f"{ollama_url}/api/generate", json=payload, timeout=timeout
-        )
-        resp.raise_for_status()
-        return resp.json().get("response", "")
-
-    if model.startswith("cli/"):
-        raise NotImplementedError(
-            "cli/* model routing requires the 'core_llm' package from the dashboard repo. "
-            "Use an ollama/* or litellm model instead."
-        )
-
-    # Non-Ollama, non-CLI path — use litellm
-    import litellm  # noqa: PLC0415
-
-    messages = [
-        {"role": "system", "content": system},
-        {
-            "role": "user",
-            "content": [
-                {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{image_b64}"}},
-                {"type": "text", "text": prompt},
-            ],
-        },
-    ]
-    response = litellm.completion(
-        model=model,
-        messages=messages,
-        temperature=0.1,
-        max_tokens=512,
-        timeout=timeout,
+    """Call a vision-capable LLM via the gateway and return the raw text response."""
+    return GatewayClient(gateway_url).image_inspector(
+        image_bytes_decoded, system, prompt, timeout=timeout
     )
-    return response.choices[0].message.content or ""
 
 
 def classify_image_expression(
     image_bytes: bytes,
     expression_labels: list[str] | None = None,
     *,
-    model: str,
-    ollama_url: str = "http://127.0.0.1:4096",
+    gateway_url: str = "http://127.0.0.1:4096",
     timeout: int = 180,
 ) -> ExpressionClassificationResult:
     """Ask a vision LLM which facial expressions are visible in *image_bytes*.
@@ -179,13 +132,8 @@ def classify_image_expression(
         names entirely from its own vocabulary.
         Either way, only plain label names are passed — no definitions,
         FACS specs, or generation instructions are ever shown to the classifier.
-    model:
-        Model string.  Prefix determines routing:
-        ``"ollama/<name>"`` → Ollama REST API;
-        ``"cli/<name>"`` → not supported (raises NotImplementedError);
-        anything else → litellm.
-    ollama_url:
-        Base URL of the Ollama server.
+    gateway_url:
+        Base URL of the LLM Gateway server.
     timeout:
         Request timeout in seconds.
 
@@ -228,15 +176,12 @@ def classify_image_expression(
             "reasoning: <one sentence citing key visible facial cues>"
         )
 
-    b64 = base64.b64encode(image_bytes).decode()
-
     try:
         raw = _call_vision_model(
-            model=model,
+            gateway_url=gateway_url,
             system=_CLASSIFIER_SYSTEM,
             prompt=user_text,
-            image_b64=b64,
-            ollama_url=ollama_url,
+            image_bytes_decoded=image_bytes,
             timeout=timeout,
         )
     except Exception as exc:
@@ -249,56 +194,21 @@ def classify_image_expression(
 
 
 def _call_text_model(
-    model: str,
+    gateway_url: str,
     prompt: str,
-    ollama_url: str,
     timeout: int,
 ) -> str:
-    """Call a text-only LLM and return the raw response.
-
-    Routing:
-    - ``ollama/*`` → Ollama REST API (no image field)
-    - ``cli/*``    → not supported (raises NotImplementedError)
-    - else         → litellm
-    """
-    if "ollama" in model.lower():
-        bare = model.removeprefix("ollama/")
-        payload = {
-            "model": bare,
-            "prompt": prompt,
-            "stream": False,
-            "options": {"temperature": 0.0},
-        }
-        resp = requests.post(
-            f"{ollama_url}/api/generate", json=payload, timeout=timeout
-        )
-        resp.raise_for_status()
-        return resp.json().get("response", "")
-
-    if model.startswith("cli/"):
-        raise NotImplementedError(
-            "cli/* model routing requires the 'core_llm' package from the dashboard repo. "
-            "Use an ollama/* or litellm model instead."
-        )
-
-    import litellm  # noqa: PLC0415
-
-    response = litellm.completion(
-        model=model,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.0,
-        max_tokens=128,
-        timeout=timeout,
+    """Call a text-only LLM via the gateway and return the raw response."""
+    return GatewayClient(gateway_url).text_gen(
+        [{"role": "user", "content": prompt}], timeout=timeout
     )
-    return response.choices[0].message.content or ""
 
 
 def semantic_effective_score(
     scores: dict[str, float],
     expected: str,
     *,
-    model: str,
-    ollama_url: str = "http://127.0.0.1:4096",
+    gateway_url: str = "http://127.0.0.1:4096",
     timeout: int = 30,
 ) -> float:
     """Return the summed probability of all output phrases semantically matching *expected*.
@@ -316,9 +226,9 @@ def semantic_effective_score(
         The ``scores`` dict from ``ExpressionClassificationResult``.
     expected:
         The human-readable target label (e.g. ``"Thinking"``).
-    model:
-        Text model string (``ollama/*``, or a litellm model name).
-    ollama_url, timeout:
+    gateway_url:
+        Base URL of the LLM Gateway server.
+    timeout:
         Forwarded to the underlying model call.
 
     Returns
@@ -338,7 +248,7 @@ def semantic_effective_score(
         )
         try:
             raw = _call_text_model(
-                model=model, prompt=prompt, ollama_url=ollama_url, timeout=timeout
+                gateway_url=gateway_url, prompt=prompt, timeout=timeout
             )
         except Exception as exc:
             logger.warning(

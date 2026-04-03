@@ -11,7 +11,7 @@ from avatar_studio.config.config import SETTINGS, _color_for_name, _hex_to_rgb, 
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_SIZE: int = SETTINGS["default_size"]
+DEFAULT_SIZE: int = SETTINGS["default_image_size"]
 
 # Reuse the rembg session across calls so the ONNX model is loaded only once.
 _rembg_session = None

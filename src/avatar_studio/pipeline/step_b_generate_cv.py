@@ -3,65 +3,21 @@
 import logging
 import re
 
-import litellm
 import yaml
 
 from avatar_studio.config.config import SETTINGS
+from avatar_studio.config.gateway import GatewayClient
 
 logger = logging.getLogger(__name__)
 
 _MAX_RETRIES: int = SETTINGS["max_retries"]
 
 
-def _reset_litellm_client() -> None:
-    """Replace litellm's HTTP clients with no-keepalive instances.
-
-    Ollama's /api/show returns ``Transfer-Encoding: chunked, chunked`` which
-    httpx raises as RemoteProtocolError.  Under sustained load this corrupts
-    the keep-alive TCP connection that gets reused for the actual /api/generate
-    completion call.  Disabling keep-alive on both the module_level_client
-    (used for /api/show) and the in_memory_llm_clients_cache entry (used for
-    completions) ensures every request opens a fresh connection.
-    """
-    try:
-        import httpx
-        from litellm.llms.custom_httpx.http_handler import HTTPHandler
-
-        no_keepalive = httpx.Limits(max_connections=10, max_keepalive_connections=0)
-
-        # module_level_client — used by Ollama's get_model_info (/api/show)
-        litellm.module_level_client = HTTPHandler(
-            client=httpx.Client(limits=no_keepalive, follow_redirects=True)
-        )
-
-        # in_memory_llm_clients_cache — used by actual completion calls
-        cache = getattr(litellm, "in_memory_llm_clients_cache", None)
-        if cache is not None:
-            fresh = HTTPHandler(
-                client=httpx.Client(limits=no_keepalive, follow_redirects=True)
-            )
-            try:
-                cache.set_cache("httpx_client", fresh)
-                cache.set_cache("httpx_client_ssl_verify_None", fresh)
-            except Exception:
-                pass
-    except Exception:
-        pass
-
-
-# Install a no-keepalive HTTP client on litellm's module_level_client at
-# import time.  Ollama's /api/show returns duplicate Transfer-Encoding headers
-# which httpx rejects; with keepalive disabled each request gets a fresh TCP
-# connection so a bad /api/show can never poison the next call.
-_reset_litellm_client()
-
-
 def generate_advisor_profile(
     role: str,
     demographics: dict,
     *,
-    ollama_text_model: str,
-    ollama_text_model_api_base: str | None = None,
+    gateway_url: str = "http://127.0.0.1:4096",
     max_retries: int = _MAX_RETRIES,
 ) -> dict:
     """Generate education, experience, and traits from role via LLM.
@@ -71,7 +27,7 @@ def generate_advisor_profile(
     gender = demographics.get("gender", "person")
     age = demographics.get("age", 40)
 
-    logger.info("[Step B] START — generate_cv (model=%s)", ollama_text_model)
+    logger.info("[Step B] START — generate_cv (gateway=%s)", gateway_url)
     system_msg = (
         "You are an advisor profile generator. "
         "Given a role, gender, and age, create a realistic professional profile. "
@@ -101,19 +57,13 @@ def generate_advisor_profile(
         {"role": "user", "content": user_msg},
     ]
 
-    base_kwargs: dict = {
-        "model": ollama_text_model,
-        "temperature": SETTINGS["step_b"]["temperature"],
-        "max_tokens": SETTINGS["step_b"]["max_tokens"],
-        "timeout": SETTINGS["timeout"],
-    }
-    if ollama_text_model_api_base:
-        base_kwargs["api_base"] = ollama_text_model_api_base
+    client = GatewayClient(gateway_url)
 
+    # The retry loop here handles YAML parsing/validation failures only.
+    # Network-level retries are delegated to the gateway via max_retries.
     for attempt in range(1, max_retries + 1):
         try:
-            response = litellm.completion(messages=messages, **base_kwargs)
-            content = response.choices[0].message.content
+            content = client.text_gen(messages, max_retries=max_retries)
             if not content or not content.strip():
                 logger.warning(
                     "Profile gen attempt %d/%d: empty response", attempt, max_retries
@@ -162,8 +112,6 @@ def generate_advisor_profile(
             logger.warning(
                 "Profile gen attempt %d/%d failed: %s", attempt, max_retries, exc
             )
-            if "Transfer-Encoding" in str(exc):
-                _reset_litellm_client()
 
     raise ValueError(
         f"Failed to generate advisor profile after {max_retries} attempts"

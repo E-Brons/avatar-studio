@@ -1,0 +1,69 @@
+{
+  "_comment_step_c": "=== Step C: Presentation (LLM text model) ===",
+  "temperature": 0.5,
+  "max_tokens": 256,
+  "schema": {
+      "HAIR_STYLE": "<style name>",
+      "CLOTHING": {"<garment_piece>": "#HEX"},
+      "ACCESSORIES": {"<accessory_name>": "<visual description>"}
+  },
+  "hair_styles": {
+    "male": [
+      "bald", "bald on top with close-cropped sides", "buzz cut",
+      "fade cut", "tapered sides", "textured quiff", "pompadour"
+    ],
+    "female": ["coiled updo", "french twist", "chignon", "space buns", "two braids"],
+    "neutral": [
+      "short cropped", "side-parted short", "swept back",
+      "medium layered", "medium tousled", "medium side-swept",
+      "shoulder-length straight", "shoulder-length wavy", "shoulder-length curtained",
+      "long straight", "long wavy", "long layered", "long curly",
+      "tight curls", "loose curls", "coily natural",
+      "afro", "afro puff", "twist-out",
+      "low bun", "high bun", "top knot", "half-up half-down",
+      "pixie cut", "textured pixie",
+      "bob straight", "bob wavy", "inverted bob", "blunt bob",
+      "braided", "cornrows", "locs", "locs updo",
+      "slicked back", "undercut", "ponytail sleek", "ponytail curly"
+    ]
+  },
+  "clothing_options": {
+    "male": [],
+    "female": ["wrap blouse", "silk blouse", "linen blouse", "asymmetric draped top"],
+    "neutral": [
+      "structured blazer over crew-neck", "blazer with collared shirt", "blazer over blouse",
+      "blazer with button-down", "open blazer over turtleneck",
+      "button-down shirt", "oxford shirt with open collar", "chambray shirt",
+      "fitted turtleneck", "oversized turtleneck",
+      "cashmere crew-neck", "V-neck sweater over collared shirt",
+      "knit cardigan over tee", "open cardigan over fitted top",
+      "tailored vest over rolled-sleeve shirt", "utility vest over shirt",
+      "mandarin-collar shirt", "mandarin-collar jacket",
+      "shawl-collar cardigan", "henley shirt", "polo shirt",
+      "lab coat over collared shirt", "minimalist crew-neck",
+      "denim jacket over tee", "bomber jacket over crew-neck",
+      "collarless structured jacket"
+    ]
+  },
+  "accessories_options": {
+    "male": ["tie", "bow tie", "corporate beard", "chevron mustache", "french beard"],
+    "female": [
+      "pair of earrings", "stud earrings", "hoop earrings",
+      "pendant necklace", "layered necklaces", "statement necklace"
+    ],
+    "neutral": [
+      "glasses", "tinted glasses", "patterned scarf", "silk scarf",
+      "discreet lapel pin", "enamel pin",
+      "hair decoration", "hair clip", "headband",
+      "hearing aid", "subtle face jewel"
+    ]
+  },
+
+  "_comment_step_c_persona": "=== Step C → E/F: Avatar Persona (marshalled dict) ===",
+  "_comment_step_c_persona_note": "Structural metadata for _marshal_avatar_persona. Determines which appearance fields are multi-hex dicts vs dict-passthrough vs plain string.",
+  "persona_hex_fields": {
+    "HAIR_COLOR": ["hex_base", "hex_shadow"],
+    "EYE_COLOR": ["hex_iris", "hex_pupil"]
+  },
+  "persona_dict_fields": ["CLOTHING", "ACCESSORIES"]
+}

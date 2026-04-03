@@ -8,10 +8,10 @@ import logging
 import re
 from pathlib import Path
 
-import litellm
 import yaml
 
 from avatar_studio.config.config import SETTINGS
+from avatar_studio.config.gateway import GatewayClient
 from avatar_studio.pipeline.step_a_randomise_person import _DEFAULT_STYLE
 
 logger = logging.getLogger(__name__)
@@ -25,36 +25,6 @@ _STEP_C_SYSTEM_PROMPT = (
     "consideration: Choose features that is consistent for the persona\n"
     "this person is professional yet approachable, wearing corporate-friendly dress-code and hairstyle\n"
 )
-
-
-def _reset_litellm_client() -> None:
-    """Replace litellm's HTTP clients with no-keepalive instances.
-
-    See generate_cv._reset_litellm_client for full explanation.
-    """
-    try:
-        import httpx
-        from litellm.llms.custom_httpx.http_handler import HTTPHandler
-
-        no_keepalive = httpx.Limits(max_connections=10, max_keepalive_connections=0)
-        litellm.module_level_client = HTTPHandler(
-            client=httpx.Client(limits=no_keepalive, follow_redirects=True)
-        )
-        cache = getattr(litellm, "in_memory_llm_clients_cache", None)
-        if cache is not None:
-            fresh = HTTPHandler(
-                client=httpx.Client(limits=no_keepalive, follow_redirects=True)
-            )
-            try:
-                cache.set_cache("httpx_client", fresh)
-                cache.set_cache("httpx_client_ssl_verify_None", fresh)
-            except Exception:
-                pass
-    except Exception:
-        pass
-
-
-_reset_litellm_client()
 
 _NONE_PATTERNS = re.compile(r"^(none|n/a|no|nothing|null|empty|-|—)$", re.IGNORECASE)
 
@@ -191,8 +161,7 @@ def _select_feature_field(
     demographics: dict,
     advisor: dict,
     *,
-    ollama_text_model: str,
-    ollama_text_model_api_base: str | None = None,
+    gateway_url: str = "http://127.0.0.1:4096",
     max_retries: int = _MAX_RETRIES,
 ) -> str | dict:
     """Select a single feature field via a small LLM call.
@@ -250,18 +219,11 @@ def _select_feature_field(
         {"role": "user", "content": user_content},
     ]
 
-    base_kwargs: dict = {
-        "model": ollama_text_model,
-        "temperature": SETTINGS["step_c"]["temperature"],
-        "max_tokens": SETTINGS["step_c"]["max_tokens"],
-        "timeout": SETTINGS["timeout"],
-    }
-    if ollama_text_model_api_base:
-        base_kwargs["api_base"] = ollama_text_model_api_base
+    client = GatewayClient(gateway_url)
 
     for attempt in range(1, max_retries + 1):
         try:
-            response = litellm.completion(messages=messages, **base_kwargs)
+            content = client.text_gen(messages)
         except Exception as exc:
             if attempt == max_retries:
                 raise
@@ -272,11 +234,7 @@ def _select_feature_field(
                 max_retries,
                 exc,
             )
-            if "Transfer-Encoding" in str(exc):
-                _reset_litellm_client()
             continue
-        content = response.choices[0].message.content
-
         if not content or not content.strip():
             logger.warning(
                 "Field %s attempt %d/%d: empty response", key, attempt, max_retries
@@ -488,35 +446,22 @@ def _select_feature_field(
 
 def _warmup_model(
     *,
-    ollama_text_model: str,
-    ollama_text_model_api_base: str | None = None,
+    gateway_url: str = "http://127.0.0.1:4096",
 ) -> None:
-    """Send a trivial request to preload the model into memory."""
-    base_kwargs: dict = {
-        "model": ollama_text_model,
-        "temperature": 0,
-        "max_tokens": 4,
-        "timeout": SETTINGS["timeout"],
-    }
-    if ollama_text_model_api_base:
-        base_kwargs["api_base"] = ollama_text_model_api_base
-
+    """Send a trivial request to health-check the gateway."""
+    client = GatewayClient(gateway_url)
     try:
-        litellm.completion(
-            messages=[{"role": "user", "content": "hi"}],
-            **base_kwargs,
-        )
-        logger.info("Model warmup complete: %s", ollama_text_model)
+        client.text_gen([{"role": "user", "content": "hi"}], max_retries=1, timeout=10)
+        logger.info("Gateway warmup complete: %s", gateway_url)
     except Exception as exc:
-        logger.warning("Model warmup failed (continuing anyway): %s", exc)
+        logger.warning("Gateway warmup failed (continuing anyway): %s", exc)
 
 
 def select_features(
     demographics: dict,
     advisor: dict,
     *,
-    ollama_text_model: str,
-    ollama_text_model_api_base: str | None = None,
+    gateway_url: str = "http://127.0.0.1:4096",
     max_retries: int = _MAX_RETRIES,
     session_dir: Path | None = None,
     hard_type_gender: bool = False,
@@ -524,7 +469,7 @@ def select_features(
     """Call a text LLM per-field to select visual features for the avatar.
 
     Each feature is requested in its own small LLM call so local models
-    can handle it reliably.  A warmup call preloads the model first.
+    can handle it reliably.  A warmup call health-checks the gateway first.
 
     If *session_dir* is provided, the assembled persona is written to
     ``session_dir/persona.yml`` for auditability.
@@ -537,16 +482,12 @@ def select_features(
     options = _load_user_prompt_options(demographics.get("gender"), hard_type=hard_type_gender)
 
     llm_kwargs: dict = {
-        "ollama_text_model": ollama_text_model,
-        "ollama_text_model_api_base": ollama_text_model_api_base,
+        "gateway_url": gateway_url,
         "max_retries": max_retries,
     }
 
-    # Warmup: preload the model into memory with a trivial request.
-    _warmup_model(
-        ollama_text_model=ollama_text_model,
-        ollama_text_model_api_base=ollama_text_model_api_base,
-    )
+    # Warmup: health-check the gateway with a trivial request.
+    _warmup_model(gateway_url=gateway_url)
 
     features: dict = {}
 

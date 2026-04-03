@@ -68,7 +68,7 @@ def _pool_by_gender(option_dict: dict | list, gender: str, *, hard_type: bool = 
     return result
 
 
-_AGE_GROUPS: list[tuple[int, int]] = [tuple(pair) for pair in SETTINGS["age_groups"]]
+_AGE_GROUPS: list[tuple[int, int]] = [tuple(pair) for pair in SETTINGS["age_groups"].values()]
 
 _DEFAULT_STYLE: str = SETTINGS["default_style"]
 

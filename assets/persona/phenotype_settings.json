@@ -1,15 +1,22 @@
 {
-  "default_size": 100,
-  "default_style": "flat-vector-2D",
-  "frame_fg_color": "#FFFFFF",
-  "wcag_min_contrast": 3.5,
-  "default_text_gen_model": "ollama/phi3:latest",
-  "default_image_gen_model": "ollama/x/flux2-klein:4b",
-  "default_visual_desc_model": "cli/claude-sonnet-4-6",
-  "max_retries": 10,
-  "timeout": 30,
-
-  "_comment_step_a": "=== Step A: Randomise Person (random pick) ===",
+  "__comment_step_a": "=== Step A: Randomise Phenotype (random pick) ===",
+  "_comment_genders": "--- gender may control other selections which are gender-based ---",
+  "genders": ["male", "female", "non-binary"],
+  "_comment_age_grp": "--- age or age_group may control other selections which are age-based ---",
+  "age_groups": {
+    "baby": [0, 1],
+    "toddler": [2, 5],
+    "kid": [6, 11],
+    "youth": [12, 17],
+    "young": [18, 26],
+    "adult": [27, 36],
+    "mature": [37, 46],
+    "middle_aged": [47, 56],
+    "pre_senior": [57, 65],
+    "senior": [66, 75],
+    "elder": [76, 85],
+    "long_lived": [86, 110]
+  },
   "palette": [
     "#F80606", "#C91616", "#9B2121", "#9B3521", "#F82E06",
     "#C93416", "#B95727", "#8D4E2F", "#E55D19", "#954C03",
@@ -172,10 +179,6 @@
     "Ivanov", "Smirnov", "Popov", "Sokolov", "Lebedev", "Kozlov",
     "Nowak", "Wójcik", "Kovalenko", "Shevchenko", "Horváth", "Szabó"
   ],
-  "genders": ["male", "female", "non-binary"],
-  "age_min": 30,
-  "age_max": 70,
-  "age_groups": [[30, 36], [37, 44], [45, 54], [55, 70]],
   "eye_shapes": [
     "almond", "round", "hooded", "monolid", "deep-set",
     "upturned", "downturned", "wide-set", "manga",
@@ -214,87 +217,5 @@
   },
   "brows_colors": [
     "#0A0A0A", "#3B2314", "#6B4226", "#8B6842", "#A08050", "#8C8C8C"
-  ],
-
-  "_comment_step_b": "=== Step B: Generate CV (LLM text model) ===",
-  "step_b": {
-    "temperature": 0.7,
-    "max_tokens": 512,
-    "schema": {
-      "education": ["<degree or certification>"],
-      "experience": ["<Job Title, Employer>"],
-      "traits": ["<personality trait>"]
-    }
-  },
-
-  "_comment_step_c": "=== Step C: Presentation (LLM text model) ===",
-  "_comment_step_c_note": "LLM selects HAIR_STYLE, CLOTHING, ACCESSORIES only. All phenotype fields are pre-seeded from Step A.",
-  "step_c": {
-    "temperature": 0.5,
-    "max_tokens": 256,
-    "schema": {
-      "HAIR_STYLE": "<style name>",
-      "CLOTHING": {"<garment_piece>": "#HEX"},
-      "ACCESSORIES": {"<accessory_name>": "<visual description>"}
-    }
-  },
-  "hair_styles": {
-    "male": [
-      "bald", "bald on top with close-cropped sides", "buzz cut",
-      "fade cut", "tapered sides", "textured quiff", "pompadour"
-    ],
-    "female": ["coiled updo", "french twist", "chignon", "space buns", "two braids"],
-    "neutral": [
-      "short cropped", "side-parted short", "swept back",
-      "medium layered", "medium tousled", "medium side-swept",
-      "shoulder-length straight", "shoulder-length wavy", "shoulder-length curtained",
-      "long straight", "long wavy", "long layered", "long curly",
-      "tight curls", "loose curls", "coily natural",
-      "afro", "afro puff", "twist-out",
-      "low bun", "high bun", "top knot", "half-up half-down",
-      "pixie cut", "textured pixie",
-      "bob straight", "bob wavy", "inverted bob", "blunt bob",
-      "braided", "cornrows", "locs", "locs updo",
-      "slicked back", "undercut", "ponytail sleek", "ponytail curly"
-    ]
-  },
-  "clothing_options": {
-    "male": [],
-    "female": ["wrap blouse", "silk blouse", "linen blouse", "asymmetric draped top"],
-    "neutral": [
-      "structured blazer over crew-neck", "blazer with collared shirt", "blazer over blouse",
-      "blazer with button-down", "open blazer over turtleneck",
-      "button-down shirt", "oxford shirt with open collar", "chambray shirt",
-      "fitted turtleneck", "oversized turtleneck",
-      "cashmere crew-neck", "V-neck sweater over collared shirt",
-      "knit cardigan over tee", "open cardigan over fitted top",
-      "tailored vest over rolled-sleeve shirt", "utility vest over shirt",
-      "mandarin-collar shirt", "mandarin-collar jacket",
-      "shawl-collar cardigan", "henley shirt", "polo shirt",
-      "lab coat over collared shirt", "minimalist crew-neck",
-      "denim jacket over tee", "bomber jacket over crew-neck",
-      "collarless structured jacket"
-    ]
-  },
-  "accessories_options": {
-    "male": ["tie", "bow tie", "corporate beard", "chevron mustache", "french beard"],
-    "female": [
-      "pair of earrings", "stud earrings", "hoop earrings",
-      "pendant necklace", "layered necklaces", "statement necklace"
-    ],
-    "neutral": [
-      "glasses", "tinted glasses", "patterned scarf", "silk scarf",
-      "discreet lapel pin", "enamel pin",
-      "hair decoration", "hair clip", "headband",
-      "hearing aid", "subtle face jewel"
-    ]
-  },
-
-  "_comment_step_c_persona": "=== Step C → E/F: Avatar Persona (marshalled dict) ===",
-  "_comment_step_c_persona_note": "Structural metadata for _marshal_avatar_persona. Determines which appearance fields are multi-hex dicts vs dict-passthrough vs plain string.",
-  "persona_hex_fields": {
-    "HAIR_COLOR": ["hex_base", "hex_shadow"],
-    "EYE_COLOR": ["hex_iris", "hex_pupil"]
-  },
-  "persona_dict_fields": ["CLOTHING", "ACCESSORIES"]
+  ]
 }
