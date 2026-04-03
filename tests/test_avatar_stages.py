@@ -523,8 +523,7 @@ def test_create_face_avatar_neutral_failure_returns_null_map():
                 ["neutral", "happy", "sad"],
                 Path(tmp),
                 "test-slug",
-                ollama_image_model="test-model",
-                ollama_text_model="test-text-model",
+                gateway_url="http://test",
             )
 
     assert expr_map == {"neutral": None, "happy": None, "sad": None}
@@ -563,8 +562,7 @@ def test_create_face_avatar_success_returns_filenames():
                 ["neutral", "happy"],
                 Path(tmp),
                 "test-slug",
-                ollama_image_model="test-model",
-                ollama_text_model="test-text-model",
+                gateway_url="http://test",
             )
 
     assert expr_map["neutral"] == "test-slug-neutral.png"
@@ -611,8 +609,7 @@ def test_create_face_avatar_expression_failure_sets_none():
                 ["neutral", "happy"],
                 Path(tmp),
                 "test-slug",
-                ollama_image_model="test-model",
-                ollama_text_model="test-text-model",
+                gateway_url="http://test",
             )
 
     assert expr_map["neutral"] == "test-slug-neutral.png"
@@ -652,8 +649,7 @@ def test_create_face_avatar_feature_failure_does_not_abort():
                 ["neutral"],
                 Path(tmp),
                 "test-slug",
-                ollama_image_model="test-model",
-                ollama_text_model="test-text-model",
+                gateway_url="http://test",
             )
 
     assert expr_map["neutral"] == "test-slug-neutral.png"
@@ -692,8 +688,7 @@ def test_create_face_avatar_returns_demographics():
                 ["neutral"],
                 Path(tmp),
                 "slug",
-                ollama_image_model="m",
-                ollama_text_model="t",
+                gateway_url="http://test",
             )
 
     assert demographics == expected_demo

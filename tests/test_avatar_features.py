@@ -226,7 +226,7 @@ def test_build_feature_prompt_substitution():
 
 
 # ---------------------------------------------------------------------------
-# _select_features (mocked litellm — per-field call pattern)
+# _select_features (mocked GatewayClient — per-field call pattern)
 # ---------------------------------------------------------------------------
 
 # Per-field responses — NAME, colors, and shape fields are now pre-seeded from
@@ -238,30 +238,33 @@ _PER_FIELD_RESPONSES = [
 ]
 
 
-def _make_llm_response(content: str):
-    """Helper: build a mock litellm response with given content."""
-    resp = MagicMock()
-    resp.choices = [MagicMock()]
-    resp.choices[0].message.content = content
-    return resp
+def _make_gateway_mock(responses: list):
+    """Helper: build a mock GatewayClient where text_gen returns plain strings.
+
+    Returns (mock_class, mock_instance). Patch the module-level GatewayClient
+    with mock_class; assertions go on mock_instance.text_gen.
+    """
+    mock_instance = MagicMock()
+    mock_instance.text_gen.side_effect = responses
+    mock_class = MagicMock(return_value=mock_instance)
+    return mock_class, mock_instance
 
 
 def _make_per_field_side_effect():
-    """Build a side_effect list: 1 warmup + 3 per-field responses."""
-    warmup = _make_llm_response("ok")
-    return [warmup] + [_make_llm_response(r) for r in _PER_FIELD_RESPONSES]
+    """Build (mock_class, mock_instance): 1 warmup + 3 per-field responses."""
+    responses = ["ok"] + _PER_FIELD_RESPONSES
+    return _make_gateway_mock(responses)
 
 
 def test_select_features_success():
     """Step B should parse per-field LLM responses into the feature dict."""
-    side_effect = _make_per_field_side_effect()
+    mock_class, mock_instance = _make_per_field_side_effect()
 
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", side_effect=side_effect) as mock_completion:
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
-            ollama_text_model="ollama/llama3.1",
-            ollama_text_model_api_base="http://localhost:11434",
+            gateway_url="http://test",
         )
 
     assert result is not None
@@ -282,97 +285,88 @@ def test_select_features_success():
     assert result["ACCESSORIES"] == {"glasses": "thin-frame rectangular"}
 
     # 1 warmup + 3 field calls = 4 total (NAME + colors + shapes pre-seeded from §A)
-    assert mock_completion.call_count == 4
-
-    # Verify model and api_base on the first field call (index 1 = HAIR_STYLE, after warmup)
-    call_kwargs = mock_completion.call_args_list[1][1]
-    assert call_kwargs["model"] == "ollama/llama3.1"
-    assert call_kwargs["api_base"] == "http://localhost:11434"
-    assert call_kwargs["temperature"] == 0.5
-    assert call_kwargs["timeout"] == 30
+    assert mock_instance.text_gen.call_count == 4
 
 
 def test_select_features_retry_on_empty_response():
     """Step C should retry a field when the LLM returns empty content."""
-    warmup = _make_llm_response("ok")
-    empty_resp = _make_llm_response("")
-    good_hair = _make_llm_response("side-parted short")
-    # Empty first, then good on retry for HAIR_STYLE, then rest of fields normal
-    rest = [_make_llm_response(r) for r in _PER_FIELD_RESPONSES[1:]]
+    # warmup "ok", empty first attempt for HAIR_STYLE, good retry, then rest of fields
+    responses = ["ok", "", "side-parted short"] + _PER_FIELD_RESPONSES[1:]
+    mock_class, mock_instance = _make_gateway_mock(responses)
 
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", side_effect=[warmup, empty_resp, good_hair] + rest) as mock_completion:
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
-            ollama_text_model="ollama/llama3.1",
+            gateway_url="http://test",
         )
 
     assert result["HAIR_STYLE"] == "side-parted short"
     # 1 warmup + 1 empty + 1 good HAIR_STYLE + 2 other fields = 5
-    assert mock_completion.call_count == 5
+    assert mock_instance.text_gen.call_count == 5
 
 
 def test_select_features_exhausts_retries():
     """Step C should raise after max_retries of empty responses for a field."""
-    warmup = _make_llm_response("ok")
-    empty = _make_llm_response("")
+    responses = ["ok"] + [""] * 10
+    mock_class, mock_instance = _make_gateway_mock(responses)
 
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", side_effect=[warmup] + [empty] * 10):
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         with pytest.raises(ValueError, match="Failed to select HAIR_STYLE"):
             _select_features(
                 SAMPLE_DEMOGRAPHICS,
                 SAMPLE_ADVISOR,
-                ollama_text_model="ollama/llama3.1",
+                gateway_url="http://test",
                 max_retries=10,
             )
 
 
 def test_select_features_llm_error_raises():
     """Step B should raise when the LLM call itself fails (warmup succeeds, first field fails)."""
-    warmup = _make_llm_response("ok")
+    mock_class, mock_instance = _make_gateway_mock(["ok", RuntimeError("connection refused")])
 
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", side_effect=[warmup, RuntimeError("connection refused")]):
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         with pytest.raises(RuntimeError, match="connection refused"):
             _select_features(
                 SAMPLE_DEMOGRAPHICS,
                 SAMPLE_ADVISOR,
-                ollama_text_model="ollama/llama3.1",
+                gateway_url="http://test",
                 max_retries=1,
             )
 
 
 def test_select_features_no_api_base():
-    """Step B should not set api_base when ollama_text_model_api_base is None."""
-    side_effect = _make_per_field_side_effect()
+    """Verify the call succeeds and returns results (api_base concept no longer relevant)."""
+    mock_class, mock_instance = _make_per_field_side_effect()
 
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", side_effect=side_effect) as mock_completion:
-        _select_features(
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
+        result = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
-            ollama_text_model="ollama/llama3.1",
-            ollama_text_model_api_base=None,
+            gateway_url="http://test",
         )
 
-    # Check a field call (not warmup) has no api_base
-    call_kwargs = mock_completion.call_args_list[1][1]
-    assert "api_base" not in call_kwargs
+    assert result is not None
+    assert result["HAIR_STYLE"] == "side-parted short"
 
 
 def test_select_features_context_accumulates():
     """Later field prompts should include the marshalled persona from earlier picks."""
-    side_effect = _make_per_field_side_effect()
+    mock_class, mock_instance = _make_per_field_side_effect()
 
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", side_effect=side_effect) as mock_completion:
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
-            ollama_text_model="ollama/llama3.1",
+            gateway_url="http://test",
         )
 
     # The HAIR_STYLE field call (index 1, after warmup) should contain the
     # marshalled persona built from the pre-seeded §A demographics.
-    hair_style_call = mock_completion.call_args_list[1]
-    user_msg = hair_style_call[1]["messages"][1]["content"]
+    # mock_instance.text_gen.call_args_list[1][0][0] gives the messages list
+    # from the second call; messages[1]["content"] is the user message.
+    messages = mock_instance.text_gen.call_args_list[1][0][0]
+    user_msg = messages[1]["content"]
     assert "Maya Chen" in user_msg
     assert "skin_tone" in user_msg
     assert "Current persona so far" in user_msg
@@ -380,19 +374,14 @@ def test_select_features_context_accumulates():
 
 def test_warmup_failure_does_not_block():
     """Warmup failure should not prevent feature selection."""
-    field_responses = [_make_llm_response(r) for r in _PER_FIELD_RESPONSES]
+    responses = [RuntimeError("warmup failed")] + _PER_FIELD_RESPONSES
+    mock_class, mock_instance = _make_gateway_mock(responses)
 
-    def warmup_fails_then_fields(*args, **kwargs):
-        # Can't use side_effect easily here, so use a different approach
-        pass
-
-    side_effect = [RuntimeError("warmup failed")] + field_responses
-
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", side_effect=side_effect):
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
-            ollama_text_model="ollama/llama3.1",
+            gateway_url="http://test",
         )
 
     assert result["NAME"] == "Maya Chen"
@@ -406,85 +395,91 @@ def test_warmup_failure_does_not_block():
 
 def test_select_feature_field_simple():
     """A simple field should return a matching option value."""
-    resp = _make_llm_response("side-parted short")
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock(["side-parted short"])
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
             "HAIR_STYLE", "Gender: female\nAge: 35\nAppearance: olive\nRole: Advisor",
             "system prompt", ["short cropped", "side-parted short", "swept back"], {},
             SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert result == "side-parted short"
 
 
 def test_select_feature_field_name():
     """NAME field should strip quotes and return the name."""
-    resp = _make_llm_response('"Elena Vasquez"')
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock(['"Elena Vasquez"'])
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
             "NAME", "profile", "system", None, {},
             SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert result == "Elena Vasquez"
 
 
 def test_select_feature_field_clothing_yaml():
     """CLOTHING should parse YAML dict response."""
-    resp = _make_llm_response('blazer: "#3C3C3C"\nshirt: "#A8C4E0"')
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock(['blazer: "#3C3C3C"\nshirt: "#A8C4E0"'])
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
             "CLOTHING", "profile", "system", ["blazer", "shirt"], {},
             SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert result == {"blazer": "#3C3C3C", "shirt": "#A8C4E0"}
 
 
 def test_select_feature_field_accessories_none():
     """ACCESSORIES with 'none' response should return empty dict."""
-    resp = _make_llm_response("none")
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock(["none"])
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
             "ACCESSORIES", "profile", "system", ["glasses", "earring"], {},
             SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert result == {}
 
 
 def test_select_feature_field_accessories_yaml_list():
     """ACCESSORIES returned as YAML list items should be merged into a dict."""
-    resp = _make_llm_response("- glasses: thin-frame rectangular\n- earring: small gold stud")
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock(
+        ["- glasses: thin-frame rectangular\n- earring: small gold stud"]
+    )
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
             "ACCESSORIES", "profile", "system", ["glasses", "earring"], {},
             SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert result == {"glasses": "thin-frame rectangular", "earring": "small gold stud"}
 
 
 def test_select_feature_field_clothing_trailing_garbage():
     """CLOTHING response with trailing non-YAML text should still parse."""
-    resp = _make_llm_response('blazer: "#3C3C3C"\nshirt: "#A8C4E0"\n\nyou are: a senior graphics designer')
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock(
+        ['blazer: "#3C3C3C"\nshirt: "#A8C4E0"\n\nyou are: a senior graphics designer']
+    )
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
             "CLOTHING", "profile", "system", ["blazer", "shirt"], {},
             SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert result == {"blazer": "#3C3C3C", "shirt": "#A8C4E0"}
 
 
 def test_select_feature_field_filters_none_values():
     """ACCESSORIES with 'none' values should be filtered out."""
-    resp = _make_llm_response("glasses: thin-frame rectangular\nearring: none")
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock(
+        ["glasses: thin-frame rectangular\nearring: none"]
+    )
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
             "ACCESSORIES", "profile", "system", ["glasses", "earring"], {},
             SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert result == {"glasses": "thin-frame rectangular"}
     assert "earring" not in result
@@ -500,13 +495,13 @@ def test_select_feature_field_filters_none_values():
 
 def test_pipeline_features_to_avatar_persona():
     """Full pipeline: mocked per-field LLM → features → avatar_persona with name + appearance."""
-    side_effect = _make_per_field_side_effect()
+    mock_class, mock_instance = _make_per_field_side_effect()
 
-    with patch("avatar_studio.pipeline.step_c_select_features.litellm.completion", side_effect=side_effect):
+    with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         features = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
-            ollama_text_model="ollama/llama3.1:8b",
+            gateway_url="http://test",
         )
 
     assert features is not None, "features must not be None"
@@ -560,12 +555,12 @@ traits:
 
 def test_generate_advisor_profile_success():
     """Profile generation should parse YAML response with education/experience/traits."""
-    resp = _make_llm_response(_PROFILE_YAML_RESPONSE)
-    with patch("avatar_studio.pipeline.step_b_generate_cv.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock([_PROFILE_YAML_RESPONSE])
+    with patch("avatar_studio.pipeline.step_b_generate_cv.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Financial Advisor",
             SAMPLE_DEMOGRAPHICS,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
 
     assert result["education"] == ["MBA Finance", "CFA Level III"]
@@ -575,12 +570,12 @@ def test_generate_advisor_profile_success():
 
 def test_generate_advisor_profile_with_code_fences():
     """Profile generation should strip code fences."""
-    resp = _make_llm_response(f"```yaml\n{_PROFILE_YAML_RESPONSE}```")
-    with patch("avatar_studio.pipeline.step_b_generate_cv.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock([f"```yaml\n{_PROFILE_YAML_RESPONSE}```"])
+    with patch("avatar_studio.pipeline.step_b_generate_cv.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Advisor",
             SAMPLE_DEMOGRAPHICS,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert len(result["education"]) == 2
     assert len(result["traits"]) == 3
@@ -603,12 +598,12 @@ traits:
   - precise
   - empathetic
 """
-    resp = _make_llm_response(yaml_resp)
-    with patch("avatar_studio.pipeline.step_b_generate_cv.litellm.completion", return_value=resp):
+    mock_class, mock_instance = _make_gateway_mock([yaml_resp])
+    with patch("avatar_studio.pipeline.step_b_generate_cv.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Advisor",
             SAMPLE_DEMOGRAPHICS,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert len(result["education"]) == 2
     assert len(result["experience"]) == 3  # capped at 3
@@ -617,42 +612,42 @@ traits:
 
 def test_generate_advisor_profile_retry_on_empty():
     """Profile generation should retry on empty response."""
-    empty = _make_llm_response("")
-    good = _make_llm_response(_PROFILE_YAML_RESPONSE)
-    with patch("avatar_studio.pipeline.step_b_generate_cv.litellm.completion", side_effect=[empty, good]) as mock:
+    mock_class, mock_instance = _make_gateway_mock(["", _PROFILE_YAML_RESPONSE])
+    with patch("avatar_studio.pipeline.step_b_generate_cv.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Advisor",
             SAMPLE_DEMOGRAPHICS,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
     assert result["education"] == ["MBA Finance", "CFA Level III"]
-    assert mock.call_count == 2
+    assert mock_instance.text_gen.call_count == 2
 
 
 def test_generate_advisor_profile_exhausts_retries():
     """Profile generation should raise after max retries."""
-    empty = _make_llm_response("")
-    with patch("avatar_studio.pipeline.step_b_generate_cv.litellm.completion", return_value=empty):
+    mock_class, mock_instance = _make_gateway_mock([""] * 10)
+    with patch("avatar_studio.pipeline.step_b_generate_cv.GatewayClient", mock_class):
         with pytest.raises(ValueError, match="Failed to generate advisor profile"):
             _generate_advisor_profile(
                 "Advisor",
                 SAMPLE_DEMOGRAPHICS,
-                ollama_text_model="ollama/test",
+                gateway_url="http://test",
                 max_retries=3,
             )
 
 
 def test_generate_advisor_profile_missing_fields_retries():
     """Profile generation retries when required fields are missing."""
-    missing = _make_llm_response("education:\n  - MBA\n")
-    good = _make_llm_response(_PROFILE_YAML_RESPONSE)
-    with patch("avatar_studio.pipeline.step_b_generate_cv.litellm.completion", side_effect=[missing, good]) as mock:
+    mock_class, mock_instance = _make_gateway_mock(
+        ["education:\n  - MBA\n", _PROFILE_YAML_RESPONSE]
+    )
+    with patch("avatar_studio.pipeline.step_b_generate_cv.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Advisor",
             SAMPLE_DEMOGRAPHICS,
-            ollama_text_model="ollama/test",
+            gateway_url="http://test",
         )
-    assert mock.call_count == 2
+    assert mock_instance.text_gen.call_count == 2
     assert len(result["traits"]) == 3
 
 
