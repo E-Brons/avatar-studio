@@ -37,7 +37,9 @@ import argparse
 import logging
 import random as _random
 import sys
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import yaml
@@ -99,6 +101,8 @@ def _flush_litellm_pool() -> None:
 _DEFAULT_SEED = None  # None = fully random seeds per run
 _DEFAULT_RUNS = 1
 _WATCH_POLL_SECONDS = 2
+_GATEWAY_MAX_PARALLEL = 3  # matches llm_gateway/settings.json parallel.ollama
+_print_lock = threading.Lock()
 
 
 # ---------------------------------------------------------------------------
@@ -139,6 +143,7 @@ def _generate_for_expression(
     gateway_url: str,
     width: int,
     height: int,
+    optimize: str = "normal",
     out_path: Path,
     session_dir: Path | None = None,
     avatar: dict | None = None,
@@ -176,6 +181,7 @@ def _generate_for_expression(
         gateway_url=gateway_url,
         width=width,
         height=height,
+        optimize=optimize,
         seed=seed,
         out_path=out_path,
         session_dir=artifact_dir,
@@ -384,6 +390,7 @@ def _run_tuning_pass(
     seed: int | None,
     width: int,
     height: int,
+    optimize: str = "normal",
     tmp_dir: Path,
     gender_personas: dict[str, dict] | None = None,
     hard_type_gender: bool = False,
@@ -439,39 +446,55 @@ def _run_tuning_pass(
                     for run_idx in range(runs)
                 ]
 
-            for iter_idx, (gender, run_seed, avatar) in enumerate(iterations):
-                session_subdir = tmp_dir / f"{expr_id}_{style_id}_{gender}"
-                session_subdir.mkdir(parents=True, exist_ok=True)
-                out_path = tmp_dir / f"{expr_id}_{style_id}_{gender}.png"
-
-                try:
-                    logger.info(
-                        "[ExprTuner] START — expr=%s, style=%s, gender=%s (seed=%s)",
-                        expr_id,
-                        style_id,
-                        gender,
-                        run_seed,
-                    )
-                    print(f"  generating {gender} / {style_id}…", end=" ", flush=True)
-                    img_bytes, _ = _generate_for_expression(
-                        expr_id,
-                        style,
-                        gender,
-                        seed=run_seed,
-                        gateway_url=gateway_url,
-                        width=width,
-                        height=height,
-                        out_path=out_path,
-                        session_dir=session_subdir,
-                        avatar=avatar,
-                        hard_type_gender=hard_type_gender,
-                    )
+            # ── Parallel image generation ────────────────────────────────
+            # Submit all iterations to the pool (capped at gateway parallel limit).
+            # Results are collected ordered by iter_idx so classification below
+            # is unaffected.
+            def _gen_one(args):
+                _iter_idx, _gender, _run_seed, _avatar = args
+                _style_id = style["id"]
+                _session_subdir = tmp_dir / f"{expr_id}_{_style_id}_{_gender}_{_run_seed}"
+                _session_subdir.mkdir(parents=True, exist_ok=True)
+                _out_path = tmp_dir / f"{expr_id}_{_style_id}_{_gender}_{_run_seed}.png"
+                logger.info(
+                    "[ExprTuner] START — expr=%s, style=%s, gender=%s (seed=%s)",
+                    expr_id, _style_id, _gender, _run_seed,
+                )
+                with _print_lock:
+                    print(f"  generating {_gender} / {_style_id}…", end=" ", flush=True)
+                _img_bytes, _ = _generate_for_expression(
+                    expr_id, style, _gender, seed=_run_seed,
+                    gateway_url=gateway_url, width=width, height=height,
+                    optimize=optimize,
+                    out_path=_out_path, session_dir=_session_subdir,
+                    avatar=_avatar, hard_type_gender=hard_type_gender,
+                )
+                logger.info("[ExprTuner] DONE  — %s", _out_path)
+                with _print_lock:
                     print("done")
-                    logger.info("[ExprTuner] DONE  — %s", out_path)
-                except Exception as exc:
-                    print(f"FAILED — {exc}", file=sys.stderr)
+                return _iter_idx, _gender, _run_seed, _out_path, _img_bytes
+
+            gen_results: list[tuple | Exception] = [None] * len(iterations)
+            with ThreadPoolExecutor(max_workers=_GATEWAY_MAX_PARALLEL) as pool:
+                future_to_idx = {
+                    pool.submit(_gen_one, (i, g, s, a)): i
+                    for i, (g, s, a) in enumerate(iterations)
+                }
+                for fut in as_completed(future_to_idx):
+                    i = future_to_idx[fut]
+                    try:
+                        gen_results[i] = fut.result()
+                    except Exception as exc:
+                        gen_results[i] = exc
+
+            # ── Process results (classification stays sequential) ─────────
+            for iter_idx, result in enumerate(gen_results):
+                if isinstance(result, Exception):
+                    print(f"FAILED — {result}", file=sys.stderr)
                     total += 1
                     continue
+
+                _, gender, run_seed, out_path, img_bytes = result
 
                 if not refine:
                     total += 1
@@ -641,6 +664,12 @@ def main() -> None:
         "--height", type=int, default=256, help="Image height in pixels (default: 256)"
     )
     parser.add_argument(
+        "--optimize",
+        choices=["quality", "normal", "fast"],
+        default="normal",
+        help="Generation quality/speed trade-off (default: normal)",
+    )
+    parser.add_argument(
         "--tmp-dir",
         default=None,
         metavar="DIR",
@@ -770,6 +799,7 @@ def main() -> None:
             seed=args.seed,
             width=args.width,
             height=args.height,
+            optimize=args.optimize,
             gender_personas=gender_personas,
             tmp_dir=tmp_dir,
             hard_type_gender=args.hard_type_gender,
