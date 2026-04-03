@@ -1,6 +1,6 @@
 # Avatar Studio — CI/CD Plan
 
-**Status**: Active. `.github/workflows/ci.yml` is implemented.
+**Status**: Active
 
 ---
 
@@ -69,12 +69,12 @@ The `Main Branch Protection` ruleset (`.github/rulesets/`) requires:
 
 ## Quality Gates
 
-- All 121 unit tests pass
+- All unit tests pass
 - No import errors (package installs cleanly)
 
 ---
 
-## CD (future)
+## CD
 
 - Tag `ver-X.Y.Z` on `main` → publish as `avatar-studio` to GitHub Packages or private registry
 - Dashboard depends on it via:

@@ -48,7 +48,7 @@ These call the live LLM Gateway and run real LLM calls through the full pipeline
 | `conftest.py` | `gateway` session fixture: connects to `OLLAMA_URL` (default `http://127.0.0.1:4096`), auto-skips all integration tests if unreachable |
 | `test_avatar_integration.py` | Gateway health check, Step B live (profile has education/experience/traits), Step C live (features non-empty, HAIR_STYLE and CLOTHING present), full A→E pipeline (valid PNG output, persona has all required sections), `test_pipeline_categorizer_score` (categorizer ≥ 75% on seed=21), `test_circle_frame_categorizer` (framed portrait ≥ 65% on seed=4) |
 
-**The categorizer tests are the primary quality gate.** They generate a real portrait via the LLM Gateway and score it against the persona using `classify_persona`. These tests are the ones that currently fail when prompt quality degrades — see `docs/plans/2026-04-02-image-prompt-improvement.md`.
+**The categorizer tests are the primary quality gate.** They generate a real portrait via the LLM Gateway and score it against the persona using `classify_persona`. These tests fail when prompt quality degrades — see `docs/plans/2026-04-02-image-prompt-improvement.md`.
 
 ---
 

@@ -386,7 +386,6 @@ organised by persona name and run timestamp:
 
 - The caller cancels in-flight requests by aborting the HTTP connection
 - The backend has no cancel API — if a gateway call is in progress, it runs to completion server-side but the response is discarded
-- Future improvement: backend could support a cancel endpoint
 
 ---
 

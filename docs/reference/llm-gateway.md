@@ -17,8 +17,7 @@
 7. [Implementation Details](#7-implementation-details)
 8. [Architecture Call-Flow Diagram](#8-architecture-call-flow-diagram)
 9. [Configuration and Selection](#9-configuration-and-selection)
-10. [Current State vs. Target State](#10-current-state-vs-target-state)
-11. [Related Documents](#11-related-documents)
+10. [Related Documents](#10-related-documents)
 
 ---
 
@@ -26,7 +25,7 @@
 
 Avatar studio uses LLMs for 6 distinct task categories. Each category has its own input/output contract, preferred model characteristics, and tuning knobs.
 
-Three execution mechanisms exist (or are planned) for reaching those models:
+Three execution mechanisms exist for reaching those models:
 **Local** (Ollama REST API), **API-Key** (LiteLLM Python library), and **CLI** (Claude Code
 subprocess).
 
@@ -42,14 +41,14 @@ per use-case.
 
 ## 2. The 6 Interface Types
 
-| # | Type | Task character | Current usage |
-|---|------|---------------|---------------|
-| 1 | **General** | Open-ended text I/O — chat, summarisation, free-form responses | Not yet used in avatar-studio (reserved for future adviser integrations) |
-| 2 | **Text-gen** | Structured text generation — output must match a schema (YAML, JSON, or template) | Steps B (profile YAML) and C (presentation YAML) in avatar pipeline |
-| 3 | **Reasoning** | Multi-step analytical thinking — chains of logic, comparison, decision-making | Not yet used |
-| 4 | **Image-gen** | Prompt → PNG — diffusion/generative image models | Steps E (canonical portrait) and F (expression variants) |
-| 5 | **Image Inspector** | PNG → text — vision models that analyse, classify, or describe an image | `classify_style`, `classify_persona`, `classify_expression` in tuning system |
-| 6 | **Viz-gen** | Context + goal → structured JSON spec consumed by a fixed plotting call | Not applicable to avatar-studio |
+| # | Type | Task character |
+|---|------|---------------|
+| 1 | **General** | Open-ended text I/O — chat, summarisation, free-form responses |
+| 2 | **Text-gen** | Structured text generation — output must match a schema (YAML, JSON, or template) |
+| 3 | **Reasoning** | Multi-step analytical thinking — chains of logic, comparison, decision-making |
+| 4 | **Image-gen** | Prompt → PNG — diffusion/generative image models |
+| 5 | **Image Inspector** | PNG → text — vision models that analyse, classify, or describe an image |
+| 6 | **Viz-gen** | Context + goal → structured JSON spec consumed by a fixed plotting call |
 
 Each type defines a fixed **contract** — the shapes of inputs and outputs that callers depend
 on. Implementations must satisfy the contract; callers never touch implementation internals.
@@ -421,9 +420,6 @@ text = response.json()["response"]
 img_b64 = response.json()["images"][0]
 ```
 
-**Current files**: `step_ef_generate_image.py` (Image-gen),
-`classify_style.py` (Image Inspector via REST when model name starts with `"ollama"`).
-
 ---
 
 ### 8.2 API-Key — LiteLLM (Python Library)
@@ -455,10 +451,6 @@ text = response.choices[0].message.content
 # Image
 img_b64 = response.data[0].b64_json
 ```
-
-**Current files**: `step_b_generate_cv.py`, `step_c_select_features.py`,
-`classify_style.py` (non-Ollama path), `classify_persona.py`,
-`classify_expression.py`.
 
 ---
 
@@ -572,9 +564,6 @@ duration_ms = data.get("duration_ms", 0)
 cost_usd = data.get("cost_usd")
 ```
 
-**Current files using this pattern**: Not yet implemented — planned for all CLI
-implementations (General, Text-gen, Reasoning, Image Inspector, Viz-gen).
-
 ---
 
 ## 8. Architecture Call-Flow Diagram
@@ -685,22 +674,7 @@ wherever the abstract type is required. Application code only depends on the abs
 
 ---
 
-## 10. Current State vs. Target State
-
-| Type | Current state | Target state |
-|------|--------------|--------------|
-| **General** | Not used | Reserved for future parent-app integrations |
-| **Text-gen** | Direct `litellm.completion()` calls in `step_b_generate_cv.py`, `step_c_select_features.py` | `TextGenLLM` injected into each step |
-| **Reasoning** | Not used | Not planned for avatar-studio currently |
-| **Image-gen** | Direct `requests.post(gateway_url/api/generate)` in `step_ef_generate_image.py` | `ImageGenLLM` injected into steps E/F |
-| **Image Inspector** | `_call_vision_model()` helper duplicated across classifier utilities (`classify_style.py`, `classify_persona.py`, `classify_expression.py`) | `ImageInspectorLLM` injected into each classifier |
-| **Viz-gen** | Not applicable to avatar-studio | N/A |
-| Configuration | Model names in `assets/persona/cv_settings.json` and `presentation_settings.json`, passed as function arguments | Central `llm:` config block, factory at startup |
-| CLI implementation | Not implemented | `ClaudeCLI*` classes using `subprocess.run` |
-
----
-
-## 11. Related Documents
+## 10. Related Documents
 
 | Document | Relationship |
 |----------|-------------|

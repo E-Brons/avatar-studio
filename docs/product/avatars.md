@@ -5,7 +5,7 @@
 1. [Avatars Essence](#1-avatars-essence)
 2. [Style](#2-style)
    - [2.1 Baseline Characteristics](#21-baseline-characteristics)
-   - [2.2 Active Styles](#22-active-styles)
+   - [2.2 Styles](#22-styles)
    - [2.3 Style Comparison Matrix](#23-style-comparison-matrix)
 3. [Avatar Personality](#3-avatar-personality)
    - [3.1 Shared Personality Traits](#31-shared-personality-traits)
@@ -55,9 +55,9 @@ Added programmatically by Step G (not in the style `system_prompt`).
 
 ---
 
-### 2.2 Active Styles
+### 2.2 Styles
 
-Six styles have detailed descriptions below. The full set of ten styles (plus `random`) is defined in `assets/styles/styles.yml` — new styles added there become active automatically.
+Detailed descriptions for five styles are below. The full set (plus `random`) is defined in `assets/styles/styles.yml` — new styles added there become active automatically.
 
 #### 3D Animation (`studio_3d`)
 > *High-quality 3D animated feature film characters*
@@ -133,7 +133,7 @@ Smooth 3D render with a matte clay/plastic finish, simplified large-scale featur
 
 ### 2.3 Style Comparison Matrix
 
-The five active styles form two stylistic pairs plus one photorealistic anchor.
+These styles form two stylistic pairs plus one photorealistic anchor.
 The pairs share the same differentiating axes — finish, tonal range, detail level, and expression intensity:
 
 | | **lineart** | **korean** | **clay** | **studio_3d** | **photorealistic** |
