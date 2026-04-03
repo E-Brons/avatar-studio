@@ -21,6 +21,7 @@ Usage
 # Specify genders and expressions explicitly:
   python -m avatar_studio.tuning.style_tuner --style mobile_icon --gender male female --expression neutral thinking
 """
+
 from __future__ import annotations
 
 import argparse
@@ -33,19 +34,20 @@ from pathlib import Path
 import yaml
 
 from avatar_studio.config.config import SETTINGS
+from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
+from avatar_studio.pipeline.step_b_generate_cv import generate_advisor_profile
+from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
 from avatar_studio.pipeline.step_ef_generate_image import (
     EXPRESSION_IDS,
     EXPRESSIONS_YML,
     STYLES_YML,
-    make_session_dir,
     generate_avatar_image,
 )
-from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
-from avatar_studio.pipeline.step_b_generate_cv import generate_advisor_profile
-from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
-from avatar_studio.tuning.classify_style import StyleClassificationResult, classify_image_style
-from avatar_studio.tuning.classify_expression import ExpressionClassificationResult, classify_image_expression
+from avatar_studio.tuning.classify_expression import (
+    classify_image_expression,
+)
 from avatar_studio.tuning.classify_persona import categorize_avatar_image
+from avatar_studio.tuning.classify_style import StyleClassificationResult, classify_image_style
 
 logger = logging.getLogger(__name__)
 
@@ -69,15 +71,11 @@ def _flush_litellm_pool() -> None:
         from litellm.llms.custom_httpx.http_handler import HTTPHandler
 
         no_keepalive = httpx.Limits(max_connections=10, max_keepalive_connections=0)
-        fresh = HTTPHandler(
-            client=httpx.Client(limits=no_keepalive, follow_redirects=True)
-        )
+        fresh = HTTPHandler(client=httpx.Client(limits=no_keepalive, follow_redirects=True))
         litellm.module_level_client = fresh
         cache = getattr(litellm, "in_memory_llm_clients_cache", None)
         if cache is not None:
-            fresh2 = HTTPHandler(
-                client=httpx.Client(limits=no_keepalive, follow_redirects=True)
-            )
+            fresh2 = HTTPHandler(client=httpx.Client(limits=no_keepalive, follow_redirects=True))
             try:
                 cache.set_cache("httpx_client", fresh2)
                 cache.set_cache("httpx_client_ssl_verify_None", fresh2)
@@ -203,7 +201,7 @@ def _print_style_run_result(
         status = f"{_YELLOW}~ TOP-2{_RESET}"
 
     line = (
-        f"  run {run_idx+1} | {gender:<10} | expr={expression:<12} | "
+        f"  run {run_idx + 1} | {gender:<10} | expr={expression:<12} | "
         f"expected={expected:<20} classified={result.top_style_id:<20} ({top_score:.2f}) "
         f"| expected_score={expected_score:.2f} | {status}"
     )
@@ -363,12 +361,16 @@ def _run_tuning_pass(
             iterations: list[tuple[str, int, dict | None]]
             if fixed_personas:
                 iterations = [
-                    (p.get("_id", f"persona_{i}"), i, p)
-                    for i, p in enumerate(fixed_personas)
+                    (p.get("_id", f"persona_{i}"), i, p) for i, p in enumerate(fixed_personas)
                 ]
             elif random_gender:
                 iterations = [
-                    (_random.choice(genders), (seed + i) if seed is not None else _random.randint(1, 999999), None) for i in range(runs)
+                    (
+                        _random.choice(genders),
+                        (seed + i) if seed is not None else _random.randint(1, 999999),
+                        None,
+                    )
+                    for i in range(runs)
                 ]
             else:
                 # Each gender gets `runs` repetitions with independent seeds.
@@ -462,8 +464,12 @@ def _run_tuning_pass(
 
                     # Resolve the expected label for the current expression.
                     import yaml as _yaml  # noqa: PLC0415
+
                     with open(EXPRESSIONS_YML) as _f:
-                        _exprs = {e.get("id") or e["expression"].lower(): e for e in _yaml.safe_load(_f)["expressions"]}
+                        _exprs = {
+                            e.get("id") or e["expression"].lower(): e
+                            for e in _yaml.safe_load(_f)["expressions"]
+                        }
                     expected_label = _exprs.get(expression, {}).get("expression", expression)
 
                     expected_score = classification.score_for(expected_label)
@@ -473,15 +479,21 @@ def _run_tuning_pass(
                     sem_score = 0.0
                     if not ok:
                         _expr_data = _exprs.get(expression, {})
-                        _valid = {expected_label.lower()} | {s.lower() for s in _expr_data.get("synonyms", [])}
+                        _valid = {expected_label.lower()} | {
+                            s.lower() for s in _expr_data.get("synonyms", [])
+                        }
                         sem_score = sum(
-                            score for name, score in classification.scores.items()
+                            score
+                            for name, score in classification.scores.items()
                             if name.lower() in _valid
                         )
                         # Semantic fallback: LLM per-phrase check, only when synonyms don't pass.
                         if sem_score < 0.35:
                             try:
-                                from avatar_studio.tuning.classify_expression import semantic_effective_score  # noqa: PLC0415
+                                from avatar_studio.tuning.classify_expression import (
+                                    semantic_effective_score,  # noqa: PLC0415
+                                )
+
                                 lm_score = semantic_effective_score(
                                     classification.scores,
                                     expected_label,
@@ -505,7 +517,7 @@ def _run_tuning_pass(
                         status = f"{_RED}✗ FAIL{_RESET}"
                     sem_col = f" | semantic={sem_score:.2f}" if sem_score > 0.0 else ""
                     print(
-                        f"  run {run_idx+1} | {gender_label:<10} | expr={expression:<12} | "
+                        f"  run {run_idx + 1} | {gender_label:<10} | expr={expression:<12} | "
                         f"expected={expected_label:<14} classified={classification.top_expression:<14} "
                         f"({top_score:.2f}) | expected_score={expected_score:.2f}{sem_col} | {status}"
                     )
@@ -525,9 +537,7 @@ def _run_tuning_pass(
                             ollama_url=ollama_url,
                         )
                     except Exception as exc:
-                        print(
-                            f"  persona classification FAILED — {exc}", file=sys.stderr
-                        )
+                        print(f"  persona classification FAILED — {exc}", file=sys.stderr)
                         _flush_litellm_pool()
                         total += 1
                         continue
@@ -535,7 +545,7 @@ def _run_tuning_pass(
                     ok = report.score >= 0.6
                     status = _fmt_pass(ok)
                     print(
-                        f"  run {run_idx+1} | {gender_label:<10} | expr={expression:<12} | "
+                        f"  run {run_idx + 1} | {gender_label:<10} | expr={expression:<12} | "
                         f"persona score={report.score:.0%} | {status}"
                     )
                     if report.failures():
@@ -641,9 +651,7 @@ def _generate_diverse_personas(
             print(f"done → {persona_path.name}")
         except Exception as exc:
             print(f"FAILED — {exc}", file=sys.stderr)
-            logger.warning(
-                "[Personas] persona generation failed for gender=%s: %s", gender, exc
-            )
+            logger.warning("[Personas] persona generation failed for gender=%s: %s", gender, exc)
 
     return personas
 
@@ -786,21 +794,17 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    logging.basicConfig(
-        level=getattr(logging, args.log_level), format="%(levelname)s %(message)s"
-    )
+    logging.basicConfig(level=getattr(logging, args.log_level), format="%(levelname)s %(message)s")
 
     # Resolve model defaults
-    image_model = args.ollama_image_model or SETTINGS[
-        "default_image_gen_model"
-    ].removeprefix("ollama/")
+    image_model = args.ollama_image_model or SETTINGS["default_image_gen_model"].removeprefix(
+        "ollama/"
+    )
     text_model = args.ollama_text_model or SETTINGS["default_text_gen_model"]
     # Ensure the ollama/ prefix is present — litellm uses it for routing.
     if not text_model.startswith("ollama/"):
         text_model = f"ollama/{text_model}"
-    visual_model = (
-        args.ollama_visual_desc_model or SETTINGS["default_visual_desc_model"]
-    )
+    visual_model = args.ollama_visual_desc_model or SETTINGS["default_visual_desc_model"]
     if not visual_model.startswith(("ollama/", "cli/")) and "ollama" not in visual_model.lower():
         visual_model = f"ollama/{visual_model}"
 
@@ -814,6 +818,7 @@ def main() -> None:
     # isolated and inspectable.  --tmp-dir is the *base* path; the actual
     # output lives in <base>/style-tuner/<timestamp>/.
     from datetime import datetime
+
     from avatar_studio.config.config import _name_to_filename
 
     base_dir = Path(args.tmp_dir) if args.tmp_dir else Path("/tmp/avatar_studio")
@@ -826,9 +831,7 @@ def main() -> None:
     log_file = tmp_dir / "run.log"
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(getattr(logging, args.log_level))
-    file_handler.setFormatter(
-        logging.Formatter("%(asctime)s %(levelname)s %(message)s")
-    )
+    file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
     logging.getLogger().addHandler(file_handler)
     print(f"  log file  : {log_file}")
 
@@ -854,9 +857,7 @@ def main() -> None:
             predicate=lambda s: s["id"] != "random" and s.get("system_prompt"),
         )
         genders, random_gender = _resolve_options(args.gender, _GENDERS)
-        expressions, random_expression = _resolve_options(
-            args.expression, EXPRESSION_IDS
-        )
+        expressions, random_expression = _resolve_options(args.expression, EXPRESSION_IDS)
 
         if not target_styles:
             print("No matching styles found.", file=sys.stderr)
@@ -873,7 +874,7 @@ def main() -> None:
         gender_list = ", ".join(genders)
         expr_list = ", ".join(expressions)
         print(
-            f"\n{'='*70}\n"
+            f"\n{'=' * 70}\n"
             f"  Style tuner\n"
             f"  styles      : {len(target_styles)} ({styles_list})\n"
             f"  genders     : {len(genders)} ({gender_list})\n"
@@ -883,7 +884,7 @@ def main() -> None:
             f"  total images: ~{total_images}\n"
             f"  image_model : {image_model}\n"
             f"  visual_model: {visual_model}\n"
-            f"{'='*70}"
+            f"{'=' * 70}"
         )
 
         results = _run_tuning_pass(
@@ -929,9 +930,9 @@ def main() -> None:
             current_mtime = STYLES_YML.stat().st_mtime
             if current_mtime != last_mtime:
                 last_mtime = current_mtime
-                print(f"\n{'~'*70}")
-                print(f"  styles.yml changed — re-running…")
-                print(f"{'~'*70}")
+                print(f"\n{'~' * 70}")
+                print("  styles.yml changed — re-running…")
+                print(f"{'~' * 70}")
                 _run_once()
     except KeyboardInterrupt:
         print("\nStopped.")

@@ -2,6 +2,7 @@
 
 Also contains the full color palette, WCAG utilities, and helper functions.
 """
+
 import hashlib
 import json
 from pathlib import Path
@@ -59,9 +60,7 @@ def _contrast_ratio(hex1: str, hex2: str) -> float:
 
 # Pre-filter palette for abbreviation avatar backgrounds: only keep colors
 # that meet WCAG AA contrast (4.5:1) against white foreground text.
-VALID_BG_PALETTE = [
-    c for c in PALETTE if _contrast_ratio(c, _FRAME_FG_COLOR) >= _WCAG_MIN_CONTRAST
-]
+VALID_BG_PALETTE = [c for c in PALETTE if _contrast_ratio(c, _FRAME_FG_COLOR) >= _WCAG_MIN_CONTRAST]
 
 
 def _color_for_name(name: str) -> str:
@@ -78,9 +77,7 @@ def _hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
 def _darken_hex(hex_color: str, factor: float = 0.7) -> str:
     """Return a darkened version of *hex_color* by multiplying each channel."""
     r, g, b = _hex_to_rgb(hex_color)
-    return "#{:02X}{:02X}{:02X}".format(
-        int(r * factor), int(g * factor), int(b * factor)
-    )
+    return "#{:02X}{:02X}{:02X}".format(int(r * factor), int(g * factor), int(b * factor))
 
 
 def _initials(name: str) -> str:

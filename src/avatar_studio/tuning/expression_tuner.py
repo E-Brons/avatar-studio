@@ -30,6 +30,7 @@ Usage
   python -m avatar_studio.tuning.expression_tuner --expression thinking happy \\
       --style cartoon pixar_3d --gender male female
 """
+
 from __future__ import annotations
 
 import argparse
@@ -42,16 +43,15 @@ from pathlib import Path
 import yaml
 
 from avatar_studio.config.config import SETTINGS
+from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
+from avatar_studio.pipeline.step_b_generate_cv import generate_advisor_profile
+from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
 from avatar_studio.pipeline.step_ef_generate_image import (
     EXPRESSION_IDS,
     EXPRESSIONS_YML,
     STYLES_YML,
-    make_session_dir,
     generate_avatar_image,
 )
-from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
-from avatar_studio.pipeline.step_b_generate_cv import generate_advisor_profile
-from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
 from avatar_studio.tuning.classify_expression import (
     ExpressionClassificationResult,
     classify_image_expression,
@@ -82,15 +82,11 @@ def _flush_litellm_pool() -> None:
         from litellm.llms.custom_httpx.http_handler import HTTPHandler
 
         no_keepalive = httpx.Limits(max_connections=10, max_keepalive_connections=0)
-        fresh = HTTPHandler(
-            client=httpx.Client(limits=no_keepalive, follow_redirects=True)
-        )
+        fresh = HTTPHandler(client=httpx.Client(limits=no_keepalive, follow_redirects=True))
         litellm.module_level_client = fresh
         cache = getattr(litellm, "in_memory_llm_clients_cache", None)
         if cache is not None:
-            fresh2 = HTTPHandler(
-                client=httpx.Client(limits=no_keepalive, follow_redirects=True)
-            )
+            fresh2 = HTTPHandler(client=httpx.Client(limits=no_keepalive, follow_redirects=True))
             try:
                 cache.set_cache("httpx_client", fresh2)
                 cache.set_cache("httpx_client_ssl_verify_None", fresh2)
@@ -114,10 +110,7 @@ def _load_expressions_fresh() -> list[dict]:
     """Always reload expressions.yml from disk (no cache). Derives 'id' from 'expression' if absent."""
     with open(EXPRESSIONS_YML) as f:
         data = yaml.safe_load(f)
-    return [
-        {**e, "id": e.get("id") or e["expression"].lower()}
-        for e in data["expressions"]
-    ]
+    return [{**e, "id": e.get("id") or e["expression"].lower()} for e in data["expressions"]]
 
 
 def _load_styles_fresh() -> list[dict]:
@@ -234,7 +227,7 @@ def _print_expression_run_result(
 
     sem_col = f" | semantic={semantic_score:.2f}" if semantic_score > 0.0 else ""
     line = (
-        f"  run {run_idx+1} | {gender:<10} | style={style_id:<20} | "
+        f"  run {run_idx + 1} | {gender:<10} | style={style_id:<20} | "
         f"expected={expected_label:<14} classified={result.top_expression:<14} ({top_score:.2f}) "
         f"| expected_score={expected_score:.2f}{sem_col} | {status}"
     )
@@ -368,9 +361,7 @@ def _generate_diverse_personas(
             print(f"done → {persona_path.name}")
         except Exception as exc:
             print(f"FAILED — {exc}", file=sys.stderr)
-            logger.warning(
-                "[Personas] persona generation failed for gender=%s: %s", gender, exc
-            )
+            logger.warning("[Personas] persona generation failed for gender=%s: %s", gender, exc)
 
     return personas
 
@@ -461,7 +452,10 @@ def _run_tuning_pass(
                 try:
                     logger.info(
                         "[ExprTuner] START — expr=%s, style=%s, gender=%s (seed=%s)",
-                        expr_id, style_id, gender, run_seed,
+                        expr_id,
+                        style_id,
+                        gender,
+                        run_seed,
                     )
                     print(f"  generating {gender} / {style_id}…", end=" ", flush=True)
                     img_bytes, _ = _generate_for_expression(
@@ -507,13 +501,17 @@ def _run_tuning_pass(
                 if not classification.is_correct(expr_label, threshold):
                     valid_names = {expr_label.lower()} | expr_synonyms
                     synonym_score = sum(
-                        score for name, score in classification.scores.items()
+                        score
+                        for name, score in classification.scores.items()
                         if name.lower() in valid_names
                     )
 
                 # Semantic fallback: LLM per-phrase check, only when synonyms don't pass.
                 sem_score = 0.0
-                if not classification.is_correct(expr_label, threshold) and synonym_score < threshold:
+                if (
+                    not classification.is_correct(expr_label, threshold)
+                    and synonym_score < threshold
+                ):
                     try:
                         sem_score = semantic_effective_score(
                             classification.scores,
@@ -525,7 +523,12 @@ def _run_tuning_pass(
                         logger.warning("[ExprTuner] semantic score failed: %s", exc)
 
                 ok = _print_expression_run_result(
-                    expr_label, classification, gender, style_id, iter_idx, threshold,
+                    expr_label,
+                    classification,
+                    gender,
+                    style_id,
+                    iter_idx,
+                    threshold,
                     semantic_score=max(synonym_score, sem_score),
                 )
                 if ok:
@@ -658,10 +661,7 @@ def main() -> None:
         "--hard-type-gender",
         action="store_true",
         default=False,
-        help=(
-            "Restrict gender-bucketed pools to the strict gender bucket only. "
-            "Default: False."
-        ),
+        help=("Restrict gender-bucketed pools to the strict gender bucket only. Default: False."),
     )
     parser.add_argument(
         "--log-level",
@@ -672,25 +672,22 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    logging.basicConfig(
-        level=getattr(logging, args.log_level), format="%(levelname)s %(message)s"
-    )
+    logging.basicConfig(level=getattr(logging, args.log_level), format="%(levelname)s %(message)s")
 
     # Resolve model defaults
-    image_model = args.ollama_image_model or SETTINGS[
-        "default_image_gen_model"
-    ].removeprefix("ollama/")
+    image_model = args.ollama_image_model or SETTINGS["default_image_gen_model"].removeprefix(
+        "ollama/"
+    )
     text_model = args.ollama_text_model or SETTINGS["default_text_gen_model"]
     if not text_model.startswith("ollama/"):
         text_model = f"ollama/{text_model}"
-    visual_model = (
-        args.ollama_visual_desc_model or SETTINGS["default_visual_desc_model"]
-    )
+    visual_model = args.ollama_visual_desc_model or SETTINGS["default_visual_desc_model"]
     if not visual_model.startswith(("ollama/", "cli/")) and "ollama" not in visual_model.lower():
         visual_model = f"ollama/{visual_model}"
 
     # Output dir — timestamped session subfolder.
     from datetime import datetime
+
     from avatar_studio.config.config import _name_to_filename
 
     base_dir = Path(args.tmp_dir) if args.tmp_dir else Path("/tmp/avatar_studio")
@@ -703,9 +700,7 @@ def main() -> None:
     log_file = tmp_dir / "run.log"
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(getattr(logging, args.log_level))
-    file_handler.setFormatter(
-        logging.Formatter("%(asctime)s %(levelname)s %(message)s")
-    )
+    file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
     logging.getLogger().addHandler(file_handler)
     print(f"  log file  : {log_file}")
 
@@ -754,7 +749,7 @@ def main() -> None:
         style_list = ", ".join(s["id"] for s in target_styles)
         gender_list = ", ".join(genders)
         print(
-            f"\n{'='*70}\n"
+            f"\n{'=' * 70}\n"
             f"  Expression tuner\n"
             f"  expressions : {len(target_expressions)} ({expr_list})\n"
             f"  styles      : {len(target_styles)} ({style_list})\n"
@@ -766,7 +761,7 @@ def main() -> None:
             f"  image_model : {image_model}\n"
             f"  visual_model: {visual_model}\n"
             f"  text_model  : {text_model}\n"
-            f"{'='*70}"
+            f"{'=' * 70}"
         )
 
         results = _run_tuning_pass(
@@ -813,9 +808,9 @@ def main() -> None:
             current_mtime = EXPRESSIONS_YML.stat().st_mtime
             if current_mtime != last_mtime:
                 last_mtime = current_mtime
-                print(f"\n{'~'*70}")
-                print(f"  expressions.yml changed — re-running…")
-                print(f"{'~'*70}")
+                print(f"\n{'~' * 70}")
+                print("  expressions.yml changed — re-running…")
+                print(f"{'~' * 70}")
                 _run_once()
     except KeyboardInterrupt:
         print("\nStopped.")

@@ -12,7 +12,6 @@ import yaml
 
 from avatar_studio.config.config import SETTINGS
 from avatar_studio.config.gateway import GatewayClient
-from avatar_studio.pipeline.step_a_randomise_person import _DEFAULT_STYLE
 
 logger = logging.getLogger(__name__)
 
@@ -47,9 +46,7 @@ _REQUIRED_FEATURE_KEYS = _load_required_feature_keys()
 def _filter_none_values(d: dict) -> dict:
     """Remove entries whose value looks like 'none' / 'n/a' / empty."""
     return {
-        k: v
-        for k, v in d.items()
-        if not (isinstance(v, str) and _NONE_PATTERNS.match(v.strip()))
+        k: v for k, v in d.items() if not (isinstance(v, str) and _NONE_PATTERNS.match(v.strip()))
     }
 
 
@@ -68,6 +65,7 @@ def _load_user_prompt_options(gender: str | None = None, *, hard_type: bool = Fa
 
     Plain lists are returned as-is.
     """
+
     def _flatten(opt_src: dict | list) -> list:
         if isinstance(opt_src, list):
             return opt_src
@@ -209,9 +207,7 @@ def _select_feature_field(
         # Simple pick-one field
         opts_str = ", ".join(str(o) for o in options) if options else ""
         user_content = (
-            f"{profile}{context}\n"
-            f"Pick ONE {key} from: {opts_str}\n"
-            f"Reply with ONLY the value."
+            f"{profile}{context}\nPick ONE {key} from: {opts_str}\nReply with ONLY the value."
         )
 
     messages: list[dict] = [
@@ -236,9 +232,7 @@ def _select_feature_field(
             )
             continue
         if not content or not content.strip():
-            logger.warning(
-                "Field %s attempt %d/%d: empty response", key, attempt, max_retries
-            )
+            logger.warning("Field %s attempt %d/%d: empty response", key, attempt, max_retries)
             continue
 
         content = content.strip()
@@ -266,9 +260,7 @@ def _select_feature_field(
         # --- CLOTHING / ACCESSORIES: parse as YAML dict ---
         if key in ("CLOTHING", "ACCESSORIES"):
             try:
-                cleaned = re.sub(
-                    r"^```(?:ya?ml)?\s*\n?", "", content, flags=re.MULTILINE
-                )
+                cleaned = re.sub(r"^```(?:ya?ml)?\s*\n?", "", content, flags=re.MULTILINE)
                 cleaned = re.sub(r"\n?```\s*$", "", cleaned.strip())
                 if cleaned.lower() == "none":
                     return {}
@@ -280,9 +272,7 @@ def _select_feature_field(
                     if not stripped:
                         break
                     # Stop at lines that don't look like YAML key:value or list items
-                    if not re.match(r"^-?\s*[\w\s\-]+:", line) and not line.startswith(
-                        " "
-                    ):
+                    if not re.match(r"^-?\s*[\w\s\-]+:", line) and not line.startswith(" "):
                         break
                     yaml_lines.append(line)
                 cleaned = "\n".join(yaml_lines) if yaml_lines else cleaned
@@ -409,9 +399,7 @@ def _select_feature_field(
             # EYE_COLOR, BROWS_COLOR) use options only as palette examples —
             # the model may return any valid hex and that is acceptable.
             # Text fields (HAIR_STYLE, EYE_SHAPE, etc.) must match exactly.
-            options_have_hex = any(
-                re.search(r"#[0-9A-Fa-f]{6}", str(o)) for o in options
-            )
+            options_have_hex = any(re.search(r"#[0-9A-Fa-f]{6}", str(o)) for o in options)
             if options_have_hex:
                 # Accept any response that contains at least one valid hex.
                 if re.search(r"#[0-9A-Fa-f]{6}", value):
@@ -565,9 +553,7 @@ def select_features(
                 session_dir,
             )
         except Exception as exc:
-            logger.warning(
-                "[Step C] Failed to write persona.yml to %s: %s", session_dir, exc
-            )
+            logger.warning("[Step C] Failed to write persona.yml to %s: %s", session_dir, exc)
 
     return features
 
@@ -621,9 +607,7 @@ def _parse_color_value(key: str, raw_value: str) -> str | dict:
     return hexes[0]
 
 
-def _marshal_avatar_persona(
-    demographics: dict, advisor: dict, features: dict | None
-) -> dict:
+def _marshal_avatar_persona(demographics: dict, advisor: dict, features: dict | None) -> dict:
     """Combine demographics + advisor + features into the avatar_persona dict.
 
     This is the single structured representation used by both the image prompt
@@ -748,8 +732,7 @@ def _visual_only_persona(persona: dict) -> dict:
             visual_appearance[k] = _sanitize_str(v)
         elif isinstance(v, dict):
             visual_appearance[k] = {
-                sk: _sanitize_str(sv) if isinstance(sv, str) else sv
-                for sk, sv in v.items()
+                sk: _sanitize_str(sv) if isinstance(sv, str) else sv for sk, sv in v.items()
             }
 
     return {

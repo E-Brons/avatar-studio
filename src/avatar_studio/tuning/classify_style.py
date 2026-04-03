@@ -7,9 +7,9 @@ Used by:
   - tuning/style_tuner.py  (CLI tuning agent)
   - test_style_classification.py  (pytest test)
 """
+
 from __future__ import annotations
 
-import base64
 import logging
 import re
 from dataclasses import dataclass, field
@@ -48,12 +48,7 @@ class StyleClassificationResult:
 
     def top_n(self, n: int = 3) -> list[str]:
         """Return the top-n style IDs by score, highest first."""
-        return [
-            k
-            for k, _ in sorted(
-                self.scores.items(), key=lambda x: x[1], reverse=True
-            )[:n]
-        ]
+        return [k for k, _ in sorted(self.scores.items(), key=lambda x: x[1], reverse=True)[:n]]
 
     def is_correct(self, expected_style_id: str) -> bool:
         return self.top_style_id == expected_style_id
@@ -169,7 +164,7 @@ def _parse_classification_response(raw: str, style_ids: list[str]) -> StyleClass
         for sid in style_ids:
             try:
                 scores[sid] = float(raw_scores.get(sid, 0.0))
-            except (TypeError, ValueError):
+            except TypeError, ValueError:
                 scores[sid] = 0.0
 
     # If top wasn't parsed but scores exist, derive top from highest score.

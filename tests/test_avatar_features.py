@@ -1,24 +1,26 @@
 """Tests for Step B — LLM Feature Selection helpers and B2 — Marshal Avatar Persona."""
 
-from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
 
-from avatar_studio.pipeline.step_a_randomise_person import _pick_diverse_demographics, _pool_by_gender
+from avatar_studio.pipeline.step_a_randomise_person import (
+    _AGE_GROUPS,
+    _pick_diverse_demographics,
+    _pool_by_gender,
+)
 from avatar_studio.pipeline.step_b_generate_cv import _generate_advisor_profile
 from avatar_studio.pipeline.step_c_select_features import (
-    _SIMPLE_FIELDS,
     _build_feature_prompt,
-    _format_profile,
     _load_user_prompt_options,
     _marshal_avatar_persona,
     _parse_color_value,
     _parse_feature_response,
     _select_feature_field,
-    _warmup_model,
 )
-from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter as _build_avatar_charachter
+from avatar_studio.pipeline.step_c_select_features import (
+    build_avatar_charachter as _build_avatar_charachter,
+)
 from avatar_studio.pipeline.step_c_select_features import select_features as _select_features
 
 pytestmark = pytest.mark.avatar
@@ -86,9 +88,11 @@ def test_parse_extra_keys_ignored():
     assert len(result) == 3
 
 
-BOLD_YAML = VALID_YAML.replace("NAME:", "**NAME:**").replace(
-    "SKIN_TONE:", "**SKIN_TONE:**"
-).replace("HAIR_STYLE:", "**HAIR_STYLE:**")
+BOLD_YAML = (
+    VALID_YAML.replace("NAME:", "**NAME:**")
+    .replace("SKIN_TONE:", "**SKIN_TONE:**")
+    .replace("HAIR_STYLE:", "**HAIR_STYLE:**")
+)
 
 
 def test_parse_yaml_with_markdown_bold_keys():
@@ -232,9 +236,9 @@ def test_build_feature_prompt_substitution():
 # Per-field responses — NAME, colors, and shape fields are now pre-seeded from
 # §A demographics.  Only 3 LLM-selected fields remain.
 _PER_FIELD_RESPONSES = [
-    "side-parted short",                                    # HAIR_STYLE
+    "side-parted short",  # HAIR_STYLE
     'blazer over blouse: "#3C3C3C"\nsilk blouse: "#A8C4E0"',  # CLOTHING (YAML dict)
-    "glasses: thin-frame rectangular",                      # ACCESSORIES (YAML dict)
+    "glasses: thin-frame rectangular",  # ACCESSORIES (YAML dict)
 ]
 
 
@@ -398,9 +402,13 @@ def test_select_feature_field_simple():
     mock_class, mock_instance = _make_gateway_mock(["side-parted short"])
     with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
-            "HAIR_STYLE", "Gender: female\nAge: 35\nAppearance: olive\nRole: Advisor",
-            "system prompt", ["short cropped", "side-parted short", "swept back"], {},
-            SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
+            "HAIR_STYLE",
+            "Gender: female\nAge: 35\nAppearance: olive\nRole: Advisor",
+            "system prompt",
+            ["short cropped", "side-parted short", "swept back"],
+            {},
+            SAMPLE_DEMOGRAPHICS,
+            SAMPLE_ADVISOR,
             gateway_url="http://test",
         )
     assert result == "side-parted short"
@@ -411,8 +419,13 @@ def test_select_feature_field_name():
     mock_class, mock_instance = _make_gateway_mock(['"Elena Vasquez"'])
     with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
-            "NAME", "profile", "system", None, {},
-            SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
+            "NAME",
+            "profile",
+            "system",
+            None,
+            {},
+            SAMPLE_DEMOGRAPHICS,
+            SAMPLE_ADVISOR,
             gateway_url="http://test",
         )
     assert result == "Elena Vasquez"
@@ -423,8 +436,13 @@ def test_select_feature_field_clothing_yaml():
     mock_class, mock_instance = _make_gateway_mock(['blazer: "#3C3C3C"\nshirt: "#A8C4E0"'])
     with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
-            "CLOTHING", "profile", "system", ["blazer", "shirt"], {},
-            SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
+            "CLOTHING",
+            "profile",
+            "system",
+            ["blazer", "shirt"],
+            {},
+            SAMPLE_DEMOGRAPHICS,
+            SAMPLE_ADVISOR,
             gateway_url="http://test",
         )
     assert result == {"blazer": "#3C3C3C", "shirt": "#A8C4E0"}
@@ -435,8 +453,13 @@ def test_select_feature_field_accessories_none():
     mock_class, mock_instance = _make_gateway_mock(["none"])
     with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
-            "ACCESSORIES", "profile", "system", ["glasses", "earring"], {},
-            SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
+            "ACCESSORIES",
+            "profile",
+            "system",
+            ["glasses", "earring"],
+            {},
+            SAMPLE_DEMOGRAPHICS,
+            SAMPLE_ADVISOR,
             gateway_url="http://test",
         )
     assert result == {}
@@ -449,8 +472,13 @@ def test_select_feature_field_accessories_yaml_list():
     )
     with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
-            "ACCESSORIES", "profile", "system", ["glasses", "earring"], {},
-            SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
+            "ACCESSORIES",
+            "profile",
+            "system",
+            ["glasses", "earring"],
+            {},
+            SAMPLE_DEMOGRAPHICS,
+            SAMPLE_ADVISOR,
             gateway_url="http://test",
         )
     assert result == {"glasses": "thin-frame rectangular", "earring": "small gold stud"}
@@ -463,8 +491,13 @@ def test_select_feature_field_clothing_trailing_garbage():
     )
     with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
-            "CLOTHING", "profile", "system", ["blazer", "shirt"], {},
-            SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
+            "CLOTHING",
+            "profile",
+            "system",
+            ["blazer", "shirt"],
+            {},
+            SAMPLE_DEMOGRAPHICS,
+            SAMPLE_ADVISOR,
             gateway_url="http://test",
         )
     assert result == {"blazer": "#3C3C3C", "shirt": "#A8C4E0"}
@@ -477,8 +510,13 @@ def test_select_feature_field_filters_none_values():
     )
     with patch("avatar_studio.pipeline.step_c_select_features.GatewayClient", mock_class):
         result = _select_feature_field(
-            "ACCESSORIES", "profile", "system", ["glasses", "earring"], {},
-            SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR,
+            "ACCESSORIES",
+            "profile",
+            "system",
+            ["glasses", "earring"],
+            {},
+            SAMPLE_DEMOGRAPHICS,
+            SAMPLE_ADVISOR,
             gateway_url="http://test",
         )
     assert result == {"glasses": "thin-frame rectangular"}
@@ -671,20 +709,17 @@ def test_diverse_demographics_gender_coverage():
 
 
 def test_diverse_demographics_age_group_coverage():
-    """At least 3 distinct age groups are represented."""
+    """At least 3 distinct age groups (from settings) are represented."""
     result = _pick_diverse_demographics(4)
-    age_groups = set()
-    for d in result:
-        age = d["age"]
-        if 25 <= age <= 35:
-            age_groups.add("25-35")
-        elif 36 <= age <= 45:
-            age_groups.add("36-45")
-        elif 46 <= age <= 55:
-            age_groups.add("46-55")
-        elif 56 <= age <= 70:
-            age_groups.add("56-70")
-    assert len(age_groups) >= 3
+
+    def age_to_group(age):
+        for lo, hi in _AGE_GROUPS:
+            if lo <= age <= hi:
+                return (lo, hi)
+        return None
+
+    groups = {age_to_group(d["age"]) for d in result}
+    assert len(groups) >= 3
 
 
 def test_diverse_demographics_skin_tones_distinct():
@@ -697,8 +732,18 @@ def test_diverse_demographics_skin_tones_distinct():
 def test_diverse_demographics_has_required_keys():
     """Each demographics dict has all required keys."""
     result = _pick_diverse_demographics(4)
-    required = {"gender", "age", "name", "style", "bg_color", "fg_color",
-                "SKIN_TONE", "HAIR_COLOR", "EYE_COLOR", "BROWS_COLOR"}
+    required = {
+        "gender",
+        "age",
+        "name",
+        "style",
+        "bg_color",
+        "fg_color",
+        "SKIN_TONE",
+        "HAIR_COLOR",
+        "EYE_COLOR",
+        "BROWS_COLOR",
+    }
     for d in result:
         assert required.issubset(d.keys())
 
@@ -789,9 +834,7 @@ def test_load_user_prompt_options_hard_type_male_excludes_female():
     # Hard-typed pool must be a subset of (or equal to) the default pool
     for key in opts_hard:
         for item in opts_hard[key]:
-            assert item in opts_default[key], (
-                f"{key}: hard-type item '{item}' not in default pool"
-            )
+            assert item in opts_default[key], f"{key}: hard-type item '{item}' not in default pool"
 
 
 def test_load_user_prompt_options_hard_type_female_excludes_male():
@@ -800,9 +843,7 @@ def test_load_user_prompt_options_hard_type_female_excludes_male():
     opts_hard = _load_user_prompt_options("female", hard_type=True)
     for key in opts_hard:
         for item in opts_hard[key]:
-            assert item in opts_default[key], (
-                f"{key}: hard-type item '{item}' not in default pool"
-            )
+            assert item in opts_default[key], f"{key}: hard-type item '{item}' not in default pool"
 
 
 def test_load_user_prompt_options_hard_type_nonbinary_is_subset_of_default():

@@ -1,10 +1,11 @@
 """Shared pytest fixtures for avatar-studio integration tests."""
+
 from __future__ import annotations
 
 import os
-import requests as _requests
-import pytest
 
+import pytest
+import requests as _requests
 
 _GATEWAY_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:4096")
 

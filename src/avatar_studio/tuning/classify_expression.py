@@ -13,9 +13,9 @@ Used by:
   - tuning/expression_tuner.py  (CLI tuning agent)
   - test_expression_classification.py  (pytest integration test)
 """
+
 from __future__ import annotations
 
-import base64
 import logging
 import re
 from dataclasses import dataclass, field
@@ -62,12 +62,7 @@ class ExpressionClassificationResult:
 
     def top_n(self, n: int = 3) -> list[str]:
         """Return the top-n expression names by score, highest first."""
-        return [
-            k
-            for k, _ in sorted(
-                self.scores.items(), key=lambda x: x[1], reverse=True
-            )[:n]
-        ]
+        return [k for k, _ in sorted(self.scores.items(), key=lambda x: x[1], reverse=True)[:n]]
 
     def top_score(self) -> float:
         """Return the probability of the top expression."""
@@ -84,8 +79,7 @@ class ExpressionClassificationResult:
     def is_correct(self, expected_label: str, threshold: float = 0.35) -> bool:
         """True when the top expression matches *expected_label* with score >= *threshold*."""
         return (
-            self.top_expression.lower() == expected_label.lower()
-            and self.top_score() >= threshold
+            self.top_expression.lower() == expected_label.lower() and self.top_score() >= threshold
         )
 
     def is_visible(self, expected_label: str, threshold: float = 0.35) -> bool:
@@ -247,9 +241,7 @@ def semantic_effective_score(
             f"Answer with a single word: yes or no."
         )
         try:
-            raw = _call_text_model(
-                gateway_url=gateway_url, prompt=prompt, timeout=timeout
-            )
+            raw = _call_text_model(gateway_url=gateway_url, prompt=prompt, timeout=timeout)
         except Exception as exc:
             logger.warning(
                 "semantic_effective_score: call failed for %r vs %r (%s)", name, expected, exc
@@ -259,12 +251,13 @@ def semantic_effective_score(
             total += score
             logger.debug(
                 "semantic_effective_score: '%s' matches '%s' (score=%.2f, running=%.2f)",
-                name, expected, score, total,
+                name,
+                expected,
+                score,
+                total,
             )
 
-    logger.debug(
-        "semantic_effective_score: expected=%r, total=%.2f", expected, total
-    )
+    logger.debug("semantic_effective_score: expected=%r, total=%.2f", expected, total)
     return total
 
 
@@ -291,7 +284,7 @@ def _parse_expression_response(
         for name, val in raw_scores.items():
             try:
                 scores[str(name)] = float(val)
-            except (TypeError, ValueError):
+            except TypeError, ValueError:
                 scores[str(name)] = 0.0
 
     # Ensure all hint labels have an entry (default 0.0 if the classifier skipped them).
