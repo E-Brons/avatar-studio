@@ -19,7 +19,7 @@ The LLM Gateway client (`GatewayClient`) is patched at the module boundary. No r
 | File | Covers |
 |------|--------|
 | `test_avatar_features.py` | Step A (`_pick_diverse_demographics`, `_pool_by_gender`), Step B (`_generate_advisor_profile`: YAML parsing, code-fence stripping, list truncation, retry on empty/missing fields, exhaustion raises), Step C (`_select_features`, `_select_feature_field`, `_marshal_avatar_persona`, `_build_feature_prompt`, warmup failure non-fatal, context accumulates, hard-type-gender pool filtering), pipeline wiring (features → persona) |
-| `test_avatar_stages.py` | `config` (WCAG utils, hex helpers, palette filtering), Step A (`_pick_colors`, `_pick_name`, `_pick_demographics`: required keys, gender valid, age in range, seeded determinism, bg_color WCAG pass), Step D (abbreviation PNG: valid PNG, correct size, RGBA, transparent corners, opaque center, white border ring), Step E/F (`create_face_avatar`: neutral failure returns null map, success returns filenames, partial expression failure, feature failure non-fatal, demographics returned) |
+| `test_avatar_stages.py` | `config` (WCAG utils, hex helpers, palette filtering), Step A (`_pick_colors`, `_pick_name`, `_pick_demographics`: required keys, gender valid, age in range, seeded determinism, bg_color WCAG pass), Step D abbreviation (valid PNG, correct size, RGBA, transparent corners, opaque center, white border ring), Step D toon-head (`create_toon_head_avatar`: creates file, returns path, SVG content, parent dirs, seed forwarded, bg_color option, no-options without demographics, Node error raises), Step E/F (`create_face_avatar`: neutral failure returns null map, success returns filenames, partial expression failure, feature failure non-fatal, demographics returned) |
 
 ### Mocking Strategy
 
@@ -30,6 +30,7 @@ The LLM Gateway client (`GatewayClient`) is patched at the module boundary. No r
 | Image generation | `avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image` |
 | Demographics | `avatar_studio.pipeline.step_ef_generate_image.pick_demographics` |
 | Feature selection | `avatar_studio.pipeline.step_ef_generate_image.select_features` |
+| Node.js ToonHead (Step D) | `avatar_studio.pipeline.step_d_make_toon_head.subprocess.run` |
 
 ---
 

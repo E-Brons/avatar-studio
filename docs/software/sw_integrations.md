@@ -107,3 +107,74 @@ This is the recommended integration for tightly coupled parent applications that
 | Manual dispatch | `tuner.yml` | Expression Autotuner with configurable iterations and threshold |
 
 Integration tests require a running LLM Gateway reachable at `$OLLAMA_URL`. Set the `OLLAMA_URL` repository variable to enable them.
+
+---
+
+## 5. DiceBear ToonHead — Vendored Node Sub-project
+
+### 5.1 Overview
+
+Step D generates a cartoon "ToonHead" SVG in addition to the initials abbreviation PNG.
+The ToonHead is produced by a vendored copy of the DiceBear `big-smile` style, pinned
+to `@dicebear/core@^9.4.2` and `@dicebear/big-smile@^9.4.2`.
+
+| Item | Value |
+|------|-------|
+| Location | `vendor/toon-head/` |
+| Entry point | `vendor/toon-head/generate.js` |
+| Runtime | Node.js ≥ 18 |
+| Lock file | `vendor/toon-head/package-lock.json` (committed) |
+| Art style | "Custom Avatar" by Ashley Seo — CC BY 4.0 |
+
+### 5.2 Why Vendored (not a submodule)
+
+Vendoring the package as a minimal Node project (`package.json` + `generate.js` + `package-lock.json`) gives us:
+- **Reproducibility** — `package-lock.json` pins exact dependency versions.
+- **Customisability** — swap the style by editing `generate.js` and updating `package.json`; no git history complexity.
+- **Fork path** — point `package.json` to a GitHub fork URL to use a custom DiceBear style fork without any other code changes.
+
+### 5.3 Setup
+
+```bash
+# First install (also run by scripts/install.sh automatically)
+cd vendor/toon-head && npm ci
+```
+
+### 5.4 Usage from Python
+
+```python
+from avatar_studio.pipeline.step_d_make_toon_head import create_toon_head_avatar
+from pathlib import Path
+
+path = create_toon_head_avatar(
+    name="Jane Smith",
+    out_path=Path("out/jane-smith-toon-head.svg"),
+    size=256,
+    demographics={"bg_color": "#4A90D9"},
+)
+# path → Path("out/jane-smith-toon-head.svg")
+```
+
+### 5.5 Attribution
+
+The `big-smile` SVG art is licensed under **CC BY 4.0**. Attribution is embedded
+automatically in the SVG `<metadata>` block by DiceBear. No additional steps are
+required for correct attribution.
+
+### 5.6 Upgrading / Forking
+
+To upgrade to a newer DiceBear release:
+
+```bash
+cd vendor/toon-head
+npm update @dicebear/core @dicebear/big-smile
+# Commit the updated package-lock.json
+```
+
+To use a fork of `big-smile`:
+1. Fork `https://github.com/dicebear/dicebear` into `E-Brons/dicebear`
+2. In `vendor/toon-head/package.json`, replace the npm dependency with:
+   ```json
+   "@dicebear/big-smile": "github:E-Brons/dicebear#path:packages/big-smile"
+   ```
+3. Run `npm install` and commit the updated lock file.

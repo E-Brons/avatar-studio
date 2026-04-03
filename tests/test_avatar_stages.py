@@ -4,6 +4,7 @@ Covers:
   - avatar_studio.config.config   — WCAG utilities, hex helpers, palette filtering
   - avatar_studio.pipeline.step_a_randomise_person — _pick_colors, _pick_name, _pick_demographics
   - avatar_studio.pipeline.step_d_make_abbreviation — create_abbreviation_avatar, apply_circle_frame
+  - avatar_studio.pipeline.step_d_make_toon_head — create_toon_head_avatar
   - avatar_studio.pipeline.step_ef_generate_image — _build_expression_prompt, create_face_avatar
 """
 
@@ -43,6 +44,7 @@ from avatar_studio.pipeline.step_d_make_abbreviation import (
     apply_circle_frame,
     create_abbreviation_avatar,
 )
+from avatar_studio.pipeline.step_d_make_toon_head import create_toon_head_avatar
 from avatar_studio.pipeline.step_ef_generate_image import create_face_avatar
 
 pytestmark = pytest.mark.avatar
@@ -706,3 +708,173 @@ def test_create_face_avatar_returns_demographics():
             )
 
     assert demographics == expected_demo
+
+
+# ---------------------------------------------------------------------------
+# avatar_studio.pipeline.step_d_make_toon_head — create_toon_head_avatar
+# ---------------------------------------------------------------------------
+
+_SVG_STUB = '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"></svg>'
+
+
+def _patch_node(return_svg: str = _SVG_STUB, returncode: int = 0):
+    """Return a context-manager that patches subprocess.run for the toon-head module."""
+    import subprocess
+
+    def _fake_run(cmd, **kwargs):
+        # Write the stub SVG to the --out path when provided.
+        out_path = None
+        for i, arg in enumerate(cmd):
+            if arg == "--out" and i + 1 < len(cmd):
+                out_path = Path(cmd[i + 1])
+                break
+        if out_path is not None:
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(return_svg, encoding="utf-8")
+        mock = subprocess.CompletedProcess(cmd, returncode=returncode, stdout="", stderr="")
+        if returncode != 0:
+            raise subprocess.CalledProcessError(returncode, cmd)
+        return mock
+
+    return patch(
+        "avatar_studio.pipeline.step_d_make_toon_head.subprocess.run", side_effect=_fake_run
+    )
+
+
+def test_create_toon_head_avatar_creates_file():
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "avatar.svg"
+        with _patch_node():
+            result = create_toon_head_avatar("John Doe", out, size=64)
+        assert result == out
+        assert out.exists()
+        assert out.stat().st_size > 0
+
+
+def test_create_toon_head_avatar_returns_path():
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "avatar.svg"
+        with _patch_node():
+            result = create_toon_head_avatar("Jane Smith", out, size=64)
+        assert isinstance(result, Path)
+        assert result == out
+
+
+def test_create_toon_head_avatar_svg_content():
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "avatar.svg"
+        with _patch_node():
+            create_toon_head_avatar("Alex Ray", out, size=128)
+        content = out.read_text(encoding="utf-8")
+        assert content.startswith("<svg")
+
+
+def test_create_toon_head_avatar_creates_parent_dirs():
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "nested" / "deep" / "avatar.svg"
+        with _patch_node():
+            create_toon_head_avatar("Test User", out, size=32)
+        assert out.exists()
+
+
+def test_create_toon_head_avatar_passes_seed_to_node():
+    """The subprocess command must include --seed with the avatar name."""
+    import subprocess
+
+    captured_cmd = []
+
+    def _capture(cmd, **kwargs):
+        captured_cmd.extend(cmd)
+        out_path = None
+        for i, arg in enumerate(cmd):
+            if arg == "--out" and i + 1 < len(cmd):
+                out_path = Path(cmd[i + 1])
+                break
+        if out_path:
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(_SVG_STUB, encoding="utf-8")
+        return subprocess.CompletedProcess(cmd, returncode=0, stdout="", stderr="")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "avatar.svg"
+        with patch(
+            "avatar_studio.pipeline.step_d_make_toon_head.subprocess.run",
+            side_effect=_capture,
+        ):
+            create_toon_head_avatar("Sam Lee", out, size=64)
+    assert "--seed" in captured_cmd
+    seed_idx = captured_cmd.index("--seed")
+    assert captured_cmd[seed_idx + 1] == "Sam Lee"
+
+
+def test_create_toon_head_avatar_passes_bg_color_from_demographics():
+    """When demographics contains bg_color it is forwarded as --options JSON."""
+    import json
+    import subprocess
+
+    captured_cmd = []
+
+    def _capture(cmd, **kwargs):
+        captured_cmd.extend(cmd)
+        out_path = None
+        for i, arg in enumerate(cmd):
+            if arg == "--out" and i + 1 < len(cmd):
+                out_path = Path(cmd[i + 1])
+                break
+        if out_path:
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(_SVG_STUB, encoding="utf-8")
+        return subprocess.CompletedProcess(cmd, returncode=0, stdout="", stderr="")
+
+    demo = {"bg_color": "#4A90D9"}
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "avatar.svg"
+        with patch(
+            "avatar_studio.pipeline.step_d_make_toon_head.subprocess.run",
+            side_effect=_capture,
+        ):
+            create_toon_head_avatar("Demo Person", out, size=64, demographics=demo)
+
+    assert "--options" in captured_cmd
+    options_idx = captured_cmd.index("--options")
+    opts = json.loads(captured_cmd[options_idx + 1])
+    assert opts.get("backgroundColor") == ["4A90D9"]
+
+
+def test_create_toon_head_avatar_no_options_when_no_demographics():
+    """Without demographics, --options must not appear in the command."""
+    captured_cmd = []
+
+    def _capture(cmd, **kwargs):
+        import subprocess
+
+        captured_cmd.extend(cmd)
+        out_path = None
+        for i, arg in enumerate(cmd):
+            if arg == "--out" and i + 1 < len(cmd):
+                out_path = Path(cmd[i + 1])
+                break
+        if out_path:
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(_SVG_STUB, encoding="utf-8")
+        return subprocess.CompletedProcess(cmd, returncode=0, stdout="", stderr="")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "avatar.svg"
+        with patch(
+            "avatar_studio.pipeline.step_d_make_toon_head.subprocess.run",
+            side_effect=_capture,
+        ):
+            create_toon_head_avatar("No Demo", out, size=64)
+    assert "--options" not in captured_cmd
+
+
+def test_create_toon_head_avatar_node_error_raises():
+    """A non-zero exit from Node.js must raise CalledProcessError."""
+    import subprocess
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "avatar.svg"
+        with _patch_node(returncode=1):
+            with pytest.raises(subprocess.CalledProcessError):
+                create_toon_head_avatar("Error Case", out, size=64)

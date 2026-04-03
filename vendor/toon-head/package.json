@@ -1,0 +1,14 @@
+{
+  "name": "@avatar-studio/toon-head",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vendored DiceBear big-smile avatar generator used as the ToonHead step in Avatar Studio.",
+  "license": "MIT",
+  "scripts": {
+    "generate": "node generate.js"
+  },
+  "dependencies": {
+    "@dicebear/core": "^9.4.2",
+    "@dicebear/big-smile": "^9.4.2"
+  }
+}

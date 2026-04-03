@@ -34,7 +34,7 @@ graph LR
     A["A · Randomise Person"]:::code
     B["B · Generate CV"]:::llmText
     C["C · Select Features"]:::llmText
-    D["D · Abbreviation Avatar"]:::pil
+    D["D · Abbreviation + ToonHead"]:::pil
     E["E · Canonical Portrait"]:::llmImage
     F["F · Expression Variants"]:::llmImage
     G["G · Postprocess"]:::pil
@@ -52,7 +52,7 @@ graph LR
 | **A** | `pipeline/step_a_randomise_person.py` | Random demographics, name, phenotype colors | ❌ |
 | **B** | `pipeline/step_b_generate_cv.py` | Education, experience, traits from role | ✅ text |
 | **C** | `pipeline/step_c_select_features.py` | Hair style, clothing, accessories per-field | ✅ text |
-| **D** | `pipeline/step_d_make_abbreviation.py` | Initials on colored circle (PIL) | ❌ |
+| **D** | `pipeline/step_d_make_abbreviation.py` + `pipeline/step_d_make_toon_head.py` | Initials PNG (PIL) + ToonHead SVG (DiceBear, Node) | ❌ |
 | **E** | `pipeline/step_ef_generate_image.py` | Neutral portrait from full persona | ✅ image |
 | **F** | `pipeline/step_ef_generate_image.py` | Expression variants from neutral reference | ✅ image |
 | **G** | `pipeline/step_g_postprocess.py` | Circle frame sticker composite (PIL + rembg) | ❌ |
@@ -75,9 +75,12 @@ Calls a text LLM once to produce `education`, `experience`, `traits`. Retries up
 
 One LLM call per field: `HAIR_STYLE`, `CLOTHING` (dict), `ACCESSORIES` (dict). Phenotype fields are pre-seeded from Stage A demographics — no LLM needed for them. Context accumulates across fields so each pick is consistent with the emerging persona.
 
-### Stage D — Abbreviation Avatar
+### Stage D — Abbreviation + ToonHead Avatars
 
-PIL renders initials on a WCAG-AA-compliant colored circle. Fully deterministic; no network calls.
+Two fast, code-only avatars are generated in parallel before any LLM call:
+
+1. **Abbreviation** — PIL renders initials on a WCAG-AA-compliant colored circle. Deterministic; no network calls. Output: `<slug>-abbreviation.png`.
+2. **ToonHead** — DiceBear `big-smile` style SVG, generated via `vendor/toon-head/generate.js` (Node.js subprocess). Seed = person name → same name always produces the same avatar. Output: `<slug>-toon-head.svg`. ToonHead failure is non-fatal; the pipeline continues without it.
 
 ### Stage E — Canonical Portrait
 
@@ -105,6 +108,7 @@ src/avatar_studio/
 │   ├── step_b_generate_cv.py
 │   ├── step_c_select_features.py
 │   ├── step_d_make_abbreviation.py
+│   ├── step_d_make_toon_head.py
 │   ├── step_ef_generate_image.py
 │   └── step_g_postprocess.py
 ├── api/
@@ -142,7 +146,7 @@ sequenceDiagram
     participant Client
     participant StepA as Step A<br>(randomise)
     participant StepBC as Steps B+C<br>(text LLM)
-    participant StepD as Step D<br>(PIL)
+    participant StepD as Step D<br>(PIL + Node)
     participant StepEF as Steps E+F<br>(image LLM)
     participant StepG as Step G<br>(PIL + rembg)
 
@@ -150,7 +154,7 @@ sequenceDiagram
     StepA-->>StepBC: demographics dict
     StepBC-->>StepEF: avatar_persona.yml
     StepA-->>StepD: bg_color, name
-    StepD-->>Client: abbreviation.png
+    StepD-->>Client: abbreviation.png + toon-head.svg
     StepEF-->>StepG: neutral.png, expression_N.png
     StepG-->>Client: framed PNGs
 ```

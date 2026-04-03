@@ -27,6 +27,20 @@ else
   exit 1
 fi
 
+if command -v node &>/dev/null; then
+  printf "  %-10s %s\n" "node" "$(node --version)"
+else
+  echo "  ✗ node not found — Node.js >= 18 is required."
+  echo "      Install from https://nodejs.org/ or via your package manager."
+  exit 1
+fi
+
+node_major=$(node --version | sed 's/v//' | cut -d. -f1)
+if [ "$node_major" -lt 18 ]; then
+  echo "  ✗ Node.js $(node --version) found, but >= 18 is required."
+  exit 1
+fi
+
 # ── Version checks ────────────────────────────────────────────────────
 py_ver=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
 py_major=$(echo "$py_ver" | cut -d. -f1)
@@ -66,6 +80,16 @@ echo "Installing Python dependencies …"
 
 # ── local/ directory ──────────────────────────────────────────────────
 mkdir -p "$ROOT/local"
+
+# ── Node vendor dependencies ──────────────────────────────────────────
+echo ""
+echo "Installing Node.js vendor dependencies …"
+if [ ! -f "$ROOT/vendor/toon-head/package-lock.json" ]; then
+  echo "  ✗ vendor/toon-head/package-lock.json not found."
+  exit 1
+fi
+(cd "$ROOT/vendor/toon-head" && npm ci --silent)
+echo "  vendor/toon-head  ✓"
 
 # ── Git hooks ─────────────────────────────────────────────────────────
 echo ""
