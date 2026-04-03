@@ -14,16 +14,16 @@ from pathlib import Path
 import pytest
 import yaml
 
-from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
-from avatar_studio.pipeline.step_b_generate_cv import generate_advisor_profile
-from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
-from avatar_studio.pipeline.step_d_make_abbreviation import apply_circle_frame
-from avatar_studio.pipeline.step_ef_generate_image import (
+from pipeline.step_a_randomise_person import pick_demographics
+from pipeline.step_b_generate_cv import generate_advisor_profile
+from pipeline.step_c_select_features import build_avatar_charachter, select_features
+from pipeline.step_d_make_abbreviation import apply_circle_frame
+from pipeline.step_ef_generate_image import (
     EXPRESSIONS_YML,
     STYLES_YML,
     generate_avatar_image,
 )
-from avatar_studio.tuning.classify_persona import categorize_avatar_image
+from tuning.classify_persona import categorize_avatar_image
 
 pytestmark = [pytest.mark.avatar, pytest.mark.integration]
 

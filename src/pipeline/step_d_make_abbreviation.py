@@ -7,7 +7,7 @@ from pathlib import Path
 import rembg
 from PIL import Image, ImageDraw, ImageFont, PngImagePlugin
 
-from avatar_studio.config.config import SETTINGS, _color_for_name, _hex_to_rgb, _initials
+from config.config import SETTINGS, _color_for_name, _hex_to_rgb, _initials
 
 logger = logging.getLogger(__name__)
 

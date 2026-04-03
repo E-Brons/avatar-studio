@@ -42,17 +42,17 @@ from pathlib import Path
 
 import yaml
 
-from avatar_studio.config.config import SETTINGS
-from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
-from avatar_studio.pipeline.step_b_generate_cv import generate_advisor_profile
-from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
-from avatar_studio.pipeline.step_ef_generate_image import (
+from config.config import SETTINGS
+from pipeline.step_a_randomise_person import pick_demographics
+from pipeline.step_b_generate_cv import generate_advisor_profile
+from pipeline.step_c_select_features import build_avatar_charachter, select_features
+from pipeline.step_ef_generate_image import (
     EXPRESSION_IDS,
     EXPRESSIONS_YML,
     STYLES_YML,
     generate_avatar_image,
 )
-from avatar_studio.tuning.classify_expression import (
+from tuning.classify_expression import (
     ExpressionClassificationResult,
     classify_image_expression,
     semantic_effective_score,
@@ -680,7 +680,7 @@ def main() -> None:
     # Output dir — timestamped session subfolder.
     from datetime import datetime
 
-    from avatar_studio.config.config import _name_to_filename
+    from config.config import _name_to_filename
 
     base_dir = Path(args.tmp_dir) if args.tmp_dir else Path("/tmp/avatar_studio")
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")

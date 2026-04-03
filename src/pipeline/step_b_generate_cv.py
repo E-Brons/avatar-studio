@@ -5,8 +5,8 @@ import re
 
 import yaml
 
-from avatar_studio.config.config import SETTINGS
-from avatar_studio.config.gateway import GatewayClient
+from config.config import SETTINGS
+from config.gateway import GatewayClient
 
 logger = logging.getLogger(__name__)
 

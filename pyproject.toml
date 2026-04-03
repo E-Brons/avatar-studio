@@ -14,10 +14,10 @@ dependencies = [
 ]
 
 [project.scripts]
-avatar-studio = "avatar_studio.api.cli:main"
-avatar-style-tuner = "avatar_studio.tuning.style_tuner:main"
-avatar-expression-tuner = "avatar_studio.tuning.expression_tuner:main"
-avatar-expression-autotuner = "avatar_studio.tuning.expression_autotuner:main"
+avatar-studio = "api.cli:main"
+avatar-style-tuner = "tuning.style_tuner:main"
+avatar-expression-tuner = "tuning.expression_tuner:main"
+avatar-expression-autotuner = "tuning.expression_autotuner:main"
 
 [project.optional-dependencies]
 dev = [
@@ -28,10 +28,9 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["avatar_studio*"]
+include = ["config*", "pipeline*", "api*", "tuning*"]
 
 [tool.setuptools.package-data]
-"avatar_studio" = ["py.typed"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

@@ -5,7 +5,7 @@ running LLM Gateway server with a vision-capable model.
 
 Usage
 -----
-    from avatar_studio.tuning.classify_persona import categorize_avatar_image, CategoryReport
+    from tuning.classify_persona import categorize_avatar_image, CategoryReport
 
     report = categorize_avatar_image(
         image_bytes,
@@ -24,8 +24,8 @@ from dataclasses import dataclass, field
 
 import yaml
 
-from avatar_studio.config.config import SETTINGS
-from avatar_studio.config.gateway import GatewayClient
+from config.config import SETTINGS
+from config.gateway import GatewayClient
 
 logger = logging.getLogger(__name__)
 

@@ -10,13 +10,13 @@ from pathlib import Path
 import requests
 import yaml
 
-from avatar_studio.config.config import SETTINGS, _slug
-from avatar_studio.pipeline.step_a_randomise_person import pick_demographics as _pick_demographics
-from avatar_studio.pipeline.step_d_make_abbreviation import (
+from config.config import SETTINGS, _slug
+from pipeline.step_a_randomise_person import pick_demographics as _pick_demographics
+from pipeline.step_d_make_abbreviation import (
     DEFAULT_SIZE,
     create_abbreviation_avatar,
 )
-from avatar_studio.pipeline.step_ef_generate_image import (
+from pipeline.step_ef_generate_image import (
     EXPRESSION_IDS,
     create_face_avatar,
 )
@@ -59,7 +59,7 @@ def _resolve_default_model(
 
 
 def _load_expression_ids() -> list[str]:
-    from avatar_studio.pipeline.step_ef_generate_image import _load_expression_ids as _lei
+    from pipeline.step_ef_generate_image import _load_expression_ids as _lei
 
     return _lei()
 
@@ -137,4 +137,4 @@ def process_advisor(
 
 
 # Re-exports for backward compatibility
-from avatar_studio.pipeline.step_d_make_abbreviation import DEFAULT_SIZE  # noqa: E402
+from pipeline.step_d_make_abbreviation import DEFAULT_SIZE  # noqa: E402
