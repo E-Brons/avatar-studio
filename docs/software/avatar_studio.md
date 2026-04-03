@@ -31,168 +31,146 @@ The API exposes stateless HTTP endpoints. Each endpoint performs a single, well-
 
 ## 2. API Services
 
-### 2.1 Endpoints
+Two API layers exist side-by-side:
 
-#### `GET /api/avatar/config`
+| Layer | Module | Purpose |
+|-------|--------|---------|
+| **HTTP server** | `api/http_server.py` | FastAPI on port 8080 — drives the Flutter web UI |
+| **CLI backend** | `api/server.py` | `process_advisor()` used by the `avatar-studio` CLI |
 
-Returns avatar studio capabilities and LLM configuration.
+### 2.1 HTTP Server Endpoints (`api/http_server.py`)
 
-**Response:**
-```json
-{
-  "max_concurrent_requests": 2,
-  "text_model": "llama3.1:8b",
-  "image_model": "stable-diffusion-xl",
-  "expression_ids": ["neutral", "happy", "thoughtful", "..."]
-}
-```
+#### `GET /health`
 
-> `max_concurrent_requests` — the maximum number of parallel image-generation
-> requests the backend can handle. The caller MUST respect this limit when
-> scheduling work.
+Liveness check.
+
+**Response:** `{"status": "ok"}`
 
 ---
 
-#### `GET /api/ollama/models?ollama_url=...`
+#### `GET /api/config`
 
-Returns available Ollama models, categorized by capability (text vs image).
-This is a shared endpoint — not avatar-specific.
+Returns all attribute definitions used to build the UI dynamically. Reads `assets/persona/attributes.yml` and resolves each `source:` reference into a typed option list. Fast — no LLM call.
 
-**Response:**
+**Response (abbreviated):**
 ```json
 {
-  "text_models": ["llama3.1:8b", "..."],
-  "image_models": ["sd-xl:latest", "..."],
-  "default_text_model": "llama3.1:8b",
-  "default_image_model": "sd-xl:latest"
+  "attributes": [
+    {
+      "id": "gender",
+      "label": "Gender",
+      "category": "demographics",
+      "type": "choice",
+      "selection_modes": [{"id": "random", "label": "Random"}, {"id": "select", "label": "Select"}],
+      "default_mode": "random",
+      "options": [{"id": "male", "label": "Male"}, ...]
+    },
+    {
+      "id": "hair_color",
+      "type": "dual_color",
+      "field_names": ["hex_base", "hex_shadow"],
+      "options": [{"id": "#3B2314 #261508", "extra": {"hex_base": "#3B2314", "hex_shadow": "#261508"}}, ...]
+    },
+    ...
+  ]
 }
 ```
 
 ---
 
-#### `POST /api/avatar/rand`
+#### `POST /api/avatar/randomize`
 
-Executes Step A (randomise demographics) + optional Step B (generate
-profile when education/experience/traits are empty) + Step C (LLM feature
-selection). Returns the full `avatar_persona` dict including the LLM-generated NAME.
+Runs Step A (`pick_demographics`) and applies any fixed constraints. Returns resolved attribute values without calling any LLM.
 
 **Request:**
 ```json
 {
-  "role": "Financial Analyst",
-  "education": [],
-  "experience": [],
-  "traits": [],
-  "text_model": "llama3.1:8b",
-  "text_model_api_base": null
+  "constraints": [{"id": "gender", "mode": "select", "value": "female"}],
+  "seed": null
 }
 ```
-
-> When `education`, `experience`, and `traits` are all empty (or omitted),
-> the backend generates them via LLM from the role. This supports the
-> multi-candidate flow where the caller provides only a role.
 
 **Response:**
 ```json
 {
-  "avatar_persona": { "personal": { "name": "Elena Vasquez", "...": "..." }, "...": "..." },
-  "demographics": { "gender": "female", "age": 34, "frame_bg_color": "#4A90D9" },
-  "model": "llama3.1:8b",
-  "duration_ms": 1200
+  "values": {
+    "gender": "female",
+    "age": 34,
+    "skin_tone": "#E8C49A",
+    "hair_color": "#D4A055 #B8873F",
+    "brows_color": "#946F3A",
+    "eye_shape": "almond",
+    ...
+  }
 }
 ```
 
 ---
 
-#### `POST /api/avatar/image`
+#### `POST /api/avatar/generate`
 
-Generates a single avatar image (portrait, abbreviation, or expression).
+Runs the full pipeline (Steps A→B→C→E, neutral portrait only for MVP) in a thread executor. Returns a base64 PNG plus the full `avatar_persona` dict.
 
 **Request:**
 ```json
 {
-  "type": "neutral | abbreviation | expression",
-  "expression_id": "happy",
-  "avatar_persona": { "...": "..." },
-  "ollama_url": "http://localhost:11434",
-  "ollama_model": "sd-xl:latest",
-  "width": 512,
-  "height": 512,
-  "portrait_base64": null
+  "selections": [{"id": "gender", "mode": "select", "value": "female"}],
+  "expressions": ["neutral"],
+  "width": 256,
+  "height": 256,
+  "seed": null
 }
 ```
-
-- `type: "abbreviation"` — generates the circular initials PNG from `avatar_persona.personal.name`. No LLM call. Requires `avatar_persona`.
-- `type: "neutral"` — generates the canonical portrait. Requires `avatar_persona`.
-- `type: "expression"` — generates an expression variant. Requires `avatar_persona`, `expression_id`, and `portrait_base64` (the neutral image, used as reference).
 
 **Response:**
 ```json
 {
-  "image": "<base64 PNG>",
-  "prompt": "...",
-  "model": "sd-xl:latest",
-  "duration_ms": 25000
+  "image_b64": "<base64 PNG>",
+  "avatar_persona": {"personal": {...}, "advisor": {...}, "appearance": {...}},
+  "expressions": {"neutral": "<base64 PNG>"},
+  "session_id": "uuid"
 }
 ```
 
 ---
 
-#### `GET /api/avatar/expressions`
+#### `WS /api/ws/keepalive`
 
-Returns the list of available expression IDs.
-
-**Response:**
-```json
-{
-  "expressions": ["neutral", "happy", "thoughtful", "stressed", "..."]
-}
-```
+Browser presence channel. Each Flutter tab connects here on startup and holds the connection open (server sends a `"ping"` every 15 s). When `AVATAR_BROWSER_SHUTDOWN=1`, the server self-terminates 8 s after the last connection drops.
 
 ---
 
-### 2.2 Sequence Diagram
+### 2.2 Sequence Diagram (HTTP Server)
 
 ```mermaid
 sequenceDiagram
-    participant C as Caller
-    participant BE as Backend
-    participant TXT as Text LLM (Gateway)
-    participant IMG as Image LLM (Gateway)
+    participant B as Browser (Flutter)
+    participant S as HTTP Server
+    participant P as Pipeline (A→E)
+    participant G as LLM Gateway
 
-    C->>BE: GET /api/avatar/config
-    BE-->>C: { max_concurrent_requests: N, ... }
+    B->>S: GET /api/config
+    S-->>B: 19 attributes + resolved options
 
-    par up to 4 candidates in parallel
-        loop Each candidate
-            C->>BE: POST /api/avatar/rand { role }
-            BE->>TXT: B: Generate profile (education, experience, traits)
-            TXT-->>BE: profile YAML
-            BE->>TXT: C: LLM feature selection (per-field)
-            TXT-->>BE: features + NAME
-            BE-->>C: { avatar_persona, demographics }
+    B->>S: POST /api/avatar/randomize {constraints}
+    S-->>B: {values: {gender, age, skin_tone, ...}}
 
-            par abbreviation ∥ neutral
-                C->>BE: POST /api/avatar/image { type: "abbreviation" }
-                BE-->>C: { image: "<abbr_b64>" }
-            and
-                C->>BE: POST /api/avatar/image { type: "neutral" }
-                BE->>IMG: image_gen (prompt + style)
-                IMG-->>BE: PNG bytes
-                BE-->>C: { image: "<portrait_b64>" }
-            end
-        end
-    end
-
-    Note over C: Caller selects one candidate
-
-    loop Each expression (up to N concurrent)
-        C->>BE: POST /api/avatar/image { type: "expression", expression_id }
-        BE->>IMG: image_gen (prompt + reference image)
-        IMG-->>BE: PNG bytes
-        BE-->>C: { image: "<expr_b64>", duration_ms }
-    end
+    B->>S: POST /api/avatar/generate {selections}
+    S->>P: pick_demographics() + apply overrides
+    P->>G: Step B text_gen (advisor profile)
+    G-->>P: education / experience / traits
+    P->>G: Step C text_gen (hair, clothing, accessories)
+    G-->>P: features
+    P->>G: Step E image_gen (neutral portrait)
+    G-->>P: PNG bytes
+    S-->>B: {image_b64, avatar_persona, session_id}
 ```
+
+---
+
+### 2.3 Old CLI Endpoints (`api/server.py`)
+
+`process_advisor()` is the end-to-end function used by the `avatar-studio generate` CLI command. See `docs/software/architecture.md §7` for CLI sub-commands.
 
 ---
 
@@ -433,3 +411,51 @@ and writes a structured report. Session artifacts are written to
 following the same folder hierarchy as the main pipeline (§5), including
 `persona.yml`, `style.yml`, `expression.yml`, `reference_person.png`,
 `prompt.txt`, `output.png`, and `session.log`.
+
+### `expression_tuner.py`
+
+Runs a **generate → classify → report** loop for iterating expression prompts
+(FACS labels and descriptions in `assets/expressions/expressions.yml`).
+
+#### Image generation parameters
+
+| Flag | Default | Notes |
+|---|---|---|
+| `--width` / `--height` | 256 | Passed to gateway `image_gen`; honours flexible resolution (64–2048) |
+| `--optimize` | `normal` | `fast` halves generation time (~12s vs ~27s) with acceptable quality loss for tuning; `quality` for final evaluation |
+
+**Recommended tuning settings** (latency-first):
+
+```bash
+.venv/bin/avatar-expression-tuner \
+  --expression all --style photorealistic \
+  --gender all --runs 3 \
+  --width 256 --height 256 --optimize fast
+```
+
+#### Style benchmark (2026-04-03)
+
+Full 75-image run (5 expressions × 5 styles × 3 genders × 1 run):
+
+| Style | Pass rate | Avg gen time |
+|---|---|---|
+| **photorealistic** | **60%** | **25s** |
+| lineart | 60% | 30s |
+| clay | 40% | 29s |
+| studio_3d | 33% | 27s |
+| korean | 0% | 26s |
+
+**Decision**: `photorealistic` is the canonical style for expression tuning — best pass rate
+and fastest generation time. Korean style is excluded from tuning runs because the flat
+rendering suppresses all emotional cues (0% pass, structural).
+
+#### Parallel image generation
+
+The tuner submits all images for a given `(expression × style × genders × runs)` batch
+to a `ThreadPoolExecutor(max_workers=3)`, matching the gateway's `parallel.ollama = 3`
+setting in `llm_gateway/settings.json`. Classification remains sequential after all images
+in the batch are collected.
+
+> **Note**: Ollama processes GPU work serially regardless of concurrent HTTP requests —
+> parallelism here improves throughput only when a truly parallel backend
+> (multiple Ollama instances or a hosted API) is used. The code is ready for that.
