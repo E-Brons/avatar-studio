@@ -458,16 +458,26 @@ def _run_tuning_pass(
                 _out_path = tmp_dir / f"{expr_id}_{_style_id}_{_gender}_{_run_seed}.png"
                 logger.info(
                     "[ExprTuner] START — expr=%s, style=%s, gender=%s (seed=%s)",
-                    expr_id, _style_id, _gender, _run_seed,
+                    expr_id,
+                    _style_id,
+                    _gender,
+                    _run_seed,
                 )
                 with _print_lock:
                     print(f"  generating {_gender} / {_style_id}…", end=" ", flush=True)
                 _img_bytes, _ = _generate_for_expression(
-                    expr_id, style, _gender, seed=_run_seed,
-                    gateway_url=gateway_url, width=width, height=height,
+                    expr_id,
+                    style,
+                    _gender,
+                    seed=_run_seed,
+                    gateway_url=gateway_url,
+                    width=width,
+                    height=height,
                     optimize=optimize,
-                    out_path=_out_path, session_dir=_session_subdir,
-                    avatar=_avatar, hard_type_gender=hard_type_gender,
+                    out_path=_out_path,
+                    session_dir=_session_subdir,
+                    avatar=_avatar,
+                    hard_type_gender=hard_type_gender,
                 )
                 logger.info("[ExprTuner] DONE  — %s", _out_path)
                 with _print_lock:
@@ -477,8 +487,7 @@ def _run_tuning_pass(
             gen_results: list[tuple | Exception] = [None] * len(iterations)
             with ThreadPoolExecutor(max_workers=_GATEWAY_MAX_PARALLEL) as pool:
                 future_to_idx = {
-                    pool.submit(_gen_one, (i, g, s, a)): i
-                    for i, (g, s, a) in enumerate(iterations)
+                    pool.submit(_gen_one, (i, g, s, a)): i for i, (g, s, a) in enumerate(iterations)
                 }
                 for fut in as_completed(future_to_idx):
                     i = future_to_idx[fut]
