@@ -14,7 +14,8 @@
 4. [Data Flow](#4-data-flow)
 5. [LLM Usage](#5-llm-usage)
 6. [Tuning System](#6-tuning-system)
-7. [API Layer](#7-api-layer)
+7. [HTTP Server](#7-http-server-aphttp_serverpy)
+8. [Flutter Web UI](#8-flutter-web-ui)
 
 ---
 
@@ -67,7 +68,9 @@ src/
 │   ├── step_ef_generate_image.py
 │   └── step_g_postprocess.py
 ├── api/
-│   ├── server.py            # process_advisor, model resolution helpers
+│   ├── config_loader.py     # Loads attributes.yml; resolves source: refs → option lists
+│   ├── http_server.py       # FastAPI HTTP server (port 8080); browser-shutdown WS
+│   ├── server.py            # process_advisor, model resolution helpers (CLI backend)
 │   └── cli.py               # CLI entry point (avatar-studio command)
 └── tuning/
     ├── classify_expression.py
@@ -79,14 +82,29 @@ assets/
 ├── expressions/
 │   └── expressions.yml               # Expression definitions: FACS, synonyms, descriptions
 ├── persona/
+│   ├── attributes.yml                # Master UI attribute definitions (19 attrs)
 │   ├── cv_settings.json              # Step B: LLM params + CV schema
 │   ├── phenotype_settings.json       # Step A: age groups, names, phenotype options, palette
 │   └── presentation_settings.json   # Step C: LLM params + hair/clothing/accessories options
 └── styles/
     ├── styles.yml                    # Style definitions: system prompts, technical traits
     └── avatar_style_<style>_<gender>.png  # 15 reference PNGs (5 styles × 3 genders)
+frontend/                             # Flutter web app
+├── lib/
+│   ├── main.dart / app.dart          # Entry point + ProviderScope + KeepaliveService
+│   ├── core/api/                     # API client (Dio), models, keepalive WebSocket
+│   ├── core/config/                  # Server URL constant
+│   ├── core/theme/                   # Material theme
+│   ├── features/
+│   │   ├── config/providers/         # configProvider → GET /api/config
+│   │   └── avatar/                   # selectionsNotifier, generateNotifier, main screen
+│   └── widgets/
+│       ├── attribute_panel/          # AttributePanel, ModeSelector, content widgets
+│       └── avatar_preview/           # AvatarPreviewPane, GenerationProgress
+└── web/                              # Web-only platform assets (index.html, manifest)
 tests/
 ├── conftest.py
+├── test_api.py                   # ConfigLoader + http_server helpers (no services)
 ├── test_avatar_features.py       # Step B/C: LLM mocks, feature selection
 ├── test_avatar_integration.py    # Integration tests (require OLLAMA_URL)
 └── test_avatar_stages.py         # Step A/D/E/F: randomise, PIL, create_face_avatar
@@ -166,9 +184,58 @@ Pass: classifier top expression matches label (exact or semantic), probability �
 
 ---
 
-## 7. API Layer
+## 7. HTTP Server (`api/http_server.py`)
 
-`api/server.py` provides `process_advisor()` — the end-to-end function used by the CLI and the dashboard's FastAPI integration.
+`api/http_server.py` is a **FastAPI application** (port 8080) that wraps the pipeline for use by the Flutter web UI and any HTTP client.
+
+### Endpoints
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| `GET` | `/health` | Liveness check → `{"status": "ok"}` |
+| `GET` | `/api/config` | Returns all 19 attribute definitions with resolved options (fast, no LLM) |
+| `POST` | `/api/avatar/randomize` | Runs Step A + applies constraint overrides → resolved attribute values |
+| `POST` | `/api/avatar/generate` | Full A→E pipeline in thread executor → base64 PNG + `avatar_persona` |
+| `WS` | `/api/ws/keepalive` | Browser presence channel; drives auto-shutdown |
+
+### Configuration loading (`api/config_loader.py`)
+
+`ConfigLoader.load()` reads `assets/persona/attributes.yml` (19 attribute definitions) and resolves each attribute's `source:` field into a typed option list:
+
+| Source type | Resolution |
+|-------------|-----------|
+| `phenotype_settings.json:skin_tones` | Flat list → `[{id, label}]` color options |
+| `phenotype_settings.json:hair_colors` | `"#BASE #SHADOW"` pairs → dual_color options with `extra.hex_base / hex_shadow` |
+| `phenotype_settings.json:brows_styles` | Gender-bucketed dict → all items tagged `extra.gender_bucket` |
+| `phenotype_settings.json:age_groups` | Named ranges → `[{id, label, extra:{min,max}}]` |
+| `styles.yml:styles` | Style entries → `[{id, label, extra:{description, example_images}}]` |
+| `presentation_settings.json:hair_styles` | Gender-bucketed dict → items tagged `extra.gender_bucket` |
+
+### Browser auto-shutdown
+
+When launched with `AVATAR_BROWSER_SHUTDOWN=1` (set by `scripts/start_http_server.sh`), the server terminates itself when all browser sessions disconnect:
+
+1. Each browser tab connects to `WS /api/ws/keepalive` on app start
+2. A background task (`_shutdown_watcher`) watches `_active_sessions`
+3. When the set empties, it waits `AVATAR_SHUTDOWN_GRACE` seconds (default 8 s) to tolerate page reloads
+4. If still empty → `os.kill(os.getpid(), signal.SIGTERM)` → uvicorn exits cleanly
+
+### Attribute ID mapping
+
+Pipeline functions use `UPPER_CASE` keys (`SKIN_TONE`, `HAIR_COLOR`, …). The HTTP layer maps to/from `snake_case` attribute IDs via `_ATTR_TO_DEMO_KEY`. `BROWS_COLOR` is always re-derived from the `hair_color` base hex when `hair_color` is overridden.
+
+### Starting the server
+
+```bash
+bash scripts/start_http_server.sh   # starts + opens browser + shuts down on close
+# or manually:
+AVATAR_BROWSER_SHUTDOWN=1 .venv/bin/uvicorn api.http_server:app \
+    --host 127.0.0.1 --port 8080 --app-dir src
+```
+
+### Old CLI API layer
+
+`api/server.py` provides `process_advisor()` — used by the CLI and earlier integrations.
 
 `api/cli.py` exposes three sub-commands via the `avatar-studio` entry point:
 
@@ -177,3 +244,49 @@ Pass: classifier top expression matches label (exact or semantic), probability �
 | `stage-b` | Run Step B only (LLM feature selection), print YAML |
 | `generate` | Full A→G pipeline for one or more advisor YAML files |
 | `gen-examples` | Generate style reference portraits (all styles × genders) |
+
+---
+
+## 8. Flutter Web UI
+
+The Flutter web app (`frontend/`) provides an interactive browser UI for avatar creation. It talks exclusively to the FastAPI server on `http://127.0.0.1:8080`.
+
+### State flow
+
+```
+App start
+  └─ configProvider → GET /api/config
+        └─ Renders all 19 AttributePanel widgets grouped by category
+
+User adjusts attributes (ModeSelector: 🎲 random | 🤖 llm | ✏️ select | 🔗 inherited)
+  └─ selectionsNotifier.setSelection(id, mode, value)
+        └─ if gender changed → reset all depends_on:gender attrs to random
+
+🎲 Randomize button (AppBar)
+  └─ POST /api/avatar/randomize { constraints }
+        └─ selectionsNotifier.applyRandomizeResult(values)
+              └─ fills random-mode attrs with grayed preview values
+
+✨ Generate FAB
+  └─ generateNotifier.generate()
+        └─ POST /api/avatar/generate { selections, expressions:["neutral"] }
+              └─ AvatarPreviewPane shows shimmer → decoded PNG + PersonaSummary
+```
+
+### Key files
+
+| File | Role |
+|------|------|
+| `core/config/app_config.dart` | `kApiBaseUrl` constant |
+| `core/api/api_models.dart` | Plain Dart classes mirroring Pydantic models |
+| `core/api/avatar_api_client.dart` | Dio HTTP client wrapper |
+| `core/api/keepalive_service.dart` | WS connection to `/api/ws/keepalive`; holds connection open for browser-shutdown detection |
+| `features/config/providers/config_provider.dart` | `FutureProvider` → `GET /api/config` |
+| `features/avatar/providers/selections_provider.dart` | `StateNotifier` — all current selections + gender-dep reset |
+| `features/avatar/providers/generate_provider.dart` | `AsyncNotifier` — wraps `POST /api/avatar/generate` |
+| `features/avatar/screens/avatar_studio_screen.dart` | Root screen: split-pane layout |
+| `widgets/attribute_panel/attribute_panel.dart` | Per-attribute card + mode selector + content widget |
+| `widgets/attribute_panel/mode_selector.dart` | Segmented button (🎲 🤖 ✏️ 🔗) |
+| `widgets/attribute_panel/content/*.dart` | Choice / color / dual_color / integer / text / list widgets |
+| `widgets/avatar_preview/avatar_preview_pane.dart` | Base64 image display + PersonaSummary collapsible |
+| `widgets/avatar_preview/generation_progress.dart` | Shimmer placeholder during generation |
