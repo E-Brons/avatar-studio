@@ -99,7 +99,7 @@ One Ollama image model call per expression. Sends the Stage E portrait as a refe
 ## 3. Package Structure
 
 ```
-src/avatar_studio/
+src/
 ├── config/
 │   ├── config.py           # Settings, WCAG utils, color helpers
 │   └── gateway.py          # LLM Gateway client

@@ -1,4 +1,4 @@
-#! python3
+#! .venv/bin/python
 """Expression tuning agent — generate → classify → report loop.
 
 Generates avatar portraits with a fixed persona but varying expressions, then
@@ -37,22 +37,24 @@ import argparse
 import logging
 import random as _random
 import sys
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import yaml
 
-from avatar_studio.config.config import SETTINGS
-from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
-from avatar_studio.pipeline.step_b_generate_cv import generate_advisor_profile
-from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
-from avatar_studio.pipeline.step_ef_generate_image import (
+from config.config import SETTINGS
+from pipeline.step_a_randomise_person import pick_demographics
+from pipeline.step_b_generate_cv import generate_advisor_profile
+from pipeline.step_c_select_features import build_avatar_charachter, select_features
+from pipeline.step_ef_generate_image import (
     EXPRESSION_IDS,
     EXPRESSIONS_YML,
     STYLES_YML,
     generate_avatar_image,
 )
-from avatar_studio.tuning.classify_expression import (
+from tuning.classify_expression import (
     ExpressionClassificationResult,
     classify_image_expression,
     semantic_effective_score,
@@ -99,6 +101,8 @@ def _flush_litellm_pool() -> None:
 _DEFAULT_SEED = None  # None = fully random seeds per run
 _DEFAULT_RUNS = 1
 _WATCH_POLL_SECONDS = 2
+_GATEWAY_MAX_PARALLEL = 3  # matches llm_gateway/settings.json parallel.ollama
+_print_lock = threading.Lock()
 
 
 # ---------------------------------------------------------------------------
@@ -136,10 +140,10 @@ def _generate_for_expression(
     gender: str,
     seed: int,
     *,
-    ollama_url: str,
-    image_model: str,
+    gateway_url: str,
     width: int,
     height: int,
+    optimize: str = "normal",
     out_path: Path,
     session_dir: Path | None = None,
     avatar: dict | None = None,
@@ -174,10 +178,10 @@ def _generate_for_expression(
         persona_path,
         style={"name": style["id"], "bg_color": bg_color, "styles_yml": STYLES_YML},
         expression={"name": expression_id, "expressions_yml": EXPRESSIONS_YML},
-        ollama_url=ollama_url,
-        model=image_model,
+        gateway_url=gateway_url,
         width=width,
         height=height,
+        optimize=optimize,
         seed=seed,
         out_path=out_path,
         session_dir=artifact_dir,
@@ -310,7 +314,7 @@ def _resolve_options(
 def _generate_diverse_personas(
     genders: list[str],
     base_seed: int | None,
-    text_model: str,
+    gateway_url: str,
     tmp_dir: Path,
     *,
     advisor_role: str = "Financial Advisor",
@@ -332,13 +336,13 @@ def _generate_diverse_personas(
                 cv = generate_advisor_profile(
                     advisor_role,
                     demographics,
-                    ollama_text_model=text_model,
+                    gateway_url=gateway_url,
                 )
                 advisor = {**advisor, **cv}
                 features = select_features(
                     demographics,
                     advisor,
-                    ollama_text_model=text_model,
+                    gateway_url=gateway_url,
                     hard_type_gender=hard_type_gender,
                 )
             except Exception as exc:
@@ -377,10 +381,7 @@ def _run_tuning_pass(
     *,
     styles: list[dict],
     random_style: bool = False,
-    ollama_url: str,
-    image_model: str,
-    visual_model: str,
-    text_model: str,
+    gateway_url: str,
     genders: list[str],
     random_gender: bool = False,
     random_expression: bool = False,
@@ -389,6 +390,7 @@ def _run_tuning_pass(
     seed: int | None,
     width: int,
     height: int,
+    optimize: str = "normal",
     tmp_dir: Path,
     gender_personas: dict[str, dict] | None = None,
     hard_type_gender: bool = False,
@@ -444,40 +446,64 @@ def _run_tuning_pass(
                     for run_idx in range(runs)
                 ]
 
-            for iter_idx, (gender, run_seed, avatar) in enumerate(iterations):
-                session_subdir = tmp_dir / f"{expr_id}_{style_id}_{gender}"
-                session_subdir.mkdir(parents=True, exist_ok=True)
-                out_path = tmp_dir / f"{expr_id}_{style_id}_{gender}.png"
-
-                try:
-                    logger.info(
-                        "[ExprTuner] START — expr=%s, style=%s, gender=%s (seed=%s)",
-                        expr_id,
-                        style_id,
-                        gender,
-                        run_seed,
-                    )
-                    print(f"  generating {gender} / {style_id}…", end=" ", flush=True)
-                    img_bytes, _ = _generate_for_expression(
-                        expr_id,
-                        style,
-                        gender,
-                        seed=run_seed,
-                        ollama_url=ollama_url,
-                        image_model=image_model,
-                        width=width,
-                        height=height,
-                        out_path=out_path,
-                        session_dir=session_subdir,
-                        avatar=avatar,
-                        hard_type_gender=hard_type_gender,
-                    )
+            # ── Parallel image generation ────────────────────────────────
+            # Submit all iterations to the pool (capped at gateway parallel limit).
+            # Results are collected ordered by iter_idx so classification below
+            # is unaffected.
+            def _gen_one(args):
+                _iter_idx, _gender, _run_seed, _avatar = args
+                _style_id = style["id"]
+                _session_subdir = tmp_dir / f"{expr_id}_{_style_id}_{_gender}_{_run_seed}"
+                _session_subdir.mkdir(parents=True, exist_ok=True)
+                _out_path = tmp_dir / f"{expr_id}_{_style_id}_{_gender}_{_run_seed}.png"
+                logger.info(
+                    "[ExprTuner] START — expr=%s, style=%s, gender=%s (seed=%s)",
+                    expr_id,
+                    _style_id,
+                    _gender,
+                    _run_seed,
+                )
+                with _print_lock:
+                    print(f"  generating {_gender} / {_style_id}…", end=" ", flush=True)
+                _img_bytes, _ = _generate_for_expression(
+                    expr_id,
+                    style,
+                    _gender,
+                    seed=_run_seed,
+                    gateway_url=gateway_url,
+                    width=width,
+                    height=height,
+                    optimize=optimize,
+                    out_path=_out_path,
+                    session_dir=_session_subdir,
+                    avatar=_avatar,
+                    hard_type_gender=hard_type_gender,
+                )
+                logger.info("[ExprTuner] DONE  — %s", _out_path)
+                with _print_lock:
                     print("done")
-                    logger.info("[ExprTuner] DONE  — %s", out_path)
-                except Exception as exc:
-                    print(f"FAILED — {exc}", file=sys.stderr)
+                return _iter_idx, _gender, _run_seed, _out_path, _img_bytes
+
+            gen_results: list[tuple | Exception] = [None] * len(iterations)
+            with ThreadPoolExecutor(max_workers=_GATEWAY_MAX_PARALLEL) as pool:
+                future_to_idx = {
+                    pool.submit(_gen_one, (i, g, s, a)): i for i, (g, s, a) in enumerate(iterations)
+                }
+                for fut in as_completed(future_to_idx):
+                    i = future_to_idx[fut]
+                    try:
+                        gen_results[i] = fut.result()
+                    except Exception as exc:
+                        gen_results[i] = exc
+
+            # ── Process results (classification stays sequential) ─────────
+            for iter_idx, result in enumerate(gen_results):
+                if isinstance(result, Exception):
+                    print(f"FAILED — {result}", file=sys.stderr)
                     total += 1
                     continue
+
+                _, gender, run_seed, out_path, img_bytes = result
 
                 if not refine:
                     total += 1
@@ -486,8 +512,7 @@ def _run_tuning_pass(
                 try:
                     classification = classify_image_expression(
                         img_bytes,
-                        model=visual_model,
-                        ollama_url=ollama_url,
+                        gateway_url=gateway_url,
                     )
                 except Exception as exc:
                     print(f"  classification FAILED — {exc}", file=sys.stderr)
@@ -516,8 +541,7 @@ def _run_tuning_pass(
                         sem_score = semantic_effective_score(
                             classification.scores,
                             expr_label,
-                            model=text_model,
-                            ollama_url=ollama_url,
+                            gateway_url=gateway_url,
                         )
                     except Exception as exc:
                         logger.warning("[ExprTuner] semantic score failed: %s", exc)
@@ -649,6 +673,12 @@ def main() -> None:
         "--height", type=int, default=256, help="Image height in pixels (default: 256)"
     )
     parser.add_argument(
+        "--optimize",
+        choices=["quality", "normal", "fast"],
+        default="normal",
+        help="Generation quality/speed trade-off (default: normal)",
+    )
+    parser.add_argument(
         "--tmp-dir",
         default=None,
         metavar="DIR",
@@ -688,7 +718,7 @@ def main() -> None:
     # Output dir — timestamped session subfolder.
     from datetime import datetime
 
-    from avatar_studio.config.config import _name_to_filename
+    from config.config import _name_to_filename
 
     base_dir = Path(args.tmp_dir) if args.tmp_dir else Path("/tmp/avatar_studio")
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -710,7 +740,7 @@ def main() -> None:
     gender_personas = _generate_diverse_personas(
         _all_genders,
         args.seed,
-        text_model,
+        args.ollama_url,
         tmp_dir,
         hard_type_gender=args.hard_type_gender,
     )
@@ -769,10 +799,7 @@ def main() -> None:
             all_expression_labels,
             styles=target_styles,
             random_style=random_style,
-            ollama_url=args.ollama_url,
-            image_model=image_model,
-            visual_model=visual_model,
-            text_model=text_model,
+            gateway_url=args.ollama_url,
             genders=genders,
             random_gender=random_gender,
             random_expression=random_expression,
@@ -781,6 +808,7 @@ def main() -> None:
             seed=args.seed,
             width=args.width,
             height=args.height,
+            optimize=args.optimize,
             gender_personas=gender_personas,
             tmp_dir=tmp_dir,
             hard_type_gender=args.hard_type_gender,

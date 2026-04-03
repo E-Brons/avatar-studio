@@ -18,7 +18,7 @@ from unittest.mock import patch
 import pytest
 from PIL import Image
 
-from avatar_studio.config.config import (
+from config.config import (
     _FRAME_FG_COLOR,
     _WCAG_MIN_CONTRAST,
     PALETTE,
@@ -31,7 +31,7 @@ from avatar_studio.config.config import (
     _relative_luminance,
     _slug,
 )
-from avatar_studio.pipeline.step_a_randomise_person import (
+from pipeline.step_a_randomise_person import (
     _GENDERS,
     _HAIR_COLORS,
     _LAST_NAMES,
@@ -40,12 +40,12 @@ from avatar_studio.pipeline.step_a_randomise_person import (
     _pick_demographics,
     _pick_name,
 )
-from avatar_studio.pipeline.step_d_make_abbreviation import (
+from pipeline.step_d_make_abbreviation import (
     apply_circle_frame,
     create_abbreviation_avatar,
 )
-from avatar_studio.pipeline.step_d_make_toon_head import create_toon_head_avatar
-from avatar_studio.pipeline.step_ef_generate_image import create_face_avatar
+from pipeline.step_d_make_toon_head import create_toon_head_avatar
+from pipeline.step_ef_generate_image import create_face_avatar
 
 pytestmark = pytest.mark.avatar
 
@@ -502,9 +502,9 @@ def test_create_face_avatar_neutral_failure_returns_null_map():
     advisor = {"name": "Test Advisor", "role": "Advisor", "traits": []}
 
     with (
-        patch("avatar_studio.pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("avatar_studio.pipeline.step_ef_generate_image.select_features") as mock_feat,
-        patch("avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image") as mock_img,
+        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
+        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
+        patch("pipeline.step_ef_generate_image.generate_avatar_image") as mock_img,
     ):
         mock_demo.return_value = {
             "gender": "male",
@@ -542,10 +542,10 @@ def test_create_face_avatar_success_returns_filenames():
         return out_path
 
     with (
-        patch("avatar_studio.pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("avatar_studio.pipeline.step_ef_generate_image.select_features") as mock_feat,
+        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
+        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
         patch(
-            "avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image",
+            "pipeline.step_ef_generate_image.generate_avatar_image",
             side_effect=fake_generate_image,
         ),
     ):
@@ -592,10 +592,10 @@ def test_create_face_avatar_expression_failure_sets_none():
             raise RuntimeError("Expression failed")
 
     with (
-        patch("avatar_studio.pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("avatar_studio.pipeline.step_ef_generate_image.select_features") as mock_feat,
+        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
+        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
         patch(
-            "avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image",
+            "pipeline.step_ef_generate_image.generate_avatar_image",
             side_effect=fake_generate_image,
         ),
     ):
@@ -635,10 +635,10 @@ def test_create_face_avatar_feature_failure_does_not_abort():
         return out_path
 
     with (
-        patch("avatar_studio.pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("avatar_studio.pipeline.step_ef_generate_image.select_features") as mock_feat,
+        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
+        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
         patch(
-            "avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image",
+            "pipeline.step_ef_generate_image.generate_avatar_image",
             side_effect=fake_generate_image,
         ),
     ):
@@ -676,10 +676,10 @@ def test_create_face_avatar_returns_demographics():
         return out_path
 
     with (
-        patch("avatar_studio.pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("avatar_studio.pipeline.step_ef_generate_image.select_features") as mock_feat,
+        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
+        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
         patch(
-            "avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image",
+            "pipeline.step_ef_generate_image.generate_avatar_image",
             side_effect=fake_generate_image,
         ),
     ):
@@ -736,9 +736,7 @@ def _patch_node(return_svg: str = _SVG_STUB, returncode: int = 0):
             raise subprocess.CalledProcessError(returncode, cmd)
         return mock
 
-    return patch(
-        "avatar_studio.pipeline.step_d_make_toon_head.subprocess.run", side_effect=_fake_run
-    )
+    return patch("pipeline.step_d_make_toon_head.subprocess.run", side_effect=_fake_run)
 
 
 def test_create_toon_head_avatar_creates_file():
@@ -798,7 +796,7 @@ def test_create_toon_head_avatar_passes_seed_to_node():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "avatar.svg"
         with patch(
-            "avatar_studio.pipeline.step_d_make_toon_head.subprocess.run",
+            "pipeline.step_d_make_toon_head.subprocess.run",
             side_effect=_capture,
         ):
             create_toon_head_avatar("Sam Lee", out, size=64)
@@ -830,7 +828,7 @@ def test_create_toon_head_avatar_passes_bg_color_from_demographics():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "avatar.svg"
         with patch(
-            "avatar_studio.pipeline.step_d_make_toon_head.subprocess.run",
+            "pipeline.step_d_make_toon_head.subprocess.run",
             side_effect=_capture,
         ):
             create_toon_head_avatar("Demo Person", out, size=64, demographics=demo)
@@ -862,7 +860,7 @@ def test_create_toon_head_avatar_no_options_when_no_demographics():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "avatar.svg"
         with patch(
-            "avatar_studio.pipeline.step_d_make_toon_head.subprocess.run",
+            "pipeline.step_d_make_toon_head.subprocess.run",
             side_effect=_capture,
         ):
             create_toon_head_avatar("No Demo", out, size=64)
