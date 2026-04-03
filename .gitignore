@@ -40,3 +40,6 @@ local/
 .idea/
 .vscode/
 *.swp
+
+# Node.js vendor dependencies (reinstall with: cd vendor/toon-head && npm ci)
+vendor/toon-head/node_modules/

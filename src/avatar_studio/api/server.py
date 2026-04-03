@@ -16,6 +16,7 @@ from avatar_studio.pipeline.step_d_make_abbreviation import (
     DEFAULT_SIZE,
     create_abbreviation_avatar,
 )
+from avatar_studio.pipeline.step_d_make_toon_head import create_toon_head_avatar
 from avatar_studio.pipeline.step_ef_generate_image import (
     EXPRESSION_IDS,
     create_face_avatar,
@@ -113,7 +114,7 @@ def process_advisor(
         ollama_text_model_api_base=ollama_text_model_api_base,
     )
 
-    # --- abbreviation avatar (uses frame colors from demographics) ---
+    # --- Step D: abbreviation avatar + toon-head avatar ---
     abbr_filename = f"{slug}-abbreviation.png"
     abbr_path = out_dir / abbr_filename
     create_abbreviation_avatar(
@@ -124,11 +125,23 @@ def process_advisor(
     )
     print(f"  [abbreviation] {abbr_path}")
 
+    toon_filename = f"{slug}-toon-head.svg"
+    toon_path = out_dir / toon_filename
+    try:
+        create_toon_head_avatar(name, toon_path, size=size, demographics=demographics)
+        print(f"  [toon-head]    {toon_path}")
+    except Exception as exc:
+        logger.warning("[Step D] toon-head failed (non-fatal): %s", exc)
+        toon_filename = None
+
     # --- update advisor YAML in-place ---
-    advisor["picture"] = {
+    picture: dict = {
         "abbreviation": str(abbr_filename),
         "expressions": expr_map,
     }
+    if toon_filename:
+        picture["toon_head"] = str(toon_filename)
+    advisor["picture"] = picture
 
     with open(advisor_path, "w") as f:
         yaml.dump(advisor, f, default_flow_style=False, sort_keys=False, allow_unicode=True)

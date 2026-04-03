@@ -49,7 +49,7 @@ def create_abbreviation_avatar(
     font_size = big // 3
     try:
         font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", font_size)
-    except OSError, IOError:
+    except OSError:
         font = ImageFont.load_default(size=font_size)
 
     bbox = draw.textbbox((0, 0), initials, font=font)

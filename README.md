@@ -11,18 +11,26 @@ Avatar Studio generates professional advisor avatars through a 7-stage pipeline:
 | A — Randomise Person | Random demographics, name, colors |
 | B — Generate CV | LLM generates education, experience, traits |
 | C — Select Features | LLM selects hair style, clothing, accessories |
-| D — Abbreviation | Initials avatar (PIL) |
+| D — Abbreviation + ToonHead | Initials PNG (PIL) + cartoon SVG (DiceBear / Node) |
 | E — Canonical Portrait | LLM image model, neutral expression |
 | F — Expression Variants | LLM image from portrait reference |
 | G — Postprocess | Circle frame sticker (PIL) |
 
 ## Installation
 
+**Prerequisites**: Python ≥ 3.14, Node.js ≥ 18
+
 ```bash
+# 1. Install Python package
 pip install .
 # or for development:
 pip install -e ".[dev]"
+
+# 2. Install Node.js vendor dependencies (ToonHead generator — DiceBear big-smile)
+cd vendor/toon-head && npm ci && cd ../..
 ```
+
+> `scripts/install.sh` does both steps automatically.
 
 ## LLM Gateway
 
