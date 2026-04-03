@@ -13,5 +13,12 @@ echo "── lint ────────────────────�
 "$VENV/bin/ruff" check src/ tests/
 "$VENV/bin/ruff" format --check src/ tests/
 
-echo "── tests ───────────────────────────────────"
+echo "── backend tests ───────────────────────────"
 "$VENV/bin/python" -m pytest "$ROOT/tests/" -m "avatar and not integration" "$@"
+
+echo "── frontend tests ──────────────────────────"
+if command -v flutter &>/dev/null; then
+  (cd "$ROOT/frontend" && flutter test)
+else
+  echo "  flutter not found — skipping (install Flutter to run frontend tests)"
+fi
