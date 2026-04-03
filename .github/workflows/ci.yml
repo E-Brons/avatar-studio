@@ -20,7 +20,7 @@ jobs:
       - run: ruff format --check src/ tests/
 
   backend-avatar:
-    name: Backend · Avatar Studio
+    name: Backend · Avatar Studio (unit)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,6 +49,25 @@ jobs:
 
       - name: Run tests
         run: python -m pytest tests/ -m "avatar and not integration" -v --tb=short
+
+  frontend-flutter:
+    name: Frontend · Flutter Web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: frontend
+
+      - name: Run tests
+        run: flutter test
+        working-directory: frontend
 
   integration-avatar:
     name: Integration · Avatar Studio
