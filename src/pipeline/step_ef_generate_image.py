@@ -27,12 +27,12 @@ from pathlib import Path
 import yaml
 from PIL import Image, PngImagePlugin
 
-from avatar_studio.config.config import SETTINGS as _SETTINGS
-from avatar_studio.config.gateway import GatewayClient
-from avatar_studio.pipeline.step_a_randomise_person import pick_demographics
-from avatar_studio.pipeline.step_c_select_features import build_avatar_charachter, select_features
+from config.config import SETTINGS as _SETTINGS
+from config.gateway import GatewayClient
+from pipeline.step_a_randomise_person import pick_demographics
+from pipeline.step_c_select_features import build_avatar_charachter, select_features
 
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 _EXPRESSIONS_YML = _PROJECT_ROOT / "assets" / "expressions" / "expressions.yml"
 _STYLES_YML = _PROJECT_ROOT / "assets" / "styles" / "styles.yml"
 
@@ -62,7 +62,7 @@ EXPRESSION_IDS = _load_expression_ids()
 
 def make_session_dir(name: str) -> Path:
     """Create and return a timestamped session folder for one pipeline run."""
-    from avatar_studio.config.config import _name_to_filename
+    from config.config import _name_to_filename
 
     slug = _name_to_filename(name)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -84,6 +84,7 @@ def generate_avatar_image(
     gateway_url: str = "http://127.0.0.1:4096",
     width: int = _DEFAULT_IMAGE_SIZE,
     height: int = _DEFAULT_IMAGE_SIZE,
+    optimize: str = "normal",
     seed: int | None = None,
     out_path: Path,
     session_dir: Path | None = None,
@@ -219,6 +220,7 @@ def generate_avatar_image(
         full_prompt,
         width=width,
         height=height,
+        optimize=optimize,
         seed=seed,
         reference_images_b64=[base64.b64encode(reference_image.read_bytes()).decode()]
         if reference_image

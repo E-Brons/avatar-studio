@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 
 import yaml
 
-from avatar_studio.config.gateway import GatewayClient
+from config.gateway import GatewayClient
 
 logger = logging.getLogger(__name__)
 

@@ -41,9 +41,10 @@ class GatewayClient:
         self,
         prompt: str,
         *,
-        width: int = 128,
-        height: int = 128,
+        width: int = 256,
+        height: int = 256,
         seed: int | None = None,
+        optimize: str = "normal",
         reference_images_b64: list[str] | None = None,
         max_retries: int = 3,
         timeout: int = 300,
@@ -55,6 +56,7 @@ class GatewayClient:
             "prompt": prompt,
             "width": width,
             "height": height,
+            "optimize": optimize,
             "max_retries": max_retries,
         }
         if seed is not None:

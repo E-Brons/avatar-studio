@@ -3,7 +3,7 @@
 import logging
 import random
 
-from avatar_studio.config.config import (
+from config.config import (
     _FRAME_FG_COLOR,
     SETTINGS,
     VALID_BG_PALETTE,

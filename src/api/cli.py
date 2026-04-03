@@ -1,3 +1,4 @@
+#! .venv/bin/python
 """Avatar studio — CLI entry point.
 
 Run avatar generation pipelines from the command line.
@@ -16,7 +17,7 @@ from pathlib import Path
 
 import yaml
 
-from avatar_studio.api.server import (
+from api.server import (
     _DEFAULT_IMAGE_MODEL,
     _DEFAULT_TEXT_MODEL,
     _GENDERS,
