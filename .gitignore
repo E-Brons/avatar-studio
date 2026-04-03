@@ -32,9 +32,10 @@ local/
 .DS_Store
 **/.DS_Store
 
-# Claude Code project files (keep settings.json)
+# Claude Code project files (keep settings and skills)
 .claude/*
 !.claude/settings.json
+!.claude/skills/*
 
 # IDEs
 .idea/

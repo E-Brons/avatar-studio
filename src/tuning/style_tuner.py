@@ -1,4 +1,4 @@
-#! python3
+#! .venv/bin/python
 """Style tuning agent — generate → classify → report loop.
 
 Generates avatar portraits with a fixed persona but varying styles, then classifies

@@ -1,3 +1,4 @@
+#! .venv/bin/python
 """Avatar studio — CLI entry point.
 
 Run avatar generation pipelines from the command line.
