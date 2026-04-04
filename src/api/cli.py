@@ -5,9 +5,8 @@ Run avatar generation pipelines from the command line.
 
 Usage
 -----
-  avatar-studio stage-b --role "Financial Advisor" ...
   avatar-studio generate --advisor path/to/advisor.yml --out-dir out/
-  avatar-studio gen-examples --ollama-image-model flux:latest
+  avatar-studio stage-b --role "Financial Advisor" ...
 """
 
 import argparse
@@ -18,25 +17,33 @@ from pathlib import Path
 import yaml
 
 from api.server import (
-    _DEFAULT_IMAGE_MODEL,
-    _DEFAULT_TEXT_MODEL,
     _GENDERS,
     _PROJECT_ROOT,
     DEFAULT_SIZE,
-    _build_avatar_charachter,
-    _build_avatar_prompt,
     _build_demographics_for_gender,
-    _load_styles,
-    _marshal_avatar_persona,
-    _ollama_available_models,
-    _ollama_generate_image,
-    _pick_demographics,
-    _resolve_default_model,
-    _select_features,
     process_advisor,
 )
+from pipeline.step_a_randomise_person import pick_demographics as _pick_demographics
+from pipeline.step_c_select_features import (
+    _marshal_avatar_persona,
+)
+from pipeline.step_c_select_features import (
+    build_avatar_charachter as _build_avatar_charachter,
+)
+from pipeline.step_c_select_features import (
+    select_features as _select_features,
+)
+from pipeline.step_ef_generate_image import STYLES_YML
 
 logger = logging.getLogger(__name__)
+
+
+def _load_styles() -> list[dict]:
+    """Load style definitions from styles.yml."""
+    import yaml as _yaml
+    with open(STYLES_YML) as f:
+        data = _yaml.safe_load(f)
+    return data.get("styles", [])
 
 
 def _run_stage_b(args) -> None:
@@ -56,8 +63,7 @@ def _run_stage_b(args) -> None:
     features = _select_features(
         demographics,
         advisor,
-        ollama_text_model=args.ollama_text_model,
-        ollama_text_model_api_base=args.text_model_api_base,
+        gateway_url=args.gateway_url,
     )
 
     if features is None:
@@ -71,7 +77,6 @@ def _run_stage_b(args) -> None:
     print("Marshalled avatar_persona:")
     print(yaml.dump(persona, default_flow_style=False, sort_keys=False))
 
-    # Validation summary
     name = persona.get("personal", {}).get("name")
     appearance = persona.get("appearance", {})
     print("--- Validation ---")
@@ -103,12 +108,9 @@ def _run_generate(args) -> None:
             out_dir,
             size=args.size,
             expressions=args.expressions,
-            ollama_url=args.ollama_url,
-            ollama_image_model=args.ollama_image_model,
+            gateway_url=args.gateway_url,
             width=args.width,
             height=args.height,
-            ollama_text_model=args.ollama_text_model,
-            ollama_text_model_api_base=args.text_model_api_base,
         )
 
     print(f"\nDone — {len(paths)} advisor(s) processed.")
@@ -116,6 +118,11 @@ def _run_generate(args) -> None:
 
 def _run_gen_examples(args) -> None:
     """Generate style example portraits: one per (style, gender) combination."""
+    import tempfile
+
+    from pipeline.render.style_resolver import _STYLES_YML
+    from pipeline.step_ef_generate_image import _EXPRESSIONS_YML, generate_avatar_image
+
     styles = _load_styles()
 
     if args.style:
@@ -150,22 +157,39 @@ def _run_gen_examples(args) -> None:
             print(f"  [{done + 1}/{total}] {style_id} / {gender} → {out_path.name}")
 
             demo = _build_demographics_for_gender(gender)
-            avatar = _build_avatar_charachter(advisor, demo)
-            sys_p, user_p = _build_avatar_prompt(avatar, "neutral", style_id=style_id)
+            demo["style"] = style_id
+            avatar_char = _build_avatar_charachter(advisor, demo)
+
+            import yaml as _yaml
+            with tempfile.NamedTemporaryFile(suffix=".yml", delete=False, mode="w") as tf:
+                _yaml.dump(
+                    avatar_char["avatar_persona"],
+                    tf,
+                    default_flow_style=False,
+                    sort_keys=False,
+                    allow_unicode=True,
+                )
+                persona_tmp = Path(tf.name)
 
             try:
-                _ollama_generate_image(
-                    user_p,
-                    out_path,
-                    system=sys_p,
-                    ollama_url=args.ollama_url,
-                    model=args.ollama_image_model,
+                generate_avatar_image(
+                    persona_tmp,
+                    style={
+                        "name": style_id,
+                        "bg_color": demo.get("bg_color", "#F5F0E8"),
+                        "styles_yml": _STYLES_YML,
+                    },
+                    expression={"name": "neutral", "expressions_yml": _EXPRESSIONS_YML},
+                    gateway_url=args.gateway_url,
                     width=args.width,
                     height=args.height,
+                    out_path=out_path,
                 )
                 print("    ✓ saved")
             except Exception as exc:
                 print(f"    ✗ failed: {exc}", file=sys.stderr)
+            finally:
+                persona_tmp.unlink(missing_ok=True)
 
             done += 1
 
@@ -178,6 +202,8 @@ def main() -> None:
     )
     subparsers = parser.add_subparsers(dest="command")
 
+    _GATEWAY_DEFAULT = "http://127.0.0.1:4096"
+
     # --- stage-b: run just the LLM feature selection ---
     sb = subparsers.add_parser(
         "stage-b",
@@ -189,14 +215,9 @@ def main() -> None:
     sb.add_argument("--experience", nargs="*", default=["10 years wealth management"])
     sb.add_argument("--seed", type=int, default=None, help="Demographics seed")
     sb.add_argument(
-        "--ollama-text-model",
-        default=None,
-        help=f"Text LLM for feature selection (default: {_DEFAULT_TEXT_MODEL} if available in Ollama)",
-    )
-    sb.add_argument(
-        "--text-model-api-base",
-        default=None,
-        help="Optional API base URL for the text model",
+        "--gateway-url",
+        default=_GATEWAY_DEFAULT,
+        help=f"LLM Gateway URL (default: {_GATEWAY_DEFAULT})",
     )
 
     # --- generate: full avatar pipeline ---
@@ -209,32 +230,15 @@ def main() -> None:
     gen.add_argument(
         "--expressions",
         nargs="*",
-        help="Expression IDs to generate (default: all). E.g. --expressions neutral thinking happy",
+        help="Expression IDs to generate (default: all).",
     )
     gen.add_argument(
-        "--ollama-url",
-        default="http://127.0.0.1:4096",
-        help="Ollama server URL (default: http://127.0.0.1:4096)",
-    )
-    gen.add_argument(
-        "--ollama-image-model",
-        default=None,
-        help=f"Ollama image generation model (default: {_DEFAULT_IMAGE_MODEL} if available in Ollama)",
+        "--gateway-url",
+        default=_GATEWAY_DEFAULT,
+        help=f"LLM Gateway URL (default: {_GATEWAY_DEFAULT})",
     )
     gen.add_argument("--width", type=int, default=128, help="Generated image width (default: 128)")
-    gen.add_argument(
-        "--height", type=int, default=128, help="Generated image height (default: 128)"
-    )
-    gen.add_argument(
-        "--ollama-text-model",
-        default=None,
-        help=f"Text LLM for Step B feature selection (default: {_DEFAULT_TEXT_MODEL} if available in Ollama)",
-    )
-    gen.add_argument(
-        "--text-model-api-base",
-        default=None,
-        help="Optional API base URL for the text model",
-    )
+    gen.add_argument("--height", type=int, default=128, help="Generated image height (default: 128)")
 
     # ── gen-examples ──────────────────────────────────────────────────────────
     gex = subparsers.add_parser(
@@ -255,20 +259,12 @@ def main() -> None:
         help=f"Gender(s) to generate (default: all). Choices: {_GENDERS}",
     )
     gex.add_argument(
-        "--ollama-url",
-        default="http://127.0.0.1:4096",
-        help="Ollama server URL (default: http://127.0.0.1:4096)",
-    )
-    gex.add_argument(
-        "--ollama-image-model",
-        required=True,
-        metavar="MODEL",
-        help="Ollama image model name",
+        "--gateway-url",
+        default=_GATEWAY_DEFAULT,
+        help=f"LLM Gateway URL (default: {_GATEWAY_DEFAULT})",
     )
     gex.add_argument("--width", type=int, default=512, help="Image width in pixels (default: 512)")
-    gex.add_argument(
-        "--height", type=int, default=512, help="Image height in pixels (default: 512)"
-    )
+    gex.add_argument("--height", type=int, default=512, help="Image height in pixels (default: 512)")
     gex.add_argument(
         "--overwrite",
         action="store_true",
@@ -276,36 +272,6 @@ def main() -> None:
     )
 
     args = parser.parse_args()
-
-    # Resolve default models from Ollama if not explicitly provided.
-    if args.command in ("stage-b", "generate"):
-        ollama_url = getattr(args, "ollama_url", "http://127.0.0.1:4096")
-        available = _ollama_available_models(ollama_url)
-
-        if not args.ollama_text_model:
-            resolved = _resolve_default_model(_DEFAULT_TEXT_MODEL, available, "text")
-            if resolved:
-                args.ollama_text_model = f"ollama/{resolved}"
-                logger.info("Auto-selected text model: %s", args.ollama_text_model)
-            else:
-                parser.error(
-                    f"--ollama-text-model not provided and default '{_DEFAULT_TEXT_MODEL}' "
-                    f"not found in Ollama. Available: {sorted(available) or '(none)'}"
-                )
-
-    if args.command == "generate" and not args.ollama_image_model:
-        ollama_url = getattr(args, "ollama_url", "http://127.0.0.1:4096")
-        if not available:
-            available = _ollama_available_models(ollama_url)
-        resolved = _resolve_default_model(_DEFAULT_IMAGE_MODEL, available, "image")
-        if resolved:
-            args.ollama_image_model = resolved
-            logger.info("Auto-selected image model: %s", args.ollama_image_model)
-        else:
-            parser.error(
-                f"--ollama-image-model not provided and default '{_DEFAULT_IMAGE_MODEL}' "
-                f"not found in Ollama. Available: {sorted(available) or '(none)'}"
-            )
 
     if args.command == "stage-b":
         _run_stage_b(args)
