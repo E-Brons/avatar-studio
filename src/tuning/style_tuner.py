@@ -113,8 +113,7 @@ def _generate_for_style(
     seed: int,
     *,
     expression: str = "neutral",
-    ollama_url: str,
-    image_model: str,
+    gateway_url: str,
     width: int,
     height: int,
     out_path: Path,
@@ -154,8 +153,7 @@ def _generate_for_style(
         persona_path,
         style={"name": style["id"], "bg_color": bg_color, "styles_yml": STYLES_YML},
         expression={"name": expression, "expressions_yml": EXPRESSIONS_YML},
-        ollama_url=ollama_url,
-        model=image_model,
+        gateway_url=gateway_url,
         width=width,
         height=height,
         seed=seed,
@@ -295,8 +293,7 @@ def _run_tuning_pass(
     target_styles: list[dict],
     all_styles: list[dict],
     *,
-    ollama_url: str,
-    image_model: str,
+    gateway_url: str,
     visual_model: str,
     genders: list[str],
     random_gender: bool = False,
@@ -406,8 +403,7 @@ def _run_tuning_pass(
                         label,
                         seed=run_seed,
                         expression=expression,
-                        ollama_url=ollama_url,
-                        image_model=image_model,
+                        gateway_url=gateway_url,
                         width=width,
                         height=height,
                         out_path=out_path,
@@ -432,7 +428,7 @@ def _run_tuning_pass(
                             img_bytes,
                             all_styles,
                             model=visual_model,
-                            ollama_url=ollama_url,
+                            ollama_url=gateway_url,
                         )
                     except Exception as exc:
                         print(f"  classification FAILED — {exc}", file=sys.stderr)
@@ -453,7 +449,7 @@ def _run_tuning_pass(
                         classification = classify_image_expression(
                             img_bytes,
                             model=visual_model,
-                            ollama_url=ollama_url,
+                            ollama_url=gateway_url,
                         )
                     except Exception as exc:
                         print(f"  expression classification FAILED — {exc}", file=sys.stderr)
@@ -498,7 +494,7 @@ def _run_tuning_pass(
                                     classification.scores,
                                     expected_label,
                                     model=visual_model,
-                                    ollama_url=ollama_url,
+                                    ollama_url=gateway_url,
                                 )
                                 sem_score = max(sem_score, lm_score)
                             except Exception as exc:
@@ -534,7 +530,7 @@ def _run_tuning_pass(
                             img_bytes,
                             persona,
                             model=visual_model,
-                            ollama_url=ollama_url,
+                            ollama_url=gateway_url,
                         )
                     except Exception as exc:
                         print(f"  persona classification FAILED — {exc}", file=sys.stderr)
@@ -581,7 +577,7 @@ def _print_overall_summary(results: dict[str, tuple[int, int]]) -> None:
 def _generate_diverse_personas(
     genders: list[str],
     base_seed: int | None,
-    text_model: str,
+    gateway_url: str,
     tmp_dir: Path,
     *,
     advisor_role: str = "Financial Advisor",
@@ -622,13 +618,13 @@ def _generate_diverse_personas(
                 cv = generate_advisor_profile(
                     advisor_role,
                     demographics,
-                    ollama_text_model=text_model,
+                    gateway_url=gateway_url,
                 )
                 advisor = {**advisor, **cv}
                 features = select_features(
                     demographics,
                     advisor,
-                    ollama_text_model=text_model,
+                    gateway_url=gateway_url,
                     hard_type_gender=hard_type_gender,
                 )
             except Exception as exc:
@@ -732,19 +728,24 @@ def main() -> None:
         help="Re-run automatically whenever styles.yml is saved",
     )
     parser.add_argument(
-        "--ollama-url",
+        "--gateway-url",
         default="http://127.0.0.1:4096",
-        help="Ollama server URL (default: http://127.0.0.1:4096)",
+        help="LLM Gateway URL (default: http://127.0.0.1:4096)",
+    )
+    parser.add_argument(
+        "--ollama-url",
+        default=None,
+        help="[DEPRECATED] Alias for --gateway-url. Use --gateway-url instead.",
     )
     parser.add_argument(
         "--ollama-image-model",
         default=None,
-        help=f"Ollama image model (default: {SETTINGS['default_image_gen_model']})",
+        help="[DEPRECATED] Ignored — model routing is handled by the gateway.",
     )
     parser.add_argument(
         "--ollama-text-model",
         default=None,
-        help=f"Ollama text model for A→C persona generation (default: {SETTINGS['default_text_gen_model']})",
+        help="[DEPRECATED] Ignored — model routing is handled by the gateway.",
     )
     parser.add_argument(
         "--ollama-visual-desc-model",
@@ -796,6 +797,9 @@ def main() -> None:
 
     logging.basicConfig(level=getattr(logging, args.log_level), format="%(levelname)s %(message)s")
 
+    # Resolve gateway URL (--ollama-url is a deprecated alias)
+    gateway_url = args.ollama_url or args.gateway_url
+
     # Resolve model defaults
     image_model = args.ollama_image_model or SETTINGS["default_image_gen_model"].removeprefix(
         "ollama/"
@@ -843,7 +847,7 @@ def main() -> None:
     gender_personas = _generate_diverse_personas(
         _all_genders,
         args.seed,
-        text_model,
+        gateway_url,
         tmp_dir,
         hard_type_gender=args.hard_type_gender,
     )
@@ -890,8 +894,7 @@ def main() -> None:
         results = _run_tuning_pass(
             target_styles,
             all_styles,
-            ollama_url=args.ollama_url,
-            image_model=image_model,
+            gateway_url=gateway_url,
             visual_model=visual_model,
             genders=genders,
             random_gender=random_gender,
