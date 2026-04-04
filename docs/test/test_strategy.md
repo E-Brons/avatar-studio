@@ -18,6 +18,7 @@ The LLM Gateway client (`GatewayClient`) is patched at the module boundary. No r
 
 | File | Covers |
 |------|--------|
+| `test_api.py` | `ConfigLoader.load()` (attribute count, option shapes, dual-color extras, gender-bucket tags, formula/depends_on fields, style options), `_demo_key` (all 15 ID mappings + unknown returns None), `_demo_to_response` (key casing, value preservation), `_resolve_demographics` (no constraints, single overrides, hair_color → brows re-derive, random mode ignored, None value skipped, multiple constraints) |
 | `test_avatar_features.py` | Step A (`_pick_diverse_demographics`, `_pool_by_gender`), Step B (`_generate_advisor_profile`: YAML parsing, code-fence stripping, list truncation, retry on empty/missing fields, exhaustion raises), Step C (`_select_features`, `_select_feature_field`, `_marshal_avatar_persona`, `_build_feature_prompt`, warmup failure non-fatal, context accumulates, hard-type-gender pool filtering), pipeline wiring (features → persona) |
 | `test_avatar_stages.py` | `config` (WCAG utils, hex helpers, palette filtering), Step A (`_pick_colors`, `_pick_name`, `_pick_demographics`: required keys, gender valid, age in range, seeded determinism, bg_color WCAG pass), Step D abbreviation (valid PNG, correct size, RGBA, transparent corners, opaque center, white border ring), Step D toon-head (`create_toon_head_avatar`: creates file, returns path, SVG content, parent dirs, seed forwarded, bg_color option, no-options without demographics, Node error raises), Step E/F (`create_face_avatar`: neutral failure returns null map, success returns filenames, partial expression failure, feature failure non-fatal, demographics returned) |
 
@@ -25,12 +26,13 @@ The LLM Gateway client (`GatewayClient`) is patched at the module boundary. No r
 
 | External dependency | Patched at |
 |--------------------|------------|
-| Text LLM (Step B) | `avatar_studio.pipeline.step_b_generate_cv.GatewayClient` |
-| Text LLM (Step C) | `avatar_studio.pipeline.step_c_select_features.GatewayClient` |
-| Image generation | `avatar_studio.pipeline.step_ef_generate_image.generate_avatar_image` |
-| Demographics | `avatar_studio.pipeline.step_ef_generate_image.pick_demographics` |
-| Feature selection | `avatar_studio.pipeline.step_ef_generate_image.select_features` |
-| Node.js ToonHead (Step D) | `avatar_studio.pipeline.step_d_make_toon_head.subprocess.run` |
+| `pick_demographics` (http_server) | `api.http_server.pick_demographics` |
+| Text LLM (Step B) | `pipeline.step_b_generate_cv.GatewayClient` |
+| Text LLM (Step C) | `pipeline.step_c_select_features.GatewayClient` |
+| Image generation | `pipeline.step_ef_generate_image.generate_avatar_image` |
+| Demographics | `pipeline.step_ef_generate_image.pick_demographics` |
+| Feature selection | `pipeline.step_ef_generate_image.select_features` |
+| Node.js ToonHead (Step D) | `pipeline.step_d_make_toon_head.subprocess.run` |
 
 ---
 
@@ -59,6 +61,9 @@ These call the live LLM Gateway and run real LLM calls through the full pipeline
 # Unit tests (no services required)
 pytest tests/ -m "avatar and not integration" -v
 
+# API layer only (fastest — no pipeline imports needed beyond config + step_a)
+pytest tests/test_api.py -v
+
 # With coverage
 pytest tests/ -m "avatar and not integration" --cov=src --cov-report=term-missing
 
@@ -75,7 +80,7 @@ pytest tests/ -m "avatar and integration" -v
 
 - Files: `test_avatar_<scope>.py` — one file per pipeline area
 - Functions: `test_<function>_<scenario>` — e.g. `test_create_face_avatar_neutral_failure_returns_null_map`
-- Mocking: gateway client patched at the module where it is imported — e.g. `avatar_studio.pipeline.step_c_select_features.GatewayClient`
+- Mocking: gateway client patched at the module where it is imported — e.g. `pipeline.step_c_select_features.GatewayClient`
 
 ---
 
@@ -84,3 +89,15 @@ pytest tests/ -m "avatar and integration" -v
 See `docs/test/ci_cd_plan.md` for the full CI pipeline description.
 
 Unit tests run on every push and PR. Integration tests run automatically when `OLLAMA_URL` is set as a repository variable.
+
+---
+
+## Flutter Web UI Tests
+
+Flutter widget tests live in `frontend/test/`. Run with:
+
+```sh
+cd frontend && flutter test
+```
+
+The generated `frontend/test/widget_test.dart` (smoke test that the app renders) serves as a placeholder until widget-level tests are added.

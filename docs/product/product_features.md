@@ -66,7 +66,51 @@ The autotuner is also available as a GitHub Actions workflow (`.github/workflows
 
 | Interface | Entry Point | Description |
 |---|---|---|
+| **HTTP server** | `scripts/start_http_server.sh` | FastAPI service on port 8080; drives the Flutter web UI |
 | **REST API** | `avatar-studio` (uvicorn) | FastAPI service; integrates with parent apps via HTTP |
 | **`stage-b`** | `avatar-studio stage-b` | Run Step B only — print persona YAML |
 | **`generate`** | `avatar-studio generate` | Full A→G pipeline for one or more advisor YAML files |
 | **`gen-examples`** | `avatar-studio gen-examples` | Generate reference portraits for all styles × genders |
+
+---
+
+## Web UI
+
+A Flutter web app (`frontend/`) provides an interactive browser UI for avatar creation.
+
+### How it works
+
+1. On load, the app fetches `GET /api/config` and builds all panels dynamically from the 19 attribute definitions — no hardcoded UI.
+2. Every attribute shows a **mode selector** (segmented button):
+   - 🎲 **Random** — pipeline picks a value at random (no LLM)
+   - 🤖 **Bot** — LLM generates the value (fields marked `llm_generated`)
+   - ✏️ **Select** — user picks a specific value (dropdown or free text)
+   - 🔗 **Inherited** — value derived from another attribute (e.g. brows color ← hair color)
+3. The **Randomize** button (`POST /api/avatar/randomize`) fills all random-mode fields with a grayed preview value, respecting any fixed (select/predefined) constraints.
+4. The **Generate Avatar** FAB (`POST /api/avatar/generate`) runs the full A→E pipeline and displays the resulting portrait plus a collapsible `PersonaSummary`.
+
+### Attribute panels (grouped by category)
+
+| Category | Attributes |
+|----------|-----------|
+| Demographics | Gender, Age |
+| Phenotype | Skin Tone, Hair Color, Eye Color, Brows Color, Eye Shape, Brow Style, Nose Shape, Chin Shape, Cheeks Shape |
+| Appearance | Art Style, Hair Style, Clothing, Accessories |
+| Advisor | Role, Education, Experience, Personality Traits |
+
+### Gender dependency
+
+Changing **Gender** automatically resets all `depends_on: gender` attributes (Brow Style, Chin Shape, Cheeks Shape, Hair Style, Clothing, Accessories) back to random mode, so gender-inappropriate options are never locked in.
+
+### Starting the UI
+
+```bash
+# Install Python deps (once)
+bash scripts/install.sh
+
+# Start server + open browser (stops when you close the browser window)
+bash scripts/start_http_server.sh
+
+# Or run the Flutter app directly against a running server
+cd frontend && flutter run -d chrome
+```
