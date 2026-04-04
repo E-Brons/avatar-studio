@@ -75,12 +75,12 @@ Calls a text LLM once to produce `education`, `experience`, `traits`. Retries up
 
 One LLM call per field: `HAIR_STYLE`, `CLOTHING` (dict), `ACCESSORIES` (dict). Phenotype fields are pre-seeded from Stage A demographics — no LLM needed for them. Context accumulates across fields so each pick is consistent with the emerging persona.
 
-### Stage D — Abbreviation + ToonHead Avatars
+### Stage D — Abbreviation + Programmatic Avatar (PA)
 
 Two fast, code-only avatars are generated in parallel before any LLM call:
 
 1. **Abbreviation** — PIL renders initials on a WCAG-AA-compliant colored circle. Deterministic; no network calls. Output: `<slug>-abbreviation.png`.
-2. **ToonHead** — DiceBear `big-smile` style SVG, generated via `vendor/toon-head/generate.js` (Node.js subprocess). Seed = person name → same name always produces the same avatar. Output: `<slug>-toon-head.svg`. ToonHead failure is non-fatal; the pipeline continues without it.
+2. **Programmatic Avatar (PA)** — multi-style SVG generated via `vendor/programmatic-avatar/generate.js` (Node.js subprocess). Seed = person name → same name always produces the same avatar. Output: `<slug>-programmatic-avatar.svg`. PA failure is non-fatal; the pipeline continues without it.
 
 ### Stage E — Canonical Portrait
 

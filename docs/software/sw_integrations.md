@@ -110,21 +110,21 @@ Integration tests require a running LLM Gateway reachable at `$OLLAMA_URL`. Set 
 
 ---
 
-## 5. DiceBear ToonHead — Vendored Node Sub-project
+## 5. Programmatic Avatar (PA) — Vendored Node Sub-project
 
 ### 5.1 Overview
 
-Step D generates a cartoon "ToonHead" SVG in addition to the initials abbreviation PNG.
-The ToonHead is produced by a vendored copy of the DiceBear `big-smile` style, pinned
-to `@dicebear/core@^9.4.2` and `@dicebear/big-smile@^9.4.2`.
+Step D generates a Programmatic Avatar (PA) SVG in addition to the initials abbreviation PNG.
+The PA is produced by a vendored multi-style DiceBear generator supporting toon-head, avataaars,
+bottts, micah, and opeeps styles.
 
 | Item | Value |
 |------|-------|
-| Location | `vendor/toon-head/` |
-| Entry point | `vendor/toon-head/generate.js` |
+| Location | `vendor/programmatic-avatar/` |
+| Entry point | `vendor/programmatic-avatar/generate.js` |
 | Runtime | Node.js ≥ 18 |
-| Lock file | `vendor/toon-head/package-lock.json` (committed) |
-| Art style | "Custom Avatar" by Ashley Seo — CC BY 4.0 |
+| Lock file | `vendor/programmatic-avatar/package-lock.json` (committed) |
+| Art styles | toon-head (Johan Melin CC BY 4.0), avataaars (Pablo Stanley), bottts (DiceBear), micah/opeeps (Micah Lanier CC BY 4.0) |
 
 ### 5.2 Why Vendored (not a submodule)
 
@@ -137,44 +137,37 @@ Vendoring the package as a minimal Node project (`package.json` + `generate.js` 
 
 ```bash
 # First install (also run by scripts/install.sh automatically)
-cd vendor/toon-head && npm ci
+cd vendor/programmatic-avatar && npm ci
 ```
 
 ### 5.4 Usage from Python
 
 ```python
-from avatar_studio.pipeline.step_d_make_toon_head import create_toon_head_avatar
+from pipeline.step_d_make_programmatic_avatar import create_programmatic_avatar
 from pathlib import Path
 
-path = create_toon_head_avatar(
+path = create_programmatic_avatar(
     name="Jane Smith",
-    out_path=Path("out/jane-smith-toon-head.svg"),
+    out_path=Path("out/jane-smith-programmatic-avatar.svg"),
     size=256,
     demographics={"bg_color": "#4A90D9"},
+    style="toon-head",  # or avataaars, bottts, micah, opeeps
 )
-# path → Path("out/jane-smith-toon-head.svg")
+# path → Path("out/jane-smith-programmatic-avatar.svg")
 ```
 
 ### 5.5 Attribution
 
-The `big-smile` SVG art is licensed under **CC BY 4.0**. Attribution is embedded
+All SVG art is licensed under **CC BY 4.0** (or permissive equivalent). Attribution is embedded
 automatically in the SVG `<metadata>` block by DiceBear. No additional steps are
 required for correct attribution.
 
-### 5.6 Upgrading / Forking
+### 5.6 Upgrading
 
 To upgrade to a newer DiceBear release:
 
 ```bash
-cd vendor/toon-head
-npm update @dicebear/core @dicebear/big-smile
+cd vendor/programmatic-avatar
+npm update @dicebear/core @dicebear/toon-head @dicebear/avataaars @dicebear/bottts @dicebear/micah
 # Commit the updated package-lock.json
 ```
-
-To use a fork of `big-smile`:
-1. Fork `https://github.com/dicebear/dicebear` into `E-Brons/dicebear`
-2. In `vendor/toon-head/package.json`, replace the npm dependency with:
-   ```json
-   "@dicebear/big-smile": "github:E-Brons/dicebear#path:packages/big-smile"
-   ```
-3. Run `npm install` and commit the updated lock file.
