@@ -16,7 +16,7 @@ from pipeline.step_d_make_abbreviation import (
     DEFAULT_SIZE,
     create_abbreviation_avatar,
 )
-from pipeline.step_d_make_toon_head import create_toon_head_avatar
+from pipeline.step_d_make_programmatic_avatar import create_programmatic_avatar
 from pipeline.step_ef_generate_image import (
     EXPRESSION_IDS,
     create_face_avatar,
@@ -114,7 +114,7 @@ def process_advisor(
         ollama_text_model_api_base=ollama_text_model_api_base,
     )
 
-    # --- Step D: abbreviation avatar + toon-head avatar ---
+    # --- Step D: abbreviation avatar + programmatic avatar (PA) ---
     abbr_filename = f"{slug}-abbreviation.png"
     abbr_path = out_dir / abbr_filename
     create_abbreviation_avatar(
@@ -125,22 +125,22 @@ def process_advisor(
     )
     print(f"  [abbreviation] {abbr_path}")
 
-    toon_filename = f"{slug}-toon-head.svg"
-    toon_path = out_dir / toon_filename
+    pa_filename = f"{slug}-programmatic-avatar.svg"
+    pa_path = out_dir / pa_filename
     try:
-        create_toon_head_avatar(name, toon_path, size=size, demographics=demographics)
-        print(f"  [toon-head]    {toon_path}")
+        create_programmatic_avatar(name, pa_path, size=size, demographics=demographics)
+        print(f"  [programmatic-avatar] {pa_path}")
     except Exception as exc:
-        logger.warning("[Step D] toon-head failed (non-fatal): %s", exc)
-        toon_filename = None
+        logger.warning("[Step D] programmatic-avatar failed (non-fatal): %s", exc)
+        pa_filename = None
 
     # --- update advisor YAML in-place ---
     picture: dict = {
         "abbreviation": str(abbr_filename),
         "expressions": expr_map,
     }
-    if toon_filename:
-        picture["toon_head"] = str(toon_filename)
+    if pa_filename:
+        picture["programmatic_avatar"] = str(pa_filename)
     advisor["picture"] = picture
 
     with open(advisor_path, "w") as f:

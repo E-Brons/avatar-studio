@@ -84,12 +84,12 @@ mkdir -p "$ROOT/local"
 # ── Node vendor dependencies ──────────────────────────────────────────
 echo ""
 echo "Installing Node.js vendor dependencies …"
-if [ ! -f "$ROOT/vendor/toon-head/package-lock.json" ]; then
-  echo "  ✗ vendor/toon-head/package-lock.json not found."
+if [ ! -f "$ROOT/vendor/programmatic-avatar/package-lock.json" ]; then
+  echo "  ✗ vendor/programmatic-avatar/package-lock.json not found."
   exit 1
 fi
-(cd "$ROOT/vendor/toon-head" && npm ci --silent)
-echo "  vendor/toon-head  ✓"
+(cd "$ROOT/vendor/programmatic-avatar" && npm ci --silent)
+echo "  vendor/programmatic-avatar  ✓"
 
 # ── Git hooks ─────────────────────────────────────────────────────────
 echo ""

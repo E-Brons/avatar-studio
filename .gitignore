@@ -42,5 +42,5 @@ local/
 .vscode/
 *.swp
 
-# Node.js vendor dependencies (reinstall with: cd vendor/toon-head && npm ci)
-vendor/toon-head/node_modules/
+# Node.js vendor dependencies (reinstall with: cd vendor/programmatic-avatar && npm ci)
+vendor/programmatic-avatar/node_modules/

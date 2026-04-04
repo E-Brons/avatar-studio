@@ -1,15 +1,18 @@
 #!/usr/bin/env node
 /**
- * Avatar Studio — ToonHead generator (DiceBear big-smile style)
+ * Avatar Studio — Programmatic Avatar (PA) multi-style generator
  *
  * Usage:
- *   node generate.js --seed <name> [--size <N>] [--options <json>] [--out <path>]
+ *   node generate.js --seed <name> [--style <style>] [--size <N>] [--options <json>] [--out <path>]
+ *
+ * Styles:
+ *   toon-head   (default) @dicebear/toon-head
+ *   avataaars             @dicebear/avataaars
+ *   bottts                @dicebear/bottts
+ *   micah                 @dicebear/micah
+ *   opeeps                @opeepsfun/avatar-illustration-system
  *
  * Writes SVG to stdout when --out is omitted, otherwise saves to the given path.
- *
- * Options JSON keys (all optional):
- *   skinColor, hairColor, backgroundColor — hex strings without the leading '#'
- *   Any other option accepted by @dicebear/big-smile
  *
  * Exit codes:
  *   0  success
@@ -19,7 +22,6 @@
 "use strict";
 
 const { createAvatar } = require("@dicebear/core");
-const bigSmile = require("@dicebear/big-smile");
 const fs = require("fs");
 const path = require("path");
 
@@ -29,6 +31,7 @@ const args = process.argv.slice(2);
 
 let seed = "";
 let size = 256;
+let style = "toon-head";
 let extraOptions = {};
 let outPath = null;
 
@@ -36,6 +39,9 @@ for (let i = 0; i < args.length; i++) {
   switch (args[i]) {
     case "--seed":
       seed = args[++i] ?? "";
+      break;
+    case "--style":
+      style = args[++i] ?? "toon-head";
       break;
     case "--size":
       size = parseInt(args[++i], 10);
@@ -68,14 +74,31 @@ if (!seed) {
 
 // ── Avatar generation ─────────────────────────────────────────────────────────
 
-const options = {
-  seed,
-  size,
-  ...extraOptions,
-};
+let svg;
 
-const avatar = createAvatar(bigSmile, options);
-const svg = avatar.toString();
+if (style === "opeeps") {
+  // @opeepsfun/avatar-illustration-system — not DiceBear, different API
+  const { Avatar } = require("@opeepsfun/avatar-illustration-system");
+  svg = Avatar({ size, ...extraOptions });
+} else {
+  // DiceBear styles
+  let dicebearStyle;
+  if (style === "toon-head") {
+    dicebearStyle = require("@dicebear/toon-head");
+  } else if (style === "avataaars") {
+    dicebearStyle = require("@dicebear/avataaars");
+  } else if (style === "bottts") {
+    dicebearStyle = require("@dicebear/bottts");
+  } else if (style === "micah") {
+    dicebearStyle = require("@dicebear/micah");
+  } else {
+    console.error(`Unknown style: ${style}. Valid: toon-head, avataaars, bottts, micah, opeeps`);
+    process.exit(1);
+  }
+
+  const avatar = createAvatar(dicebearStyle, { seed, size, ...extraOptions });
+  svg = avatar.toString();
+}
 
 // ── Output ────────────────────────────────────────────────────────────────────
 

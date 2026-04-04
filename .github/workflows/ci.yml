@@ -36,11 +36,11 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-          cache-dependency-path: vendor/toon-head/package-lock.json
+          cache-dependency-path: vendor/programmatic-avatar/package-lock.json
 
       - name: Install Node vendor dependencies
         run: npm ci
-        working-directory: vendor/toon-head
+        working-directory: vendor/programmatic-avatar
 
       - name: Install package and dependencies
         run: |
@@ -68,11 +68,11 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-          cache-dependency-path: vendor/toon-head/package-lock.json
+          cache-dependency-path: vendor/programmatic-avatar/package-lock.json
 
       - name: Install Node vendor dependencies
         run: npm ci
-        working-directory: vendor/toon-head
+        working-directory: vendor/programmatic-avatar
 
       - name: Install package and dependencies
         run: |
