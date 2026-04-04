@@ -47,52 +47,7 @@ graph LR
 
 ## 2. Pipeline Stages (A→G)
 
-| Stage | Module | What it does | LLM? |
-|-------|--------|--------------|:----:|
-| **A** | `pipeline/step_a_randomise_person.py` | Random demographics, name, phenotype colors | ❌ |
-| **B** | `pipeline/step_b_generate_cv.py` | Education, experience, traits from role | ✅ text |
-| **C** | `pipeline/step_c_select_features.py` | Hair style, clothing, accessories per-field | ✅ text |
-| **D** | `pipeline/step_d_make_abbreviation.py` + `pipeline/step_d_make_toon_head.py` | Initials PNG (PIL) + ToonHead SVG (DiceBear, Node) | ❌ |
-| **E** | `pipeline/step_ef_generate_image.py` | Neutral portrait from full persona | ✅ image |
-| **F** | `pipeline/step_ef_generate_image.py` | Expression variants from neutral reference | ✅ image |
-| **G** | `pipeline/step_g_postprocess.py` | Circle frame sticker composite (PIL + rembg) | ❌ |
-
-### Stage A — Randomise Person
-
-Produces a `demographics` dict with:
-- Identity: `gender`, `age`, `name`
-- Style: `style`, `bg_color`, `fg_color`
-- Phenotype colors: `SKIN_TONE`, `HAIR_COLOR`, `EYE_COLOR`, `BROWS_COLOR`
-- Shape fields: `EYE_SHAPE`, `BROWS_STYLE`, `NOSE_SHAPE`, `CHIN_SHAPE`, `CHEEKS_SHAPE`
-
-All values drawn uniformly from the palettes in `assets/persona/phenotype_settings.json`. No LLM involved.
-
-### Stage B — Generate CV
-
-Calls a text LLM once to produce `education`, `experience`, `traits`. Retries up to `max_retries` on empty or malformed responses.
-
-### Stage C — Select Features
-
-One LLM call per field: `HAIR_STYLE`, `CLOTHING` (dict), `ACCESSORIES` (dict). Phenotype fields are pre-seeded from Stage A demographics — no LLM needed for them. Context accumulates across fields so each pick is consistent with the emerging persona.
-
-### Stage D — Abbreviation + Programmatic Avatar (PA)
-
-Two fast, code-only avatars are generated in parallel before any LLM call:
-
-1. **Abbreviation** — PIL renders initials on a WCAG-AA-compliant colored circle. Deterministic; no network calls. Output: `<slug>-abbreviation.png`.
-2. **Programmatic Avatar (PA)** — multi-style SVG generated via `vendor/programmatic-avatar/generate.js` (Node.js subprocess). Seed = person name → same name always produces the same avatar. Output: `<slug>-programmatic-avatar.svg`. PA failure is non-fatal; the pipeline continues without it.
-
-### Stage E — Canonical Portrait
-
-Single Ollama image model call. Input: `persona.yml` + style directive + `neutral` expression. Output: PNG.
-
-### Stage F — Expression Variants
-
-One Ollama image model call per expression. Sends the Stage E portrait as a reference image so the model preserves identity across expressions.
-
-### Stage G — Postprocess
-
-`rembg` removes the portrait background; PIL composites it over a colored circle with a white sticker border.
+see [Avatar Pipeline Software Architecture](avatar_pipeline.md)
 
 ---
 

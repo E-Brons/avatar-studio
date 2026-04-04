@@ -13,46 +13,49 @@
 3. [Avatar Creation Pipeline](#3-avatar-creation-pipeline)
    - [3.1 Generate Avatar Persona](#31-generate-avatar-persona)
    - [3.2 Render Avatars](#32-render-avatars)
+     - [Programmatic Avatar](pipeline/step_d2.md)
+     - [Neutral Portrait](pipeline/step_e.md)
+     - [Expression Variants](pipeline/step_f.md)
+     - [Post-process / Apply Background](pipeline/step_g.md)
 4. [Validation](#4-validation)
    - [4.1 Scorers Overview](#41-scorers-overview)
-   - [4.2 Expression Classifier](#42-expression-classifier)
-   - [4.3 Style Classifier](#43-style-classifier)
-   - [4.4 Persona Categorizer](#44-persona-categorizer)
-
+   - [4.2 Expression Classifier](pipeline/scoring_expression_classifier.md)
+   - [4.3 Style Classifier](pipeline/scoring_style_classifier.md)
+   - [4.4 Persona Categorizer](pipeline/scoring_persona_categorizer.md)
+5. [Appendix A — Data Structures](#appendix-a--data-structures)
+   - [A.1 Avatar Request](#a1-avatar-request)
+   - [A.2 Avatar Persona](#a2-avatar-persona)
+   - [A.3 PNG Metadata](#a3-png-metadata)
 
 ---
 
 ## 1. Input
 
-**Avatar Request** - The input for the avatar pipeline is a key-value dictionary, where:
-- Key is the name of the attribute
-- Value is a selector, of one of the following types:
-  - single value
-  - a list of values
-  - a range of values
-  - probability dict
-    - a dict of values and their corresponding probabilities (must sum to 1)
-  - per-another-attribute key-value
-    - parent attribute name
-    - attribute:value dictionary
-  - 🤖 LLM Selector
+The input to the avatar pipeline is an **Avatar Request** (see [Appendix A.1](#a1-avatar-request)).
 
 The following rendering parameters are mandatory:
 
 | Parameter | Description |
 |---|---|
-| **Artistic Style** | Which visual style to render |
-| **Expression ID** | Which expression(s) to generate [^expression-id] |
+| **Artistic Style** | Which visual style to render [^style-id] |
+| **Expression IDs** | Which expression(s) to generate [^expression-id] |
 | **Image Size** | Output pixel dimensions (width = height) |
 | **Background Style** | How to composite the background [^bg-style] |
 | **Background Color** | Hex color used for the background element |
 
-[^expression-id]: Accepts four forms: a single expression name (e.g. `"happiness"`), a list of names (e.g. `["happiness", "anger"]`), `"all"` (generate every defined expression), or `"random"` (pick one at random).
+[^style-id]: Any style ID defined in `assets/styles/styles.yml` — e.g. `"studio_3d"`, `"photorealistic"`, `"toon-head"`.
 
-[^bg-style]: Currently only `round-fill` is supported — a solid-color circle composited behind the portrait. Additional background styles (gradient, transparent, full-bleed) are planned for a future phase.
+[^expression-id]: Accepts four forms: a single expression name (e.g. `"happiness"`), a list of names (e.g. `["happiness", "anger"]`), `"all"` (generate every defined expression), or `"random"` (pick one at random). The reason we need the IDs in a single request is to be able to identify all expressions-avatars as the same person.
 
-**Frontend - User**
-Our Frontend (future, TBD) will allow user to select for each of the attributes, using ✏️ Manual, 🎲 Random or 🤖 LLM pick methods:
+[^bg-style]: Currently only `transparent`, `color-fill`, `round-fill` are to be supported. Additional background styles (gradient, full-bleed) provision is advised.
+
+## 1.1 API, Test and Package users
+
+This library is mainly an API / package utilitiy.
+The main user would convey the **Avatar Request** as a file, or via APIs
+
+## 1.2 Frontend - User
+Frontend (minimal implementation for manual testing) allows the user to select for each of the attributes, using ✏️ Manual, 🎲 Random or 🤖 LLM pick methods:
 
 ```mermaid
 flowchart TD
@@ -91,42 +94,22 @@ flowchart TD
 
 ## 2. Output
 
-A **set** of PNGs, each:
-- represent and identifiable as the same person
-- mimics a facial expression
+A **set** of PNGs, each representing the same person in a distinct facial expression.
 
-Every PNG also carries the following metadata:
-```yml
-- avatar-studio:
-    - date
-    - version
-- attributes:
-    - artistic-style
-    - gender
-    - age
-    - name
-    - ...
-- expression-id
-- if LLM-created:
-    - model name and version
-    - prompt
-- if programmatically-created:
-    - credits according to package usage
-- acceptance-scores:
-    - style-fidelity
-    - expression-clarity
-    - ...
-- generation-time-ms  # includes acceptance gate passes
-```
+Every PNG carries embedded metadata — see [Appendix A.3](#a3-png-metadata).
+
+---
 
 ## 3. Avatar Creation Pipeline
 
 ### 3.1 Generate Avatar Persona
 
-Input: **Avatar Request**
-Output:  **Avatar Persona**
+Input: **Avatar Request** (see [Appendix A.1](#a1-avatar-request))
+Output: **Avatar Persona** (see [Appendix A.2](#a2-avatar-persona))
 
-### Persona Attributes collection
+The persona generation phase resolves all avatar attributes from the **Avatar Request** into concrete values, producing **Avatar Persona** — the single source of truth consumed by the upcoming avatar-rendering steps.
+
+### 3.1.1 Generate Avatar Persona - Flowchart
 
 ```mermaid
 flowchart TD
@@ -151,7 +134,7 @@ flowchart TD
 
         %% prop-selector - selecting using random / LLM
         PROP_SELECTOR --> WHICH_SELECTOR{"Which Selector?"}:::op
-        WHICH_SELECTOR -->|📋 list| RAND_FROM_LIST(["Random from list"]):::op --> AGGREGATE
+        WHICH_SELECTOR -->|📋 uniform| RAND_FROM_LIST(["Random from list"]):::op --> AGGREGATE
         WHICH_SELECTOR -->|🎲 probability| RAND_FROM_PROB(["Random from probability"]):::op --> AGGREGATE
         WHICH_SELECTOR -->|🎯 range| RAND_FROM_RANG(["Random from range"]):::op --> AGGREGATE
         WHICH_SELECTOR -->|🤖 LLM| LLM_SELECTOR(["LLM Selector"]):::llm --> AGGREGATE
@@ -159,7 +142,7 @@ flowchart TD
 
         %% missing attributes - fallback according to schema defaults
         ATTRIBUTE_DEFAULT .-> |read default| DFLT_FALLBACK(["Default Fallback"]):::op
-        PROP_MISSING .-> |identify missing| DFLT_FALLBACK --> WHICH_SELECTOR
+        PROP_MISSING .-> |identify 🫥 missing| DFLT_FALLBACK --> WHICH_SELECTOR
     end
 
     AGGREGATE --> PERSONA[("<b>avatar_persona.yml</b>")]:::inter
@@ -168,13 +151,64 @@ flowchart TD
     classDef cnst fill:#FFF5B0,color:#333,stroke:#221E04,stroke-width:2px,font-family:monospace;
     classDef op fill:#D8DFF1,stroke:#0A066F,stroke-width:2px;
     classDef llm fill:#F5C4E1,stroke:#A92656,stroke-width:2px;
-
 ```
+
+### 3.1.2 Order of Attribute Resolving
+
+1. Attributes **Missing 🫥** from the request - pre-pass that assigns the schema default (selector/value) for any missing attribute
+2. Attributes with a **Single Value** (i.e. ☝🏻 explicit) pass through unchanged.
+*e.g. 'Eye Color' : 'Green'*
+3. Attributes with **Random Selectors** (i.e. 📋 uniform, 🎲 probability, 🎯 range)
+*e.g. 'Age' : range(25,70)*
+4. Attributes **Generated by LLM 🤖** - may implicitly depend on other attributes
+*e.g. 'Brows Color' may implicitly inherit from 'Age', 'Hair Color'*
+5. Attributes whose value **Explicitly Inherited 🔗** by other attributes.
+*e.g. 'First Name' is random pick of a list derived by 'Gender'*
+
+> note: Explicitly Inherited attributes can't depend on other similarily-inherited attribute, as the order of their evaluation is undefined 
+
+The result is a fully concrete **Avatar Persona** — every attribute has exactly one resolved value. No selectors remain at this point; the persona is ready for rendering.
+
+### 3.1.3 Multiple-Selection Types
+
+Attribute with more than one optional value may be selected with any of the following strategies:
+- 📋 **Uniform Random Pick** from a list
+- 🎯 **Uniform Random Pick** from a range (integer / color)
+- 🎲 **Probability Random Pick** where the probability for each value is given.
+- 🤖 **LLM Pick** The LLM input will include all attributes resolved so far (steps 1-3 [above](#312-order-of-attribute-resolving)) and restricted format by a schema.
+
+### 3.1.4 Unit-level Breakdown
+
+- [avatar_persona_generator](pipeline/units/avatar_persona_generator.md)
+  - [avatar_persona_schema](pipeline/units/avatar_persona_schema.md)
+  - [avatar_request_serve](pipeline/units/avatar_request_serve.md)
+    - [avatar_request_api](pipeline/units/avatar_request_api.md)
+    - [avatar_request_validate_input](pipeline/units/avatar_request_validate_input.md)
+    - [avatar_request_identify_missing](pipeline/units/avatar_request_identify_missing.md)
+      - [avatar_persona_default_fallback](pipeline/units/avatar_persona_default_fallback.md)
+    - [avatar_request_identify_explicits](pipeline/units/avatar_request_identify_explicits.md)
+      - [avatar_persona_aggregator_fallthrough](pipeline/units/avatar_persona_aggregator_fallthrough.md)
+    - [avatar_request_parse_selector](pipeline/units/avatar_request_parse_selector.md)
+      - [avatar_persona_aggregator_random_from_list](pipeline/units/avatar_persona_aggregator_random_from_list.md)
+      - [avatar_persona_aggregator_random_from_range](pipeline/units/avatar_persona_aggregator_random_from_range.md)
+        - [avatar_persona_aggregator_random_from_range_color](pipeline/units/avatar_persona_aggregator_random_from_range_color.md)
+      - [avatar_persona_aggregator_random_from_probability](pipeline/units/avatar_persona_aggregator_random_from_probability.md)
+      - [avatar_persona_aggregator_from_llm](pipeline/units/avatar_persona_aggregator_from_llm.md)
+      - [avatar_persona_aggregator_from_inherited](pipeline/units/avatar_persona_aggregator_from_inherited.md)
+    - [avatar_persona_marshal](pipeline/units/avatar_persona_marshal.md)
+
+### 3.1.5 Unit Tests
+The whole unit is unit-testable, except for LLM Generation.
+Since the mock to LLM generation will be random, it is unnecessary and can be marked as Intentionally skipped (low ROI).
+
+---
 
 ### 3.2 Render Avatars
 
-Input: **Avatar Persona**
-Output:  **Avatar Image**
+Input: **Avatar Persona** (`avatar_persona.yml`)
+Output: **Avatar Images** (final PNGs per expression)
+
+### 3.2.1 Render Avatars — Flowchart
 
 ```mermaid
 flowchart TD
@@ -216,7 +250,6 @@ flowchart TD
         AVATAR_SVG ==>|N expressions| POST ==>|N expressions| FINAL[(<b><u>FINAL</u>:<br/>Avatar_Expression<br/><i>.png</i></b>)]:::final
     end
 
-    
     classDef inter fill:#FFF,color:#333,stroke:#111,font-family:monospace;
     classDef cnst fill:#FFF5B0,color:#333,stroke:#221E04,stroke-width:2px,font-family:monospace;
     classDef kv fill:#e6fffb,stroke:#006d77,stroke-width:2px,font-family:monospace;
@@ -225,18 +258,80 @@ flowchart TD
     classDef scrpt fill:#D6EBB0,stroke:#156816,stroke-width:2px;
 ```
 
+### 3.2.2 Render Sequence
+
+1. **Style resolution** — `style_id` is looked up in `styles.yml`; determines render family (LLM or Programmatic) and loads the style directive or component configuration.
+2. **Expression set resolution** — `expression_id` is resolved to a concrete list of expression names: single name, explicit list, `"all"` (every expression in `expressions.yml`), or `"random"` (one uniform pick).
+3. **Path branch on style family** — LLM styles → LLM render; Programmatic styles → Programmatic render.
+
+4. (🤖) **LLM — Neutral Portrait** · [SRS →](pipeline/step_e.md) — one image model call; establishes visual identity. Prompt combines the style directive, a sanitized persona YAML, and the neutral expression.[^persona-sanitize] Output PNG is the reference image for all expression variants.
+5. (🤖) **LLM — Expression Variants** · [SRS →](pipeline/step_f.md) — N calls (one per non-neutral expression), each receiving the neutral portrait as a reference image to anchor identity.[^ref-img-f] Individual failures are non-fatal.
+6. (🐍) **Programmatic — Expression Set** · [SRS →](pipeline/step_d2.md) — N SVG generations via DiceBear (Node.js), seeded deterministically from the persona name. Expression controlled by pre-mapped component overrides — no neutral reference needed. Failure is non-fatal.
+7. (🐍) **Post-processing** - transforming SVG to PNG
+8. **Post-processing** · [SRS →](pipeline/step_g.md) — applied to outputs from both paths: background removal (LLM path only) then composite layout.[^no-bg-in-style]
+
+[^persona-sanitize]: Text-heavy fields (name, CV, traits) are excluded from the image prompt — the model may render them as literal text. `eye_shape` is excluded because rendering is owned by the style system prompt; persona-level eye shape would conflict.
+
+[^ref-img-f]: Without the reference image the model generates a different-looking person for each expression. The reference anchors hair, skin, and facial structure while allowing the expression signal to vary.
+
+[^no-bg-in-style]: Style system prompts deliberately omit background instructions. A background in the raw output would conflict with background removal in post-processing, producing a doubled or inconsistent result in the final composite.
+
+### 3.2.3 Render Families
+
+| | **🤖 LLM** | **🐍 Programmatic** |
+|---|---|---|
+| Driven by | Image model + style system prompt | DiceBear component library (Node.js) |
+| Raw output format | PNG | SVG |
+| Expression control | FACS codes + description in prompt | Pre-mapped component variants (eyes, mouth, brows) |
+| Identity anchor | Neutral portrait passed as reference image | Name seed — same name always produces same avatar |
+| Deterministic | No | Yes (except `opeeps` style) |
+| Persona applied | Full visual persona YAML | `bg_color` only |
+| Failure granularity | Per-expression (one failure doesn't block others) | Whole path (Node.js unavailable → no programmatic output) |
+
+### 3.2.4 Unit-level Breakdown
+
+- [avatar_renderer](pipeline/units/avatar_renderer.md)
+  - [avatar_render_style_resolver](pipeline/units/avatar_render_style_resolver.md)
+  - [avatar_render_expression_resolver](pipeline/units/avatar_render_expression_resolver.md)
+  - [avatar_render_llm](pipeline/units/avatar_render_llm.md)
+    - [avatar_render_llm_prompt_builder](pipeline/units/avatar_render_llm_prompt_builder.md)
+      - [avatar_render_llm_persona_sanitizer](pipeline/units/avatar_render_llm_persona_sanitizer.md)
+      - [avatar_render_llm_style_directive](pipeline/units/avatar_render_llm_style_directive.md)
+      - [avatar_render_llm_facs_resolver](pipeline/units/avatar_render_llm_facs_resolver.md)
+    - [avatar_render_llm_neutral_portrait](pipeline/units/avatar_render_llm_neutral_portrait.md)
+    - [avatar_render_llm_expression_variants](pipeline/units/avatar_render_llm_expression_variants.md)
+  - [avatar_render_programmatic](pipeline/units/avatar_render_programmatic.md)
+    - [avatar_render_programmatic_expression_mapper](pipeline/units/avatar_render_programmatic_expression_mapper.md)
+    - [avatar_render_programmatic_svg_generator](pipeline/units/avatar_render_programmatic_svg_generator.md)
+  - [avatar_postprocessor](pipeline/units/avatar_postprocessor.md)
+    - [avatar_postprocessor_svg_2_png](pipeline/units/avatar_postprocessor_svg_2_png.md)
+    - [avatar_postprocessor_background_remover](pipeline/units/avatar_postprocessor_background_remover.md)
+    - [avatar_postprocessor_compositor](pipeline/units/avatar_postprocessor_compositor.md)
+      - [avatar_postprocessor_metadata](pipeline/units/avatar_postprocessor_metadata.md)
+
+### 3.2.5 Testability
+
+- `avatar_render_style_resolver` and `avatar_render_expression_resolver` are pure lookups — fully unit-testable.
+- `avatar_render_llm_prompt_builder` and its children (`persona_sanitizer`, `style_directive`, `facs_resolver`) are pure functions — fully unit-testable.
+- `avatar_render_llm_neutral_portrait` and `avatar_render_llm_expression_variants` make image model calls — integration-test only; mock at the gateway boundary.
+- `avatar_render_programmatic_svg_generator` calls Node.js subprocess — integration-test only; mock at subprocess boundary or use a fixture SVG.
+- `avatar_postprocessor_background_remover` depends on rembg ONNX model — integration-test; can be mocked with a pre-removed fixture image.
+- `avatar_postprocessor_compositor` is pure Pillow — fully unit-testable with fixture images.
+
+---
+
 ## 4. Validation
 
-Validation runs after render. Three independent scorers operate on the final PNG and write their results to the `acceptance-scores` field in the output metadata (see §2). Scores are informational — the library returns them; the caller decides what to do with them.
+Validation runs after render. Three independent scorers operate on each final PNG and write their results to the `acceptance-scores` field in the output metadata (see [Appendix A.3](#a3-png-metadata)). Scores are informational — the library returns them; the caller decides what to do with them (retry, warn, reject).
 
 ### 4.1 Scorers Overview
 
-| Scorer | Product criterion (avatars.md §6) | Module |
-|---|---|---|
-| Expression Classifier | §6.3 Expression Clarity | `tuning/classify_expression.py` |
-| Style Classifier | §6.4 Style Fidelity | `tuning/classify_style.py` |
-| Persona Categorizer | §6.2 Phenotype Fidelity, §6.1 Identity Consistency | `tuning/classify_persona.py` |
-| Technical Quality | §6.5 Technical Quality | *not yet implemented* |
+| Scorer | Product criterion ([avatars.md §6](../product/avatars.md#6-acceptance-gate)) | Module | Detailed SRS |
+|---|---|---|---|
+| Expression Classifier | §6.3 Expression Clarity | `tuning/classify_expression.py` | [→](pipeline/scoring_expression_classifier.md) |
+| Style Classifier | §6.4 Style Fidelity | `tuning/classify_style.py` | [→](pipeline/scoring_style_classifier.md) |
+| Persona Categorizer | §6.2 Phenotype Fidelity, §6.1 Identity Consistency | `tuning/classify_persona.py` | [→](pipeline/scoring_persona_categorizer.md) |
+| Technical Quality | §6.5 Technical Quality | *not yet implemented* | — |
 
 ---
 
@@ -244,6 +339,7 @@ Validation runs after render. Three independent scorers operate on the final PNG
 
 **Module**: `tuning/classify_expression.py`
 **Entry point**: `classify_image_expression(image_bytes, expression_labels, *, gateway_url, timeout)`
+**[Full SRS →](pipeline/scoring_expression_classifier.md)**
 
 Asks a vision LLM to identify which facial expressions are visible in the image. The classifier operates **blind** — it receives only plain label names as soft hints, never FACS specs or generation instructions.
 
@@ -258,10 +354,12 @@ Asks a vision LLM to identify which facial expressions are visible in the image.
 
 **Pass evaluation — two paths**:
 
-1. **Direct match**: `top_expression` matches the expected label (case-insensitive) AND `top_score ≥ 0.35`
+1. **Direct match**: `top_expression` matches the expected label (case-insensitive) AND `top_score ≥ 0.35`[^expr-threshold]
 2. **Semantic fallback** (`semantic_effective_score()`): sums probabilities of all classifier output labels that a text-LLM judges semantically equivalent to the expected label (separate yes/no call per label). Allows synonyms — e.g. `"joyful"` counting toward `"happiness"`.
 
 If neither path passes, the expression score is the semantic effective score (float 0.0–1.0); the caller uses this to decide acceptance.
+
+[^expr-threshold]: Threshold 0.35 was chosen empirically during tuning. It passes clearly rendered expressions while filtering diffused scores (0.15–0.20) caused by ambiguous renderings.
 
 ---
 
@@ -269,8 +367,9 @@ If neither path passes, the expression score is the semantic effective score (fl
 
 **Module**: `tuning/classify_style.py`
 **Entry point**: `classify_image_style(image_bytes, styles, *, gateway_url, timeout)`
+**[Full SRS →](pipeline/scoring_style_classifier.md)**
 
-Asks a vision LLM to identify which style from `styles.yml` the image best represents. Each style's `key_technical_traits` list is provided as discriminating criteria. Styles without `key_technical_traits` and the `random` pseudo-style are automatically excluded.
+Asks a vision LLM to identify which style from `styles.yml` the image best represents. Each style's `key_technical_traits` list is provided as discriminating criteria. Styles without `key_technical_traits` and the `random` selector are automatically excluded.[^style-filter]
 
 **Output — `StyleClassificationResult`**:
 
@@ -281,7 +380,9 @@ Asks a vision LLM to identify which style from `styles.yml` the image best repre
 | `reasoning` | `str` | One-sentence visual evidence |
 | `raw_response` | `str` | Raw LLM YAML for debugging |
 
-**Pass evaluation**: `top_style_id == expected_style_id`
+**Pass evaluation**: `top_style_id == expected_style_id` (exact match, no threshold).
+
+[^style-filter]: `random` has no visual definition and cannot be classified. Styles without `key_technical_traits` are excluded because the classifier has no discriminating criteria to apply.
 
 ---
 
@@ -289,13 +390,13 @@ Asks a vision LLM to identify which style from `styles.yml` the image best repre
 
 **Module**: `tuning/classify_persona.py`
 **Entry point**: `categorize_avatar_image(image_bytes, persona, *, gateway_url, timeout)`
+**[Full SRS →](pipeline/scoring_persona_categorizer.md)**
 
 Verifies which visual properties from `avatar_persona.yml` are present in the image. Two scoring methods are used depending on property type:
 
 **Color properties** — `skin_tone`, `hair_color`, `eye_color`, `clothing`:
 - VLM reports `observed_hex` (`#RRGGBB`) for the dominant color of each property
-- Pass/fail is determined **programmatically** by YCbCr Euclidean distance ≤ 55.0 between observed and expected hex
-- YCbCr is used instead of RGB to tolerate lighting variation while catching genuine color-family mismatches (e.g. dark brown vs blue)
+- Pass/fail is determined **programmatically** by YCbCr Euclidean distance ≤ 55.0 between observed and expected hex[^ycbcr-main]
 - The LLM's own `visible` flag is overridden by the distance check when an `observed_hex` is present
 
 **Structural properties** — `gender`, `hair_style`, `eye_shape`, `brows_style`, `nose_shape`, `chin_shape`, `cheeks_shape`, `accessories`:
@@ -312,143 +413,109 @@ Verifies which visual properties from `avatar_persona.yml` are present in the im
 
 Mandatory phenotype attributes (SKIN_TONE, HAIR_COLOR) are among the color properties that receive the YCbCr objective check. All other attributes are best-effort (LLM judgment only).
 
-
-
-### A — Randomize Person
-
-> **Design intent:** demographic and phenotype traits are selected **uniformly at random**
-> from equal-weight lists. No group is favored or disfavored. The categories
-> exist solely as visual descriptors to guide the image model — they are not
-> identity labels and do not represent real-world population ratios. The goal
-> is visual variety across a set of generated personas, not demographic modelling.
-
-Personal fields are randomized at generation time (not seeded from the advisor
-name). When re-generating an advisor, fresh random values are chosen.
-
-**DEMO** fields:
-- **NAME** — generated full name
-- **GENDER** — uniform random pick from: male, female, non-binary
-- **AGE** — uniform random integer 25–70
-
-**PHENO** fields (all randomized in this step):
-- **Color picks** — **SKIN_TONE**, **HAIR_COLOR**, **EYE_COLOR**, **BROWS_COLOR** — uniform random picks
-- **Shape picks** — **EYE_SHAPE**, **BROWS_STYLE**, **NOSE_SHAPE**, **CHIN_SHAPE**, **CHEEKS_SHAPE** — uniform random picks
-- **BG_COLOR** — uniform random pick from PALETTE (same palette used for abbreviation avatars)
-
-This step is pure randomization in code — no LLM call is made.
+[^ycbcr-main]: YCbCr separates luminance from chrominance, tolerating the lighting variation typical of diffusion model outputs (e.g. dark brown hair appearing lighter under rendered studio lighting) while still catching genuine color-family mismatches (dark brown vs. blue). Threshold 55.0 was set empirically.
 
 ---
 
-### B — Generate CV
+## Appendix A — Data Structures
 
-> **Design intent:** given the role/persona description and the avatar's age from §A,
-> an LLM call generates a character profile. This enables the
-> **multi-candidate** flow where the system produces diverse candidates from
-> a single persona input, with each candidate receiving a distinct background.
+### A.1 Avatar Request
 
-An LLM call generates a YAML profile with three keys:
+The Avatar Request is a key-value dictionary. Each key is an attribute name; each value is either a concrete value or a selector that resolves to one.
 
-- **education** — 1–2 items (degrees, certifications)
-- **experience** — 1–2 items (years and domain)
-- **traits** — 2–3 personality traits
+**Selector types**:
 
-#### Model call parameters:
-- **Temperature**: 0.7 (encourages diversity across candidates)
-- **Max tokens**: 512
-- **Max retries**: 10
-- **Inputs**: USER_ROLE, DEMO:AGE
+| Selector | Description |
+|---|---|
+| **Single value** | Explicit concrete value — passed through unchanged |
+| **List** | Uniform random pick from the provided list of values |
+| **Range** | Uniform random sample from `[min, max]` |
+| **Probability dict** | Weighted random pick; dict of `{value: probability}` (probabilities must sum to 1) |
+| **Inherit** | Derives value from another attribute: `{parent_attribute: {parent_value: derived_value, ...}}` |
+| **🤖 LLM Selector** | Value is chosen by an LLM call given the attribute context and the partially-resolved persona |
 
----
-
-### C — Presentation
-
-> **Design intent:** given the advisor's CV, phenotype, and demographics, an LLM
-> call selects the presentation details that complete the visual persona.
-> Temperature *0.5* balances consistency with natural variation — coherent choices
-> that still differ meaningfully across candidates.
-
-#### Model call parameters:
-- **Temperature**: 0.5
-- **Max tokens**: 1024
-- **Max retries**: 10
-- **Inputs**: CV (§B), PHENO (§A), DEMO (§A)
-
-**PRESENT** output fields:
-- **HAIR_STYLE** — e.g. short wavy, bun, cropped
-- **CLOTHING** — attire selection appropriate to the persona and style
-- **ACCESSORIES** — optional discreet items (glasses, earring, timepiece)
-
-Prompts and output schema are defined in `avatar_studio_settings.json`.
-
-> After §C completes, DEMO + PHENO + CV + PRESENT are marshaled into a single
-> `avatar_persona` dict — the **single source of truth** for image prompts and
-> the UI panel display.
+Attributes absent from the request fall back to the schema default selector defined in `Persona_Schema.yml`.
 
 ---
 
-### D — Abbreviation + ToonHead Avatars
+### A.2 Avatar Persona
 
-> **Design intent:** two lightweight code-generated avatars are produced in
-> parallel so the UI always has something to display while the image model runs.
+`avatar_persona.yml` is the fully resolved persona produced by §3.1. It has four top-level sections:
 
-#### D.1 — Abbreviation
+```yaml
+personal:
+  name: <str>
+  gender: <str>           # male | female | non-binary
+  age-group: <str>        # baby | toddler | adult | senior | etc.
+  age: <int>
 
-Generated by **Pillow** (no LLM call):
+appearance:
+  skin_tone: <hex>
+  hair_color:
+    hex_base: <hex>
+    hex_shadow: <hex>
+  eye_color:
+    hex_iris: <hex>
+    hex_pupil: <hex>
+  brows_color: <hex>
+  hair_style: <str>
+  eye_shape: <str>
+  brows_style: <str>
+  nose_shape: <str>
+  chin_shape: <str>
+  cheeks_shape: <str>
+  clothing:
+    <garment>: <hex>       # 1–4 items
+    ...
+  accessories:
+    <accessory>: <desc>    # 0–3 items
+    ...
 
-- **Inputs**: DEMO:NAME (for initials), PHENO:BG_COLOR (background), `#FFFFFF` foreground
-- **Output**: `<slug>-abbreviation.png` — square raster, initials centered on solid background circle
+post-process:              # ⚠️ NOT passed to the image model — compositing metadata only
+  pp_style_name: <str>     # factory to post-process: `transparent`, `color-fill`, `round-fill`
+  bg_color: <hex>          # background circle color
+  fg_color: <hex>          # foreground/text color
 
-#### D.2 — Programmatic Avatar (PA)
+```
 
-Generated by **DiceBear** (multi-style, CC BY 4.0) via a vendored Node.js
-sub-project (`vendor/programmatic-avatar/`). No LLM call; deterministic from the person's name.
+When injected into the image model prompt, the `style` block is stripped and `eye_shape` is excluded.[^persona-img-strip]
 
-- **Inputs**: DEMO:NAME (seed), PHENO:BG_COLOR (background color option)
-- **Output**: `<slug>-toon-head.svg` — scalable cartoon head SVG
-- **Failure behavior**: non-fatal — the pipeline continues without it if Node.js is unavailable
-
----
-
-### E — Canonical Portrait
-
-This is the **identity prompt** — it fully defines what the person looks like.
-It is called once and produces the neutral portrait that all expression variants
-will reference.
-
-Image models use a single combined `prompt.txt` (no separate system/user prompt files).
-
-*where*:
-{avatar_persona.yml} - replace by a (properly indented) dump of `avatar_persona.yml`
-{expressions.yml:{expression}} - replace by a (properly indented) dump of `expressions.yml:neutral`
-
----
-
-### F — Expression Avatars
-
-This prompt is sent **together with the neutral portrait image** (base64 in
-Ollama's `images` field). It asks the model to re-render the same person with a
-different expression.
-
-Image models use a single combined `prompt.txt` (no separate system/user prompt files).
-
-*where*:
-{avatar_persona.yml} - replace by a (properly indented) dump of `avatar_persona.yml`
-{expressions.yml:{expression}} - replace by a (properly indented) dump of `expressions.yml:{expression}`
-
+[^persona-img-strip]: `style` holds compositing metadata (bg/fg colors), not visual identity. `eye_shape` is excluded because rendering is owned by the style system prompt — injecting a persona-level eye shape would conflict with the style's defined rendering contract.
 
 ---
 
-### G — Apply Avatar on Background
+### A.3 PNG Metadata
 
-> **Design intent:** Highlight the portrait, while providing color-background for fast-recognising.
-> **Design style**
+Every output PNG carries the following embedded text chunks:
 
-> Remove any background generated in the previous LLM-image generation
-> Portrait covers ~ 90% of the picture vertical (~425px), highlighted by a 6-pixel width white "sticker" margins
-> `BG_COLOR` circle in the back with radius of 33% of the image (~350x350px)
+```yaml
+avatar-studio:
+  date: <ISO date>
+  version: <package version>
 
-Generated by **Pillow** (no LLM call):
+attributes:
+  artistic-style: <style_id>
+  gender: <str>
+  age: <int>
+  name: <str>
+  # ... all appearance attributes
 
-- **Inputs**: temporary files of avatars + expressions
-- **Output**: `avatar_expression.png` files
+expression-id: <str>
 
+# LLM-generated avatars only:
+llm:
+  model: <model name and version>
+  prompt: <full prompt sent to image model>
+
+# Programmatically-generated avatars only:
+programmatic:
+  credits: <attribution per package usage>
+
+acceptance-scores:
+  expression-clarity: <float 0.0–1.0>
+  style-fidelity: <float 0.0–1.0>
+  phenotype-fidelity: <float 0.0–1.0>
+  # technical-quality: not yet implemented
+
+generation-time-ms: <int>   # includes all acceptance scorer passes
+```

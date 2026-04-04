@@ -41,6 +41,8 @@ Avatar Studio supports two fundamentally different style families:
 | **LLM-Generated** | Image model + style system prompt | Natural language prompt | Raster (PNG) |
 | **Programmatic** | Deterministic code / component library | Component selection (eyes, mouth, …) | Vector (SVG) |
 
+The style input also accepts **`random`** as a selector value — it resolves to one of the LLM-generated styles at runtime, chosen uniformly. `random` is not a style; it has no visual definition and cannot appear as a result in style classification.
+
 ---
 
 ### 2.1 LLM-Generated Styles
@@ -308,7 +310,6 @@ Phenotype attributes are provided as generation inputs. Their fidelity in the ou
 | **CHIN_SHAPE** | Best effort | Hard to verify and control precisely |
 | **CHEEKS_SHAPE** | Best effort | Hard to verify and control precisely |
 
-> Programmatic styles are exempt from phenotype gating — appearance is determined by the component library, not by phenotype inputs.
 
 ### 6.3 Expression Clarity
 
