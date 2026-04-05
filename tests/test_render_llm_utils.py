@@ -41,10 +41,7 @@ class TestBuildStyleDirective:
 class TestSanitizePersona:
     _PERSONA = {
         "personal": {"name": "Alice", "gender": "female", "age": 35},
-        "advisor": {
-            "role": "Advisor",
-            "education": ["MBA"],
-            "experience": ["10 years"],
+        "personality": {
             "traits": ["analytical"],
         },
         "appearance": {"hair_style": "bob", "eye_shape": "almond"},
@@ -58,16 +55,9 @@ class TestSanitizePersona:
         result = sanitize_persona(self._PERSONA)
         assert "name" not in result.get("personal", {})
 
-    def test_removes_education_experience_traits(self):
+    def test_excludes_personality_section(self):
         result = sanitize_persona(self._PERSONA)
-        advisor = result.get("advisor", {})
-        assert "education" not in advisor
-        assert "experience" not in advisor
-        assert "traits" not in advisor
-
-    def test_keeps_role(self):
-        result = sanitize_persona(self._PERSONA)
-        assert result.get("advisor", {}).get("role") == "Advisor"
+        assert "personality" not in result
 
     def test_excludes_eye_shape(self):
         result = sanitize_persona(self._PERSONA)

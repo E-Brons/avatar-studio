@@ -34,7 +34,7 @@ from pathlib import Path
 import yaml
 
 from config.config import SETTINGS
-from pipeline.persona.aggregator_llm import generate_advisor_profile, select_features
+from pipeline.persona.aggregator_llm import select_features
 from pipeline.persona.generator import build_avatar_charachter, pick_demographics
 from pipeline.render.expression_resolver import EXPRESSION_IDS, EXPRESSIONS_YML
 from pipeline.render.llm.orchestrator import generate_avatar_image
@@ -574,7 +574,6 @@ def _generate_diverse_personas(
     gateway_url: str,
     tmp_dir: Path,
     *,
-    advisor_role: str = "Financial Advisor",
     hard_type_gender: bool = False,
 ) -> dict[str, dict]:
     """Run the full A→C pipeline once per gender and return a gender→avatar map.
@@ -590,12 +589,8 @@ def _generate_diverse_personas(
         Gender strings to generate personas for (e.g. ["male", "female", "non-binary"]).
     base_seed:
         Starting seed; persona i uses base_seed + i. None = random per persona.
-    text_model:
-        Ollama text model name in ``ollama/<model>`` format, routed via litellm.
     tmp_dir:
         Directory where ``persona_{gender}.yml`` files are written.
-    advisor_role:
-        Role string passed to Step B for CV generation.
     """
     personas: dict[str, dict] = {}
 
@@ -606,15 +601,9 @@ def _generate_diverse_personas(
             demographics = pick_demographics(seed=seed, hard_type_gender=hard_type_gender)
             demographics["gender"] = gender
 
-            advisor = {"role": advisor_role}
+            advisor: dict = {}
             features = None
             try:
-                cv = generate_advisor_profile(
-                    advisor_role,
-                    demographics,
-                    gateway_url=gateway_url,
-                )
-                advisor = {**advisor, **cv}
                 features = select_features(
                     demographics,
                     advisor,

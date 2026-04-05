@@ -1,9 +1,4 @@
-"""Persona generator — demographics randomisation + avatar character builder.
-
-Stage A: pick_demographics(), _pick_diverse_demographics()
-Stage C: build_avatar_charachter()
-Orchestrator: generate_persona()
-"""
+"""Persona generator — demographics randomisation + avatar character builder."""
 
 from __future__ import annotations
 
@@ -23,7 +18,7 @@ from pipeline.persona.aggregators import pool_by_gender
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
-# Stage A — pool constants
+# pool constants
 # ---------------------------------------------------------------------------
 
 _GENDERS: list[str] = SETTINGS["genders"]
@@ -42,7 +37,7 @@ _DEFAULT_STYLE: str = SETTINGS["default_style"]
 
 
 # ---------------------------------------------------------------------------
-# Stage A — private helpers
+# private helpers
 # ---------------------------------------------------------------------------
 
 
@@ -74,7 +69,7 @@ def _pick_colors(rng: random.Random | None = None) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# Stage A — public API
+# public API
 # ---------------------------------------------------------------------------
 
 
@@ -93,12 +88,13 @@ def pick_demographics(
 
     Returns DEMO fields (gender, age, name), STYLE fields (style, bg_color,
     fg_color), and PHENO color fields (SKIN_TONE, HAIR_COLOR, EYE_COLOR,
-    BROWS_COLOR) — all generated in Step A so no LLM is needed for visual
+    BROWS_COLOR) — all generated from random selection, no LLM needed for visual
     identity basics.
     """
     rng = random.Random(seed) if seed is not None else random.Random()
-    logger.info("[Step A] START — randomise_person (seed=%s)", seed)
-    gender = rng.choice(_GENDERS)
+    logger.info("START — randomise_person (seed=%s)", seed)
+    # Weight non-binary at 10 % — male/female each get 45 %.
+    gender = rng.choices(_GENDERS, weights=[45, 45, 10], k=1)[0]
 
     demo = {
         "gender": gender,
@@ -124,7 +120,7 @@ def pick_demographics(
             ),
         }
     )
-    logger.info("[Step A] DONE  — gender=%s, age=%s", demo.get("gender"), demo.get("age"))
+    logger.info("DONE  — gender=%s, age=%s", demo.get("gender"), demo.get("age"))
     return demo
 
 
@@ -138,7 +134,7 @@ def _pick_diverse_demographics(count: int = 4) -> list[dict]:
     """
     rng = random.Random()
 
-    logger.info("[Step A] START — randomise_person diverse (count=%d)", count)
+    logger.info("START — randomise_person diverse (count=%d)", count)
     genders = list(_GENDERS)
     rng.shuffle(genders)
     genders.append(rng.choice(_GENDERS))
@@ -174,12 +170,12 @@ def _pick_diverse_demographics(count: int = 4) -> list[dict]:
         }
         results.append(demo)
 
-    logger.info("[Step A] DONE  — diverse demographics count=%d", len(results))
+    logger.info("DONE  — diverse demographics count=%d", len(results))
     return results
 
 
 # ---------------------------------------------------------------------------
-# Stage C — avatar character builder
+# avatar character builder
 # ---------------------------------------------------------------------------
 
 
@@ -188,15 +184,9 @@ def build_avatar_charachter(
     demographics: dict,
     features: dict | None = None,
 ) -> dict:
-    """Build a complete avatar character definition.
-
-    This avatar character is the single character builder used
-    by both Step C (portrait) and Step D (expression variants).
-    to create visualisation
-    """
+    """Build a complete avatar character definition."""
     from pipeline.persona.marshal import marshal_avatar_persona
 
-    role = advisor.get("role", "Advisor")
     traits = advisor.get("traits", [])
     traits_str = ", ".join(traits) if traits else "professional"
 
@@ -205,7 +195,6 @@ def build_avatar_charachter(
     return dict(
         gender=demographics["gender"],
         age=demographics["age"],
-        role=role,
         traits_str=traits_str,
         avatar_persona=avatar_persona,
     )
@@ -234,7 +223,7 @@ def generate_persona(
     Returns the ``avatar_persona`` dict (same structure as ``marshal_avatar_persona``).
     """
     from config.config import SETTINGS
-    from pipeline.persona.aggregator_llm import generate_advisor_profile, select_features
+    from pipeline.persona.aggregator_llm import select_features
 
     # Normalize request
     req: dict = {}
@@ -243,7 +232,7 @@ def generate_persona(
 
         req = normalize_input(request)
 
-    # Step A — demographics
+    # demographics
     style = req.get("style", SETTINGS.get("default_style", "random"))
     demographics = pick_demographics(seed, style, hard_type_gender=hard_type_gender)
 
@@ -267,30 +256,12 @@ def generate_persona(
         if key in req:
             demographics[key] = req[key]
 
-    # Build advisor dict from request or defaults
+    # Build personality dict from request or defaults
     advisor: dict = {
-        "role": req.get("role", "Professional Advisor"),
         "traits": req.get("traits", []),
-        "education": req.get("education", []),
-        "experience": req.get("experience", []),
     }
 
-    # Step B — advisor profile (skip if all fields already provided)
-    if not all(advisor.get(k) for k in ("traits", "education", "experience")):
-        try:
-            profile = generate_advisor_profile(
-                advisor["role"],
-                {"gender": demographics["gender"], "age": demographics["age"]},
-                gateway_url=gateway_url,
-            )
-            advisor.update(profile)
-        except Exception as exc:
-            logger.warning("[generate_persona] Step B failed: %s", exc)
-            advisor.setdefault("traits", [])
-            advisor.setdefault("education", [])
-            advisor.setdefault("experience", [])
-
-    # Step C — feature selection
+    # feature selection
     features = None
     _tmp_ctx = None
     if session_dir is None:
@@ -308,7 +279,7 @@ def generate_persona(
             hard_type_gender=hard_type_gender,
         )
     except Exception as exc:
-        logger.warning("[generate_persona] Step C failed: %s", exc)
+        logger.warning("[generate_persona] feature selection failed: %s", exc)
     finally:
         if _tmp_ctx is not None:
             _tmp_ctx.__exit__(None, None, None)

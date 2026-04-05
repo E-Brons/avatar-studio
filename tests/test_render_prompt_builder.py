@@ -6,7 +6,6 @@ from pipeline.render.llm.prompt_builder import build_prompt
 class TestBuildPrompt:
     _PERSONA = {
         "personal": {"gender": "female", "age": 35},
-        "advisor": {"role": "Advisor"},
         "appearance": {"hair_style": "bob"},
     }
     _EXPR_ENTRY = {

@@ -1,4 +1,4 @@
-"""Tests for Step B — LLM Feature Selection helpers and B2 — Marshal Avatar Persona."""
+"""Tests for LLM Feature Selection helpers and Marshal Avatar Persona."""
 
 from unittest.mock import MagicMock, patch
 
@@ -10,7 +10,6 @@ from pipeline.persona.aggregator_llm import (
     _parse_feature_response,
     _select_feature_field,
 )
-from pipeline.persona.aggregator_llm import generate_advisor_profile as _generate_advisor_profile
 from pipeline.persona.aggregator_llm import select_features as _select_features
 from pipeline.persona.aggregators import pool_by_gender as _pool_by_gender
 from pipeline.persona.generator import (
@@ -141,9 +140,6 @@ def test_parse_color_no_hex():
 # ---------------------------------------------------------------------------
 
 SAMPLE_ADVISOR = {
-    "role": "Financial Advisor",
-    "education": ["MBA Finance"],
-    "experience": ["10 years wealth management"],
     "traits": ["analytical", "patient"],
 }
 
@@ -190,9 +186,7 @@ def test_marshal_full_features():
     assert persona["style"]["bg_color"] == "#4A90D9"
     assert persona["style"]["fg_color"] == "#FFFFFF"
     assert persona["personal"]["name"] == "Maya Chen"
-    assert persona["advisor"]["role"] == "Financial Advisor"
-    assert persona["advisor"]["education"] == ["MBA Finance"]
-    assert persona["advisor"]["traits"] == ["analytical", "patient"]
+    assert persona["personality"]["traits"] == ["analytical", "patient"]
 
     app = persona["appearance"]
     assert app["skin_tone"] == "#C9A96E"
@@ -211,7 +205,7 @@ def test_marshal_none_features():
     persona = _marshal_avatar_persona(SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR, None)
 
     assert persona["personal"]["gender"] == "female"
-    assert persona["advisor"]["role"] == "Financial Advisor"
+    assert persona["personality"]["traits"] == ["analytical", "patient"]
     assert persona["appearance"] == {}
 
 
@@ -221,29 +215,28 @@ def test_marshal_none_features():
 
 
 def test_build_feature_prompt_substitution():
-    """Feature prompt templates should substitute demographics and advisor fields."""
+    """Feature prompt templates should substitute demographics fields."""
     system_msg, user_msg = _build_feature_prompt(SAMPLE_DEMOGRAPHICS, SAMPLE_ADVISOR)
     assert "female" in user_msg
     assert "35" in user_msg
-    assert "Financial Advisor" in user_msg
     assert "analytical" in user_msg
-    # Appearance is no longer passed to the prompt
     assert "{ APPEARANCE_ID }" not in user_msg
-    # System message should be non-empty
     assert len(system_msg) > 0
 
 
 # ---------------------------------------------------------------------------
-# _select_features (mocked GatewayClient — per-field call pattern)
+# _select_features (mocked GatewayClient — batch call pattern)
 # ---------------------------------------------------------------------------
 
-# Per-field responses — NAME, colors, and shape fields are now pre-seeded from
-# §A demographics.  Only 3 LLM-selected fields remain.
-_PER_FIELD_RESPONSES = [
-    "side-parted short",  # HAIR_STYLE
-    'blazer over blouse: "#3C3C3C"\nsilk blouse: "#A8C4E0"',  # CLOTHING (YAML dict)
-    "glasses: thin-frame rectangular",  # ACCESSORIES (YAML dict)
-]
+# Batch response — all 3 appearance fields returned in a single YAML block.
+_BATCH_RESPONSE = (
+    "HAIR_STYLE: side-parted short\n"
+    "CLOTHING:\n"
+    '  blazer over blouse: "#3C3C3C"\n'
+    '  silk blouse: "#A8C4E0"\n'
+    "ACCESSORIES:\n"
+    "  glasses: thin-frame rectangular\n"
+)
 
 
 def _make_gateway_mock(responses: list):
@@ -259,13 +252,13 @@ def _make_gateway_mock(responses: list):
 
 
 def _make_per_field_side_effect():
-    """Build (mock_class, mock_instance): 1 warmup + 3 per-field responses."""
-    responses = ["ok"] + _PER_FIELD_RESPONSES
+    """Build (mock_class, mock_instance): 1 warmup + 1 batch response."""
+    responses = ["ok", _BATCH_RESPONSE]
     return _make_gateway_mock(responses)
 
 
 def test_select_features_success():
-    """Step B should parse per-field LLM responses into the feature dict."""
+    """Feature selection should parse per-field LLM responses into the feature dict."""
     mock_class, mock_instance = _make_per_field_side_effect()
 
     with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
@@ -292,14 +285,14 @@ def test_select_features_success():
     assert result["CLOTHING"] == {"blazer over blouse": "#3C3C3C", "silk blouse": "#A8C4E0"}
     assert result["ACCESSORIES"] == {"glasses": "thin-frame rectangular"}
 
-    # 1 warmup + 3 field calls = 4 total (NAME + colors + shapes pre-seeded from §A)
-    assert mock_instance.text_gen.call_count == 4
+    # 1 warmup + 1 batch call = 2 total (NAME + colors + shapes pre-seeded from §A)
+    assert mock_instance.text_gen.call_count == 2
 
 
 def test_select_features_retry_on_empty_response():
-    """Step C should retry a field when the LLM returns empty content."""
-    # warmup "ok", empty first attempt for HAIR_STYLE, good retry, then rest of fields
-    responses = ["ok", "", "side-parted short"] + _PER_FIELD_RESPONSES[1:]
+    """Batch call should retry when the LLM returns empty content."""
+    # warmup "ok", empty first attempt for batch, then good batch response
+    responses = ["ok", "", _BATCH_RESPONSE]
     mock_class, mock_instance = _make_gateway_mock(responses)
 
     with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
@@ -310,17 +303,17 @@ def test_select_features_retry_on_empty_response():
         )
 
     assert result["HAIR_STYLE"] == "side-parted short"
-    # 1 warmup + 1 empty + 1 good HAIR_STYLE + 2 other fields = 5
-    assert mock_instance.text_gen.call_count == 5
+    # 1 warmup + 1 empty retry + 1 good batch = 3
+    assert mock_instance.text_gen.call_count == 3
 
 
 def test_select_features_exhausts_retries():
-    """Step C should raise after max_retries of empty responses for a field."""
+    """Batch call should raise after max_retries of empty responses."""
     responses = ["ok"] + [""] * 10
     mock_class, mock_instance = _make_gateway_mock(responses)
 
     with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
-        with pytest.raises(ValueError, match="Failed to select HAIR_STYLE"):
+        with pytest.raises(ValueError, match="Failed to select appearance"):
             _select_features(
                 SAMPLE_DEMOGRAPHICS,
                 SAMPLE_ADVISOR,
@@ -330,7 +323,7 @@ def test_select_features_exhausts_retries():
 
 
 def test_select_features_llm_error_raises():
-    """Step B should raise when the LLM call itself fails (warmup succeeds, first field fails)."""
+    """Should raise when the LLM call itself fails (warmup succeeds, first field fails)."""
     mock_class, mock_instance = _make_gateway_mock(["ok", RuntimeError("connection refused")])
 
     with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
@@ -359,7 +352,7 @@ def test_select_features_no_api_base():
 
 
 def test_select_features_context_accumulates():
-    """Later field prompts should include the marshalled persona from earlier picks."""
+    """Batch prompt should include the marshalled persona from pre-seeded §A fields."""
     mock_class, mock_instance = _make_per_field_side_effect()
 
     with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
@@ -369,20 +362,18 @@ def test_select_features_context_accumulates():
             gateway_url="http://test",
         )
 
-    # The HAIR_STYLE field call (index 1, after warmup) should contain the
-    # marshalled persona built from the pre-seeded §A demographics.
-    # mock_instance.text_gen.call_args_list[1][0][0] gives the messages list
-    # from the second call; messages[1]["content"] is the user message.
+    # The batch call (index 1, after warmup at index 0) receives messages.
+    # messages[1]["content"] is the user message and should contain persona context.
     messages = mock_instance.text_gen.call_args_list[1][0][0]
     user_msg = messages[1]["content"]
     assert "Maya Chen" in user_msg
     assert "skin_tone" in user_msg
-    assert "Current persona so far" in user_msg
+    assert "Current persona:" in user_msg
 
 
 def test_warmup_failure_does_not_block():
     """Warmup failure should not prevent feature selection."""
-    responses = [RuntimeError("warmup failed")] + _PER_FIELD_RESPONSES
+    responses = [RuntimeError("warmup failed"), _BATCH_RESPONSE]
     mock_class, mock_instance = _make_gateway_mock(responses)
 
     with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
@@ -530,7 +521,7 @@ def test_select_feature_field_filters_none_values():
 # ---------------------------------------------------------------------------
 # Pipeline wiring test: _select_features → _build_avatar_charachter
 #
-# This catches the real bug: Stage B returning valid features but the
+# This catches the real bug: feature selection returning valid features but the
 # persona ending up with empty appearance because of wiring failures.
 # ---------------------------------------------------------------------------
 
@@ -552,13 +543,13 @@ def test_pipeline_features_to_avatar_persona():
     persona = avatar["avatar_persona"]
 
     # Name must be present in personal section
-    assert persona["personal"].get("name"), "personal.name must be set by Stage B"
+    assert persona["personal"].get("name"), "personal.name must be set"
 
     # Appearance must be non-empty with all visual keys
     appearance = persona.get("appearance", {})
     assert len(appearance) >= 12, (
         f"appearance has only {len(appearance)} keys — "
-        f"expected 12+. Stage B features did not flow through. "
+        f"expected 12+. Features did not flow through. "
         f"Keys present: {list(appearance.keys())}"
     )
 
@@ -574,123 +565,7 @@ def test_pipeline_features_none_gives_empty_appearance():
     persona = avatar["avatar_persona"]
 
     assert persona["appearance"] == {}
-    assert "name" not in persona["advisor"]
-
-
-# ---------------------------------------------------------------------------
-# _generate_advisor_profile
-# ---------------------------------------------------------------------------
-
-_PROFILE_YAML_RESPONSE = """\
-education:
-  - MBA Finance
-  - CFA Level III
-experience:
-  - 10 years wealth management
-  - 5 years private banking
-traits:
-  - analytical
-  - patient
-  - detail-oriented
-"""
-
-
-def test_generate_advisor_profile_success():
-    """Profile generation should parse YAML response with education/experience/traits."""
-    mock_class, mock_instance = _make_gateway_mock([_PROFILE_YAML_RESPONSE])
-    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
-        result = _generate_advisor_profile(
-            "Financial Advisor",
-            SAMPLE_DEMOGRAPHICS,
-            gateway_url="http://test",
-        )
-
-    assert result["education"] == ["MBA Finance", "CFA Level III"]
-    assert result["experience"] == ["10 years wealth management", "5 years private banking"]
-    assert result["traits"] == ["analytical", "patient", "detail-oriented"]
-
-
-def test_generate_advisor_profile_with_code_fences():
-    """Profile generation should strip code fences."""
-    mock_class, mock_instance = _make_gateway_mock([f"```yaml\n{_PROFILE_YAML_RESPONSE}```"])
-    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
-        result = _generate_advisor_profile(
-            "Advisor",
-            SAMPLE_DEMOGRAPHICS,
-            gateway_url="http://test",
-        )
-    assert len(result["education"]) == 2
-    assert len(result["traits"]) == 3
-
-
-def test_generate_advisor_profile_truncates_long_lists():
-    """Education and experience are capped at 2 items, traits at 3."""
-    yaml_resp = """\
-education:
-  - MBA
-  - CFA
-  - PhD Economics
-experience:
-  - 10 years banking
-  - 5 years consulting
-  - 3 years audit
-traits:
-  - analytical
-  - patient
-  - precise
-  - empathetic
-"""
-    mock_class, mock_instance = _make_gateway_mock([yaml_resp])
-    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
-        result = _generate_advisor_profile(
-            "Advisor",
-            SAMPLE_DEMOGRAPHICS,
-            gateway_url="http://test",
-        )
-    assert len(result["education"]) == 2
-    assert len(result["experience"]) == 3  # capped at 3
-    assert len(result["traits"]) == 3
-
-
-def test_generate_advisor_profile_retry_on_empty():
-    """Profile generation should retry on empty response."""
-    mock_class, mock_instance = _make_gateway_mock(["", _PROFILE_YAML_RESPONSE])
-    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
-        result = _generate_advisor_profile(
-            "Advisor",
-            SAMPLE_DEMOGRAPHICS,
-            gateway_url="http://test",
-        )
-    assert result["education"] == ["MBA Finance", "CFA Level III"]
-    assert mock_instance.text_gen.call_count == 2
-
-
-def test_generate_advisor_profile_exhausts_retries():
-    """Profile generation should raise after max retries."""
-    mock_class, mock_instance = _make_gateway_mock([""] * 10)
-    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
-        with pytest.raises(ValueError, match="Failed to generate advisor profile"):
-            _generate_advisor_profile(
-                "Advisor",
-                SAMPLE_DEMOGRAPHICS,
-                gateway_url="http://test",
-                max_retries=3,
-            )
-
-
-def test_generate_advisor_profile_missing_fields_retries():
-    """Profile generation retries when required fields are missing."""
-    mock_class, mock_instance = _make_gateway_mock(
-        ["education:\n  - MBA\n", _PROFILE_YAML_RESPONSE]
-    )
-    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
-        result = _generate_advisor_profile(
-            "Advisor",
-            SAMPLE_DEMOGRAPHICS,
-            gateway_url="http://test",
-        )
-    assert mock_instance.text_gen.call_count == 2
-    assert len(result["traits"]) == 3
+    assert "gender" in persona["personal"]
 
 
 # ---------------------------------------------------------------------------
