@@ -1,4 +1,4 @@
-"""Tests targeting uncovered branches in step_c_select_features.py."""
+"""Tests targeting uncovered branches in aggregator_llm.py."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ import pytest
 # ---------------------------------------------------------------------------
 
 _DEMOGRAPHICS = {"gender": "female", "age": 30, "name": "Alice Smith"}
-_ADVISOR = {"role": "Advisor", "traits": [], "education": [], "experience": []}
+_ADVISOR = {"traits": []}
 
 
 def _gateway_mock(responses: list):
@@ -363,12 +363,10 @@ class TestTextFieldNotInOptions:
 
 class TestSelectFeaturesSessionDir:
     def _mock_responses(self):
-        """1 warmup + 3 per-field responses (HAIR_STYLE, CLOTHING, ACCESSORIES)."""
+        """1 warmup + 1 appearance batch response."""
         return [
             "ok",  # warmup
-            "side-parted short",  # HAIR_STYLE
-            'blazer: "#3C3C3C"\nshirt: "#A8C4E0"',  # CLOTHING
-            "glasses: thin-frame rectangular",  # ACCESSORIES
+            'HAIR_STYLE: side-parted short\nCLOTHING:\n  blazer: "#3C3C3C"\nACCESSORIES:\n  glasses: thin-frame rectangular',
         ]
 
     def test_persona_yml_written_to_session_dir(self, tmp_path):
@@ -439,25 +437,18 @@ class TestVisualOnlyPersona:
 
         persona = {
             "personal": {"name": "Alice", "gender": "female", "age": 30},
-            "advisor": {
-                "role": "Advisor",
-                "education": ["MBA"],
-                "experience": ["10 years"],
-                "traits": ["smart"],
-            },
+            "personality": {"traits": ["smart"]},
             "appearance": {"hair_style": "bob", "eye_shape": "almond"},
         }
         visual = visual_only_persona(persona)
         assert "name" not in visual.get("personal", {})
-        assert "education" not in visual.get("advisor", {})
-        assert visual["advisor"]["role"] == "Advisor"
+        assert "personality" not in visual
 
     def test_excludes_eye_shape(self):
         from pipeline.persona.marshal import visual_only_persona
 
         persona = {
             "personal": {"gender": "female", "age": 30},
-            "advisor": {"role": "Advisor"},
             "appearance": {"hair_style": "bob", "eye_shape": "almond"},
         }
         visual = visual_only_persona(persona)
@@ -469,7 +460,6 @@ class TestVisualOnlyPersona:
 
         persona = {
             "personal": {"gender": "female", "age": 30},
-            "advisor": {"role": "Advisor"},
             "appearance": {"hair_color": {"hex_base": "#8B5E3C", "hex_shadow": "#5C3D1E"}},
         }
         visual = visual_only_persona(persona)

@@ -48,7 +48,7 @@ def create_programmatic_avatar(
     size:
         Pixel dimensions of the rendered SVG canvas (width = height).
     demographics:
-        Optional demographics dict from Step A.  When provided, the
+        Optional demographics dict.  When provided, the
         following fields are forwarded as style options:
 
         ============  ========================
@@ -71,7 +71,7 @@ def create_programmatic_avatar(
         *out_path* after the file has been written.
     """
     logger.info(
-        "[Step D] START — make_programmatic_avatar (name=%s, style=%s, expression=%s)",
+        "START — make_programmatic_avatar (name=%s, style=%s, expression=%s)",
         name,
         style,
         expression,
@@ -100,7 +100,7 @@ def create_programmatic_avatar(
             options.update(expr_opts)
         else:
             logger.warning(
-                "[Step D] Unknown expression %r for style %r — skipping. Known: %s",
+                "Unknown expression %r for style %r — skipping. Known: %s",
                 expression,
                 style,
                 ", ".join(style_map),
@@ -123,7 +123,7 @@ def create_programmatic_avatar(
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    logger.debug("[Step D] cmd: %s", " ".join(cmd))
+    logger.debug("cmd: %s", " ".join(cmd))
     result = subprocess.run(
         cmd,
         check=True,
@@ -132,9 +132,9 @@ def create_programmatic_avatar(
         cwd=str(vendor),
     )
     if result.stderr:
-        logger.debug("[Step D] stderr: %s", result.stderr.strip())
+        logger.debug("stderr: %s", result.stderr.strip())
 
-    logger.info("[Step D] DONE  — %s", out_path)
+    logger.info("DONE  — %s", out_path)
     return out_path
 
 

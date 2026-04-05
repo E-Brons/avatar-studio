@@ -1,6 +1,6 @@
 """Inherited aggregator — gender-bucketed pool selection.
 
-Extracts the _pool_by_gender pattern from step_a into a standalone function
+Extracts the _pool_by_gender pattern into a standalone function
 so it can be used from request.py and tested independently.
 """
 

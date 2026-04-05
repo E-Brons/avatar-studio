@@ -57,7 +57,7 @@ and (with YCbCr tolerance) `eye_color` when the distance is small.
 
 ## Approach
 
-Improve the prompt-building function in `step_ef_generate_image.py` that constructs
+Improve the prompt-building function in `pipeline/render/llm/prompt_builder.py` that constructs
 `full_prompt` before calling the gateway. The goal is a natural-language portrait
 description that FLUX can use directly.
 
@@ -122,7 +122,7 @@ Examples:
 - `bold unibrow` → `thick continuous brow`
 - `wide-set` → `eyes placed wide apart on the face`
 
-Maintain a vocabulary mapping in `step_ef_generate_image.py` (or a shared helper).
+Maintain a vocabulary mapping in `pipeline/render/llm/prompt_builder.py` (or a shared helper).
 
 ---
 
@@ -148,7 +148,7 @@ Some feature values (manga eyes, anime nose) are inherently incompatible with th
 selected style (e.g., skip `eye_shape: manga` when style is `photorealistic`).
 
 **5b — Style auto-select:** Allow `pick_demographics` to bias the style selection
-based on the feature set picked in Step A (cartoon features → cartoon/korean style).
+based on the feature set picked during demographics randomization (cartoon features → cartoon/korean style).
 
 Evaluate which produces better categorizer scores.
 
@@ -180,7 +180,7 @@ reliably. The evaluation suite (10 seeds) is a separate research harness, not pa
 
 | File | Change |
 |---|---|
-| `src/avatar_studio/pipeline/step_ef_generate_image.py` | Rewrite `_build_persona_prompt()` (new helper); replace YAML dump with natural-language description |
+| `src/pipeline/render/llm/prompt_builder.py` | Rewrite `_build_persona_prompt()` (new helper); replace YAML dump with natural-language description |
 | `src/avatar_studio/config/config.py` | Optionally expose `_hex_label` for reuse |
 | `assets/persona/phenotype_settings.json` | Optionally add `flux_vocab` mapping for feature normalisation |
 

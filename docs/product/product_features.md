@@ -9,13 +9,13 @@
 | Feature | Description |
 |---|---|
 | **User** | *May* select (or confine) every feature of the avatar (e.g. age, style) |
-| **Step A — Randomize Person** | Uniform random pick of *missing* demographics (name, gender, age), phenotype (skin tone, hair color, eye shape, etc.), and other features. No LLM call. |
-| **Step B — Generate CV** | Text LLM generates *missing* education, experience, and personality traits from a role description and age. |
-| **Step C — Select Features** | Text LLM picks *missing* apearnace: hair style, clothing, and accessories consistent with the persona. One call per field; context accumulates. |
-| **Step D — Abbreviation Avatar** | Pillow renders initials on a WCAG-AA-compliant colored circle. Synchronous, no network call. |
-| **Step E — Canonical Portrait** | Image LLM produces the neutral bust portrait that anchors all expression variants. |
-| **Step F — Expression Variants** | Image LLM generates one portrait per expression, using the Step E output as a reference image to preserve identity. |
-| **Step G — Postprocess** | `rembg` removes the generated background; Pillow composites the portrait over a colored circle with a white sticker border. |
+| **Randomize Demographics** | Uniform random pick of *missing* demographics (name, gender, age), phenotype (skin tone, hair color, eye shape, etc.), and other features. No LLM call. |
+| **Generate CV** | Text LLM generates *missing* education, experience, and personality traits from a role description and age. |
+| **Select Features** | Text LLM picks *missing* appearance: hair style, clothing, and accessories consistent with the persona. One call per field; context accumulates. |
+| **Abbreviation Avatar** | Pillow renders initials on a WCAG-AA-compliant colored circle. Synchronous, no network call. |
+| **Canonical Portrait** | Image LLM produces the neutral bust portrait that anchors all expression variants. |
+| **Expression Variants** | Image LLM generates one portrait per expression, using the canonical neutral portrait as a reference image to preserve identity. |
+| **Postprocess** | `rembg` removes the generated background; Pillow composites the portrait over a colored circle with a white sticker border. |
 
 ---
 
@@ -68,8 +68,8 @@ The autotuner is also available as a GitHub Actions workflow (`.github/workflows
 |---|---|---|
 | **HTTP server** | `scripts/start_http_server.sh` | FastAPI service on port 8080; drives the Flutter web UI |
 | **REST API** | `avatar-studio` (uvicorn) | FastAPI service; integrates with parent apps via HTTP |
-| **`stage-b`** | `avatar-studio stage-b` | Run Step B only — print persona YAML |
-| **`generate`** | `avatar-studio generate` | Full A→G pipeline for one or more advisor YAML files |
+| **`select-features`** | `avatar-studio select-features` | Run CV generation only — print persona YAML |
+| **`generate`** | `avatar-studio generate` | Full pipeline for one or more advisor YAML files |
 | **`gen-examples`** | `avatar-studio gen-examples` | Generate reference portraits for all styles × genders |
 
 ---
@@ -87,7 +87,7 @@ A Flutter web app (`frontend/`) provides an interactive browser UI for avatar cr
    - ✏️ **Select** — user picks a specific value (dropdown or free text)
    - 🔗 **Inherited** — value derived from another attribute (e.g. brows color ← hair color)
 3. The **Randomize** button (`POST /api/avatar/randomize`) fills all random-mode fields with a grayed preview value, respecting any fixed (select/predefined) constraints.
-4. The **Generate Avatar** FAB (`POST /api/avatar/generate`) runs the full A→E pipeline and displays the resulting portrait plus a collapsible `PersonaSummary`.
+4. The **Generate Avatar** FAB (`POST /api/avatar/generate`) runs the full pipeline (demographics → CV → features → neutral portrait) and displays the resulting portrait plus a collapsible `PersonaSummary`.
 
 ### Attribute panels (grouped by category)
 

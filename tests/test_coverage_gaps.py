@@ -30,17 +30,17 @@ def test_expression_autotuner_raises():
 
 
 # ---------------------------------------------------------------------------
-# step_g_postprocess — re-exports apply_circle_frame
+# postprocess/compositor — re-exports apply_circle_frame
 # ---------------------------------------------------------------------------
 
 
-def test_step_g_exports_apply_circle_frame():
+def test_postprocess_exports_apply_circle_frame():
     from pipeline.render.postprocess.compositor import apply_circle_frame
 
     assert callable(apply_circle_frame)
 
 
-def test_step_g_apply_circle_frame_works():
+def test_postprocess_apply_circle_frame_works():
     """Smoke-test the re-exported function with a tiny RGBA input."""
     from pipeline.render.postprocess.compositor import apply_circle_frame
 

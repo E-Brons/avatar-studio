@@ -21,5 +21,5 @@ Generates the canonical neutral portrait — the identity anchor for the avatar.
 5. Write session artifacts to `session_dir/`: `prompt.txt`, `style.yml`, `expression.yml`, `output.png`.
 
 ## Notes
-- `reference_images_b64` is `None` here — distinguishes Step E from Step F at the gateway level.
+- `reference_images_b64` is `None` here — distinguishes the neutral portrait from expression variant generation at the gateway level.
 - If the gateway returns no image data, raise `RuntimeError`.

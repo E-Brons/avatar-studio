@@ -21,15 +21,12 @@ _DEMO = {
 
 _ADVISOR_YAML = {
     "name": "Alice Smith",
-    "role": "Advisor",
     "traits": ["analytical"],
-    "education": ["MBA"],
-    "experience": ["5 years"],
 }
 
 _PERSONA = {
     "personal": {"name": "Alice Smith", "gender": "female", "age": 30},
-    "advisor": {"role": "Advisor"},
+    "personality": {"traits": []},
     "appearance": {"hair_style": "bob"},
     "style": {"bg_color": "#4A90D9"},
 }
@@ -86,31 +83,31 @@ class TestMainNoSubcommand:
 
 
 # ---------------------------------------------------------------------------
-# stage-b subcommand
+# select-features subcommand
 # ---------------------------------------------------------------------------
 
 
-class TestRunStageB:
-    def _patch_stage_b(self):
+class TestRunSelectFeaturesSubcommand:
+    def _patch_select_features(self):
         return [
             patch("api.cli.pick_demographics", return_value=dict(_DEMO)),
             patch("api.cli.select_features", return_value=_FEATURES),
             patch("api.cli.marshal_avatar_persona", return_value=_PERSONA),
         ]
 
-    def test_stage_b_prints_ok(self, capsys):
-        patches = self._patch_stage_b()
+    def test_prints_ok(self, capsys):
+        patches = self._patch_select_features()
         with patches[0], patches[1], patches[2]:
-            code = _run_main(["stage-b", "--role", "Engineer"])
+            code = _run_main(["select-features"])
         assert code == 0
         out = capsys.readouterr().out
-        assert "Stage B OK" in out
+        assert "Feature selection OK" in out
 
-    def test_stage_b_uses_role(self, capsys):
+    def test_uses_traits(self, capsys):
         captured = {}
 
         def _cap_select(demo, advisor, **kwargs):
-            captured["role"] = advisor["role"]
+            captured["traits"] = advisor["traits"]
             return _FEATURES
 
         patches = [
@@ -119,27 +116,15 @@ class TestRunStageB:
             patch("api.cli.marshal_avatar_persona", return_value=_PERSONA),
         ]
         with patches[0], patches[1], patches[2]:
-            _run_main(["stage-b", "--role", "Data Scientist"])
-        assert captured["role"] == "Data Scientist"
+            _run_main(["select-features", "--traits", "curious", "empathetic"])
+        assert captured["traits"] == ["curious", "empathetic"]
 
-    def test_stage_b_exits_1_when_no_name(self, capsys):
+    def test_exits_1_when_no_name(self, capsys):
         """Missing name in persona → sys.exit(1)."""
-        bad_persona = {"personal": {}, "appearance": {"hair": "bob"}, "advisor": {}, "style": {}}
-        patches = [
-            patch("api.cli.pick_demographics", return_value=dict(_DEMO)),
-            patch("api.cli.select_features", return_value=_FEATURES),
-            patch("api.cli.marshal_avatar_persona", return_value=bad_persona),
-        ]
-        with patches[0], patches[1], patches[2]:
-            code = _run_main(["stage-b"])
-        assert code == 1
-
-    def test_stage_b_exits_1_when_no_appearance(self, capsys):
-        """Empty appearance in persona → sys.exit(1)."""
         bad_persona = {
-            "personal": {"name": "Alice Smith"},
-            "appearance": {},
-            "advisor": {},
+            "personal": {},
+            "appearance": {"hair": "bob"},
+            "personality": {},
             "style": {},
         }
         patches = [
@@ -148,7 +133,24 @@ class TestRunStageB:
             patch("api.cli.marshal_avatar_persona", return_value=bad_persona),
         ]
         with patches[0], patches[1], patches[2]:
-            code = _run_main(["stage-b"])
+            code = _run_main(["select-features"])
+        assert code == 1
+
+    def test_exits_1_when_no_appearance(self, capsys):
+        """Empty appearance in persona → sys.exit(1)."""
+        bad_persona = {
+            "personal": {"name": "Alice Smith"},
+            "appearance": {},
+            "personality": {},
+            "style": {},
+        }
+        patches = [
+            patch("api.cli.pick_demographics", return_value=dict(_DEMO)),
+            patch("api.cli.select_features", return_value=_FEATURES),
+            patch("api.cli.marshal_avatar_persona", return_value=bad_persona),
+        ]
+        with patches[0], patches[1], patches[2]:
+            code = _run_main(["select-features"])
         assert code == 1
 
 
@@ -360,7 +362,7 @@ class TestRunGenExamples:
         assert not any("random" in n for n in gen_calls)
 
 
-class TestStageBNoneFeatures:
+class TestSelectFeaturesSubcommandNoneFeatures:
     def test_select_features_returns_none_exits_1(self, capsys):
         """Lines 70-71: _select_features returns None → sys.exit(1)."""
         patches = [
@@ -368,7 +370,7 @@ class TestStageBNoneFeatures:
             patch("api.cli.select_features", return_value=None),
         ]
         with patches[0], patches[1]:
-            code = _run_main(["stage-b", "--role", "Advisor"])
+            code = _run_main(["select-features"])
         assert code == 1
         err = capsys.readouterr().err
         assert "None" in err

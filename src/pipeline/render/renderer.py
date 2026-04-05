@@ -31,7 +31,7 @@ def create_abbreviation_avatar(
     color: str | None = None,
 ) -> Path:
     """Create a circular avatar PNG with initials."""
-    logger.info("[Step D] START — make_abbreviation (name=%s)", name)
+    logger.info("START — make_abbreviation (name=%s)", name)
     bg = _hex_to_rgb(color or _color_for_name(name))
     initials = _initials(name)
 
@@ -66,7 +66,7 @@ def create_abbreviation_avatar(
     meta.add_text("Copyright", "\u00a9 2026 MyBoard & Elkana Bronstein")
     meta.add_text("Generator", "PIL abbreviation avatar")
     img.save(str(out_path), pnginfo=meta)
-    logger.info("[Step D] DONE  — %s", out_path)
+    logger.info("DONE  — %s", out_path)
     return out_path
 
 
@@ -90,7 +90,7 @@ def create_face_avatar(
     height: int = DEFAULT_SIZE,
     seed: int | None = None,
 ) -> tuple[dict[str, str | None], dict]:
-    """Generate face avatars: neutral portrait (Step E) then expression variants (Step F).
+    """Generate face avatars: neutral portrait then expression variants.
 
     Returns (expr_map, demographics) where expr_map maps expression IDs to
     filenames (or None on failure) and demographics is the randomized dict.
@@ -102,7 +102,7 @@ def create_face_avatar(
     demographics = pick_demographics(seed)
     session_root = make_session_dir(name)
 
-    # Step C — feature selection (writes features to session_root/persona.yml).
+    # feature selection (writes features to session_root/persona.yml).
     features = None
     try:
         features = select_features(
@@ -112,7 +112,7 @@ def create_face_avatar(
             session_dir=session_root,
         )
     except Exception as exc:
-        logger.warning("[Step C] feature selection failed: %s", exc)
+        logger.warning("feature selection failed: %s", exc)
 
     # Marshal the full avatar_persona and write persona.yml to session_root.
     avatar = build_avatar_charachter(advisor, demographics, features)
@@ -132,7 +132,7 @@ def create_face_avatar(
         "styles_yml": STYLES_YML,
     }
 
-    # Step E — neutral portrait.
+    # neutral portrait
     neutral_filename = f"{slug}-neutral.png"
     neutral_path = out_dir / neutral_filename
     try:
@@ -154,7 +154,7 @@ def create_face_avatar(
 
     expr_map: dict[str, str | None] = {"neutral": neutral_filename}
 
-    # Step F — expression variants.
+    # expression variants.
     for expr_id in [e for e in expressions if e != "neutral"]:
         expr_filename = f"{slug}-{expr_id}.png"
         expr_path = out_dir / expr_filename
@@ -210,7 +210,7 @@ def render(
 
     expr_map: dict[str, str | None] = {}
 
-    # Step E — neutral portrait
+    # neutral portrait
     neutral_filename = f"{slug}-neutral.png"
     neutral_path = out_dir / neutral_filename
     try:
@@ -232,7 +232,7 @@ def render(
         logger.error("[render] neutral portrait failed: %s", exc)
         return {"expressions": {e: None for e in expressions}, "programmatic": {}}
 
-    # Step F — expression variants
+    # expression variants
     for expr_id in [e for e in expressions if e != "neutral"]:
         expr_filename = f"{slug}-{expr_id}.png"
         expr_path = out_dir / expr_filename
@@ -255,7 +255,7 @@ def render(
             logger.warning("[render] expression %s failed: %s", expr_id, exc)
             expr_map[expr_id] = None
 
-    # Step D — programmatic avatar
+    # programmatic avatar
     name = ""
     try:
         with open(persona_path) as f:

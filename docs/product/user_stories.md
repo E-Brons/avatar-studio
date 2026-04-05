@@ -16,15 +16,15 @@
 |-------|:--------:|-------------|
 | Persona description / role | ✅ | Free-text description of the character (e.g. "senior financial analyst", "cheerful baby", "grumpy wizard") |
 | Style | ❌ | One of the style IDs in `assets/styles/styles.yml`. Defaults to `random`. |
-| Seed | ❌ | Integer seed for reproducible randomization in Step A |
+| Seed | ❌ | Integer seed for reproducible randomization during demographics generation |
 
 ### Outputs
 
 | Output | Description |
 |--------|-------------|
-| `abbreviation.png` | Initials on a colored circle — available immediately (Step D, no LLM) |
-| `neutral/output.png` | Canonical portrait (Step E) |
-| `<expression>/output.png` | One portrait per expression in `expressions.yml` (Step F) |
+| `abbreviation.png` | Initials on a colored circle — available immediately (no LLM) |
+| `neutral/output.png` | Canonical portrait (neutral expression) |
+| `<expression>/output.png` | One portrait per expression in `expressions.yml` (expression variants) |
 | `persona.yml` | Full persona dict used for generation (useful for debugging and re-generation) |
 
 ### How to invoke
@@ -85,11 +85,11 @@ Add a new entry to `assets/expressions/expressions.yml`:
 | `expression` | Canonical name (used as folder name and classifier label) |
 | `synonyms` | Alternative names the expression classifier accepts as a match |
 | `facs_action_units` | FACS AUs and intensities — reference for prompt engineering and classifier scoring |
-| `description` | Natural-language rendering instruction injected into the Step F prompt |
+| `description` | Natural-language rendering instruction injected into the expression variant portrait prompt |
 
 ### What happens next
 
-- Step F automatically generates a portrait for every expression in the file — no code change required
+- Expression variants are automatically generated for every expression in the file — no code change required
 - Run `avatar-expression-tuner` to validate the new expression achieves acceptable classifier scores before deploying
 
 ### Acceptance criteria
@@ -135,7 +135,7 @@ Add a new entry to `assets/styles/styles.yml`:
 | Field | Description |
 |-------|-------------|
 | `id` | Machine identifier used in API calls and file paths |
-| `system_prompt` | Injected verbatim as the image model system prompt for Steps E and F. Cover rendering only — no background, no framing. `null` = model decides freely (`random`). |
+| `system_prompt` | Injected verbatim as the image model system prompt for portrait and expression variant generation. Cover rendering only — no background, no framing. `null` = model decides freely (`random`). |
 | `key_technical_traits` | Rendering characteristics used by the style classifier and as prompt engineering reference |
 | `example_images` | Optional reference PNGs for the tuner; generate them with `avatar-studio gen-examples` |
 
@@ -163,8 +163,8 @@ Add a new entry to `assets/styles/styles.yml`:
 | File | Controls |
 |------|----------|
 | `assets/persona/phenotype_settings.json` | **Age groups** (ranges, including baby/toddler/kid/…/elder), gender options, name pools, skin tones, hair colors, eye colors, eye shapes, brow styles, nose shapes, chin shapes, cheeks shapes, background color palette |
-| `assets/persona/cv_settings.json` | Step B LLM parameters (temperature, max_tokens) and CV schema (education, experience, traits) |
-| `assets/persona/presentation_settings.json` | Step C LLM parameters (temperature, max_tokens), hair styles, clothing options, accessories options per gender |
+| `assets/persona/cv_settings.json` | CV generation LLM parameters (temperature, max_tokens) and CV schema (education, experience, traits) |
+| `assets/persona/presentation_settings.json` | Feature selection LLM parameters (temperature, max_tokens), hair styles, clothing options, accessories options per gender |
 
 ### Common configurations
 
@@ -199,7 +199,7 @@ Add a new entry to `assets/styles/styles.yml`:
 
 - Pipeline runs without error after the change
 - New age group appears in generated persona YAMLs with the expected age range
-- New clothing options appear in Step C outputs
+- New clothing options appear in feature selection outputs
 
 ---
 

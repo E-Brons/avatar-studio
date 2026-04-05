@@ -26,7 +26,7 @@ def build_prompt(
     style_directive:
         Prepended verbatim before the user content.
     reference_image:
-        When True, appends the reference image note (Step F).
+        When True, appends the reference image note (expression variant).
     """
     persona_for_prompt = {k: v for k, v in persona.items() if k != "style"}
     persona_yaml = yaml.dump(

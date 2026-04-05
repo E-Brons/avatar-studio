@@ -24,9 +24,9 @@ def _load_settings() -> dict:
             data = json.load(f)
         # Strip comment-only keys (prefixed with _ or __)
         merged.update({k: v for k, v in data.items() if not k.startswith("_")})
-    # Expose presentation schema under the step_c namespace expected by step_c code.
+    # Expose presentation schema under the feature_selection namespace.
     if "schema" in merged:
-        merged["step_c"] = {"schema": merged.pop("schema")}
+        merged["feature_selection"] = {"schema": merged.pop("schema")}
     return merged
 
 

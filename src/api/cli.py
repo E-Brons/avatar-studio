@@ -6,7 +6,7 @@ Run avatar generation pipelines from the command line.
 Usage
 -----
   avatar-studio generate --advisor path/to/advisor.yml --out-dir out/
-  avatar-studio stage-b --role "Financial Advisor" ...
+  avatar-studio select-features --role "Financial Advisor" ...
 """
 
 import argparse
@@ -41,14 +41,11 @@ def _load_styles() -> list[dict]:
     return data.get("styles", [])
 
 
-def _run_stage_b(args) -> None:
-    """Run Stage B only: demographics + LLM feature selection → YAML output."""
+def _run_select_features(args) -> None:
+    """Run feature selection only: demographics + LLM feature selection → YAML output."""
     demographics = pick_demographics(seed=args.seed)
     advisor = {
-        "role": args.role,
         "traits": args.traits or [],
-        "education": args.education or [],
-        "experience": args.experience or [],
     }
 
     print("Demographics:")
@@ -76,10 +73,12 @@ def _run_stage_b(args) -> None:
     appearance = persona.get("appearance", {})
     print("--- Validation ---")
     print(f"Name:       {name or 'MISSING'}")
-    print(f"Appearance: {len(appearance)} keys {'OK' if appearance else 'EMPTY — Stage B FAILED'}")
+    print(
+        f"Appearance: {len(appearance)} keys {'OK' if appearance else 'EMPTY — feature selection FAILED'}"
+    )
     if not name or not appearance:
         sys.exit(1)
-    print("Stage B OK")
+    print("Feature selection OK")
 
 
 def _run_generate(args) -> None:
@@ -199,15 +198,12 @@ def main() -> None:
 
     _GATEWAY_DEFAULT = "http://127.0.0.1:4096"
 
-    # --- stage-b: run just the LLM feature selection ---
+    # --- select-features: run just the LLM feature selection ---
     sb = subparsers.add_parser(
-        "stage-b",
-        help="Run Stage B (LLM feature selection) only — prints features as YAML",
+        "select-features",
+        help="Run LLM feature selection only — prints features as YAML",
     )
-    sb.add_argument("--role", default="Financial Advisor", help="Advisor role")
     sb.add_argument("--traits", nargs="*", default=["analytical", "patient"])
-    sb.add_argument("--education", nargs="*", default=["MBA Finance"])
-    sb.add_argument("--experience", nargs="*", default=["10 years wealth management"])
     sb.add_argument("--seed", type=int, default=None, help="Demographics seed")
     sb.add_argument(
         "--gateway-url",
@@ -272,8 +268,8 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    if args.command == "stage-b":
-        _run_stage_b(args)
+    if args.command == "select-features":
+        _run_select_features(args)
     elif args.command == "generate":
         _run_generate(args)
     elif args.command == "gen-examples":

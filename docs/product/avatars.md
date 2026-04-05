@@ -179,7 +179,7 @@ Robot / machine avatars. No human phenotype features (skin tone, hair, etc. are 
 
 ## 3. Phenotype
 
-Phenotype is the set of **visible physical characteristics** that define what the avatar looks like as a person. These fields are randomized uniformly in Step A with no population-ratio bias — the goal is visual variety across generated personas, not demographic modelling.
+Phenotype is the set of **visible physical characteristics** that define what the avatar looks like as a person. These fields are randomized uniformly during demographics generation with no population-ratio bias — the goal is visual variety across generated personas, not demographic modelling.
 
 Phenotype applies fully to **LLM-generated styles**. Programmatic styles derive appearance from the persona name seed and only consume a subset of phenotype fields (primarily `bg_color`).
 
@@ -196,7 +196,7 @@ Phenotype applies fully to **LLM-generated styles**. Programmatic styles derive 
 | **HAIR_TYPE** | Texture and curl pattern (e.g. straight, wavy, curly, coily) |
 | **HAIR_COLOR** | Natural or stylized color (e.g. black, auburn, blonde, silver) |
 
-Hair **style** (cut, length, arrangement) is determined separately in Step C (Presentation), not in phenotype.
+Hair **style** (cut, length, arrangement) is determined separately during feature selection (Presentation), not in phenotype.
 
 ### 3.3 Eyes
 

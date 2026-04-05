@@ -1,4 +1,4 @@
-"""Expression variant generator — Step F (with reference image)."""
+"""Expression variant generator — with reference image."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ def generate_expression_variant(
     out_path: Path,
     session_dir: Path | None = None,
 ) -> Path:
-    """Generate one expression variant (Step F).
+    """Generate one expression variant.
 
     Delegates to ``render_llm`` with a reference image.
     """

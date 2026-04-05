@@ -18,7 +18,7 @@ graph LR
     classDef gateway fill:#E67E22,color:#fff,stroke:#C46A1A
     classDef model fill:#7B61FF,color:#fff,stroke:#5B41DF
 
-    Pipeline["Avatar Studio Pipeline<br/>(steps B, C, E, F, classifiers)"]:::pipeline
+    Pipeline["Avatar Studio Pipeline<br/>(CV generation, feature selection, portrait generation, classifiers)"]:::pipeline
     Gateway["LLM Gateway<br/>http://127.0.0.1:4096"]:::gateway
     Text["Text Model<br/>(qwen2.5, etc.)"]:::model
     Image["Image Model<br/>(sd-xl, etc.)"]:::model
@@ -36,8 +36,8 @@ Default models are configured in `assets/persona/cv_settings.json` and `assets/p
 
 | Use | Setting key | Typical value |
 |-----|-------------|---------------|
-| Text generation (Steps B, C) | `default_text_gen_model` | `ollama/qwen2.5:7b` |
-| Image generation (Steps E, F) | `default_image_gen_model` | `sd-xl:latest` |
+| Text generation (CV generation, feature selection) | `default_text_gen_model` | `ollama/qwen2.5:7b` |
+| Image generation (neutral portrait, expression variants) | `default_image_gen_model` | `sd-xl:latest` |
 | Vision / classification | `default_visual_desc_model` | `ollama/qwen2.5vl:7b` |
 
 ### 1.3 LiteLLM Routing
@@ -46,7 +46,7 @@ Text and vision calls use `litellm.completion()` with `api_base="http://127.0.0.
 
 Image generation uses `requests.post()` directly to `http://127.0.0.1:4096/api/generate`.
 
-**Known issue — chunked-transfer header bug**: Ollama's `/api/show` returns a duplicate `Transfer-Encoding: chunked` header. Workaround: force `max_keepalive_connections=0` on litellm's internal HTTP clients (see `step_b_generate_cv.py`). Must be re-applied after any litellm client reset.
+**Known issue — chunked-transfer header bug**: Ollama's `/api/show` returns a duplicate `Transfer-Encoding: chunked` header. Workaround: force `max_keepalive_connections=0` on litellm's internal HTTP clients (see `pipeline/persona/aggregator_llm.py`). Must be re-applied after any litellm client reset.
 
 ---
 
@@ -63,7 +63,7 @@ graph LR
 
     ParentApp["Parent App"]:::parent
     AvatarStudio["Avatar Studio<br/>FastAPI service"]:::service
-    Pipeline["Pipeline A→G"]:::service
+    Pipeline["Pipeline"]:::service
 
     ParentApp -->|HTTP POST /generate| AvatarStudio
     AvatarStudio --> Pipeline
@@ -114,7 +114,7 @@ Integration tests require a running LLM Gateway reachable at `$OLLAMA_URL`. Set 
 
 ### 5.1 Overview
 
-Step D generates a Programmatic Avatar (PA) SVG in addition to the initials abbreviation PNG.
+The programmatic avatar phase generates a Programmatic Avatar (PA) SVG in addition to the initials abbreviation PNG.
 The PA is produced by a vendored multi-style DiceBear generator supporting toon-head, avataaars,
 bottts, micah, and opeeps styles.
 
@@ -143,7 +143,7 @@ cd vendor/programmatic-avatar && npm ci
 ### 5.4 Usage from Python
 
 ```python
-from pipeline.step_d_make_programmatic_avatar import create_programmatic_avatar
+from pipeline.render.programmatic.svg_generator import create_programmatic_avatar
 from pathlib import Path
 
 path = create_programmatic_avatar(

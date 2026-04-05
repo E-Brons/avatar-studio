@@ -126,7 +126,7 @@ def _make_avatar_dict():
     return {
         "avatar_persona": {
             "personal": {"gender": "female", "age": 30, "name": "Alice Smith"},
-            "advisor": {"role": "Advisor"},
+            "personality": {"traits": []},
             "style": {"bg_color": "#4A90D9", "fg_color": "#FFFFFF"},
             "appearance": {},
         }
@@ -138,14 +138,6 @@ class TestRunPipelineSync:
         """Context managers for all pipeline dependencies."""
         return [
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch(
-                "api.http_server.generate_advisor_profile",
-                return_value={
-                    "education": ["MBA"],
-                    "experience": ["5 years"],
-                    "traits": ["analytical"],
-                },
-            ),
             patch("api.http_server.select_features", return_value={"HAIR_STYLE": "bob"}),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=self._mock_gen),
@@ -163,20 +155,19 @@ class TestRunPipelineSync:
 
         req = GenerateRequest(expressions=["neutral"], width=64, height=64)
         patches = self._patch_all()
-        with patches[0], patches[1], patches[2], patches[3], patches[4]:
+        with patches[0], patches[1], patches[2], patches[3]:
             result = _run_pipeline_sync(req)
         assert result.image_b64
         assert isinstance(result.session_id, str)
         assert "neutral" in result.expressions
 
-    def test_step_b_failure_continues(self):
-        """[Step B] failure → advisor defaults used, pipeline still runs."""
+    def test_feature_selection_failure_continues(self):
+        """Feature selection failure → features=None, pipeline still runs."""
         from api.http_server import GenerateRequest, _run_pipeline_sync
 
         req = GenerateRequest(expressions=["neutral"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch("api.http_server.generate_advisor_profile", side_effect=RuntimeError("B down")),
             patch("api.http_server.select_features", return_value={}),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=self._mock_gen),
@@ -184,21 +175,13 @@ class TestRunPipelineSync:
             result = _run_pipeline_sync(req)
         assert result.image_b64
 
-    def test_step_c_failure_continues(self):
-        """[Step C] failure → features=None, pipeline still runs."""
+    def test_select_features_failure_continues(self):
+        """Feature selection failure → features=None, pipeline still runs."""
         from api.http_server import GenerateRequest, _run_pipeline_sync
 
         req = GenerateRequest(expressions=["neutral"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch(
-                "api.http_server.generate_advisor_profile",
-                return_value={
-                    "education": [],
-                    "experience": [],
-                    "traits": [],
-                },
-            ),
             patch("api.http_server.select_features", side_effect=RuntimeError("C down")),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=self._mock_gen),
@@ -215,14 +198,6 @@ class TestRunPipelineSync:
         req = GenerateRequest(expressions=["neutral"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch(
-                "api.http_server.generate_advisor_profile",
-                return_value={
-                    "education": [],
-                    "experience": [],
-                    "traits": [],
-                },
-            ),
             patch("api.http_server.select_features", return_value={}),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=RuntimeError("gpu down")),
@@ -232,7 +207,7 @@ class TestRunPipelineSync:
         assert exc_info.value.status_code == 500
 
     def test_expression_variant_failure_skipped(self):
-        """[Step F] expression failure → that expression absent, neutral still returned."""
+        """Expression generation failure → that expression absent, neutral still returned."""
         neutral_calls = []
 
         def _selective_gen(persona_path, *, expression, out_path, **kwargs):
@@ -248,14 +223,6 @@ class TestRunPipelineSync:
         req = GenerateRequest(expressions=["neutral", "happiness"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch(
-                "api.http_server.generate_advisor_profile",
-                return_value={
-                    "education": [],
-                    "experience": [],
-                    "traits": [],
-                },
-            ),
             patch("api.http_server.select_features", return_value={}),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=_selective_gen),
@@ -265,14 +232,11 @@ class TestRunPipelineSync:
         assert "happiness" not in result.expressions
 
     def test_advisor_fields_from_selections(self):
-        """Lines 232-241: role + education from selections → used directly."""
+        """traits from selections → used directly, no LLM call needed."""
         from api.http_server import AttributeSelection, GenerateRequest, _run_pipeline_sync
 
         req = GenerateRequest(
             selections=[
-                AttributeSelection(id="role", mode="select", value="Engineer"),
-                AttributeSelection(id="education", mode="predefined", value=["BSc"]),
-                AttributeSelection(id="experience", mode="predefined", value=["3 years"]),
                 AttributeSelection(id="traits", mode="predefined", value=["curious"]),
             ],
             expressions=["neutral"],
@@ -288,14 +252,12 @@ class TestRunPipelineSync:
 
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch("api.http_server.generate_advisor_profile"),  # should NOT be called
             patch("api.http_server.select_features", return_value={}),
             patch("api.http_server.build_avatar_charachter", side_effect=_capture_advisor),
             patch("api.http_server.generate_avatar_image", side_effect=self._mock_gen),
         ):
             _run_pipeline_sync(req)
-        assert captured_advisor.get("role") == "Engineer"
-        assert captured_advisor.get("education") == ["BSc"]
+        assert captured_advisor.get("traits") == ["curious"]
 
 
 # ---------------------------------------------------------------------------
@@ -339,14 +301,6 @@ class TestExpressionVariantSuccess:
         req = GenerateRequest(expressions=["neutral", "happiness"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch(
-                "api.http_server.generate_advisor_profile",
-                return_value={
-                    "education": [],
-                    "experience": [],
-                    "traits": [],
-                },
-            ),
             patch("api.http_server.select_features", return_value={}),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=self._gen_both),

@@ -216,7 +216,7 @@ def test_color_for_name_in_palette():
 
 
 # ---------------------------------------------------------------------------
-# avatar_studio.pipeline.step_a_randomise_person — _pick_name
+# avatar_studio.pipeline.persona.generator — _pick_name
 # ---------------------------------------------------------------------------
 
 
@@ -252,7 +252,7 @@ def test_pick_name_seeded_is_deterministic():
 
 
 # ---------------------------------------------------------------------------
-# avatar_studio.pipeline.step_a_randomise_person — _pick_colors
+# avatar_studio.pipeline.persona.generator — _pick_colors
 # ---------------------------------------------------------------------------
 
 
@@ -295,7 +295,7 @@ def test_pick_colors_brows_derived_from_hair():
 
 
 # ---------------------------------------------------------------------------
-# avatar_studio.pipeline.step_a_randomise_person — _pick_demographics
+# avatar_studio.pipeline.persona.generator — _pick_demographics
 # ---------------------------------------------------------------------------
 
 
@@ -357,7 +357,7 @@ def test_pick_demographics_name_has_two_parts():
 
 
 # ---------------------------------------------------------------------------
-# avatar_studio.pipeline.step_d_make_abbreviation — create_abbreviation_avatar
+# avatar_studio.pipeline.render.renderer — create_abbreviation_avatar
 # ---------------------------------------------------------------------------
 
 
@@ -410,7 +410,7 @@ def test_create_abbreviation_avatar_creates_parent_dirs():
 
 
 # ---------------------------------------------------------------------------
-# avatar_studio.pipeline.step_d_make_abbreviation — apply_circle_frame
+# avatar_studio.pipeline.render.postprocess.compositor — apply_circle_frame
 # ---------------------------------------------------------------------------
 
 
@@ -488,7 +488,7 @@ def test_apply_circle_frame_png_magic_bytes():
 
 
 # ---------------------------------------------------------------------------
-# avatar_studio.pipeline.step_ef_generate_image — create_face_avatar
+# avatar_studio.pipeline.render.renderer — create_face_avatar
 # ---------------------------------------------------------------------------
 
 

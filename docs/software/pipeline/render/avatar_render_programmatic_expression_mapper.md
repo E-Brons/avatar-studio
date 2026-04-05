@@ -14,7 +14,7 @@ Maps a canonical expression name to the DiceBear (or Opeeps) component override 
 - Empty dict if no mapping exists for the style/expression combination
 
 ## Source
-Mapping table defined in `src/pipeline/step_d_make_programmatic_avatar.py → EXPRESSION_OPTIONS`. See also [step_d2.md](../step_d2.md) for the full 5×6 table.
+Mapping table defined in `src/pipeline/render/programmatic/svg_generator.py → EXPRESSION_OPTIONS`. See also the programmatic avatar feature matrix documentation for the full 5×6 table.
 
 ## Notes
 - `bottts` style has no `eyebrows` key — only `eyes` and `mouth`.

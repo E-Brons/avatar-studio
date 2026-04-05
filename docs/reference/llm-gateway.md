@@ -244,7 +244,7 @@ expression variant images in the avatar pipeline.
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `prompt` | `str` | — | Full text prompt (style directive + persona + expression) |
-| `reference_images` | `list[bytes] \| None` | `None` | Reference PNGs for expression variants (Step F) |
+| `reference_images` | `list[bytes] \| None` | `None` | Reference PNGs for expression variants |
 | `width` | `int` | `512` | Output image width in pixels |
 | `height` | `int` | `512` | Output image height in pixels |
 | `seed` | `int \| None` | `None` | Reproducibility seed |
@@ -400,9 +400,9 @@ No API key required. Server must be running locally or be reachable by URL.
 | Text / multi-turn endpoint | `POST {ollama_url}/api/chat` — `{"model": str, "messages": [...], "stream": false, "options": {"temperature": float, "num_predict": int}}` |
 | Text / single-turn endpoint | `POST {ollama_url}/api/generate` — `{"model": str, "prompt": str, "stream": false}` |
 | Image generation | `POST /api/generate` with `"options": {"width": int, "height": int, "seed": int}`; response: `{"images": ["<base64>"], ...}` |
-| Image input (multimodal / vision) | `"images": ["<base64>"]` field in the `/api/generate` payload — used for Image Inspector and Step F reference images |
+| Image input (multimodal / vision) | `"images": ["<base64>"]` field in the `/api/generate` payload — used for Image Inspector and expression variant reference images |
 | Streaming | Always `"stream": false` in current usage |
-| Chunked-transfer header bug | Ollama's `/api/show` endpoint returns `Transfer-Encoding: chunked, chunked` (duplicate header). `httpx` rejects this, corrupting keep-alive TCP connections. **Workaround**: force `max_keepalive_connections=0` on litellm's `module_level_client` and `in_memory_llm_clients_cache` (see `step_b_generate_cv.py:_reset_litellm_client()`). Must be re-applied after any litellm client reset. |
+| Chunked-transfer header bug | Ollama's `/api/show` endpoint returns `Transfer-Encoding: chunked, chunked` (duplicate header). `httpx` rejects this, corrupting keep-alive TCP connections. **Workaround**: force `max_keepalive_connections=0` on litellm's `module_level_client` and `in_memory_llm_clients_cache` (see `pipeline/persona/aggregator_llm.py:_reset_litellm_client()`). Must be re-applied after any litellm client reset. |
 | Model string (REST) | Bare name: `qwen2.5:7b`, `sd-xl:latest` — no provider prefix |
 | Model string (via LiteLLM routing to Ollama) | Must be prefixed: `ollama/qwen2.5:7b` — LiteLLM strips the prefix before calling Ollama |
 | Listing available models | `GET {ollama_url}/api/tags` → `{"models": [{"name": str, ...}]}` |
@@ -440,7 +440,7 @@ the library.
 | Multimodal / Image Inspector | User message content: `[{"type": "image_url", "image_url": {"url": "data:image/png;base64,<b64>"}}, {"type": "text", "text": "<prompt>"}]` |
 | Extended thinking (Anthropic) | Extra kwarg: `thinking={"type": "enabled", "budget_tokens": N}` — only valid for `claude-opus-4-6` and above |
 | Keepalive bug (when routing to Ollama) | Same duplicate-header issue as REST. Must call `_reset_litellm_client()` at import time and after each `Transfer-Encoding` error |
-| Empty-response retries | LiteLLM does **not** retry on empty `choices[0].message.content`. Application-level retry loops are required (already present in `step_b_generate_cv.py`, `step_c_select_features.py`) |
+| Empty-response retries | LiteLLM does **not** retry on empty `choices[0].message.content`. Application-level retry loops are required (already present in `pipeline/persona/aggregator_llm.py`) |
 
 **Response extraction**:
 
@@ -576,7 +576,7 @@ graph TD
     classDef cliImpl fill:#E67E22,color:#fff,stroke:#C46A1A
     classDef caller fill:#F5F0E8,color:#333,stroke:#999
 
-    App["Application Code<br/>(steps B/C/E/F, classifiers,<br/>viz tool, adviser chat)"]:::caller
+    App["Application Code<br/>(CV generation, feature selection, portrait generation,<br/>classifiers, viz tool, adviser chat)"]:::caller
 
     subgraph TypeInterfaces["Level 1 — Interface Types (6)"]
         GEN["GeneralLLM<br/>.complete(messages) → TextResponse"]:::typeIface
