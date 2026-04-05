@@ -1,0 +1,872 @@
+# demographic slect options (used by attributes.yml)
+nationality:
+  # Universal
+  - id: universal
+    label: "🇺🇳 Universal"
+    group: true
+
+  - id: other
+    label: "🏳️ Other"
+    group: false
+
+  - id: indigenous
+    label: "🍀 Indigenous"
+    group: true
+
+  # Europe (Including Caucasus)
+  - id: european
+    label: "🇪🇺 European"
+    group: true
+  - id: albanian
+    label: "🇦🇱 Albanian"
+    group: false
+  - id: armenian
+    label: "🇦🇲 Armenian"
+    group: false
+  - id: austrian
+    label: "🇦🇹 Austrian"
+    group: false
+  - id: azerbaijani
+    label: "🇦🇿 Azerbaijani"
+    group: false
+  - id: basque
+    label: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Basque"
+    group: false
+  - id: belarusian
+    label: "🇧🇾 Belarusian"
+    group: false
+  - id: belgian
+    label: "🇧🇪 Belgian"
+    group: false
+  - id: bosnian
+    label: "🇧🇦 Bosnian"
+    group: false
+  - id: british
+    label: "🇬🇧 British"
+    group: false
+  - id: bulgarian
+    label: "🇧🇬 Bulgarian"
+    group: false
+  - id: corsican
+    label: "🏝️ Corsican"
+    group: false
+  - id: croatian
+    label: "🇭🇷 Croatian"
+    group: false
+  - id: cypriot
+    label: "🇨🇾 Cypriot"
+    group: false
+  - id: czech
+    label: "🇨🇿 Czech"
+    group: false
+  - id: danish
+    label: "🇩🇰 Danish"
+    group: false
+  - id: dutch
+    label: "🇳🇱 Dutch"
+    group: false
+  - id: estonian
+    label: "🇪🇪 Estonian"
+    group: false
+  - id: finnish
+    label: "🇫🇮 Finnish"
+    group: false
+  - id: french
+    label: "🇫🇷 French"
+    group: false
+  - id: georgian
+    label: "🇬🇪 Georgian"
+    group: false
+  - id: german
+    label: "🇩🇪 German"
+    group: false
+  - id: greek
+    label: "🇬🇷 Greek"
+    group: false
+  - id: hungarian
+    label: "🇭🇺 Hungarian"
+    group: false
+  - id: icelandic
+    label: "🇮🇸 Icelandic"
+    group: false
+  - id: irish
+    label: "🇮🇪 Irish"
+    group: false
+  - id: italian
+    label: "🇮🇹 Italian"
+    group: false
+  - id: kosovar
+    label: "🇽🇰 Kosovar"
+    group: false
+  - id: latvian
+    label: "🇱🇻 Latvian"
+    group: false
+  - id: lithuanian
+    label: "🇱🇹 Lithuanian"
+    group: false
+  - id: luxembourgish
+    label: "🇱🇺 Luxembourgish"
+    group: false
+  - id: maltese
+    label: "🇲🇹 Maltese"
+    group: false
+  - id: moldovan
+    label: "🇲🇩 Moldovan"
+    group: false
+  - id: montenegrin
+    label: "🇲🇪 Montenegrin"
+    group: false
+  - id: north_macedonian
+    label: "🇲🇰 North Macedonian"
+    group: false
+  - id: norwegian
+    label: "🇳🇴 Norwegian"
+    group: false
+  - id: polish
+    label: "🇵🇱 Polish"
+    group: false
+  - id: portuguese
+    label: "🇵🇹 Portuguese"
+    group: false
+  - id: romanian
+    label: "🇷🇴 Romanian"
+    group: false
+  - id: russian
+    label: "🇷🇺 Russian"
+    group: false
+  - id: serbian
+    label: "🇷🇸 Serbian"
+    group: false
+  - id: slovak
+    label: "🇸🇰 Slovak"
+    group: false
+  - id: slovenian
+    label: "🇸🇮 Slovenian"
+    group: false
+  - id: spanish
+    label: "🇪🇸 Spanish"
+    group: false
+  - id: swedish
+    label: "🇸🇪 Swedish"
+    group: false
+  - id: swiss
+    label: "🇨🇭 Swiss"
+    group: false
+  - id: ukrainian
+    label: "🇺🇦 Ukrainian"
+    group: false
+  - id: andorran
+    label: "🇦🇩 Andorran"
+    group: false
+  - id: monegasque
+    label: "🇲🇨 Monégasque"
+    group: false
+  - id: san_marinese
+    label: "🇸🇲 San Marinese"
+    group: false
+  - id: liechtensteiner
+    label: "🇱🇮 Liechtensteiner"
+    group: false
+  - id: scottish
+    label: "🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scottish"
+    group: false
+  - id: welsh
+    label: "🏴󠁧󠁢󠁷󠁬󠁳󠁿 Welsh"
+    group: false
+  - id: english
+    label: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 English"
+    group: false
+  - id: catalan
+    label: "🟨 Catalan"
+    group: false
+  - id: quebecois
+    label: "⚜️ Québécois"
+    group: false
+  - id: roma
+    label: "🌍 Roma (Romani)"
+    group: false
+  # North America
+  - id: north_american
+    label: "🌎 North-American"
+    group: true
+  - id: american
+    label: "🇺🇸 American"
+    group: false
+  - id: canadian
+    label: "🇨🇦 Canadian"
+    group: false
+  - id: mexican
+    label: "🇲🇽 Mexican"
+    group: false
+  - id: greenlandic
+    label: "🇬🇱 Greenlandic"
+    group: false
+
+  # Central America
+  - id: central_american
+    label: "🌎 Central-American"
+    group: true
+  - id: guatemalan
+    label: "🇬🇹 Guatemalan"
+    group: false
+  - id: belizean
+    label: "🇧🇿 Belizean"
+    group: false
+  - id: honduran
+    label: "🇭🇳 Honduran"
+    group: false
+  - id: salvadoran
+    label: "🇸🇻 Salvadoran"
+    group: false
+  - id: nicaraguan
+    label: "🇳🇮 Nicaraguan"
+    group: false
+  - id: costa_rican
+    label: "🇨🇷 Costa Rican"
+    group: false
+  - id: panamanian
+    label: "🇵🇦 Panamanian"
+    group: false
+
+  # Caribbean
+  - id: caribbean
+    label: "🏝️ Caribbean"
+    group: true
+  - id: antiguian_barbudan
+    label: "🇦🇬 Antiguan / Barbudan"
+    group: false
+  - id: bahamian
+    label: "🇧🇸 Bahamian"
+    group: false
+  - id: barbadian
+    label: "🇧🇧 Barbadian"
+    group: false
+  - id: cuban
+    label: "🇨🇺 Cuban"
+    group: false
+  - id: dominica_commonwealth
+    label: "🇩🇲 Dominican (Dominica)"
+    group: false
+  - id: dominican_republic
+    label: "🇩🇴 Dominican (Rep.)"
+    group: false
+  - id: grenadian
+    label: "🇬🇩 Grenadian"
+    group: false
+  - id: haitian
+    label: "🇭🇹 Haitian"
+    group: false
+  - id: jamaican
+    label: "🇯🇲 Jamaican"
+    group: false
+  - id: puerto_rican
+    label: "🇵🇷 Puerto Rican"
+    group: false
+  - id: st_kitts_nevis
+    label: "🇰🇳 Kittitian / Nevisian"
+    group: false
+  - id: st_lucian
+    label: "🇱🇨 Saint Lucian"
+    group: false
+  - id: st_vincent_grenadines
+    label: "🇻🇨 Vincentian"
+    group: false
+  - id: trinidadian
+    label: "🇹🇹 Trinidadian"
+    group: false
+
+  # Latin America
+  - id: latin_american
+    label: "🌎 Latin-American"
+    group: true
+  - id: brazilian
+    label: "🇧🇷 Brazilian"
+    group: false
+  - id: argentine
+    label: "🇦🇷 Argentine"
+    group: false
+  - id: chilean
+    label: "🇨🇱 Chilean"
+    group: false
+  - id: colombian
+    label: "🇨🇴 Colombian"
+    group: false
+  - id: venezuelan
+    label: "🇻🇪 Venezuelan"
+    group: false
+  - id: peruvian
+    label: "🇵🇪 Peruvian"
+    group: false
+  - id: ecuadorian
+    label: "🇪🇨 Ecuadorian"
+    group: false
+  - id: bolivian
+    label: "🇧🇴 Bolivian"
+    group: false
+  - id: paraguayan
+    label: "🇵🇾 Paraguayan"
+    group: false
+  - id: uruguayan
+    label: "🇺🇾 Uruguayan"
+    group: false
+  - id: guyanese
+    label: "🇬🇾 Guyanese"
+    group: false
+  - id: surinamese
+    label: "🇸🇷 Surinamese"
+    group: false
+  - id: french_guianese
+    label: "🇬🇫 French Guianese"
+    group: false
+
+  # Middle East
+  - id: middle_eastern
+    label: "🌙 Middle-Eastern"
+    group: true
+  - id: arab
+    label: "☪️ Arab"
+    group: true
+  - id: israeli
+    label: "🇮🇱 Israeli"
+    group: false
+  - id: palestinian
+    label: "🇵🇸 Palestinian"
+    group: false
+  - id: pashtun
+    label: "🇦🇫 Pashtun"
+    group: false
+  - id: persian
+    label: "☫ Persian"
+    group: false
+  - id: kurdish
+    label: "☀️ Kurdish"
+    group: false
+  - id: jordanian
+    label: "🇯🇴 Jordanian"
+    group: false
+  - id: lebanese
+    label: "🇱🇧 Lebanese"
+    group: false
+  - id: syrian
+    label: "🇸🇾 Syrian"
+    group: false
+  - id: iraqi
+    label: "🇮🇶 Iraqi"
+    group: false
+  - id: iranian
+    label: "🇮🇷 Iranian"
+    group: false
+  - id: saudi
+    label: "🇸🇦 Saudi"
+    group: false
+  - id: emirati
+    label: "🇦🇪 Emirati"
+    group: false
+  - id: kuwaiti
+    label: "🇰🇼 Kuwaiti"
+    group: false
+  - id: qatari
+    label: "🇶🇦 Qatari"
+    group: false
+  - id: bahraini
+    label: "🇧🇭 Bahraini"
+    group: false
+  - id: omani
+    label: "🇴🇲 Omani"
+    group: false
+  - id: yemeni
+    label: "🇾🇪 Yemeni"
+    group: false
+  - id: turkish
+    label: "🇹🇷 Turkish"
+    group: false
+  - id: assyrian
+    label: "🏺 Assyrian"
+    group: false
+  - id: druze
+    label: "🏳️‍🌈 Druze"
+    group: false
+
+  # North Africa
+  - id: north_african
+    label: "🌍 North-African"
+    group: true
+  - id: coptic
+    label: "🪔 Coptic"
+    group: false
+  - id: egyptian
+    label: "🇪🇬 Egyptian"
+    group: false
+  - id: libyan
+    label: "🇱🇾 Libyan"
+    group: false
+  - id: tunisian
+    label: "🇹🇳 Tunisian"
+    group: false
+  - id: algerian
+    label: "🇩🇿 Algerian"
+    group: false
+  - id: moroccan
+    label: "🇲🇦 Moroccan"
+    group: false
+  - id: sudanese
+    label: "🇸🇩 Sudanese"
+    group: false
+  - id: saharawi
+    label: "🇪🇭 Saharawi"
+    group: false
+  - id: berber
+    label: "🌍 Amazigh (Berber)"
+    group: false
+
+  # West Africa
+  - id: west_african
+    label: "🌍 West-African"
+    group: true
+  - id: nigerian
+    label: "🇳🇬 Nigerian"
+    group: false
+  - id: ghanaian
+    label: "🇬🇭 Ghanaian"
+    group: false
+  - id: bissau_guinean
+    label: "🇬🇼 Bissau-Guinean"
+    group: false
+  - id: senegalese
+    label: "🇸🇳 Senegalese"
+    group: false
+  - id: ivorian
+    label: "🇨🇮 Ivorian"
+    group: false
+  - id: malian
+    label: "🇲🇱 Malian"
+    group: false
+  - id: guinean
+    label: "🇬🇳 Guinean"
+    group: false
+  - id: burkinabe
+    label: "🇧🇫 Burkinabé"
+    group: false
+  - id: beninese
+    label: "🇧🇯 Beninese"
+    group: false
+  - id: togolese
+    label: "🇹🇬 Togolese"
+    group: false
+  - id: sierra_leonean
+    label: "🇸🇱 Sierra Leonean"
+    group: false
+  - id: liberian
+    label: "🇱🇷 Liberian"
+    group: false
+  - id: gambian
+    label: "🇬🇲 Gambian"
+    group: false
+  - id: cape_verdean
+    label: "🇨🇻 Cape Verdean"
+    group: false
+  - id: nigerien
+    label: "🇳🇪 Nigerien"
+    group: false
+  - id: mauritanian
+    label: "🇲🇷 Mauritanian"
+    group: false
+
+  # East Africa
+  - id: east_african
+    label: "🌍 East-African"
+    group: true
+  - id: ethiopian
+    label: "🇪🇹 Ethiopian"
+    group: false
+  - id: kenyan
+    label: "🇰🇪 Kenyan"
+    group: false
+  - id: tanzanian
+    label: "🇹🇿 Tanzanian"
+    group: false
+  - id: ugandan
+    label: "🇺🇬 Ugandan"
+    group: false
+  - id: rwandan
+    label: "🇷🇼 Rwandan"
+    group: false
+  - id: somali
+    label: "🇸🇴 Somali"
+    group: false
+  - id: djiboutian
+    label: "🇩🇯 Djiboutian"
+    group: false
+  - id: eritrean
+    label: "🇪🇷 Eritrean"
+    group: false
+  - id: south_sudanese
+    label: "🇸🇸 South Sudanese"
+    group: false
+  - id: burundian
+    label: "🇧🇮 Burundian"
+    group: false
+  - id: malagasy
+    label: "🇲🇬 Malagasy"
+    group: false
+  - id: mozambican
+    label: "🇲🇿 Mozambican"
+    group: false
+  - id: zambian
+    label: "🇿🇲 Zambian"
+    group: false
+  - id: malawian
+    label: "🇲🇼 Malawian"
+    group: false
+  - id: seychellois
+    label: "🇸🇨 Seychellois"
+    group: false
+  - id: comorian
+    label: "🇰🇲 Comorian"
+    group: false
+
+  # Central Africa
+  - id: central_african_region
+    label: "🌍 Central-African"
+    group: true
+  - id: cameroonian
+    label: "🇨🇲 Cameroonian"
+    group: false
+  - id: congolese_drc
+    label: "🇨🇩 Congolese (DRC)"
+    group: false
+  - id: congolese_republic
+    label: "🇨🇬 Congolese (Republic)"
+    group: false
+  - id: chadian
+    label: "🇹🇩 Chadian"
+    group: false
+  - id: central_african
+    label: "🇨🇫 Central African"
+    group: false
+  - id: gabonese
+    label: "🇬🇦 Gabonese"
+    group: false
+  - id: equatorial_guinean
+    label: "🇬🇶 Equatorial Guinean"
+    group: false
+  - id: sao_tomean
+    label: "🇸🇹 São Toméan"
+    group: false
+
+  # Southern Africa
+  - id: southern_african
+    label: "🌍 Southern-African"
+    group: true
+  - id: south_african
+    label: "🇿🇦 South African"
+    group: false
+  - id: zimbabwean
+    label: "🇿🇼 Zimbabwean"
+    group: false
+  - id: botswanan
+    label: "🇧🇼 Botswanan"
+    group: false
+  - id: namibian
+    label: "🇳🇦 Namibian"
+    group: false
+  - id: lesothan
+    label: "🇱🇸 Lesothan"
+    group: false
+  - id: swazi
+    label: "🇸🇿 Swazi"
+    group: false
+  - id: angolan
+    label: "🇦🇴 Angolan"
+    group: false
+  - id: mauritian
+    label: "🇲🇺 Mauritian"
+    group: false
+
+  # South Asia
+  - id: south_asian
+    label: "🌏 South-Asian"
+    group: true
+  - id: indian
+    label: "🇮🇳 Indian"
+    group: false
+  - id: pakistani
+    label: "🇵🇰 Pakistani"
+    group: false
+  - id: bangladeshi
+    label: "🇧🇩 Bangladeshi"
+    group: false
+  - id: sri_lankan
+    label: "🇱🇰 Sri Lankan"
+    group: false
+  - id: nepali
+    label: "🇳🇵 Nepali"
+    group: false
+  - id: bhutanese
+    label: "🇧🇹 Bhutanese"
+    group: false
+  - id: maldivian
+    label: "🇲🇻 Maldivian"
+    group: false
+  - id: afghan
+    label: "🇦🇫 Afghan"
+    group: false
+
+  # Central Asia
+  - id: central_asian
+    label: "🌏 Central-Asian"
+    group: true
+  - id: kazakhstani
+    label: "🇰🇿 Kazakhstani"
+    group: false
+  - id: uzbekistani
+    label: "🇺🇿 Uzbekistani"
+    group: false
+  - id: turkmen
+    label: "🇹🇲 Turkmen"
+    group: false
+  - id: kyrgyz
+    label: "🇰🇬 Kyrgyz"
+    group: false
+  - id: tajik
+    label: "🇹🇯 Tajik"
+    group: false
+  - id: uyghur
+    label: "🌙 Uyghur"
+    group: false
+
+  # East Asia
+  - id: east_asian
+    label: "🌏 East-Asian"
+    group: true
+  - id: chinese
+    label: "🇨🇳 Chinese"
+    group: false
+  - id: japanese
+    label: "🇯🇵 Japanese"
+    group: false
+  - id: south_korean
+    label: "🇰🇷 South Korean"
+    group: false
+  - id: north_korean
+    label: "🇰🇵 North Korean"
+    group: false
+  - id: mongolian
+    label: "🇲🇳 Mongolian"
+    group: false
+  - id: taiwanese
+    label: "🇹🇼 Taiwanese"
+    group: false
+  - id: hong_konger
+    label: "🇭🇰 Hong Konger"
+    group: false
+  - id: macanese
+    label: "🇲🇴 Macanese"
+    group: false
+  - id: tibetan
+    label: "☸️ Tibetan"
+    group: false
+  - id: rohingya
+    label: "🚩 Rohingya"
+    group: false
+
+  # Southeast Asia
+  - id: southeast_asian
+    label: "🌏 Southeast-Asian"
+    group: true
+  - id: indonesian
+    label: "🇮🇩 Indonesian"
+    group: false
+  - id: filipino
+    label: "🇵🇭 Filipino"
+    group: false
+  - id: vietnamese
+    label: "🇻🇳 Vietnamese"
+    group: false
+  - id: thai
+    label: "🇹🇭 Thai"
+    group: false
+  - id: burmese
+    label: "🇲🇲 Burmese"
+    group: false
+  - id: malaysian
+    label: "🇲🇾 Malaysian"
+    group: false
+  - id: singaporean
+    label: "🇸🇬 Singaporean"
+    group: false
+  - id: cambodian
+    label: "🇰🇭 Cambodian"
+    group: false
+  - id: laotian
+    label: "🇱🇦 Laotian"
+    group: false
+  - id: bruneian
+    label: "🇧🇳 Bruneian"
+    group: false
+  - id: timorese
+    label: "🇹🇱 Timorese"
+    group: false
+
+  # Oceania / Polynesia
+  - id: oceanian
+    label: "🌏 Oceanian"
+    group: true
+  - id: australian
+    label: "🇦🇺 Australian"
+    group: false
+  - id: new_zealander
+    label: "🇳🇿 New Zealander"
+    group: false
+  - id: samoan
+    label: "🇼🇸 Samoan"
+    group: false
+  - id: tongan
+    label: "🇹🇴 Tongan"
+    group: false
+  - id: fijian
+    label: "🇫🇯 Fijian"
+    group: false
+  - id: i_kiribati
+    label: "🇰🇮 I-Kiribati"
+    group: false
+  - id: tuvaluan
+    label: "🇹🇻 Tuvaluan"
+    group: false
+  - id: marshallese
+    label: "🇲🇭 Marshallese"
+    group: false
+  - id: palauan
+    label: "🇵🇼 Palauan"
+    group: false
+  - id: maori
+    label: "🇳🇿 Māori"
+    group: false
+  - id: micronesian
+    label: "🇫🇲 Micronesian"
+    group: false
+  - id: nauruan
+    label: "🇳🇷 Nauruan"
+    group: false
+  - id: vanuatuan
+    label: "🇻🇺 Vanuatuan"
+    group: false
+  - id: solomon_islander
+    label: "🇸🇧 Solomon Islander"
+    group: false
+  - id: papua_new_guinean
+    label: "🇵🇬 Papua New Guinean"
+    group: false
+  - id: guamanian
+    label: "🇬🇺 Guamanian"
+    group: false
+  - id: tahitian
+    label: "🇵🇫 Tahitian"
+    group: false
+  - id: new_caledonian
+    label: "🇳🇨 New Caledonian"
+    group: false
+  - id: cook_islander
+    label: "🇨🇰 Cook Islander"
+    group: false
+  - id: niuean
+    label: "🇳🇺 Niuean"
+    group: false
+  - id: tokelauan
+    label: "🇹🇰 Tokelauan"
+    group: false
+
+religion:
+  - id: agnostic
+    label: "❓ Agnostic"
+    group: false
+  - id: atheist
+    label: "⚛️ Atheist"
+    group: false
+  - id: bahai
+    label: "🌐 Baháí"
+    group: false
+  - id: buddhist
+    label: "☸️ Buddhist"
+    group: false
+  - id: christian
+    label: "✝️ Christian"
+    group: false
+  - id: confucian
+    label: "📜 Confucian"
+    group: false
+  - id: hindu
+    label: "🕉️ Hindu"
+    group: false
+  - id: jain
+    label: "🪷 Jain"
+    group: false
+  - id: jewish
+    label: "✡️ Jewish"
+    group: false
+  - id: muslim
+    label: "☪️ Muslim"
+    group: false
+  - id: pagan
+    label: "🌿 Pagan"
+    group: false
+  - id: shinto
+    label: "⛩️ Shinto"
+    group: false
+  - id: sikh
+    label: "🪯 Sikh"
+    group: false
+  - id: spiritual
+    label: "🌟 Spiritual"
+    group: false
+  - id: taoist
+    label: "☯️ Taoist"
+    group: false
+  - id: wiccan
+    label: "🔮 Wiccan"
+    group: false
+  - id: zoroastrian
+    label: "🔥 Zoroastrian"
+    group: false
+  - id: other_religion
+    label: "🏳️ Other"
+    group: false
+
+
+zodiac:
+  - id: aries
+    label: "♈ Aries"
+    group: false
+  - id: taurus
+    label: "♉ Taurus"
+    group: false
+  - id: gemini
+    label: "♊ Gemini"
+    group: false
+  - id: cancer
+    label: "♋ Cancer"
+    group: false
+  - id: leo
+    label: "♌ Leo"
+    group: false
+  - id: virgo
+    label: "♍ Virgo"
+    group: false
+  - id: libra
+    label: "♎ Libra"
+    group: false
+  - id: scorpio
+    label: "♏ Scorpio"
+    group: false
+  - id: sagittarius
+    label: "♐ Sagittarius"
+    group: false
+  - id: capricorn
+    label: "♑ Capricorn"
+    group: false
+  - id: aquarius
+    label: "♒ Aquarius"
+    group: false
+  - id: pisces
+    label: "♓ Pisces"
+    group: false
