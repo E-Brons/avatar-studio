@@ -28,10 +28,11 @@ from pydantic import BaseModel
 
 from api.config_loader import ConfigLoader
 from config.config import SETTINGS, _darken_hex
-from pipeline.step_a_randomise_person import pick_demographics
-from pipeline.step_b_generate_cv import generate_advisor_profile
-from pipeline.step_c_select_features import build_avatar_charachter, select_features
-from pipeline.step_ef_generate_image import EXPRESSIONS_YML, STYLES_YML, generate_avatar_image
+from pipeline.persona.aggregator_llm import generate_advisor_profile, select_features
+from pipeline.persona.generator import build_avatar_charachter, pick_demographics
+from pipeline.render.expression_resolver import EXPRESSIONS_YML
+from pipeline.render.llm.orchestrator import generate_avatar_image
+from pipeline.render.style_resolver import STYLES_YML
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 _GATEWAY_URL: str = SETTINGS.get("gateway_url", "http://127.0.0.1:4096")

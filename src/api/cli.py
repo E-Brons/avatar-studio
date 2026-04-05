@@ -23,17 +23,11 @@ from api.server import (
     _build_demographics_for_gender,
     process_advisor,
 )
-from pipeline.step_a_randomise_person import pick_demographics as _pick_demographics
-from pipeline.step_c_select_features import (
-    _marshal_avatar_persona,
-)
-from pipeline.step_c_select_features import (
-    build_avatar_charachter as _build_avatar_charachter,
-)
-from pipeline.step_c_select_features import (
-    select_features as _select_features,
-)
-from pipeline.step_ef_generate_image import STYLES_YML
+from pipeline.persona.aggregator_llm import select_features
+from pipeline.persona.generator import build_avatar_charachter, pick_demographics
+from pipeline.persona.marshal import marshal_avatar_persona
+from pipeline.render.expression_resolver import EXPRESSIONS_YML
+from pipeline.render.style_resolver import STYLES_YML
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +42,7 @@ def _load_styles() -> list[dict]:
 
 def _run_stage_b(args) -> None:
     """Run Stage B only: demographics + LLM feature selection → YAML output."""
-    demographics = _pick_demographics(seed=args.seed)
+    demographics = pick_demographics(seed=args.seed)
     advisor = {
         "role": args.role,
         "traits": args.traits or [],
@@ -60,20 +54,20 @@ def _run_stage_b(args) -> None:
     print(yaml.dump(demographics, default_flow_style=False, sort_keys=False))
 
     print("Calling LLM for feature selection…")
-    features = _select_features(
+    features = select_features(
         demographics,
         advisor,
         gateway_url=args.gateway_url,
     )
 
     if features is None:
-        print("ERROR: _select_features returned None", file=sys.stderr)
+        print("ERROR: select_features returned None", file=sys.stderr)
         sys.exit(1)
 
     print("Raw features:")
     print(yaml.dump(features, default_flow_style=False, sort_keys=False))
 
-    persona = _marshal_avatar_persona(demographics, advisor, features)
+    persona = marshal_avatar_persona(demographics, advisor, features)
     print("Marshalled avatar_persona:")
     print(yaml.dump(persona, default_flow_style=False, sort_keys=False))
 
@@ -120,8 +114,7 @@ def _run_gen_examples(args) -> None:
     """Generate style example portraits: one per (style, gender) combination."""
     import tempfile
 
-    from pipeline.render.style_resolver import _STYLES_YML
-    from pipeline.step_ef_generate_image import _EXPRESSIONS_YML, generate_avatar_image
+    from pipeline.render.llm.orchestrator import generate_avatar_image
 
     styles = _load_styles()
 
@@ -158,7 +151,7 @@ def _run_gen_examples(args) -> None:
 
             demo = _build_demographics_for_gender(gender)
             demo["style"] = style_id
-            avatar_char = _build_avatar_charachter(advisor, demo)
+            avatar_char = build_avatar_charachter(advisor, demo)
 
             import yaml as _yaml
             with tempfile.NamedTemporaryFile(suffix=".yml", delete=False, mode="w") as tf:
@@ -177,9 +170,9 @@ def _run_gen_examples(args) -> None:
                     style={
                         "name": style_id,
                         "bg_color": demo.get("bg_color", "#F5F0E8"),
-                        "styles_yml": _STYLES_YML,
+                        "styles_yml": STYLES_YML,
                     },
-                    expression={"name": "neutral", "expressions_yml": _EXPRESSIONS_YML},
+                    expression={"name": "neutral", "expressions_yml": EXPRESSIONS_YML},
                     gateway_url=args.gateway_url,
                     width=args.width,
                     height=args.height,
