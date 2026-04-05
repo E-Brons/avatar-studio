@@ -1,0 +1,18 @@
+{
+  "name": "@avatar-studio/programmatic-avatar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Programmatic Avatar (PA) — multi-style SVG avatar generator vendored for Avatar Studio.",
+  "license": "MIT",
+  "scripts": {
+    "generate": "node generate.js"
+  },
+  "dependencies": {
+    "@dicebear/avataaars": "^9.4.2",
+    "@dicebear/bottts": "^9.4.2",
+    "@dicebear/core": "^9.4.2",
+    "@dicebear/micah": "^9.4.2",
+    "@dicebear/toon-head": "^9.4.2",
+    "@opeepsfun/avatar-illustration-system": "^1.0.3"
+  }
+}

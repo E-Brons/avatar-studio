@@ -20,7 +20,7 @@ jobs:
       - run: ruff format --check src/ tests/
 
   backend-avatar:
-    name: Backend · Avatar Studio
+    name: Backend · Avatar Studio (unit)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,11 +36,11 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-          cache-dependency-path: vendor/toon-head/package-lock.json
+          cache-dependency-path: vendor/programmatic-avatar/package-lock.json
 
       - name: Install Node vendor dependencies
         run: npm ci
-        working-directory: vendor/toon-head
+        working-directory: vendor/programmatic-avatar
 
       - name: Install package and dependencies
         run: |
@@ -48,7 +48,26 @@ jobs:
           pip install -e ".[dev]"
 
       - name: Run tests
-        run: python -m pytest tests/ -m "avatar and not integration" -v --tb=short
+        run: python -m pytest tests/ -m "not integration" -v --tb=short
+
+  frontend-flutter:
+    name: Frontend · Flutter Web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: frontend
+
+      - name: Run tests
+        run: flutter test
+        working-directory: frontend
 
   integration-avatar:
     name: Integration · Avatar Studio
@@ -68,11 +87,11 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-          cache-dependency-path: vendor/toon-head/package-lock.json
+          cache-dependency-path: vendor/programmatic-avatar/package-lock.json
 
       - name: Install Node vendor dependencies
         run: npm ci
-        working-directory: vendor/toon-head
+        working-directory: vendor/programmatic-avatar
 
       - name: Install package and dependencies
         run: |
@@ -82,4 +101,4 @@ jobs:
       - name: Run tests
         env:
           OLLAMA_URL: ${{ vars.OLLAMA_URL }}
-        run: python -m pytest tests/ -m "avatar and integration" -v --tb=short
+        run: python -m pytest tests/ -m "integration" -v --tb=short

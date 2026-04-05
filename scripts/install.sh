@@ -20,33 +20,51 @@ GATEWAY_URL="http://127.0.0.1:$GATEWAY_PORT"
 # ── Prerequisites ─────────────────────────────────────────────────────
 echo "Checking prerequisites…"
 
+# python3 ≥ 3.14
 if command -v python3 &>/dev/null; then
   printf "  %-10s %s\n" "python3" "$(python3 --version 2>&1 | head -1)"
 else
   echo "  ✗ python3 not found"
+  echo "      brew install python@3.14"
+  echo "      (alternative: https://www.python.org/downloads/)"
   exit 1
 fi
 
+py_ver=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+py_major=$(echo "$py_ver" | cut -d. -f1)
+py_minor=$(echo "$py_ver" | cut -d. -f2)
+if [ "$py_major" -lt 3 ] || { [ "$py_major" -eq 3 ] && [ "$py_minor" -lt 14 ]; }; then
+  echo "  ✗ python3 $py_ver found, but >= 3.14 is required."
+  echo "      brew install python@3.14"
+  echo "      (alternative: https://www.python.org/downloads/)"
+  exit 1
+fi
+
+# flutter
+if command -v flutter &>/dev/null; then
+  flutter_ver=$(flutter --version 2>/dev/null | head -1 | grep -oE 'Flutter [0-9]+\.[0-9]+\.[0-9]+' || echo "Flutter (version unknown)")
+  printf "  %-10s %s\n" "flutter" "$flutter_ver"
+else
+  echo "  ✗ flutter not found"
+  echo "      brew install --cask flutter"
+  echo "      (alternative: https://docs.flutter.dev/get-started/install)"
+  exit 1
+fi
+
+# node ≥ 18
 if command -v node &>/dev/null; then
   printf "  %-10s %s\n" "node" "$(node --version)"
 else
   echo "  ✗ node not found — Node.js >= 18 is required."
-  echo "      Install from https://nodejs.org/ or via your package manager."
+  echo "      brew install node"
+  echo "      (alternative: https://nodejs.org/)"
   exit 1
 fi
 
 node_major=$(node --version | sed 's/v//' | cut -d. -f1)
 if [ "$node_major" -lt 18 ]; then
   echo "  ✗ Node.js $(node --version) found, but >= 18 is required."
-  exit 1
-fi
-
-# ── Version checks ────────────────────────────────────────────────────
-py_ver=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
-py_major=$(echo "$py_ver" | cut -d. -f1)
-py_minor=$(echo "$py_ver" | cut -d. -f2)
-if [ "$py_major" -lt 3 ] || { [ "$py_major" -eq 3 ] && [ "$py_minor" -lt 14 ]; }; then
-  echo "  ✗ python3 $py_ver found, but >= 3.14 is required."
+  echo "      brew install node"
   exit 1
 fi
 
@@ -75,8 +93,8 @@ if [ ! -d "$VENV" ]; then
 fi
 
 echo "Installing Python dependencies …"
-"$VENV/bin/pip" install --upgrade pip
-"$VENV/bin/pip" install -e "$ROOT[dev]"
+"$VENV/bin/pip" install -q --upgrade pip
+"$VENV/bin/pip" install -q -e "$ROOT[dev]"
 
 # ── local/ directory ──────────────────────────────────────────────────
 mkdir -p "$ROOT/local"
@@ -84,15 +102,22 @@ mkdir -p "$ROOT/local"
 # ── Node vendor dependencies ──────────────────────────────────────────
 echo ""
 echo "Installing Node.js vendor dependencies …"
-if [ ! -f "$ROOT/vendor/toon-head/package-lock.json" ]; then
-  echo "  ✗ vendor/toon-head/package-lock.json not found."
+if [ ! -f "$ROOT/vendor/programmatic-avatar/package-lock.json" ]; then
+  echo "  ✗ vendor/programmatic-avatar/package-lock.json not found."
   exit 1
 fi
-(cd "$ROOT/vendor/toon-head" && npm ci --silent)
-echo "  vendor/toon-head  ✓"
+(cd "$ROOT/vendor/programmatic-avatar" && npm ci --silent)
+echo "  vendor/programmatic-avatar  ✓"
+
+# ── Flutter frontend ──────────────────────────────────────────────────
+echo ""
+echo "Installing Flutter dependencies …"
+(cd "$ROOT/frontend" && flutter pub get)
+echo "  frontend/  ✓"
 
 # ── Git hooks ─────────────────────────────────────────────────────────
 echo ""
 echo "Installing git hooks …"
 git -C "$ROOT" config core.hooksPath .githooks
-echo "  pre-push hook active (ruff check + format)"
+echo "  pre-commit  active (ruff check + format)"
+echo "  pre-push    active (python tests + flutter tests)"

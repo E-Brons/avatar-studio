@@ -2,10 +2,10 @@
 
 Covers:
   - avatar_studio.config.config   — WCAG utilities, hex helpers, palette filtering
-  - avatar_studio.pipeline.step_a_randomise_person — _pick_colors, _pick_name, _pick_demographics
-  - avatar_studio.pipeline.step_d_make_abbreviation — create_abbreviation_avatar, apply_circle_frame
-  - avatar_studio.pipeline.step_d_make_toon_head — create_toon_head_avatar
-  - avatar_studio.pipeline.step_ef_generate_image — _build_expression_prompt, create_face_avatar
+  - avatar_studio.pipeline.persona.generator — _pick_colors, _pick_name, pick_demographics
+  - avatar_studio.pipeline.render.renderer — create_abbreviation_avatar, apply_circle_frame
+  - avatar_studio.pipeline.render.programmatic.svg_generator — create_programmatic_avatar
+  - avatar_studio.pipeline.render.renderer — create_face_avatar
 """
 
 import io
@@ -31,21 +31,20 @@ from config.config import (
     _relative_luminance,
     _slug,
 )
-from pipeline.step_a_randomise_person import (
+from pipeline.persona.generator import (
     _GENDERS,
     _HAIR_COLORS,
     _LAST_NAMES,
     _SKIN_TONES,
     _pick_colors,
-    _pick_demographics,
     _pick_name,
 )
-from pipeline.step_d_make_abbreviation import (
-    apply_circle_frame,
-    create_abbreviation_avatar,
+from pipeline.persona.generator import (
+    pick_demographics as _pick_demographics,
 )
-from pipeline.step_d_make_toon_head import create_toon_head_avatar
-from pipeline.step_ef_generate_image import create_face_avatar
+from pipeline.render.postprocess.compositor import apply_circle_frame
+from pipeline.render.programmatic.svg_generator import create_programmatic_avatar
+from pipeline.render.renderer import create_abbreviation_avatar, create_face_avatar
 
 pytestmark = pytest.mark.avatar
 
@@ -502,9 +501,9 @@ def test_create_face_avatar_neutral_failure_returns_null_map():
     advisor = {"name": "Test Advisor", "role": "Advisor", "traits": []}
 
     with (
-        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
-        patch("pipeline.step_ef_generate_image.generate_avatar_image") as mock_img,
+        patch("pipeline.persona.generator.pick_demographics") as mock_demo,
+        patch("pipeline.persona.aggregator_llm.select_features") as mock_feat,
+        patch("pipeline.render.renderer.generate_avatar_image") as mock_img,
     ):
         mock_demo.return_value = {
             "gender": "male",
@@ -542,10 +541,10 @@ def test_create_face_avatar_success_returns_filenames():
         return out_path
 
     with (
-        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
+        patch("pipeline.persona.generator.pick_demographics") as mock_demo,
+        patch("pipeline.persona.aggregator_llm.select_features") as mock_feat,
         patch(
-            "pipeline.step_ef_generate_image.generate_avatar_image",
+            "pipeline.render.renderer.generate_avatar_image",
             side_effect=fake_generate_image,
         ),
     ):
@@ -592,10 +591,10 @@ def test_create_face_avatar_expression_failure_sets_none():
             raise RuntimeError("Expression failed")
 
     with (
-        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
+        patch("pipeline.persona.generator.pick_demographics") as mock_demo,
+        patch("pipeline.persona.aggregator_llm.select_features") as mock_feat,
         patch(
-            "pipeline.step_ef_generate_image.generate_avatar_image",
+            "pipeline.render.renderer.generate_avatar_image",
             side_effect=fake_generate_image,
         ),
     ):
@@ -635,10 +634,10 @@ def test_create_face_avatar_feature_failure_does_not_abort():
         return out_path
 
     with (
-        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
+        patch("pipeline.persona.generator.pick_demographics") as mock_demo,
+        patch("pipeline.persona.aggregator_llm.select_features") as mock_feat,
         patch(
-            "pipeline.step_ef_generate_image.generate_avatar_image",
+            "pipeline.render.renderer.generate_avatar_image",
             side_effect=fake_generate_image,
         ),
     ):
@@ -676,10 +675,10 @@ def test_create_face_avatar_returns_demographics():
         return out_path
 
     with (
-        patch("pipeline.step_ef_generate_image.pick_demographics") as mock_demo,
-        patch("pipeline.step_ef_generate_image.select_features") as mock_feat,
+        patch("pipeline.persona.generator.pick_demographics") as mock_demo,
+        patch("pipeline.persona.aggregator_llm.select_features") as mock_feat,
         patch(
-            "pipeline.step_ef_generate_image.generate_avatar_image",
+            "pipeline.render.renderer.generate_avatar_image",
             side_effect=fake_generate_image,
         ),
     ):
@@ -711,14 +710,14 @@ def test_create_face_avatar_returns_demographics():
 
 
 # ---------------------------------------------------------------------------
-# avatar_studio.pipeline.step_d_make_toon_head — create_toon_head_avatar
+# avatar_studio.pipeline.render.programmatic.svg_generator — create_programmatic_avatar
 # ---------------------------------------------------------------------------
 
 _SVG_STUB = '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"></svg>'
 
 
 def _patch_node(return_svg: str = _SVG_STUB, returncode: int = 0):
-    """Return a context-manager that patches subprocess.run for the toon-head module."""
+    """Return a context-manager that patches subprocess.run for the programmatic-avatar module."""
     import subprocess
 
     def _fake_run(cmd, **kwargs):
@@ -736,46 +735,46 @@ def _patch_node(return_svg: str = _SVG_STUB, returncode: int = 0):
             raise subprocess.CalledProcessError(returncode, cmd)
         return mock
 
-    return patch("pipeline.step_d_make_toon_head.subprocess.run", side_effect=_fake_run)
+    return patch("pipeline.render.programmatic.svg_generator.subprocess.run", side_effect=_fake_run)
 
 
-def test_create_toon_head_avatar_creates_file():
+def test_create_programmatic_avatar_creates_file():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "avatar.svg"
         with _patch_node():
-            result = create_toon_head_avatar("John Doe", out, size=64)
+            result = create_programmatic_avatar("John Doe", out, size=64)
         assert result == out
         assert out.exists()
         assert out.stat().st_size > 0
 
 
-def test_create_toon_head_avatar_returns_path():
+def test_create_programmatic_avatar_returns_path():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "avatar.svg"
         with _patch_node():
-            result = create_toon_head_avatar("Jane Smith", out, size=64)
+            result = create_programmatic_avatar("Jane Smith", out, size=64)
         assert isinstance(result, Path)
         assert result == out
 
 
-def test_create_toon_head_avatar_svg_content():
+def test_create_programmatic_avatar_svg_content():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "avatar.svg"
         with _patch_node():
-            create_toon_head_avatar("Alex Ray", out, size=128)
+            create_programmatic_avatar("Alex Ray", out, size=128)
         content = out.read_text(encoding="utf-8")
         assert content.startswith("<svg")
 
 
-def test_create_toon_head_avatar_creates_parent_dirs():
+def test_create_programmatic_avatar_creates_parent_dirs():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "nested" / "deep" / "avatar.svg"
         with _patch_node():
-            create_toon_head_avatar("Test User", out, size=32)
+            create_programmatic_avatar("Test User", out, size=32)
         assert out.exists()
 
 
-def test_create_toon_head_avatar_passes_seed_to_node():
+def test_create_programmatic_avatar_passes_seed_to_node():
     """The subprocess command must include --seed with the avatar name."""
     import subprocess
 
@@ -796,16 +795,16 @@ def test_create_toon_head_avatar_passes_seed_to_node():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "avatar.svg"
         with patch(
-            "pipeline.step_d_make_toon_head.subprocess.run",
+            "pipeline.render.programmatic.svg_generator.subprocess.run",
             side_effect=_capture,
         ):
-            create_toon_head_avatar("Sam Lee", out, size=64)
+            create_programmatic_avatar("Sam Lee", out, size=64)
     assert "--seed" in captured_cmd
     seed_idx = captured_cmd.index("--seed")
     assert captured_cmd[seed_idx + 1] == "Sam Lee"
 
 
-def test_create_toon_head_avatar_passes_bg_color_from_demographics():
+def test_create_programmatic_avatar_passes_bg_color_from_demographics():
     """When demographics contains bg_color it is forwarded as --options JSON."""
     import json
     import subprocess
@@ -828,10 +827,10 @@ def test_create_toon_head_avatar_passes_bg_color_from_demographics():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "avatar.svg"
         with patch(
-            "pipeline.step_d_make_toon_head.subprocess.run",
+            "pipeline.render.programmatic.svg_generator.subprocess.run",
             side_effect=_capture,
         ):
-            create_toon_head_avatar("Demo Person", out, size=64, demographics=demo)
+            create_programmatic_avatar("Demo Person", out, size=64, demographics=demo)
 
     assert "--options" in captured_cmd
     options_idx = captured_cmd.index("--options")
@@ -839,7 +838,7 @@ def test_create_toon_head_avatar_passes_bg_color_from_demographics():
     assert opts.get("backgroundColor") == ["4A90D9"]
 
 
-def test_create_toon_head_avatar_no_options_when_no_demographics():
+def test_create_programmatic_avatar_no_options_when_no_demographics():
     """Without demographics, --options must not appear in the command."""
     captured_cmd = []
 
@@ -860,14 +859,14 @@ def test_create_toon_head_avatar_no_options_when_no_demographics():
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "avatar.svg"
         with patch(
-            "pipeline.step_d_make_toon_head.subprocess.run",
+            "pipeline.render.programmatic.svg_generator.subprocess.run",
             side_effect=_capture,
         ):
-            create_toon_head_avatar("No Demo", out, size=64)
+            create_programmatic_avatar("No Demo", out, size=64)
     assert "--options" not in captured_cmd
 
 
-def test_create_toon_head_avatar_node_error_raises():
+def test_create_programmatic_avatar_node_error_raises():
     """A non-zero exit from Node.js must raise CalledProcessError."""
     import subprocess
 
@@ -875,4 +874,24 @@ def test_create_toon_head_avatar_node_error_raises():
         out = Path(tmp) / "avatar.svg"
         with _patch_node(returncode=1):
             with pytest.raises(subprocess.CalledProcessError):
-                create_toon_head_avatar("Error Case", out, size=64)
+                create_programmatic_avatar("Error Case", out, size=64)
+
+
+def test_create_abbreviation_avatar_font_fallback(tmp_path):
+    """Covers lines 52-53: ImageFont.load_default fallback when truetype raises OSError."""
+    from unittest.mock import patch
+
+    from PIL import ImageFont
+
+    _real_truetype = ImageFont.truetype
+
+    def _fail_system_font(*args, **kwargs):
+        if args and "/System/Library/Fonts" in str(args[0]):
+            raise OSError("font not found")
+        return _real_truetype(*args, **kwargs)
+
+    out = tmp_path / "avatar.png"
+    with patch.object(ImageFont, "truetype", side_effect=_fail_system_font):
+        result = create_abbreviation_avatar("Font Test", out, size=64)
+    assert result == out
+    assert out.exists()

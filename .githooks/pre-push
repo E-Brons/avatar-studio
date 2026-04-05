@@ -1,20 +1,19 @@
 #!/usr/bin/env bash
-# Git pre-push hook — blocks push if ruff finds lint errors or formatting issues.
+# Git pre-push hook — blocks 'git push' if unittest fail
 # Installed automatically by scripts/install.sh via: git config core.hooksPath .githooks
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-RUFF="$ROOT/.venv/bin/ruff"
+PYTHON="$ROOT/.venv/bin/python"
 
-if [ ! -x "$RUFF" ]; then
-  echo "pre-push: ruff not found in .venv — run ./scripts/install.sh first."
-  exit 1
+# unittests (python)
+echo "githook-pre-push: running python tests …"
+$PYTHON -m pytest tests/ -m "not integration"
+
+# unittests (flutter)
+if [ -d "$ROOT/frontend" ]; then
+  echo "githook-pre-push: running flutter tests …"
+  (cd "$ROOT/frontend" && flutter test)
 fi
 
-echo "pre-push: running ruff check …"
-"$RUFF" check src/ tests/
-
-echo "pre-push: running ruff format --check …"
-"$RUFF" format --check src/ tests/
-
-echo "pre-push: all checks passed."
+echo "githook-pre-push: all checks passed."

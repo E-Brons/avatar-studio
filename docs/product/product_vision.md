@@ -35,6 +35,7 @@ Avatar Studio solves this by generating avatars programmatically:
 | **Background compositing** | Sticker-on-circle framing applied programmatically via Pillow |
 | **Quality tuning** | Style and Expression classifiers with iterative autotuner loop |
 | **REST API + CLI** | Embeddable as a service or run from the command line |
+| **FRONTED** | Currently only visioned as internal-tool, but this may be a future expension plan |
 
 ---
 

@@ -1,0 +1,108 @@
+# Pipeline-facing persona schema — one entry per attribute.
+#
+# Fields:
+#   selector_types  — which selection strategies are valid for this attribute
+#   default_selector — strategy to use when absent from the request
+#   default_value    — concrete default, option pool key, or range tuple
+#
+# Selector types:
+#   random_from_list    — uniform choice from a named option pool
+#   random_from_range   — uniform int in [lo, hi]
+#   random_from_range_color — darken-derived from another field
+#   random_from_probability — weighted random from probabilities
+#   fallthrough         — inherited from another pipeline field verbatim
+#   from_llm            — LLM-selected from options
+#   from_inherited      — gender-bucketed pool selection
+
+attributes:
+  gender:
+    selector_types: [random_from_list, fallthrough]
+    default_selector: random_from_list
+    default_value: genders
+
+  age:
+    selector_types: [random_from_range, fallthrough]
+    default_selector: random_from_range
+    default_value: [25, 70]
+
+  style:
+    selector_types: [random_from_list, fallthrough]
+    default_selector: fallthrough
+    default_value: random
+
+  bg_color:
+    selector_types: [random_from_list, fallthrough]
+    default_selector: random_from_list
+    default_value: valid_bg_palette
+
+  fg_color:
+    selector_types: [fallthrough]
+    default_selector: fallthrough
+    default_value: frame_fg_color
+
+  name:
+    selector_types: [from_inherited, from_llm]
+    default_selector: from_inherited
+    default_value: first_names
+
+  SKIN_TONE:
+    selector_types: [random_from_list, fallthrough]
+    default_selector: random_from_list
+    default_value: skin_tones
+
+  HAIR_COLOR:
+    selector_types: [random_from_list, fallthrough]
+    default_selector: random_from_list
+    default_value: hair_colors
+
+  EYE_COLOR:
+    selector_types: [random_from_list, fallthrough]
+    default_selector: random_from_list
+    default_value: eye_colors
+
+  BROWS_COLOR:
+    selector_types: [random_from_range_color, fallthrough]
+    default_selector: random_from_range_color
+    default_value:
+      source: HAIR_COLOR
+      factor: 0.7
+
+  EYE_SHAPE:
+    selector_types: [random_from_list, fallthrough]
+    default_selector: random_from_list
+    default_value: eye_shapes
+
+  BROWS_STYLE:
+    selector_types: [from_inherited, fallthrough]
+    default_selector: from_inherited
+    default_value: brows_styles
+
+  NOSE_SHAPE:
+    selector_types: [random_from_list, fallthrough]
+    default_selector: random_from_list
+    default_value: nose_shapes
+
+  CHIN_SHAPE:
+    selector_types: [from_inherited, fallthrough]
+    default_selector: from_inherited
+    default_value: chin_shapes
+
+  CHEEKS_SHAPE:
+    selector_types: [from_inherited, fallthrough]
+    default_selector: from_inherited
+    default_value: cheeks_shapes
+
+  HAIR_STYLE:
+    selector_types: [from_llm, from_inherited, fallthrough]
+    default_selector: from_llm
+    default_value: hair_styles
+
+  CLOTHING:
+    selector_types: [from_llm, fallthrough]
+    default_selector: from_llm
+    default_value: clothing_options
+
+  ACCESSORIES:
+    selector_types: [from_llm, fallthrough]
+    default_selector: from_llm
+    default_value: accessories_options

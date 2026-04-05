@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Git pre-commit hook — blocks 'git commit' if ruff finds lint errors or formatting issues.
+# Installed automatically by scripts/install.sh via: git config core.hooksPath .githooks
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+RUFF="$ROOT/.venv/bin/ruff"
+
+if [ ! -x "$RUFF" ]; then
+  echo "githook-pre-commit: ruff not found in .venv — run ./scripts/install.sh first."
+  exit 1
+fi
+
+# ruff (python)
+echo "githook-pre-commit: running ruff check …"
+"$RUFF" check src/ tests/
+"$RUFF" format --check src/ tests/
+
+echo "githook-pre-commit: all checks passed."
