@@ -983,7 +983,9 @@ class TestMainCli:
     def test_main_if_name_main_guard(self):
         """Line 844: __name__ == '__main__' guard — covered by running main directly."""
         import runpy
+        import sys
 
+        sys.modules.pop("tuning.expression_tuner", None)
         with (
             patch("sys.argv", ["expression_tuner", "--help"]),
         ):

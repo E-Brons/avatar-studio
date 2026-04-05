@@ -761,6 +761,7 @@ class TestRunTuningPassExpressionBranches:
         with (
             patch("tuning.style_tuner._generate_for_style", side_effect=_fake_gen_style),
             patch("tuning.style_tuner.classify_image_expression", return_value=visible_result),
+            patch("tuning.classify_expression.semantic_effective_score", return_value=0.0),
         ):
             _run_tuning_pass(
                 [_FAKE_STYLE],
@@ -1314,7 +1315,9 @@ class TestMainCli:
     def test_main_if_name_main_guard(self):
         """Line 941: __name__ == '__main__' guard covered by runpy."""
         import runpy
+        import sys
 
+        sys.modules.pop("tuning.style_tuner", None)
         with patch("sys.argv", ["style_tuner", "--help"]):
             try:
                 runpy.run_module("tuning.style_tuner", run_name="__main__", alter_sys=True)

@@ -471,9 +471,7 @@ def _run_tuning_pass(
                     sem_score = 0.0
                     if not ok:
                         _expr_data = _exprs.get(expression, {})
-                        _valid = {expected_label.lower()} | {
-                            s.lower() for s in _expr_data.get("synonyms", [])
-                        }
+                        _valid = {s.lower() for s in _expr_data.get("synonyms", [])}
                         sem_score = sum(
                             score
                             for name, score in classification.scores.items()

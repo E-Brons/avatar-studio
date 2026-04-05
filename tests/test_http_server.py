@@ -357,13 +357,13 @@ class TestExpressionVariantSuccess:
 
 
 # ---------------------------------------------------------------------------
-# _start_shutdown_watcher — BROWSER_SHUTDOWN=True branch (lines 87-88)
+# _lifespan — BROWSER_SHUTDOWN task creation (replaces _start_shutdown_watcher)
 # ---------------------------------------------------------------------------
 
 
 class TestStartShutdownWatcher:
     def test_creates_task_when_browser_shutdown_enabled(self):
-        """Lines 87-88: _BROWSER_SHUTDOWN=True → asyncio.create_task called."""
+        """_lifespan creates a shutdown watcher task when _BROWSER_SHUTDOWN=True."""
         import api.http_server as mod
 
         task_created = []
@@ -373,23 +373,25 @@ class TestStartShutdownWatcher:
                 patch.object(mod, "_BROWSER_SHUTDOWN", True),
                 patch(
                     "asyncio.create_task",
-                    side_effect=lambda coro: (task_created.append(1), coro.__class__),
-                ) as _mock_ct,
+                    side_effect=lambda coro: (task_created.append(1), coro.close(), None)[2],
+                ),
             ):
-                await mod._start_shutdown_watcher()
+                async with mod._lifespan(mod.app):
+                    pass
             return task_created
 
         result = asyncio.run(_run())
         assert len(result) == 1
 
     def test_no_task_when_browser_shutdown_disabled(self):
-        """Lines 87-88 not reached when _BROWSER_SHUTDOWN=False."""
+        """_lifespan does not create a task when _BROWSER_SHUTDOWN=False."""
         import api.http_server as mod
 
         async def _run():
             with patch.object(mod, "_BROWSER_SHUTDOWN", False):
                 with patch("asyncio.create_task") as mock_ct:
-                    await mod._start_shutdown_watcher()
+                    async with mod._lifespan(mod.app):
+                        pass
                     return mock_ct.call_count
 
         count = asyncio.run(_run())
@@ -506,7 +508,8 @@ class TestBrowserKeepaliveWebSocket:
             # Reset global state
             mod._active_sessions.clear()
             mod._had_connection = False
-            await mod.browser_keepalive(ws)
+            with patch("api.http_server.asyncio.sleep", return_value=None):
+                await mod.browser_keepalive(ws)
             return len(mod._active_sessions)
 
         remaining = asyncio.run(_run())
@@ -529,7 +532,8 @@ class TestBrowserKeepaliveWebSocket:
         async def _run():
             mod._active_sessions.clear()
             mod._had_connection = False
-            await mod.browser_keepalive(_FakeWS())
+            with patch("api.http_server.asyncio.sleep", return_value=None):
+                await mod.browser_keepalive(_FakeWS())
             return len(mod._active_sessions)
 
         remaining = asyncio.run(_run())
@@ -545,7 +549,9 @@ class TestCliMainGuard:
     def test_cli_main_guard_via_runpy(self):
         """Line 281: if __name__ == '__main__': main() — covered by runpy."""
         import runpy
+        import sys
 
+        sys.modules.pop("api.cli", None)
         with patch("sys.argv", ["cli", "--help"]):
             try:
                 runpy.run_module("api.cli", run_name="__main__", alter_sys=True)
@@ -571,7 +577,9 @@ class TestExpressionAutotunerMainGuard:
     def test_autotuner_main_guard_via_runpy(self):
         """Line 15: if __name__ == '__main__': main() — covered by runpy."""
         import runpy
+        import sys
 
+        sys.modules.pop("tuning.expression_autotuner", None)
         import pytest
 
         with pytest.raises(NotImplementedError):

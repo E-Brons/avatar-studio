@@ -17,6 +17,7 @@ import signal
 import tempfile
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 
@@ -44,7 +45,18 @@ _SHUTDOWN_GRACE: int = int(os.environ.get("AVATAR_SHUTDOWN_GRACE", "8"))
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Avatar Studio API", version="0.1.0")
+
+@asynccontextmanager
+async def _lifespan(app: FastAPI):  # noqa: ARG001
+    task = None
+    if _BROWSER_SHUTDOWN:
+        task = asyncio.create_task(_shutdown_watcher())
+    yield
+    if task is not None and not task.done():
+        task.cancel()
+
+
+app = FastAPI(title="Avatar Studio API", version="0.1.0", lifespan=_lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -81,12 +93,6 @@ async def _shutdown_watcher() -> None:
                 logger.info("Shutting down server (browser window closed).")
                 os.kill(os.getpid(), signal.SIGTERM)
                 return
-
-
-@app.on_event("startup")
-async def _start_shutdown_watcher() -> None:
-    if _BROWSER_SHUTDOWN:
-        asyncio.create_task(_shutdown_watcher())
 
 
 @app.websocket("/api/ws/keepalive")
