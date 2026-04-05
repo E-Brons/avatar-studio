@@ -4,24 +4,28 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from pipeline.step_a_randomise_person import (
-    _AGE_GROUPS,
-    _pick_diverse_demographics,
-    _pool_by_gender,
-)
-from pipeline.step_b_generate_cv import _generate_advisor_profile
-from pipeline.step_c_select_features import (
+from pipeline.persona.aggregator_llm import (
     _build_feature_prompt,
     _load_user_prompt_options,
-    _marshal_avatar_persona,
-    _parse_color_value,
     _parse_feature_response,
     _select_feature_field,
 )
-from pipeline.step_c_select_features import (
+from pipeline.persona.aggregator_llm import generate_advisor_profile as _generate_advisor_profile
+from pipeline.persona.aggregator_llm import select_features as _select_features
+from pipeline.persona.aggregators import pool_by_gender as _pool_by_gender
+from pipeline.persona.generator import (
+    _AGE_GROUPS,
+    _pick_diverse_demographics,
+)
+from pipeline.persona.generator import (
     build_avatar_charachter as _build_avatar_charachter,
 )
-from pipeline.step_c_select_features import select_features as _select_features
+from pipeline.persona.marshal import (
+    marshal_avatar_persona as _marshal_avatar_persona,
+)
+from pipeline.persona.marshal import (
+    parse_color_value as _parse_color_value,
+)
 
 pytestmark = pytest.mark.avatar
 
@@ -264,7 +268,7 @@ def test_select_features_success():
     """Step B should parse per-field LLM responses into the feature dict."""
     mock_class, mock_instance = _make_per_field_side_effect()
 
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
@@ -298,7 +302,7 @@ def test_select_features_retry_on_empty_response():
     responses = ["ok", "", "side-parted short"] + _PER_FIELD_RESPONSES[1:]
     mock_class, mock_instance = _make_gateway_mock(responses)
 
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
@@ -315,7 +319,7 @@ def test_select_features_exhausts_retries():
     responses = ["ok"] + [""] * 10
     mock_class, mock_instance = _make_gateway_mock(responses)
 
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         with pytest.raises(ValueError, match="Failed to select HAIR_STYLE"):
             _select_features(
                 SAMPLE_DEMOGRAPHICS,
@@ -329,7 +333,7 @@ def test_select_features_llm_error_raises():
     """Step B should raise when the LLM call itself fails (warmup succeeds, first field fails)."""
     mock_class, mock_instance = _make_gateway_mock(["ok", RuntimeError("connection refused")])
 
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         with pytest.raises(RuntimeError, match="connection refused"):
             _select_features(
                 SAMPLE_DEMOGRAPHICS,
@@ -343,7 +347,7 @@ def test_select_features_no_api_base():
     """Verify the call succeeds and returns results (api_base concept no longer relevant)."""
     mock_class, mock_instance = _make_per_field_side_effect()
 
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
@@ -358,7 +362,7 @@ def test_select_features_context_accumulates():
     """Later field prompts should include the marshalled persona from earlier picks."""
     mock_class, mock_instance = _make_per_field_side_effect()
 
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
@@ -381,7 +385,7 @@ def test_warmup_failure_does_not_block():
     responses = [RuntimeError("warmup failed")] + _PER_FIELD_RESPONSES
     mock_class, mock_instance = _make_gateway_mock(responses)
 
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
@@ -400,7 +404,7 @@ def test_warmup_failure_does_not_block():
 def test_select_feature_field_simple():
     """A simple field should return a matching option value."""
     mock_class, mock_instance = _make_gateway_mock(["side-parted short"])
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_feature_field(
             "HAIR_STYLE",
             "Gender: female\nAge: 35\nAppearance: olive\nRole: Advisor",
@@ -417,7 +421,7 @@ def test_select_feature_field_simple():
 def test_select_feature_field_name():
     """NAME field should strip quotes and return the name."""
     mock_class, mock_instance = _make_gateway_mock(['"Elena Vasquez"'])
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_feature_field(
             "NAME",
             "profile",
@@ -434,7 +438,7 @@ def test_select_feature_field_name():
 def test_select_feature_field_clothing_yaml():
     """CLOTHING should parse YAML dict response."""
     mock_class, mock_instance = _make_gateway_mock(['blazer: "#3C3C3C"\nshirt: "#A8C4E0"'])
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_feature_field(
             "CLOTHING",
             "profile",
@@ -451,7 +455,7 @@ def test_select_feature_field_clothing_yaml():
 def test_select_feature_field_accessories_none():
     """ACCESSORIES with 'none' response should return empty dict."""
     mock_class, mock_instance = _make_gateway_mock(["none"])
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_feature_field(
             "ACCESSORIES",
             "profile",
@@ -470,7 +474,7 @@ def test_select_feature_field_accessories_yaml_list():
     mock_class, mock_instance = _make_gateway_mock(
         ["- glasses: thin-frame rectangular\n- earring: small gold stud"]
     )
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_feature_field(
             "ACCESSORIES",
             "profile",
@@ -489,7 +493,7 @@ def test_select_feature_field_clothing_trailing_garbage():
     mock_class, mock_instance = _make_gateway_mock(
         ['blazer: "#3C3C3C"\nshirt: "#A8C4E0"\n\nyou are: a senior graphics designer']
     )
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_feature_field(
             "CLOTHING",
             "profile",
@@ -508,7 +512,7 @@ def test_select_feature_field_filters_none_values():
     mock_class, mock_instance = _make_gateway_mock(
         ["glasses: thin-frame rectangular\nearring: none"]
     )
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _select_feature_field(
             "ACCESSORIES",
             "profile",
@@ -535,7 +539,7 @@ def test_pipeline_features_to_avatar_persona():
     """Full pipeline: mocked per-field LLM → features → avatar_persona with name + appearance."""
     mock_class, mock_instance = _make_per_field_side_effect()
 
-    with patch("pipeline.step_c_select_features.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         features = _select_features(
             SAMPLE_DEMOGRAPHICS,
             SAMPLE_ADVISOR,
@@ -594,7 +598,7 @@ traits:
 def test_generate_advisor_profile_success():
     """Profile generation should parse YAML response with education/experience/traits."""
     mock_class, mock_instance = _make_gateway_mock([_PROFILE_YAML_RESPONSE])
-    with patch("pipeline.step_b_generate_cv.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Financial Advisor",
             SAMPLE_DEMOGRAPHICS,
@@ -609,7 +613,7 @@ def test_generate_advisor_profile_success():
 def test_generate_advisor_profile_with_code_fences():
     """Profile generation should strip code fences."""
     mock_class, mock_instance = _make_gateway_mock([f"```yaml\n{_PROFILE_YAML_RESPONSE}```"])
-    with patch("pipeline.step_b_generate_cv.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Advisor",
             SAMPLE_DEMOGRAPHICS,
@@ -637,7 +641,7 @@ traits:
   - empathetic
 """
     mock_class, mock_instance = _make_gateway_mock([yaml_resp])
-    with patch("pipeline.step_b_generate_cv.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Advisor",
             SAMPLE_DEMOGRAPHICS,
@@ -651,7 +655,7 @@ traits:
 def test_generate_advisor_profile_retry_on_empty():
     """Profile generation should retry on empty response."""
     mock_class, mock_instance = _make_gateway_mock(["", _PROFILE_YAML_RESPONSE])
-    with patch("pipeline.step_b_generate_cv.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Advisor",
             SAMPLE_DEMOGRAPHICS,
@@ -664,7 +668,7 @@ def test_generate_advisor_profile_retry_on_empty():
 def test_generate_advisor_profile_exhausts_retries():
     """Profile generation should raise after max retries."""
     mock_class, mock_instance = _make_gateway_mock([""] * 10)
-    with patch("pipeline.step_b_generate_cv.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         with pytest.raises(ValueError, match="Failed to generate advisor profile"):
             _generate_advisor_profile(
                 "Advisor",
@@ -679,7 +683,7 @@ def test_generate_advisor_profile_missing_fields_retries():
     mock_class, mock_instance = _make_gateway_mock(
         ["education:\n  - MBA\n", _PROFILE_YAML_RESPONSE]
     )
-    with patch("pipeline.step_b_generate_cv.GatewayClient", mock_class):
+    with patch("pipeline.persona.aggregator_llm.GatewayClient", mock_class):
         result = _generate_advisor_profile(
             "Advisor",
             SAMPLE_DEMOGRAPHICS,

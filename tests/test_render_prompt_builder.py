@@ -1,6 +1,5 @@
 """Tests for LLM render prompt builder."""
 
-import pytest
 
 from pipeline.render.llm.prompt_builder import build_prompt
 

@@ -1,6 +1,5 @@
 """Tests for FACS unilateral resolver."""
 
-import pytest
 
 from pipeline.render.llm.facs_resolver import resolve_unilateral
 

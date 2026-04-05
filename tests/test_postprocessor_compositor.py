@@ -2,7 +2,6 @@
 
 import io
 
-import pytest
 from PIL import Image
 
 from pipeline.render.postprocess.compositor import composite
