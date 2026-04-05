@@ -14,7 +14,13 @@ class SelectionsState {
 
 class SelectionsNotifier extends Notifier<SelectionsState> {
   @override
-  SelectionsState build() => const SelectionsState();
+  SelectionsState build() => SelectionsState(
+        selections: const {
+          // Style defaults to 'photorealistic' so the AI style is pre-selected
+          // on first load and the picker shows a clear selection.
+          'style': AttributeSelection(id: 'style', mode: 'select', value: 'photorealistic'),
+        },
+      );
 
   void setSelection(String id, String mode, dynamic value) {
     final updated = Map<String, AttributeSelection>.from(state.selections);

@@ -16,6 +16,7 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 _ATTRIBUTES_YML = _PROJECT_ROOT / "assets" / "persona" / "attributes.yml"
 _PHENOTYPE_SETTINGS = _PROJECT_ROOT / "assets" / "persona" / "phenotype_settings.json"
 _PRESENTATION_SETTINGS = _PROJECT_ROOT / "assets" / "persona" / "presentation_settings.json"
+_DEMOGRAPHICS_YML = _PROJECT_ROOT / "assets" / "persona" / "demographics.yml"
 _STYLES_YML = _PROJECT_ROOT / "assets" / "styles" / "styles.yml"
 
 
@@ -61,6 +62,9 @@ class ConfigLoader:
         with open(_PRESENTATION_SETTINGS) as f:
             self._presentation: dict = json.load(f)
 
+        with open(_DEMOGRAPHICS_YML) as f:
+            self._demographics: dict = yaml.safe_load(f)
+
         with open(_STYLES_YML) as f:
             self._styles_data: dict = yaml.safe_load(f)
 
@@ -95,6 +99,8 @@ class ConfigLoader:
             data = self._phenotype
         elif filename == "presentation_settings.json":
             data = self._presentation
+        elif filename == "demographics.yml":
+            return self._load_demographics_options(key_path)
         else:
             raise ValueError(f"Unknown source file: {filename}")
 
@@ -164,11 +170,23 @@ class ConfigLoader:
             options.append(_option(item, item, extra))
         return options
 
+    def _load_demographics_options(self, key: str) -> list[dict]:
+        """Load options from demographics.yml — items have {id, label, group}."""
+        items: list[dict] = self._demographics.get(key, [])
+        options = []
+        for item in items:
+            extra: dict | None = {"group": item["group"]} if "group" in item else None
+            options.append(_option(item["id"], item["label"], extra))
+        return options
+
     def _load_styles_options(self) -> list[dict]:
         options = []
         for style in self._styles_data.get("styles", []):
             extra = {
+                "engine": style.get("engine", "llm"),
+                "icon": style.get("icon", "image"),
                 "description": style.get("description", ""),
+                "credit": style.get("credit", ""),
                 "example_images": style.get("example_images", []),
             }
             options.append(_option(style["id"], style["name"], extra))

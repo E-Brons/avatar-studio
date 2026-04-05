@@ -6,6 +6,6 @@
   "default_visual_desc_model": "cli/claude-sonnet-4-6",
   "max_retries": 10,
   "timeout": 30,
-  "default_style": "realistic",
+  "default_style": "photorealistic",
   "default_image_size": 256
 }
