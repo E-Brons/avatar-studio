@@ -11,8 +11,12 @@ import yaml
 # ---------------------------------------------------------------------------
 
 _DEMO = {
-    "gender": "female", "age": 30, "name": "Alice Smith",
-    "bg_color": "#4A90D9", "fg_color": "#FFFFFF", "style": "photorealistic",
+    "gender": "female",
+    "age": 30,
+    "name": "Alice Smith",
+    "bg_color": "#4A90D9",
+    "fg_color": "#FFFFFF",
+    "style": "photorealistic",
 }
 
 _ADVISOR_YAML = {
@@ -43,6 +47,7 @@ def _run_main(argv: list[str]) -> int:
     with patch("sys.argv", ["avatar-studio", *argv]):
         try:
             from api.cli import main
+
             main()
             return 0
         except SystemExit as e:
@@ -53,15 +58,18 @@ def _run_main(argv: list[str]) -> int:
 # _load_styles
 # ---------------------------------------------------------------------------
 
+
 class TestLoadStyles:
     def test_returns_list(self):
         from api.cli import _load_styles
+
         result = _load_styles()
         assert isinstance(result, list)
         assert len(result) > 0
 
     def test_styles_have_id(self):
         from api.cli import _load_styles
+
         for s in _load_styles():
             assert "id" in s
 
@@ -69,6 +77,7 @@ class TestLoadStyles:
 # ---------------------------------------------------------------------------
 # main — no subcommand → help + exit 1
 # ---------------------------------------------------------------------------
+
 
 class TestMainNoSubcommand:
     def test_no_args_exits_1(self, capsys):
@@ -79,6 +88,7 @@ class TestMainNoSubcommand:
 # ---------------------------------------------------------------------------
 # stage-b subcommand
 # ---------------------------------------------------------------------------
+
 
 class TestRunStageB:
     def _patch_stage_b(self):
@@ -146,17 +156,22 @@ class TestRunStageB:
 # generate subcommand
 # ---------------------------------------------------------------------------
 
+
 class TestRunGenerate:
     def test_single_advisor(self, tmp_path, capsys):
         advisor_path = tmp_path / "alice.yml"
         advisor_path.write_text(yaml.dump(_ADVISOR_YAML))
 
         with patch("api.cli.process_advisor") as mock_pa:
-            code = _run_main([
-                "generate",
-                "--advisor", str(advisor_path),
-                "--out-dir", str(tmp_path),
-            ])
+            code = _run_main(
+                [
+                    "generate",
+                    "--advisor",
+                    str(advisor_path),
+                    "--out-dir",
+                    str(tmp_path),
+                ]
+            )
         assert code == 0
         mock_pa.assert_called_once()
 
@@ -165,22 +180,30 @@ class TestRunGenerate:
             (tmp_path / f"advisor_{i}.yml").write_text(yaml.dump(_ADVISOR_YAML))
 
         with patch("api.cli.process_advisor") as mock_pa:
-            code = _run_main([
-                "generate",
-                "--advisors-dir", str(tmp_path),
-                "--out-dir", str(tmp_path / "out"),
-            ])
+            code = _run_main(
+                [
+                    "generate",
+                    "--advisors-dir",
+                    str(tmp_path),
+                    "--out-dir",
+                    str(tmp_path / "out"),
+                ]
+            )
         assert code == 0
         assert mock_pa.call_count == 2
 
     def test_advisors_dir_empty_exits_1(self, tmp_path, capsys):
         empty_dir = tmp_path / "empty"
         empty_dir.mkdir()
-        code = _run_main([
-            "generate",
-            "--advisors-dir", str(empty_dir),
-            "--out-dir", str(tmp_path / "out"),
-        ])
+        code = _run_main(
+            [
+                "generate",
+                "--advisors-dir",
+                str(empty_dir),
+                "--out-dir",
+                str(tmp_path / "out"),
+            ]
+        )
         assert code == 1
 
     def test_gateway_url_forwarded(self, tmp_path):
@@ -192,18 +215,24 @@ class TestRunGenerate:
             captured["url"] = kwargs.get("gateway_url")
 
         with patch("api.cli.process_advisor", side_effect=_cap):
-            _run_main([
-                "generate",
-                "--advisor", str(advisor_path),
-                "--out-dir", str(tmp_path),
-                "--gateway-url", "http://custom:9999",
-            ])
+            _run_main(
+                [
+                    "generate",
+                    "--advisor",
+                    str(advisor_path),
+                    "--out-dir",
+                    str(tmp_path),
+                    "--gateway-url",
+                    "http://custom:9999",
+                ]
+            )
         assert captured["url"] == "http://custom:9999"
 
 
 # ---------------------------------------------------------------------------
 # gen-examples subcommand
 # ---------------------------------------------------------------------------
+
 
 class TestRunGenExamples:
     def _styles(self):
@@ -220,6 +249,7 @@ class TestRunGenExamples:
         def _mock_gen(persona_path, *, out_path, **kwargs):
             out_path.parent.mkdir(parents=True, exist_ok=True)
             from PIL import Image as PILImage
+
             img = PILImage.new("RGBA", (64, 64), (0, 0, 0, 255))
             buf = _io.BytesIO()
             img.save(buf, format="PNG")
@@ -264,11 +294,15 @@ class TestRunGenExamples:
             expected.parent.mkdir(parents=True, exist_ok=True)
             expected.write_bytes(b"fake")
 
-            code = _run_main([
-                "gen-examples",
-                "--style", "photorealistic",
-                "--gender", "female",
-            ])
+            code = _run_main(
+                [
+                    "gen-examples",
+                    "--style",
+                    "photorealistic",
+                    "--gender",
+                    "female",
+                ]
+            )
         assert code == 0
         assert len(gen_calls) == 0  # skipped
 
@@ -281,7 +315,10 @@ class TestRunGenExamples:
             patch("api.cli._load_styles", return_value=styles),
             patch("api.cli._build_demographics_for_gender", return_value=dict(_DEMO)),
             patch("api.cli.build_avatar_charachter", return_value={"avatar_persona": _PERSONA}),
-            patch("pipeline.render.llm.orchestrator.generate_avatar_image", side_effect=RuntimeError("gpu down")),
+            patch(
+                "pipeline.render.llm.orchestrator.generate_avatar_image",
+                side_effect=RuntimeError("gpu down"),
+            ),
             patch("api.cli._PROJECT_ROOT", tmp_path),
         ):
             code = _run_main(["gen-examples", "--style", "photorealistic", "--gender", "female"])

@@ -39,9 +39,9 @@ def random_from_range_color(min_hex: str, max_hex: str, rng: random.Random) -> s
         return int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
 
     def _rgb_to_ycbcr(r: int, g: int, b: int) -> tuple[float, float, float]:
-        y  =  0.299 * r + 0.587 * g + 0.114 * b
+        y = 0.299 * r + 0.587 * g + 0.114 * b
         cb = -0.168736 * r - 0.331264 * g + 0.5 * b + 128
-        cr =  0.5 * r - 0.418688 * g - 0.081312 * b + 128
+        cr = 0.5 * r - 0.418688 * g - 0.081312 * b + 128
         return y, cb, cr
 
     def _ycbcr_to_rgb(y: float, cb: float, cr: float) -> tuple[int, int, int]:
@@ -59,7 +59,7 @@ def random_from_range_color(min_hex: str, max_hex: str, rng: random.Random) -> s
     t = rng.random()
     y1, cb1, cr1 = _rgb_to_ycbcr(*_hex_to_rgb(min_hex))
     y2, cb2, cr2 = _rgb_to_ycbcr(*_hex_to_rgb(max_hex))
-    y  = y1 + t * (y2 - y1)
+    y = y1 + t * (y2 - y1)
     cb = cb1 + t * (cb2 - cb1)
     cr = cr1 + t * (cr2 - cr1)
     r, g, b = _ycbcr_to_rgb(y, cb, cr)

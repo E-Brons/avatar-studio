@@ -39,8 +39,21 @@ def _fail_result(label: str = "Happiness") -> ExpressionClassificationResult:
     )
 
 
-def _fake_gen(expr_id, style, gender, seed, *, gateway_url, width, height,
-              optimize, out_path, session_dir, avatar, hard_type_gender):
+def _fake_gen(
+    expr_id,
+    style,
+    gender,
+    seed,
+    *,
+    gateway_url,
+    width,
+    height,
+    optimize,
+    out_path,
+    session_dir,
+    avatar,
+    hard_type_gender,
+):
     """Fake _generate_for_expression — no disk I/O."""
     return (b"fake_png_bytes", _FAKE_AVATAR)
 
@@ -53,6 +66,7 @@ def _fake_gen(expr_id, style, gender, seed, *, gateway_url, width, height,
 class TestResolveOptions:
     def _call(self, raw, all_options, key=None, predicate=None):
         from tuning.expression_tuner import _resolve_options
+
         return _resolve_options(raw, all_options, key=key, predicate=predicate)
 
     def test_none_returns_all(self):
@@ -96,18 +110,22 @@ class TestResolveOptions:
 class TestFmtPass:
     def test_ok_returns_pass(self):
         from tuning.expression_tuner import _fmt_pass
+
         assert "PASS" in _fmt_pass(True)
 
     def test_semantic_ok_returns_semantic(self):
         from tuning.expression_tuner import _fmt_pass
+
         assert "SEMANTIC" in _fmt_pass(False, semantic=True)
 
     def test_visible_returns_visible(self):
         from tuning.expression_tuner import _fmt_pass
+
         assert "VISIBLE" in _fmt_pass(False, semantic=False, visible=True)
 
     def test_fail_returns_fail(self):
         from tuning.expression_tuner import _fmt_pass
+
         assert "FAIL" in _fmt_pass(False)
 
 
@@ -119,6 +137,7 @@ class TestFmtPass:
 class TestExpressionLabels:
     def test_returns_expression_field(self):
         from tuning.expression_tuner import _expression_labels
+
         exprs = [{"id": "happiness", "expression": "Happiness"}, {"id": "sadness"}]
         labels = _expression_labels(exprs)
         assert labels[0] == "Happiness"
@@ -133,6 +152,7 @@ class TestExpressionLabels:
 class TestPrintExpressionSummary:
     def test_100_pct_prints_green(self, capsys):
         from tuning.expression_tuner import _print_expression_summary
+
         _print_expression_summary("happiness", 5, 5)
         out = capsys.readouterr().out
         assert "happiness" in out
@@ -140,12 +160,14 @@ class TestPrintExpressionSummary:
 
     def test_zero_total_no_crash(self, capsys):
         from tuning.expression_tuner import _print_expression_summary
+
         _print_expression_summary("happiness", 0, 0)
         out = capsys.readouterr().out
         assert "happiness" in out
 
     def test_low_pct_red(self, capsys):
         from tuning.expression_tuner import _print_expression_summary
+
         _print_expression_summary("anger", 1, 10)
         out = capsys.readouterr().out
         assert "1/10" in out
@@ -159,11 +181,13 @@ class TestPrintExpressionSummary:
 class TestPrintOverallSummary:
     def test_empty_dict_no_output(self, capsys):
         from tuning.expression_tuner import _print_overall_summary
+
         _print_overall_summary({})
         assert capsys.readouterr().out == ""
 
     def test_normal_case(self, capsys):
         from tuning.expression_tuner import _print_overall_summary
+
         _print_overall_summary({"happiness": (8, 10), "sadness": (5, 10)})
         out = capsys.readouterr().out
         assert "13/20" in out
@@ -177,24 +201,30 @@ class TestPrintOverallSummary:
 class TestPrintExpressionRunResult:
     def test_pass_returns_true(self, capsys):
         from tuning.expression_tuner import _print_expression_run_result
+
         result = _pass_result("Happiness")
         ok = _print_expression_run_result("Happiness", result, "female", "photorealistic", 0, 0.35)
         assert ok is True
 
     def test_fail_returns_false(self, capsys):
         from tuning.expression_tuner import _print_expression_run_result
+
         result = _fail_result("Happiness")
         ok = _print_expression_run_result("Happiness", result, "male", "photorealistic", 0, 0.35)
         assert ok is False
 
     def test_semantic_pass(self, capsys):
         from tuning.expression_tuner import _print_expression_run_result
+
         result = _fail_result("Happiness")
-        ok = _print_expression_run_result("Happiness", result, "male", "photorealistic", 0, 0.35, semantic_score=0.80)
+        ok = _print_expression_run_result(
+            "Happiness", result, "male", "photorealistic", 0, 0.35, semantic_score=0.80
+        )
         assert ok is True
 
     def test_reasoning_printed(self, capsys):
         from tuning.expression_tuner import _print_expression_run_result
+
         result = _pass_result("Happiness")
         _print_expression_run_result("Happiness", result, "female", "photorealistic", 0, 0.35)
         out = capsys.readouterr().out
@@ -209,6 +239,7 @@ class TestPrintExpressionRunResult:
 class TestLoadFresh:
     def test_load_expressions_returns_list(self):
         from tuning.expression_tuner import _load_expressions_fresh
+
         exprs = _load_expressions_fresh()
         assert isinstance(exprs, list)
         assert len(exprs) > 0
@@ -216,6 +247,7 @@ class TestLoadFresh:
 
     def test_load_styles_returns_list(self):
         from tuning.expression_tuner import _load_styles_fresh
+
         styles = _load_styles_fresh()
         assert isinstance(styles, list)
         assert len(styles) > 0
@@ -229,6 +261,7 @@ class TestLoadFresh:
 class TestFlushLitellmPool:
     def test_no_raise(self):
         from tuning.expression_tuner import _flush_litellm_pool
+
         _flush_litellm_pool()  # OK if litellm not installed — swallows exceptions
 
 
@@ -467,7 +500,10 @@ class TestRunTuningPassWithRefine:
         with (
             patch("tuning.expression_tuner._generate_for_expression", side_effect=_fake_gen),
             patch("tuning.expression_tuner.classify_image_expression", return_value=_fail_result()),
-            patch("tuning.expression_tuner.semantic_effective_score", side_effect=RuntimeError("llm down")),
+            patch(
+                "tuning.expression_tuner.semantic_effective_score",
+                side_effect=RuntimeError("llm down"),
+            ),
         ):
             results = _run_tuning_pass(
                 [_FAKE_EXPR],
@@ -522,12 +558,22 @@ class TestRunTuningPassWithRefine:
 class TestGenerateDiversePersonas:
     def _mock_pipeline(self):
         return [
-            patch("tuning.expression_tuner.pick_demographics", return_value={
-                "gender": "female", "age": 30, "name": "Alice",
-            }),
-            patch("tuning.expression_tuner.generate_advisor_profile", return_value={
-                "education": ["MBA"], "experience": ["5 years"], "traits": ["analytical"],
-            }),
+            patch(
+                "tuning.expression_tuner.pick_demographics",
+                return_value={
+                    "gender": "female",
+                    "age": 30,
+                    "name": "Alice",
+                },
+            ),
+            patch(
+                "tuning.expression_tuner.generate_advisor_profile",
+                return_value={
+                    "education": ["MBA"],
+                    "experience": ["5 years"],
+                    "traits": ["analytical"],
+                },
+            ),
             patch("tuning.expression_tuner.select_features", return_value={"HAIR_STYLE": "bob"}),
             patch("tuning.expression_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
         ]
@@ -547,10 +593,18 @@ class TestGenerateDiversePersonas:
         from tuning.expression_tuner import _generate_diverse_personas
 
         with (
-            patch("tuning.expression_tuner.pick_demographics", return_value={
-                "gender": "male", "age": 28, "name": "Bob",
-            }),
-            patch("tuning.expression_tuner.generate_advisor_profile", side_effect=RuntimeError("B down")),
+            patch(
+                "tuning.expression_tuner.pick_demographics",
+                return_value={
+                    "gender": "male",
+                    "age": 28,
+                    "name": "Bob",
+                },
+            ),
+            patch(
+                "tuning.expression_tuner.generate_advisor_profile",
+                side_effect=RuntimeError("B down"),
+            ),
             patch("tuning.expression_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
         ):
             result = _generate_diverse_personas(
@@ -631,9 +685,14 @@ class TestGenerateForExpression:
         out_path.write_bytes(b"fake_png")
 
         with (
-            patch("tuning.expression_tuner.pick_demographics", return_value={
-                "gender": "female", "age": 30, "name": "Alice",
-            }),
+            patch(
+                "tuning.expression_tuner.pick_demographics",
+                return_value={
+                    "gender": "female",
+                    "age": 30,
+                    "name": "Alice",
+                },
+            ),
             patch("tuning.expression_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
             patch("tuning.expression_tuner.generate_avatar_image"),
         ):
@@ -746,21 +805,36 @@ class TestMainCli:
     def _common_patches(self, tmp_path):
         """Return patch context managers covering all side-effects of main()."""
         return [
-            patch("sys.argv", [
-                "avatar-expression-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--expression", "happiness",
-                "--style", "photorealistic",
-                "--gender", "female",
-                "--refine", "expression",
-            ]),
-            patch("tuning.expression_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.expression_tuner._run_tuning_pass", return_value={
-                "happiness": (1, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-expression-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--expression",
+                    "happiness",
+                    "--style",
+                    "photorealistic",
+                    "--gender",
+                    "female",
+                    "--refine",
+                    "expression",
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.expression_tuner._run_tuning_pass",
+                return_value={
+                    "happiness": (1, 1),
+                },
+            ),
         ]
 
     def test_main_runs_without_watch(self, tmp_path):
@@ -768,26 +842,41 @@ class TestMainCli:
         patches = self._common_patches(tmp_path)
         with patches[0], patches[1], patches[2]:
             from tuning.expression_tuner import main
+
             main()  # should not raise
 
     def test_main_no_watch_generate_only(self, tmp_path):
         """main() with --refine none still completes."""
         with (
-            patch("sys.argv", [
-                "avatar-expression-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--refine", "none",
-                "--gender", "female",
-            ]),
-            patch("tuning.expression_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.expression_tuner._run_tuning_pass", return_value={
-                "happiness": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-expression-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--refine",
+                    "none",
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.expression_tuner._run_tuning_pass",
+                return_value={
+                    "happiness": (0, 1),
+                },
+            ),
         ):
             from tuning.expression_tuner import main
+
             main()
 
     def test_main_watch_mode_polls_until_keyboard_interrupt(self, tmp_path):
@@ -800,22 +889,35 @@ class TestMainCli:
             call_count.append(1)
 
         with (
-            patch("sys.argv", [
-                "avatar-expression-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--watch",
-                "--gender", "female",
-            ]),
-            patch("tuning.expression_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.expression_tuner._run_tuning_pass", return_value={
-                "happiness": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-expression-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--watch",
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.expression_tuner._run_tuning_pass",
+                return_value={
+                    "happiness": (0, 1),
+                },
+            ),
             patch("time.sleep", side_effect=_mock_sleep),
         ):
             from tuning.expression_tuner import main
+
             main()  # KeyboardInterrupt is caught internally → should not propagate
 
     def test_main_watch_reruns_on_file_change(self, tmp_path):
@@ -843,26 +945,37 @@ class TestMainCli:
         mock_styles = [{"id": "photorealistic", "system_prompt": "photo", "name": "Photo"}]
 
         with (
-            patch("sys.argv", [
-                "avatar-expression-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--watch",
-                "--gender", "female",
-            ]),
-            patch("tuning.expression_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-expression-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--watch",
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
             patch("tuning.expression_tuner._load_expressions_fresh", return_value=mock_expressions),
             patch("tuning.expression_tuner._load_styles_fresh", return_value=mock_styles),
-            patch("tuning.expression_tuner._run_tuning_pass", side_effect=lambda *a, **kw: (
-                run_once_calls.append(1), {"happiness": (0, 1)}
-            )[1]),
+            patch(
+                "tuning.expression_tuner._run_tuning_pass",
+                side_effect=lambda *a, **kw: (run_once_calls.append(1), {"happiness": (0, 1)})[1],
+            ),
             patch("time.sleep", side_effect=_mock_sleep),
             patch("tuning.expression_tuner.EXPRESSIONS_YML") as mock_yml,
         ):
             mock_yml.stat.side_effect = _mock_stat
             from tuning.expression_tuner import main
+
             main()
         # _run_once called at startup + once on mtime change
         assert len(run_once_calls) >= 2
@@ -882,51 +995,89 @@ class TestMainCli:
     def test_main_custom_model_prefix_added(self, tmp_path):
         """Lines 709, 712: models without ollama/ prefix get it added."""
         with (
-            patch("sys.argv", [
-                "avatar-expression-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--gender", "female",
-                "--ollama-text-model", "phi3:mini",  # no ollama/ prefix
-                "--ollama-visual-desc-model", "llava",  # no ollama/ or cli/ prefix
-            ]),
-            patch("tuning.expression_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.expression_tuner._load_expressions_fresh", return_value=[
-                {"id": "happiness", "expression": "Happiness", "synonyms": []},
-            ]),
-            patch("tuning.expression_tuner._load_styles_fresh", return_value=[
-                {"id": "photorealistic", "system_prompt": "photo", "name": "Photo"},
-            ]),
-            patch("tuning.expression_tuner._run_tuning_pass", return_value={
-                "happiness": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-expression-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--gender",
+                    "female",
+                    "--ollama-text-model",
+                    "phi3:mini",  # no ollama/ prefix
+                    "--ollama-visual-desc-model",
+                    "llava",  # no ollama/ or cli/ prefix
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.expression_tuner._load_expressions_fresh",
+                return_value=[
+                    {"id": "happiness", "expression": "Happiness", "synonyms": []},
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._load_styles_fresh",
+                return_value=[
+                    {"id": "photorealistic", "system_prompt": "photo", "name": "Photo"},
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._run_tuning_pass",
+                return_value={
+                    "happiness": (0, 1),
+                },
+            ),
         ):
             from tuning.expression_tuner import main
+
             main()  # prefix-adding lines exercised, should not raise
 
     def test_main_no_matching_expressions_exits_early(self, tmp_path, capsys):
         """Lines 766-767: no matching expressions found → prints error and returns."""
         with (
-            patch("sys.argv", [
-                "avatar-expression-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--expression", "nonexistent_xyz",
-                "--gender", "female",
-            ]),
-            patch("tuning.expression_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.expression_tuner._load_expressions_fresh", return_value=[
-                {"id": "happiness", "expression": "Happiness", "synonyms": []},
-            ]),
-            patch("tuning.expression_tuner._load_styles_fresh", return_value=[
-                {"id": "photorealistic", "system_prompt": "photo", "name": "Photo"},
-            ]),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-expression-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--expression",
+                    "nonexistent_xyz",
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.expression_tuner._load_expressions_fresh",
+                return_value=[
+                    {"id": "happiness", "expression": "Happiness", "synonyms": []},
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._load_styles_fresh",
+                return_value=[
+                    {"id": "photorealistic", "system_prompt": "photo", "name": "Photo"},
+                ],
+            ),
         ):
             from tuning.expression_tuner import main
+
             main()
         err = capsys.readouterr().err
         assert "No matching expressions found" in err
@@ -934,54 +1085,96 @@ class TestMainCli:
     def test_main_style_fallback_to_first_available(self, tmp_path):
         """Lines 760-763: no style resolved → fallback to first style with system_prompt."""
         with (
-            patch("sys.argv", [
-                "avatar-expression-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--gender", "female",
-                "--refine", "none",
-                "--style", "nonexistent_style_xyz",  # won't match → target_styles empty
-            ]),
-            patch("tuning.expression_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.expression_tuner._load_expressions_fresh", return_value=[
-                {"id": "happiness", "expression": "Happiness", "synonyms": []},
-            ]),
-            patch("tuning.expression_tuner._load_styles_fresh", return_value=[
-                {"id": "photorealistic", "system_prompt": "photo", "name": "Photo"},
-            ]),
-            patch("tuning.expression_tuner._run_tuning_pass", return_value={
-                "happiness": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-expression-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--gender",
+                    "female",
+                    "--refine",
+                    "none",
+                    "--style",
+                    "nonexistent_style_xyz",  # won't match → target_styles empty
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.expression_tuner._load_expressions_fresh",
+                return_value=[
+                    {"id": "happiness", "expression": "Happiness", "synonyms": []},
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._load_styles_fresh",
+                return_value=[
+                    {"id": "photorealistic", "system_prompt": "photo", "name": "Photo"},
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._run_tuning_pass",
+                return_value={
+                    "happiness": (0, 1),
+                },
+            ),
         ):
             from tuning.expression_tuner import main
+
             main()  # should not raise — fallback style used
 
     def test_main_style_fallback_no_system_prompt(self, tmp_path):
         """Line 763: all styles lack system_prompt → fallback to all_styles[:1]."""
         with (
-            patch("sys.argv", [
-                "avatar-expression-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--gender", "female",
-                "--refine", "none",
-                "--style", "nonexistent_style_xyz",
-            ]),
-            patch("tuning.expression_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.expression_tuner._load_expressions_fresh", return_value=[
-                {"id": "happiness", "expression": "Happiness", "synonyms": []},
-            ]),
-            patch("tuning.expression_tuner._load_styles_fresh", return_value=[
-                # No system_prompt → first list comprehension returns empty → fallback to [:1]
-                {"id": "random", "name": "Random"},
-            ]),
-            patch("tuning.expression_tuner._run_tuning_pass", return_value={
-                "happiness": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-expression-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--gender",
+                    "female",
+                    "--refine",
+                    "none",
+                    "--style",
+                    "nonexistent_style_xyz",
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.expression_tuner._load_expressions_fresh",
+                return_value=[
+                    {"id": "happiness", "expression": "Happiness", "synonyms": []},
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._load_styles_fresh",
+                return_value=[
+                    # No system_prompt → first list comprehension returns empty → fallback to [:1]
+                    {"id": "random", "name": "Random"},
+                ],
+            ),
+            patch(
+                "tuning.expression_tuner._run_tuning_pass",
+                return_value={
+                    "happiness": (0, 1),
+                },
+            ),
         ):
             from tuning.expression_tuner import main
+
             main()  # should not raise — all_styles[:1] fallback used

@@ -1,6 +1,5 @@
 """Tests for PersonaSchema loading and validation."""
 
-
 from pipeline.persona.schema import get_schema
 
 

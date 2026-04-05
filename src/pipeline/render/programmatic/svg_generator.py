@@ -72,7 +72,9 @@ def create_programmatic_avatar(
     """
     logger.info(
         "[Step D] START — make_programmatic_avatar (name=%s, style=%s, expression=%s)",
-        name, style, expression,
+        name,
+        style,
+        expression,
     )
 
     vendor = _vendor_dir()
@@ -99,16 +101,22 @@ def create_programmatic_avatar(
         else:
             logger.warning(
                 "[Step D] Unknown expression %r for style %r — skipping. Known: %s",
-                expression, style, ", ".join(style_map),
+                expression,
+                style,
+                ", ".join(style_map),
             )
 
     cmd = [
         "node",
         str(generate_js),
-        "--seed", name,
-        "--style", style,
-        "--size", str(size),
-        "--out", str(out_path),
+        "--seed",
+        name,
+        "--style",
+        style,
+        "--size",
+        str(size),
+        "--out",
+        str(out_path),
     ]
     if options:
         cmd += ["--options", json.dumps(options)]

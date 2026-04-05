@@ -53,6 +53,7 @@ class TestCreateProgrammaticAvatar:
             cmd = mock_run.call_args.args[0]
             assert "--options" in cmd
             import json
+
             opts_idx = cmd.index("--options") + 1
             opts = json.loads(cmd[opts_idx])
             assert "backgroundColor" in opts
@@ -73,6 +74,7 @@ class TestCreateProgrammaticAvatar:
             )
             cmd = mock_run.call_args.args[0]
             import json
+
             opts_idx = cmd.index("--options") + 1
             opts = json.loads(cmd[opts_idx])
             assert "circle" in opts
@@ -127,6 +129,7 @@ class TestCreateProgrammaticAvatar:
             cmd = mock_run.call_args.args[0]
             assert "--options" in cmd
             import json
+
             opts = json.loads(cmd[cmd.index("--options") + 1])
             assert "eyes" in opts or "mouth" in opts
         """Covers line 87: FileNotFoundError when vendor dir missing."""

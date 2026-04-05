@@ -1,6 +1,5 @@
 """Tests for programmatic expression mapper."""
 
-
 from pipeline.render.programmatic.expression_mapper import (
     SUPPORTED_EXPRESSIONS,
     SUPPORTED_STYLES,

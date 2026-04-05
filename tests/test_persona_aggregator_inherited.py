@@ -43,7 +43,5 @@ class TestFromInherited:
         # No gender key — pool_by_gender for "" will include all buckets
         rng = random.Random(1)
         result = from_inherited("BROWS_STYLE", _BROWS, {}, rng)
-        all_options = (
-            _BROWS["male"] + _BROWS["female"] + _BROWS["neutral"]
-        )
+        all_options = _BROWS["male"] + _BROWS["female"] + _BROWS["neutral"]
         assert result in all_options

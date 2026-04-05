@@ -26,7 +26,8 @@ class TestExpressionClassificationResult:
 
         return ExpressionClassificationResult(
             top_expression=top,
-            scores=scores or {"happy": 0.6, "neutral": 0.2, "sad": 0.1, "angry": 0.05, "surprised": 0.05},
+            scores=scores
+            or {"happy": 0.6, "neutral": 0.2, "sad": 0.1, "angry": 0.05, "surprised": 0.05},
         )
 
     def test_top_n(self):
@@ -143,7 +144,9 @@ class TestParseExpressionResponse:
 
 
 class TestClassifyImageExpression:
-    _RESPONSE = "top_expression: happy\nexpressions:\n  happy: 0.8\n  neutral: 0.2\nreasoning: smile\n"
+    _RESPONSE = (
+        "top_expression: happy\nexpressions:\n  happy: 0.8\n  neutral: 0.2\nreasoning: smile\n"
+    )
 
     def test_returns_result(self):
         with patch(
@@ -504,9 +507,7 @@ class TestCategorizeAvatarImage:
             MockClient.return_value.image_inspector.side_effect = RuntimeError("gateway down")
             from tuning.classify_persona import categorize_avatar_image
 
-            persona = {
-                "appearance": {"skin_tone": "#D4A76A"}
-            }
+            persona = {"appearance": {"skin_tone": "#D4A76A"}}
             with pytest.raises(RuntimeError):
                 categorize_avatar_image(_tiny_png(), persona)
 

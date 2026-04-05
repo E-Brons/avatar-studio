@@ -42,9 +42,7 @@ def validate_input(request: dict, schema: PersonaSchema | None = None) -> list[s
             selector = value["selector"]
             valid = schema.valid_selector_types(key)
             if selector not in valid:
-                errors.append(
-                    f"Attribute {key!r}: selector {selector!r} not in {valid}"
-                )
+                errors.append(f"Attribute {key!r}: selector {selector!r} not in {valid}")
     return errors
 
 
@@ -149,7 +147,9 @@ def parse_selectors(
                     max_hex = parts[1] if len(parts) > 1 else parts[0]
                     result[key] = random_from_range_color(min_hex, max_hex, rng)
                 else:
-                    logger.warning("parse_selectors: source %r not resolved for %r", source_key, key)
+                    logger.warning(
+                        "parse_selectors: source %r not resolved for %r", source_key, key
+                    )
 
             elif selector == "random_from_probability":
                 opts = value.get("options", []) if isinstance(value, dict) else []

@@ -54,7 +54,9 @@ def test_random_from_range_in_bounds():
 
 
 def test_random_from_range_deterministic():
-    assert random_from_range(1, 100, random.Random(7)) == random_from_range(1, 100, random.Random(7))
+    assert random_from_range(1, 100, random.Random(7)) == random_from_range(
+        1, 100, random.Random(7)
+    )
 
 
 def test_random_from_range_color_valid_hex():
@@ -64,10 +66,9 @@ def test_random_from_range_color_valid_hex():
 
 
 def test_random_from_range_color_deterministic():
-    assert (
-        random_from_range_color("#AABBCC", "#001122", random.Random(7))
-        == random_from_range_color("#AABBCC", "#001122", random.Random(7))
-    )
+    assert random_from_range_color(
+        "#AABBCC", "#001122", random.Random(7)
+    ) == random_from_range_color("#AABBCC", "#001122", random.Random(7))
 
 
 def test_random_from_range_color_within_ycbcr_range():
@@ -76,9 +77,9 @@ def test_random_from_range_color_within_ycbcr_range():
     def _hex_to_ycbcr(h: str) -> tuple[float, float, float]:
         h = h.lstrip("#")
         r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
-        y  =  0.299 * r + 0.587 * g + 0.114 * b
+        y = 0.299 * r + 0.587 * g + 0.114 * b
         cb = -0.168736 * r - 0.331264 * g + 0.5 * b + 128
-        cr =  0.5 * r - 0.418688 * g - 0.081312 * b + 128
+        cr = 0.5 * r - 0.418688 * g - 0.081312 * b + 128
         return y, cb, cr
 
     min_hex, max_hex = "#8B5E3C", "#5C3D1E"
@@ -90,7 +91,7 @@ def test_random_from_range_color_within_ycbcr_range():
     for _ in range(200):
         result = random_from_range_color(min_hex, max_hex, rng)
         ry, rcb, rcr = _hex_to_ycbcr(result)
-        assert min(y1, y2) - tol <= ry  <= max(y1, y2) + tol, f"Y out of range: {ry}"
+        assert min(y1, y2) - tol <= ry <= max(y1, y2) + tol, f"Y out of range: {ry}"
         assert min(cb1, cb2) - tol <= rcb <= max(cb1, cb2) + tol, f"Cb out of range: {rcb}"
         assert min(cr1, cr2) - tol <= rcr <= max(cr1, cr2) + tol, f"Cr out of range: {rcr}"
 

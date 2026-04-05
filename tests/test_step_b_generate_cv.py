@@ -87,24 +87,18 @@ class TestGenerateAdvisorProfile:
             from pipeline.persona.aggregator_llm import generate_advisor_profile
 
             with pytest.raises(ValueError, match="Failed to generate"):
-                generate_advisor_profile(
-                    "Advisor", {"gender": "female", "age": 40}, max_retries=2
-                )
+                generate_advisor_profile("Advisor", {"gender": "female", "age": 40}, max_retries=2)
 
     def test_network_error_reraises_on_last_attempt(self):
         """Covers the `if attempt == max_retries: raise` branch."""
         with patch(
             "pipeline.persona.aggregator_llm.GatewayClient",
-            return_value=_mock_client(
-                [RuntimeError("conn error"), RuntimeError("conn error")]
-            ),
+            return_value=_mock_client([RuntimeError("conn error"), RuntimeError("conn error")]),
         ):
             from pipeline.persona.aggregator_llm import generate_advisor_profile
 
             with pytest.raises(RuntimeError, match="conn error"):
-                generate_advisor_profile(
-                    "Advisor", {"gender": "male", "age": 30}, max_retries=2
-                )
+                generate_advisor_profile("Advisor", {"gender": "male", "age": 30}, max_retries=2)
 
     def test_network_error_retries_then_succeeds(self):
         """First call raises, second succeeds — covers the warning+continue path."""

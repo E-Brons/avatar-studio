@@ -36,6 +36,7 @@ local/
 .claude/*
 !.claude/settings.json
 !.claude/skills/*
+!.claude/rules/
 
 # IDEs
 .idea/

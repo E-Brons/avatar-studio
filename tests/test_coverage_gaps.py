@@ -366,6 +366,7 @@ class TestConfigLoader:
         assert "hex_base" in first["extra"]
         assert first["extra"]["hex_base"] == "#1A0E07"
 
+
 # ---------------------------------------------------------------------------
 # postprocess/orchestrator — metadata path + compositor failure
 # ---------------------------------------------------------------------------
@@ -386,7 +387,9 @@ class TestPostprocessOrchestratorExtra:
     def test_metadata_written_when_provided(self):
         png = _make_png2()
         with (
-            patch("pipeline.render.postprocess.background_remover.remove_background", return_value=png),
+            patch(
+                "pipeline.render.postprocess.background_remover.remove_background", return_value=png
+            ),
             patch("pipeline.render.postprocess.compositor.composite", return_value=png),
             patch(
                 "pipeline.render.postprocess.metadata.write_metadata",
@@ -401,7 +404,9 @@ class TestPostprocessOrchestratorExtra:
     def test_metadata_skipped_when_none(self):
         png = _make_png2()
         with (
-            patch("pipeline.render.postprocess.background_remover.remove_background", return_value=png),
+            patch(
+                "pipeline.render.postprocess.background_remover.remove_background", return_value=png
+            ),
             patch("pipeline.render.postprocess.compositor.composite", return_value=png),
             patch(
                 "pipeline.render.postprocess.metadata.write_metadata",
@@ -416,7 +421,9 @@ class TestPostprocessOrchestratorExtra:
     def test_compositor_failure_continues(self):
         png = _make_png2()
         with (
-            patch("pipeline.render.postprocess.background_remover.remove_background", return_value=png),
+            patch(
+                "pipeline.render.postprocess.background_remover.remove_background", return_value=png
+            ),
             patch(
                 "pipeline.render.postprocess.compositor.composite",
                 side_effect=RuntimeError("compositor down"),
@@ -431,7 +438,9 @@ class TestPostprocessOrchestratorExtra:
         """Covers lines 42-43: metadata write raises but result still returned."""
         png = _make_png2()
         with (
-            patch("pipeline.render.postprocess.background_remover.remove_background", return_value=png),
+            patch(
+                "pipeline.render.postprocess.background_remover.remove_background", return_value=png
+            ),
             patch("pipeline.render.postprocess.compositor.composite", return_value=png),
             patch(
                 "pipeline.render.postprocess.metadata.write_metadata",
@@ -502,7 +511,9 @@ class TestSvgGeneratorStyle:
         ) as mock_cpa:
             from pipeline.render.programmatic.svg_generator import generate_svg
 
-            generate_svg("Bob", out, size=128, demographics={}, expression="neutral", style="bottts")
+            generate_svg(
+                "Bob", out, size=128, demographics={}, expression="neutral", style="bottts"
+            )
             # style passed as keyword arg
             assert "bottts" in str(mock_cpa.call_args)
 

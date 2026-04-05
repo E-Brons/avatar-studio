@@ -119,4 +119,4 @@ echo "  frontend/  ✓"
 echo ""
 echo "Installing git hooks …"
 git -C "$ROOT" config core.hooksPath .githooks
-echo "  pre-push hook active (ruff check + format)"
+echo "  pre-commit hook active (ruff check + format)"

@@ -11,8 +11,7 @@ def svg_to_png(svg_path: Path, out_path: Path, *, size: int = 256) -> Path:
         import cairosvg
     except ImportError as exc:
         raise ImportError(
-            "cairosvg is required for SVG→PNG conversion. "
-            "Install it with: pip install cairosvg"
+            "cairosvg is required for SVG→PNG conversion. Install it with: pip install cairosvg"
         ) from exc
 
     out_path.parent.mkdir(parents=True, exist_ok=True)

@@ -35,6 +35,7 @@ logger = logging.getLogger(__name__)
 def _load_styles() -> list[dict]:
     """Load style definitions from styles.yml."""
     import yaml as _yaml
+
     with open(STYLES_YML) as f:
         data = _yaml.safe_load(f)
     return data.get("styles", [])
@@ -154,6 +155,7 @@ def _run_gen_examples(args) -> None:
             avatar_char = build_avatar_charachter(advisor, demo)
 
             import yaml as _yaml
+
             with tempfile.NamedTemporaryFile(suffix=".yml", delete=False, mode="w") as tf:
                 _yaml.dump(
                     avatar_char["avatar_persona"],
@@ -231,7 +233,9 @@ def main() -> None:
         help=f"LLM Gateway URL (default: {_GATEWAY_DEFAULT})",
     )
     gen.add_argument("--width", type=int, default=128, help="Generated image width (default: 128)")
-    gen.add_argument("--height", type=int, default=128, help="Generated image height (default: 128)")
+    gen.add_argument(
+        "--height", type=int, default=128, help="Generated image height (default: 128)"
+    )
 
     # ── gen-examples ──────────────────────────────────────────────────────────
     gex = subparsers.add_parser(
@@ -257,7 +261,9 @@ def main() -> None:
         help=f"LLM Gateway URL (default: {_GATEWAY_DEFAULT})",
     )
     gex.add_argument("--width", type=int, default=512, help="Image width in pixels (default: 512)")
-    gex.add_argument("--height", type=int, default=512, help="Image height in pixels (default: 512)")
+    gex.add_argument(
+        "--height", type=int, default=512, help="Image height in pixels (default: 512)"
+    )
     gex.add_argument(
         "--overwrite",
         action="store_true",

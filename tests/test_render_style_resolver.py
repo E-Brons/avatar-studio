@@ -1,7 +1,5 @@
 """Tests for render style resolver."""
 
-
-
 from pipeline.render.style_resolver import resolve_style
 
 

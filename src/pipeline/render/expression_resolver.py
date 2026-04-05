@@ -18,10 +18,7 @@ def load_all_expressions(expressions_yml: Path = EXPRESSIONS_YML) -> dict[str, d
     """Return a mapping of expression id → entry dict for all expressions."""
     with open(expressions_yml) as f:
         data = yaml.safe_load(f)
-    return {
-        (e.get("id") or e["expression"].lower()): e
-        for e in data.get("expressions", [])
-    }
+    return {(e.get("id") or e["expression"].lower()): e for e in data.get("expressions", [])}
 
 
 def resolve_expression(

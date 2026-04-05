@@ -1,6 +1,5 @@
 """Tests for FACS unilateral resolver."""
 
-
 from pipeline.render.llm.facs_resolver import resolve_unilateral
 
 

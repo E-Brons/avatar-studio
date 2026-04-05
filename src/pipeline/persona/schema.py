@@ -6,7 +6,12 @@ from pathlib import Path
 
 import yaml
 
-_SCHEMA_PATH = Path(__file__).resolve().parent.parent.parent.parent / "assets" / "persona" / "persona_schema.yml"
+_SCHEMA_PATH = (
+    Path(__file__).resolve().parent.parent.parent.parent
+    / "assets"
+    / "persona"
+    / "persona_schema.yml"
+)
 
 
 class PersonaSchema:

@@ -97,10 +97,19 @@ _FAKE_AVATAR = {
 class TestGeneratePersona:
     def test_returns_dict(self):
         with (
-            patch("pipeline.persona.generator.pick_demographics", return_value=_FAKE_DEMOGRAPHICS.copy()),
-            patch("pipeline.persona.aggregator_llm.generate_advisor_profile", return_value=_FAKE_ADVISOR.copy()),
+            patch(
+                "pipeline.persona.generator.pick_demographics",
+                return_value=_FAKE_DEMOGRAPHICS.copy(),
+            ),
+            patch(
+                "pipeline.persona.aggregator_llm.generate_advisor_profile",
+                return_value=_FAKE_ADVISOR.copy(),
+            ),
             patch("pipeline.persona.aggregator_llm.select_features", return_value={}),
-            patch("pipeline.persona.generator.build_avatar_charachter", return_value=_FAKE_AVATAR.copy()),
+            patch(
+                "pipeline.persona.generator.build_avatar_charachter",
+                return_value=_FAKE_AVATAR.copy(),
+            ),
         ):
             from pipeline.persona.generator import generate_persona
 
@@ -109,10 +118,19 @@ class TestGeneratePersona:
 
     def test_with_explicit_request_dict(self):
         with (
-            patch("pipeline.persona.generator.pick_demographics", return_value=_FAKE_DEMOGRAPHICS.copy()),
-            patch("pipeline.persona.aggregator_llm.generate_advisor_profile", return_value=_FAKE_ADVISOR.copy()),
+            patch(
+                "pipeline.persona.generator.pick_demographics",
+                return_value=_FAKE_DEMOGRAPHICS.copy(),
+            ),
+            patch(
+                "pipeline.persona.aggregator_llm.generate_advisor_profile",
+                return_value=_FAKE_ADVISOR.copy(),
+            ),
             patch("pipeline.persona.aggregator_llm.select_features", return_value={}),
-            patch("pipeline.persona.generator.build_avatar_charachter", return_value=_FAKE_AVATAR.copy()),
+            patch(
+                "pipeline.persona.generator.build_avatar_charachter",
+                return_value=_FAKE_AVATAR.copy(),
+            ),
         ):
             from pipeline.persona.generator import generate_persona
 
@@ -124,10 +142,19 @@ class TestGeneratePersona:
         persona_file.write_text("gender: female\n")
 
         with (
-            patch("pipeline.persona.generator.pick_demographics", return_value=_FAKE_DEMOGRAPHICS.copy()),
-            patch("pipeline.persona.aggregator_llm.generate_advisor_profile", return_value=_FAKE_ADVISOR.copy()),
+            patch(
+                "pipeline.persona.generator.pick_demographics",
+                return_value=_FAKE_DEMOGRAPHICS.copy(),
+            ),
+            patch(
+                "pipeline.persona.aggregator_llm.generate_advisor_profile",
+                return_value=_FAKE_ADVISOR.copy(),
+            ),
             patch("pipeline.persona.aggregator_llm.select_features", return_value={}),
-            patch("pipeline.persona.generator.build_avatar_charachter", return_value=_FAKE_AVATAR.copy()),
+            patch(
+                "pipeline.persona.generator.build_avatar_charachter",
+                return_value=_FAKE_AVATAR.copy(),
+            ),
         ):
             from pipeline.persona.generator import generate_persona
 
@@ -136,13 +163,19 @@ class TestGeneratePersona:
 
     def test_step_b_failure_graceful(self):
         with (
-            patch("pipeline.persona.generator.pick_demographics", return_value=_FAKE_DEMOGRAPHICS.copy()),
+            patch(
+                "pipeline.persona.generator.pick_demographics",
+                return_value=_FAKE_DEMOGRAPHICS.copy(),
+            ),
             patch(
                 "pipeline.persona.aggregator_llm.generate_advisor_profile",
                 side_effect=RuntimeError("LLM unavailable"),
             ),
             patch("pipeline.persona.aggregator_llm.select_features", return_value={}),
-            patch("pipeline.persona.generator.build_avatar_charachter", return_value=_FAKE_AVATAR.copy()),
+            patch(
+                "pipeline.persona.generator.build_avatar_charachter",
+                return_value=_FAKE_AVATAR.copy(),
+            ),
         ):
             from pipeline.persona.generator import generate_persona
 
@@ -151,13 +184,22 @@ class TestGeneratePersona:
 
     def test_step_c_failure_graceful(self):
         with (
-            patch("pipeline.persona.generator.pick_demographics", return_value=_FAKE_DEMOGRAPHICS.copy()),
-            patch("pipeline.persona.aggregator_llm.generate_advisor_profile", return_value=_FAKE_ADVISOR.copy()),
+            patch(
+                "pipeline.persona.generator.pick_demographics",
+                return_value=_FAKE_DEMOGRAPHICS.copy(),
+            ),
+            patch(
+                "pipeline.persona.aggregator_llm.generate_advisor_profile",
+                return_value=_FAKE_ADVISOR.copy(),
+            ),
             patch(
                 "pipeline.persona.aggregator_llm.select_features",
                 side_effect=RuntimeError("step C down"),
             ),
-            patch("pipeline.persona.generator.build_avatar_charachter", return_value=_FAKE_AVATAR.copy()),
+            patch(
+                "pipeline.persona.generator.build_avatar_charachter",
+                return_value=_FAKE_AVATAR.copy(),
+            ),
         ):
             from pipeline.persona.generator import generate_persona
 
@@ -172,10 +214,19 @@ class TestGeneratePersona:
             return {}
 
         with (
-            patch("pipeline.persona.generator.pick_demographics", return_value=_FAKE_DEMOGRAPHICS.copy()),
-            patch("pipeline.persona.aggregator_llm.generate_advisor_profile", return_value=_FAKE_ADVISOR.copy()),
+            patch(
+                "pipeline.persona.generator.pick_demographics",
+                return_value=_FAKE_DEMOGRAPHICS.copy(),
+            ),
+            patch(
+                "pipeline.persona.aggregator_llm.generate_advisor_profile",
+                return_value=_FAKE_ADVISOR.copy(),
+            ),
             patch("pipeline.persona.aggregator_llm.select_features", side_effect=_capture_select),
-            patch("pipeline.persona.generator.build_avatar_charachter", return_value=_FAKE_AVATAR.copy()),
+            patch(
+                "pipeline.persona.generator.build_avatar_charachter",
+                return_value=_FAKE_AVATAR.copy(),
+            ),
         ):
             from pipeline.persona.generator import generate_persona
 

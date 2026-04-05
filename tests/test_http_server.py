@@ -16,6 +16,7 @@ from PIL import Image
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _make_png(w: int = 64, h: int = 64) -> bytes:
     img = Image.new("RGBA", (w, h), (100, 150, 200, 255))
     buf = io.BytesIO()
@@ -82,6 +83,7 @@ class TestResolveDemographicsDict:
 class TestHealthEndpoint:
     def test_returns_ok(self):
         from api.http_server import health
+
         result = asyncio.run(health())
         assert result == {"status": "ok"}
 
@@ -89,6 +91,7 @@ class TestHealthEndpoint:
 class TestGetConfigEndpoint:
     def test_returns_attributes(self):
         from api.http_server import get_config
+
         result = asyncio.run(get_config())
         assert "attributes" in result
         assert isinstance(result["attributes"], list)
@@ -97,6 +100,7 @@ class TestGetConfigEndpoint:
 class TestRandomizeEndpoint:
     def test_returns_values_dict(self):
         from api.http_server import RandomizeRequest, randomize_avatar
+
         with patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)):
             result = asyncio.run(randomize_avatar(RandomizeRequest()))
         assert "values" in result
@@ -104,6 +108,7 @@ class TestRandomizeEndpoint:
 
     def test_constraint_applied(self):
         from api.http_server import AttributeSelection, RandomizeRequest, randomize_avatar
+
         with patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)):
             req = RandomizeRequest(
                 constraints=[AttributeSelection(id="gender", mode="select", value="male")]
@@ -133,11 +138,14 @@ class TestRunPipelineSync:
         """Context managers for all pipeline dependencies."""
         return [
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch("api.http_server.generate_advisor_profile", return_value={
-                "education": ["MBA"],
-                "experience": ["5 years"],
-                "traits": ["analytical"],
-            }),
+            patch(
+                "api.http_server.generate_advisor_profile",
+                return_value={
+                    "education": ["MBA"],
+                    "experience": ["5 years"],
+                    "traits": ["analytical"],
+                },
+            ),
             patch("api.http_server.select_features", return_value={"HAIR_STYLE": "bob"}),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=self._mock_gen),
@@ -152,6 +160,7 @@ class TestRunPipelineSync:
 
     def test_returns_generate_result(self):
         from api.http_server import GenerateRequest, _run_pipeline_sync
+
         req = GenerateRequest(expressions=["neutral"], width=64, height=64)
         patches = self._patch_all()
         with patches[0], patches[1], patches[2], patches[3], patches[4]:
@@ -163,6 +172,7 @@ class TestRunPipelineSync:
     def test_step_b_failure_continues(self):
         """[Step B] failure → advisor defaults used, pipeline still runs."""
         from api.http_server import GenerateRequest, _run_pipeline_sync
+
         req = GenerateRequest(expressions=["neutral"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
@@ -177,12 +187,18 @@ class TestRunPipelineSync:
     def test_step_c_failure_continues(self):
         """[Step C] failure → features=None, pipeline still runs."""
         from api.http_server import GenerateRequest, _run_pipeline_sync
+
         req = GenerateRequest(expressions=["neutral"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch("api.http_server.generate_advisor_profile", return_value={
-                "education": [], "experience": [], "traits": [],
-            }),
+            patch(
+                "api.http_server.generate_advisor_profile",
+                return_value={
+                    "education": [],
+                    "experience": [],
+                    "traits": [],
+                },
+            ),
             patch("api.http_server.select_features", side_effect=RuntimeError("C down")),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=self._mock_gen),
@@ -195,12 +211,18 @@ class TestRunPipelineSync:
         from fastapi import HTTPException
 
         from api.http_server import GenerateRequest, _run_pipeline_sync
+
         req = GenerateRequest(expressions=["neutral"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch("api.http_server.generate_advisor_profile", return_value={
-                "education": [], "experience": [], "traits": [],
-            }),
+            patch(
+                "api.http_server.generate_advisor_profile",
+                return_value={
+                    "education": [],
+                    "experience": [],
+                    "traits": [],
+                },
+            ),
             patch("api.http_server.select_features", return_value={}),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=RuntimeError("gpu down")),
@@ -222,12 +244,18 @@ class TestRunPipelineSync:
             raise RuntimeError("expr down")
 
         from api.http_server import GenerateRequest, _run_pipeline_sync
+
         req = GenerateRequest(expressions=["neutral", "happiness"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch("api.http_server.generate_advisor_profile", return_value={
-                "education": [], "experience": [], "traits": [],
-            }),
+            patch(
+                "api.http_server.generate_advisor_profile",
+                return_value={
+                    "education": [],
+                    "experience": [],
+                    "traits": [],
+                },
+            ),
             patch("api.http_server.select_features", return_value={}),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=_selective_gen),
@@ -239,6 +267,7 @@ class TestRunPipelineSync:
     def test_advisor_fields_from_selections(self):
         """Lines 232-241: role + education from selections → used directly."""
         from api.http_server import AttributeSelection, GenerateRequest, _run_pipeline_sync
+
         req = GenerateRequest(
             selections=[
                 AttributeSelection(id="role", mode="select", value="Engineer"),
@@ -277,6 +306,7 @@ class TestRunPipelineSync:
 class TestGenerateAvatarEndpoint:
     def test_calls_run_pipeline_sync(self):
         from api.http_server import GenerateRequest, GenerateResult, generate_avatar
+
         fake_result = GenerateResult(
             image_b64="abc",
             avatar_persona={},
@@ -305,12 +335,18 @@ class TestExpressionVariantSuccess:
     def test_expression_variant_included_on_success(self):
         """Line 326: expression variant succeeds → b64 encoded in results."""
         from api.http_server import GenerateRequest, _run_pipeline_sync
+
         req = GenerateRequest(expressions=["neutral", "happiness"], width=64, height=64)
         with (
             patch("api.http_server.pick_demographics", return_value=dict(_DEMO_BASE)),
-            patch("api.http_server.generate_advisor_profile", return_value={
-                "education": [], "experience": [], "traits": [],
-            }),
+            patch(
+                "api.http_server.generate_advisor_profile",
+                return_value={
+                    "education": [],
+                    "experience": [],
+                    "traits": [],
+                },
+            ),
             patch("api.http_server.select_features", return_value={}),
             patch("api.http_server.build_avatar_charachter", return_value=_make_avatar_dict()),
             patch("api.http_server.generate_avatar_image", side_effect=self._gen_both),
@@ -335,7 +371,10 @@ class TestStartShutdownWatcher:
         async def _run():
             with (
                 patch.object(mod, "_BROWSER_SHUTDOWN", True),
-                patch("asyncio.create_task", side_effect=lambda coro: (task_created.append(1), coro.__class__)) as _mock_ct,
+                patch(
+                    "asyncio.create_task",
+                    side_effect=lambda coro: (task_created.append(1), coro.__class__),
+                ) as _mock_ct,
             ):
                 await mod._start_shutdown_watcher()
             return task_created
@@ -525,6 +564,7 @@ class TestExpressionAutotunerMainGuard:
         import pytest
 
         from tuning.expression_autotuner import main
+
         with pytest.raises(NotImplementedError):
             main()
 

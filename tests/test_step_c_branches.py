@@ -238,10 +238,7 @@ class TestBadValueTypes:
 class TestCountLimit:
     def test_clothing_truncated_to_4(self):
         """Line 349: parsed dict > max_count (4) → truncated."""
-        many = (
-            'blazer: "#111"\nshirt: "#222"\ntrousers: "#333"\n'
-            'shoes: "#444"\ntie: "#555"\n'
-        )
+        many = 'blazer: "#111"\nshirt: "#222"\ntrousers: "#333"\nshoes: "#444"\ntie: "#555"\n'
         result = _call(
             "CLOTHING",
             [many],

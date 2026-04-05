@@ -200,6 +200,7 @@ class TestGenerateAvatarImage:
         captured_prompt = {}
 
         with patch("pipeline.render.llm.orchestrator.GatewayClient") as MockClient:
+
             def _capture(prompt="", **kwargs):
                 captured_prompt["full"] = prompt
                 return _make_png()

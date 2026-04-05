@@ -1,6 +1,5 @@
 """Tests for render expression resolver."""
 
-
 from pipeline.render.expression_resolver import (
     load_all_expressions,
     resolve_expression,
@@ -24,7 +23,9 @@ class TestResolveExpression:
     def test_known_expression(self):
         entry = resolve_expression("happiness")
         assert isinstance(entry, dict)
-        assert entry.get("expression", "").lower() in ("happiness", "happy") or "happiness" in str(entry)
+        assert entry.get("expression", "").lower() in ("happiness", "happy") or "happiness" in str(
+            entry
+        )
 
     def test_unknown_expression_fallback(self):
         entry = resolve_expression("unknownxyz")

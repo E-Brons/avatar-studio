@@ -13,6 +13,7 @@ from PIL import Image
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _make_png() -> bytes:
     img = Image.new("RGBA", (64, 64), (100, 150, 200, 255))
     buf = io.BytesIO()
@@ -21,8 +22,11 @@ def _make_png() -> bytes:
 
 
 _DEMO = {
-    "gender": "female", "age": 30, "name": "Alice Smith",
-    "bg_color": "#4A90D9", "fg_color": "#FFFFFF",
+    "gender": "female",
+    "age": 30,
+    "name": "Alice Smith",
+    "bg_color": "#4A90D9",
+    "fg_color": "#FFFFFF",
     "style": "photorealistic",
 }
 
@@ -38,6 +42,7 @@ _ADVISOR = {
 # ---------------------------------------------------------------------------
 # _ollama_available_models
 # ---------------------------------------------------------------------------
+
 
 class TestOllamaAvailableModels:
     def test_returns_model_names_on_success(self):
@@ -72,6 +77,7 @@ class TestOllamaAvailableModels:
 # _resolve_default_model
 # ---------------------------------------------------------------------------
 
+
 class TestResolveDefaultModel:
     def test_exact_match(self):
         from api.server import _resolve_default_model
@@ -101,6 +107,7 @@ class TestResolveDefaultModel:
 # _build_demographics_for_gender
 # ---------------------------------------------------------------------------
 
+
 class TestBuildDemographicsForGender:
     def test_forces_gender(self):
         from api.server import _build_demographics_for_gender
@@ -121,6 +128,7 @@ class TestBuildDemographicsForGender:
 # process_advisor
 # ---------------------------------------------------------------------------
 
+
 class TestProcessAdvisor:
     def _write_advisor(self, tmp_path: Path) -> Path:
         p = tmp_path / "advisor.yml"
@@ -139,9 +147,10 @@ class TestProcessAdvisor:
         neutral_png.write_bytes(_make_png())
 
         with (
-            patch("api.server.create_face_avatar", return_value=(
-                {"neutral": "alice-smith-neutral.png"}, dict(_DEMO)
-            )),
+            patch(
+                "api.server.create_face_avatar",
+                return_value=({"neutral": "alice-smith-neutral.png"}, dict(_DEMO)),
+            ),
             patch("api.server.create_abbreviation_avatar"),
             patch("api.server.create_programmatic_avatar"),
         ):
@@ -158,9 +167,10 @@ class TestProcessAdvisor:
         advisor_path = self._write_advisor(tmp_path)
 
         with (
-            patch("api.server.create_face_avatar", return_value=(
-                {"neutral": "alice-smith-neutral.png"}, dict(_DEMO)
-            )),
+            patch(
+                "api.server.create_face_avatar",
+                return_value=({"neutral": "alice-smith-neutral.png"}, dict(_DEMO)),
+            ),
             patch("api.server.create_abbreviation_avatar"),
             patch("api.server.create_programmatic_avatar", side_effect=RuntimeError("node fail")),
         ):
@@ -197,9 +207,11 @@ class TestProcessAdvisor:
 # _load_expression_ids (lines 62-64)
 # ---------------------------------------------------------------------------
 
+
 class TestLoadExpressionIds:
     def test_returns_list_of_strings(self):
         from pipeline.render.expression_resolver import load_expression_ids
+
         result = load_expression_ids()
         assert isinstance(result, list)
         assert len(result) > 0

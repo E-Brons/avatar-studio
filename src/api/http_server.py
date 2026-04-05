@@ -108,7 +108,7 @@ async def browser_keepalive(ws: WebSocket) -> None:
             # Send a ping every 15 s; client echoes it back.
             await asyncio.sleep(15)
             await ws.send_text("ping")
-    except (WebSocketDisconnect, Exception):
+    except WebSocketDisconnect, Exception:
         pass
     finally:
         _active_sessions.discard(session_id)

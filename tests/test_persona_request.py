@@ -176,9 +176,9 @@ class TestParseSelectors:
         def _hex_to_ycbcr(h: str) -> tuple[float, float, float]:
             h = h.lstrip("#")
             r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
-            y  =  0.299 * r + 0.587 * g + 0.114 * b
+            y = 0.299 * r + 0.587 * g + 0.114 * b
             cb = -0.168736 * r - 0.331264 * g + 0.5 * b + 128
-            cr =  0.5 * r - 0.418688 * g - 0.081312 * b + 128
+            cr = 0.5 * r - 0.418688 * g - 0.081312 * b + 128
             return y, cb, cr
 
         hair = "#8B5E3C #5C3D1E"
@@ -197,7 +197,7 @@ class TestParseSelectors:
         for _ in range(200):
             result = parse_selectors(selectors, {"HAIR_COLOR": hair}, rng=rng)
             ry, rcb, rcr = _hex_to_ycbcr(result["BROWS_COLOR"])
-            assert min(y1, y2) - tol <= ry  <= max(y1, y2) + tol, f"Y out of range: {ry}"
+            assert min(y1, y2) - tol <= ry <= max(y1, y2) + tol, f"Y out of range: {ry}"
             assert min(cb1, cb2) - tol <= rcb <= max(cb1, cb2) + tol, f"Cb out of range: {rcb}"
             assert min(cr1, cr2) - tol <= rcr <= max(cr1, cr2) + tol, f"Cr out of range: {rcr}"
 

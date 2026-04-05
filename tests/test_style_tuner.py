@@ -52,21 +52,37 @@ def _pass_expr_result(label: str = "Happiness") -> ExpressionClassificationResul
 
 
 def _pass_report() -> CategoryReport:
-    return CategoryReport(results=[
-        PropertyResult(property_name="gender", expected="female", visible=True),
-        PropertyResult(property_name="hair_style", expected="bob", visible=True),
-    ])
+    return CategoryReport(
+        results=[
+            PropertyResult(property_name="gender", expected="female", visible=True),
+            PropertyResult(property_name="hair_style", expected="bob", visible=True),
+        ]
+    )
 
 
 def _fail_report() -> CategoryReport:
-    return CategoryReport(results=[
-        PropertyResult(property_name="gender", expected="female", visible=False),
-        PropertyResult(property_name="hair_style", expected="bob", visible=False),
-    ])
+    return CategoryReport(
+        results=[
+            PropertyResult(property_name="gender", expected="female", visible=False),
+            PropertyResult(property_name="hair_style", expected="bob", visible=False),
+        ]
+    )
 
 
-def _fake_gen_style(style, gender, seed, *, expression, gateway_url, width, height,
-                    out_path, session_dir, avatar, hard_type_gender):
+def _fake_gen_style(
+    style,
+    gender,
+    seed,
+    *,
+    expression,
+    gateway_url,
+    width,
+    height,
+    out_path,
+    session_dir,
+    avatar,
+    hard_type_gender,
+):
     return (b"fake_png_bytes", _FAKE_AVATAR)
 
 
@@ -78,6 +94,7 @@ def _fake_gen_style(style, gender, seed, *, expression, gateway_url, width, heig
 class TestResolveOptions:
     def _call(self, raw, all_options, key=None, predicate=None):
         from tuning.style_tuner import _resolve_options
+
         return _resolve_options(raw, all_options, key=key, predicate=predicate)
 
     def test_none_returns_all(self):
@@ -116,10 +133,12 @@ class TestResolveOptions:
 class TestFmtPass:
     def test_pass(self):
         from tuning.style_tuner import _fmt_pass
+
         assert "PASS" in _fmt_pass(True)
 
     def test_fail(self):
         from tuning.style_tuner import _fmt_pass
+
         assert "FAIL" in _fmt_pass(False)
 
 
@@ -131,12 +150,14 @@ class TestFmtPass:
 class TestPrintStyleRunResult:
     def test_correct_returns_true(self, capsys):
         from tuning.style_tuner import _print_style_run_result
+
         result = _pass_style_result("photorealistic")
         ok = _print_style_run_result("photorealistic", result, "female", "neutral", 0)
         assert ok is True
 
     def test_incorrect_returns_false(self, capsys):
         from tuning.style_tuner import _print_style_run_result
+
         result = _fail_style_result()
         ok = _print_style_run_result("photorealistic", result, "male", "neutral", 0)
         assert ok is False
@@ -144,6 +165,7 @@ class TestPrintStyleRunResult:
     def test_top2_label_when_not_top1(self, capsys):
         """Expected style is #2 → TOP-2 shown."""
         from tuning.style_tuner import _print_style_run_result
+
         result = StyleClassificationResult(
             top_style_id="clay",
             scores={"clay": 0.55, "photorealistic": 0.45},
@@ -154,6 +176,7 @@ class TestPrintStyleRunResult:
 
     def test_reasoning_printed(self, capsys):
         from tuning.style_tuner import _print_style_run_result
+
         result = StyleClassificationResult(
             top_style_id="photorealistic",
             scores={"photorealistic": 0.90},
@@ -172,12 +195,14 @@ class TestPrintStyleRunResult:
 class TestPrintStyleSummary:
     def test_normal(self, capsys):
         from tuning.style_tuner import _print_style_summary
+
         _print_style_summary("photorealistic", 7, 10)
         out = capsys.readouterr().out
         assert "7/10" in out
 
     def test_zero_total(self, capsys):
         from tuning.style_tuner import _print_style_summary
+
         _print_style_summary("photorealistic", 0, 0)
         out = capsys.readouterr().out
         assert "photorealistic" in out
@@ -191,11 +216,13 @@ class TestPrintStyleSummary:
 class TestPrintOverallSummary:
     def test_empty_no_output(self, capsys):
         from tuning.style_tuner import _print_overall_summary
+
         _print_overall_summary({})
         assert capsys.readouterr().out == ""
 
     def test_aggregates_all(self, capsys):
         from tuning.style_tuner import _print_overall_summary
+
         _print_overall_summary({"photorealistic": (8, 10), "clay": (6, 10)})
         out = capsys.readouterr().out
         assert "14/20" in out
@@ -209,6 +236,7 @@ class TestPrintOverallSummary:
 class TestLoadStylesFresh:
     def test_returns_list_with_ids(self):
         from tuning.style_tuner import _load_styles_fresh
+
         styles = _load_styles_fresh()
         assert isinstance(styles, list)
         assert len(styles) > 0
@@ -223,6 +251,7 @@ class TestLoadStylesFresh:
 class TestFlushLitellmPool:
     def test_no_raise(self):
         from tuning.style_tuner import _flush_litellm_pool
+
         _flush_litellm_pool()
 
 
@@ -528,6 +557,7 @@ class TestRunTuningPassExpression:
         # semantic_effective_score is imported inside the function body, so patch
         # it via the source module
         import tuning.classify_expression as _ce
+
         with (
             patch("tuning.style_tuner._generate_for_style", side_effect=_fake_gen_style),
             patch("tuning.style_tuner.classify_image_expression", return_value=fail_result),
@@ -646,12 +676,22 @@ class TestRunTuningPassGender:
 class TestGenerateDiversePersonas:
     def _mock_pipeline(self):
         return [
-            patch("tuning.style_tuner.pick_demographics", return_value={
-                "gender": "female", "age": 30, "name": "Alice",
-            }),
-            patch("tuning.style_tuner.generate_advisor_profile", return_value={
-                "education": ["MBA"], "experience": ["5 years"], "traits": ["analytical"],
-            }),
+            patch(
+                "tuning.style_tuner.pick_demographics",
+                return_value={
+                    "gender": "female",
+                    "age": 30,
+                    "name": "Alice",
+                },
+            ),
+            patch(
+                "tuning.style_tuner.generate_advisor_profile",
+                return_value={
+                    "education": ["MBA"],
+                    "experience": ["5 years"],
+                    "traits": ["analytical"],
+                },
+            ),
             patch("tuning.style_tuner.select_features", return_value={"HAIR_STYLE": "bob"}),
             patch("tuning.style_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
         ]
@@ -671,10 +711,17 @@ class TestGenerateDiversePersonas:
         from tuning.style_tuner import _generate_diverse_personas
 
         with (
-            patch("tuning.style_tuner.pick_demographics", return_value={
-                "gender": "male", "age": 28, "name": "Bob",
-            }),
-            patch("tuning.style_tuner.generate_advisor_profile", side_effect=RuntimeError("B down")),
+            patch(
+                "tuning.style_tuner.pick_demographics",
+                return_value={
+                    "gender": "male",
+                    "age": 28,
+                    "name": "Bob",
+                },
+            ),
+            patch(
+                "tuning.style_tuner.generate_advisor_profile", side_effect=RuntimeError("B down")
+            ),
             patch("tuning.style_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
         ):
             result = _generate_diverse_personas(
@@ -862,9 +909,14 @@ class TestGenerateForStyle:
         out_path.write_bytes(b"fake_png")
 
         with (
-            patch("tuning.style_tuner.pick_demographics", return_value={
-                "gender": "female", "age": 30, "name": "Alice",
-            }),
+            patch(
+                "tuning.style_tuner.pick_demographics",
+                return_value={
+                    "gender": "female",
+                    "age": 30,
+                    "name": "Alice",
+                },
+            ),
             patch("tuning.style_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
             patch("tuning.style_tuner.generate_avatar_image"),
         ):
@@ -976,20 +1028,34 @@ class TestMainCli:
 
     def _common_patches(self, tmp_path):
         return [
-            patch("sys.argv", [
-                "avatar-style-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--style", "photorealistic",
-                "--gender", "female",
-                "--refine", "none",
-            ]),
-            patch("tuning.style_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.style_tuner._run_tuning_pass", return_value={
-                "photorealistic": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-style-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--style",
+                    "photorealistic",
+                    "--gender",
+                    "female",
+                    "--refine",
+                    "none",
+                ],
+            ),
+            patch(
+                "tuning.style_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.style_tuner._run_tuning_pass",
+                return_value={
+                    "photorealistic": (0, 1),
+                },
+            ),
         ]
 
     def test_main_runs_without_watch(self, tmp_path):
@@ -997,43 +1063,69 @@ class TestMainCli:
         patches = self._common_patches(tmp_path)
         with patches[0], patches[1], patches[2]:
             from tuning.style_tuner import main
+
             main()  # should not raise
 
     def test_main_with_refine_style(self, tmp_path):
         """main() with --refine style prints overall summary."""
         with (
-            patch("sys.argv", [
-                "avatar-style-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--refine", "style",
-                "--gender", "female",
-            ]),
-            patch("tuning.style_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.style_tuner._run_tuning_pass", return_value={
-                "photorealistic": (1, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-style-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--refine",
+                    "style",
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.style_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.style_tuner._run_tuning_pass",
+                return_value={
+                    "photorealistic": (1, 1),
+                },
+            ),
         ):
             from tuning.style_tuner import main
+
             main()
 
     def test_main_no_matching_styles_prints_error(self, tmp_path, capsys):
         """No matching styles found → prints error and returns."""
         with (
-            patch("sys.argv", [
-                "avatar-style-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--style", "nonexistent_style_xyz",
-                "--gender", "female",
-            ]),
-            patch("tuning.style_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-style-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--style",
+                    "nonexistent_style_xyz",
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.style_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
         ):
             from tuning.style_tuner import main
+
             main()
         err = capsys.readouterr().err
         assert "No matching styles found" in err
@@ -1041,53 +1133,83 @@ class TestMainCli:
     def test_main_deprecated_ollama_url_alias(self, tmp_path):
         """--ollama-url is accepted as deprecated alias for --gateway-url."""
         with (
-            patch("sys.argv", [
-                "avatar-style-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--ollama-url", "http://custom:9999",
-                "--gender", "female",
-            ]),
-            patch("tuning.style_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.style_tuner._run_tuning_pass", return_value={
-                "photorealistic": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-style-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--ollama-url",
+                    "http://custom:9999",
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.style_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.style_tuner._run_tuning_pass",
+                return_value={
+                    "photorealistic": (0, 1),
+                },
+            ),
         ):
             from tuning.style_tuner import main
+
             main()
 
     def test_main_personas_file_loaded(self, tmp_path):
         """--personas-file path → _load_personas_file is called."""
         personas_data = {
-            "personas": [{
-                "id": "alice",
-                "demographics": {"gender": "female", "age": 30, "name": "Alice"},
-                "advisor": {"role": "Advisor"},
-                "features": {"HAIR_STYLE": "bob"},
-            }]
+            "personas": [
+                {
+                    "id": "alice",
+                    "demographics": {"gender": "female", "age": 30, "name": "Alice"},
+                    "advisor": {"role": "Advisor"},
+                    "features": {"HAIR_STYLE": "bob"},
+                }
+            ]
         }
         personas_file = tmp_path / "personas.yml"
         personas_file.write_text(yaml.dump(personas_data))
 
         with (
-            patch("sys.argv", [
-                "avatar-style-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--personas-file", str(personas_file),
-                "--gender", "female",
-            ]),
-            patch("tuning.style_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.style_tuner._run_tuning_pass", return_value={
-                "photorealistic": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-style-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--personas-file",
+                    str(personas_file),
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.style_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.style_tuner._run_tuning_pass",
+                return_value={
+                    "photorealistic": (0, 1),
+                },
+            ),
             patch("tuning.style_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
         ):
             from tuning.style_tuner import main
+
             main()
 
     def test_main_watch_mode_polls_until_keyboard_interrupt(self, tmp_path):
@@ -1100,22 +1222,35 @@ class TestMainCli:
             call_count.append(1)
 
         with (
-            patch("sys.argv", [
-                "avatar-style-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--watch",
-                "--gender", "female",
-            ]),
-            patch("tuning.style_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.style_tuner._run_tuning_pass", return_value={
-                "photorealistic": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-style-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--watch",
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.style_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.style_tuner._run_tuning_pass",
+                return_value={
+                    "photorealistic": (0, 1),
+                },
+            ),
             patch("time.sleep", side_effect=_mock_sleep),
         ):
             from tuning.style_tuner import main
+
             main()  # KeyboardInterrupt caught internally → no propagation
 
     def test_main_watch_reruns_on_file_change(self, tmp_path):
@@ -1141,25 +1276,38 @@ class TestMainCli:
         mock_styles = [{"id": "photorealistic", "system_prompt": "photo", "name": "Photo"}]
 
         with (
-            patch("sys.argv", [
-                "avatar-style-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--watch",
-                "--gender", "female",
-            ]),
-            patch("tuning.style_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-style-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--watch",
+                    "--gender",
+                    "female",
+                ],
+            ),
+            patch(
+                "tuning.style_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
             patch("tuning.style_tuner._load_styles_fresh", return_value=mock_styles),
-            patch("tuning.style_tuner._run_tuning_pass", side_effect=lambda *a, **kw: (
-                run_once_calls.append(1), {"photorealistic": (0, 1)}
-            )[1]),
+            patch(
+                "tuning.style_tuner._run_tuning_pass",
+                side_effect=lambda *a, **kw: (run_once_calls.append(1), {"photorealistic": (0, 1)})[
+                    1
+                ],
+            ),
             patch("time.sleep", side_effect=_mock_sleep),
             patch("tuning.style_tuner.STYLES_YML") as mock_yml,
         ):
             mock_yml.stat.side_effect = _mock_stat
             from tuning.style_tuner import main
+
             main()
         assert len(run_once_calls) >= 2
 
@@ -1176,20 +1324,35 @@ class TestMainCli:
     def test_main_custom_model_prefix_added(self, tmp_path):
         """Lines 806, 809: models without ollama/ prefix get it added."""
         with (
-            patch("sys.argv", [
-                "avatar-style-tuner",
-                "--tmp-dir", str(tmp_path),
-                "--runs", "1",
-                "--gender", "female",
-                "--ollama-text-model", "phi3:mini",  # no ollama/ prefix
-                "--ollama-visual-desc-model", "llava",  # no ollama/ or cli/ prefix
-            ]),
-            patch("tuning.style_tuner._generate_diverse_personas", return_value={
-                "female": _FAKE_AVATAR,
-            }),
-            patch("tuning.style_tuner._run_tuning_pass", return_value={
-                "photorealistic": (0, 1),
-            }),
+            patch(
+                "sys.argv",
+                [
+                    "avatar-style-tuner",
+                    "--tmp-dir",
+                    str(tmp_path),
+                    "--runs",
+                    "1",
+                    "--gender",
+                    "female",
+                    "--ollama-text-model",
+                    "phi3:mini",  # no ollama/ prefix
+                    "--ollama-visual-desc-model",
+                    "llava",  # no ollama/ or cli/ prefix
+                ],
+            ),
+            patch(
+                "tuning.style_tuner._generate_diverse_personas",
+                return_value={
+                    "female": _FAKE_AVATAR,
+                },
+            ),
+            patch(
+                "tuning.style_tuner._run_tuning_pass",
+                return_value={
+                    "photorealistic": (0, 1),
+                },
+            ),
         ):
             from tuning.style_tuner import main
+
             main()  # prefix-adding lines exercised, should not raise

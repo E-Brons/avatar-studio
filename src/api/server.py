@@ -123,4 +123,3 @@ def process_advisor(
         yaml.dump(advisor, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
 
     print(f"  Updated {advisor_path}")
-

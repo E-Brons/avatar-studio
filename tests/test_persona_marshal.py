@@ -1,6 +1,5 @@
 """Tests for persona marshal functions."""
 
-
 from pipeline.persona.marshal import (
     marshal_avatar_persona,
     parse_color_value,

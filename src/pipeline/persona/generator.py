@@ -240,6 +240,7 @@ def generate_persona(
     req: dict = {}
     if request is not None:
         from pipeline.persona.request import normalize_input
+
         req = normalize_input(request)
 
     # Step A — demographics
@@ -247,9 +248,22 @@ def generate_persona(
     demographics = pick_demographics(seed, style, hard_type_gender=hard_type_gender)
 
     # Override any explicitly provided demographics fields
-    for key in ("gender", "age", "style", "bg_color", "fg_color",
-                "SKIN_TONE", "HAIR_COLOR", "EYE_COLOR", "BROWS_COLOR",
-                "EYE_SHAPE", "BROWS_STYLE", "NOSE_SHAPE", "CHIN_SHAPE", "CHEEKS_SHAPE"):
+    for key in (
+        "gender",
+        "age",
+        "style",
+        "bg_color",
+        "fg_color",
+        "SKIN_TONE",
+        "HAIR_COLOR",
+        "EYE_COLOR",
+        "BROWS_COLOR",
+        "EYE_SHAPE",
+        "BROWS_STYLE",
+        "NOSE_SHAPE",
+        "CHIN_SHAPE",
+        "CHEEKS_SHAPE",
+    ):
         if key in req:
             demographics[key] = req[key]
 
