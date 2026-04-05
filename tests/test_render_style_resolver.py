@@ -1,8 +1,6 @@
 """Tests for render style resolver."""
 
-from pathlib import Path
 
-import pytest
 
 from pipeline.render.style_resolver import resolve_style
 

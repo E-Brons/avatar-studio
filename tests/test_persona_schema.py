@@ -1,8 +1,7 @@
 """Tests for PersonaSchema loading and validation."""
 
-import pytest
 
-from pipeline.persona.schema import PersonaSchema, get_schema
+from pipeline.persona.schema import get_schema
 
 
 class TestPersonaSchema:

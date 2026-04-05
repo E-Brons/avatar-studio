@@ -332,8 +332,9 @@ class TestResolveDemographics:
         demo = self._patched([AttributeSelection(id="hair_color", mode="select", value=new_hair)])
         assert demo["HAIR_COLOR"] == new_hair
         # BROWS_COLOR should be darkened version of #8B5E3C (factor 0.7)
-        # R=0x8B*0.7≈98=0x62, G=0x5E*0.7≈66=0x42, B=0x3C*0.7≈42=0x2A → #62422A
-        assert demo["BROWS_COLOR"] == "#62422A"
+        # _darken_hex uses int() (truncation): int(0x8B*0.7)=int(97.3)=97=0x61,
+        # int(0x5E*0.7)=int(65.8)=65=0x41, int(0x3C*0.7)=int(42.0)=42=0x2A → #61412A
+        assert demo["BROWS_COLOR"] == "#61412A"
 
     def test_hair_color_no_override_keeps_original_brows_color(self):
         """If hair_color is NOT overridden, BROWS_COLOR is not touched."""

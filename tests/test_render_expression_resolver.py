@@ -1,6 +1,5 @@
 """Tests for render expression resolver."""
 
-import pytest
 
 from pipeline.render.expression_resolver import (
     load_all_expressions,
