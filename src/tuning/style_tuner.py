@@ -34,15 +34,11 @@ from pathlib import Path
 import yaml
 
 from config.config import SETTINGS
-from pipeline.step_a_randomise_person import pick_demographics
-from pipeline.step_b_generate_cv import generate_advisor_profile
-from pipeline.step_c_select_features import build_avatar_charachter, select_features
-from pipeline.step_ef_generate_image import (
-    EXPRESSION_IDS,
-    EXPRESSIONS_YML,
-    STYLES_YML,
-    generate_avatar_image,
-)
+from pipeline.persona.aggregator_llm import generate_advisor_profile, select_features
+from pipeline.persona.generator import build_avatar_charachter, pick_demographics
+from pipeline.render.expression_resolver import EXPRESSION_IDS, EXPRESSIONS_YML
+from pipeline.render.llm.orchestrator import generate_avatar_image
+from pipeline.render.style_resolver import STYLES_YML
 from tuning.classify_expression import (
     classify_image_expression,
 )

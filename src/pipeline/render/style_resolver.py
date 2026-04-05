@@ -7,10 +7,10 @@ from pathlib import Path
 import yaml
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-_STYLES_YML = _PROJECT_ROOT / "assets" / "styles" / "styles.yml"
+STYLES_YML = _PROJECT_ROOT / "assets" / "styles" / "styles.yml"
 
 
-def resolve_style(style_name: str, bg_color: str = "#F5F0E8", styles_yml: Path = _STYLES_YML) -> tuple[dict, str]:
+def resolve_style(style_name: str, bg_color: str = "#F5F0E8", styles_yml: Path = STYLES_YML) -> tuple[dict, str]:
     """Return (style_entry, style_directive) for *style_name*.
 
     *style_directive* is the system_prompt with ``[BG_COLOR]`` substituted.

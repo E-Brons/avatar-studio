@@ -11,16 +11,10 @@ import requests
 import yaml
 
 from config.config import SETTINGS, _slug
-from pipeline.step_a_randomise_person import pick_demographics as _pick_demographics
-from pipeline.step_d_make_abbreviation import (
-    DEFAULT_SIZE,
-    create_abbreviation_avatar,
-)
-from pipeline.step_d_make_programmatic_avatar import create_programmatic_avatar
-from pipeline.step_ef_generate_image import (
-    EXPRESSION_IDS,
-    create_face_avatar,
-)
+from pipeline.persona.generator import pick_demographics
+from pipeline.render.expression_resolver import EXPRESSION_IDS
+from pipeline.render.programmatic.svg_generator import create_programmatic_avatar
+from pipeline.render.renderer import DEFAULT_SIZE, create_abbreviation_avatar, create_face_avatar
 
 logger = logging.getLogger(__name__)
 
@@ -58,15 +52,9 @@ def _resolve_default_model(
     return None
 
 
-def _load_expression_ids() -> list[str]:
-    from pipeline.step_ef_generate_image import _load_expression_ids as _lei
-
-    return _lei()
-
-
 def _build_demographics_for_gender(gender: str, seed: int | None = None) -> dict:
     """Return a demographics dict with the given gender forced."""
-    demo = _pick_demographics(seed=seed)
+    demo = pick_demographics(seed=seed)
     demo["gender"] = gender
     return demo
 
@@ -136,6 +124,3 @@ def process_advisor(
 
     print(f"  Updated {advisor_path}")
 
-
-# Re-exports for backward compatibility
-from pipeline.step_d_make_abbreviation import DEFAULT_SIZE  # noqa: E402
