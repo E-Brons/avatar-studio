@@ -29,11 +29,32 @@ from pydantic import BaseModel
 
 from api.config_loader import ConfigLoader
 from config.config import SETTINGS, _darken_hex
-from pipeline.persona.aggregator_llm import generate_advisor_profile, select_features
+from pipeline.persona.aggregator_llm import select_features
 from pipeline.persona.generator import build_avatar_charachter, pick_demographics
 from pipeline.render.expression_resolver import EXPRESSIONS_YML
 from pipeline.render.llm.orchestrator import generate_avatar_image
+from pipeline.render.programmatic.svg_generator import create_programmatic_avatar, svg_to_png
 from pipeline.render.style_resolver import STYLES_YML
+
+PROGRAMMATIC_STYLES: frozenset[str] = frozenset(
+    {"toon-head", "avataaars", "bottts", "micah", "opeeps"}
+)
+
+
+def _build_styles_info() -> dict[str, dict]:
+    with open(STYLES_YML) as f:
+        data = yaml.safe_load(f)
+    return {
+        s["id"]: {
+            "name": s.get("name", s["id"]),
+            "description": s.get("description", ""),
+            "credit": s.get("credit", ""),
+        }
+        for s in data.get("styles", [])
+    }
+
+
+_STYLES_INFO: dict[str, dict] = _build_styles_info()
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 _GATEWAY_URL: str = SETTINGS.get("gateway_url", "http://127.0.0.1:4096")
@@ -159,6 +180,9 @@ _ATTR_TO_DEMO_KEY: dict[str, str] = {
     "gender": "gender",
     "age": "age",
     "style": "style",
+    "nationality": "nationality",
+    "religion": "religion",
+    "zodiac": "zodiac",
     "skin_tone": "SKIN_TONE",
     "hair_color": "HAIR_COLOR",
     "eye_color": "EYE_COLOR",
@@ -171,7 +195,6 @@ _ATTR_TO_DEMO_KEY: dict[str, str] = {
     "hair_style": "HAIR_STYLE",
     "clothing": "CLOTHING",
     "accessories": "ACCESSORIES",
-    "role": "role",
 }
 
 
@@ -232,34 +255,16 @@ def _run_pipeline_sync(request: GenerateRequest) -> GenerateResult:
     """Blocking pipeline execution — run inside the thread executor."""
     session_id = str(uuid.uuid4())
 
-    # ── Step A — demographics ─────────────────────────────────────────────
+    # ── demographics ─────────────────────────────────────────────────────
     demo = _resolve_demographics(request.selections, request.seed)
-    gender = demo.get("gender", "male")
 
-    # ── Extract advisor fields from selections ────────────────────────────
-    advisor: dict[str, Any] = {"role": "Professional"}
+    # ── Extract personality fields from selections ────────────────────────
+    advisor: dict[str, Any] = {}
     for sel in request.selections:
-        if sel.id == "role" and sel.mode in ("select", "predefined") and sel.value:
-            advisor["role"] = sel.value
-        elif sel.id in ("education", "experience", "traits") and sel.mode == "predefined":
-            advisor[sel.id] = sel.value or []
+        if sel.id == "traits" and sel.mode == "predefined":
+            advisor["traits"] = sel.value or []
 
-    # ── Step B — advisor profile (LLM) ───────────────────────────────────
-    if not all(k in advisor for k in ("education", "experience", "traits")):
-        try:
-            profile = generate_advisor_profile(
-                advisor["role"],
-                {"gender": gender, "age": demo.get("age", 30)},
-                gateway_url=_GATEWAY_URL,
-            )
-            advisor.update(profile)
-        except Exception as exc:
-            logger.warning("[Step B] advisor profile failed: %s", exc)
-            advisor.setdefault("education", [])
-            advisor.setdefault("experience", [])
-            advisor.setdefault("traits", [])
-
-    # ── Step C — feature selection (LLM) ─────────────────────────────────
+    # ── feature selection (LLM) ─────────────────────────────────────────
     features = None
     with tempfile.TemporaryDirectory(prefix="avatar_studio_") as tmpdir:
         session_dir = Path(tmpdir)
@@ -271,7 +276,7 @@ def _run_pipeline_sync(request: GenerateRequest) -> GenerateResult:
                 session_dir=session_dir,
             )
         except Exception as exc:
-            logger.warning("[Step C] feature selection failed: %s", exc)
+            logger.warning("feature selection failed: %s", exc)
 
         # ── Build avatar_persona & write persona.yml ──────────────────────
         avatar = build_avatar_charachter(advisor, demo, features)
@@ -291,55 +296,101 @@ def _run_pipeline_sync(request: GenerateRequest) -> GenerateResult:
             "styles_yml": STYLES_YML,
         }
 
-        # ── Step E — neutral portrait ─────────────────────────────────────
+        # ── neutral portrait ─────────────────────────────────────────
         expr_results: dict[str, str] = {}
         neutral_path = session_dir / "neutral.png"
 
         expressions_to_generate = request.expressions or ["neutral"]
 
+        style_name = demo.get("style", "random")
+        size = min(request.width or 256, request.height or 256)
+        person_name = avatar.get("avatar_persona", {}).get("personal", {}).get("name", "Avatar")
         try:
-            generate_avatar_image(
-                persona_path,
-                style=style_arg,
-                expression={"name": "neutral", "expressions_yml": EXPRESSIONS_YML},
-                gateway_url=_GATEWAY_URL,
-                width=request.width,
-                height=request.height,
-                seed=request.seed,
-                out_path=neutral_path,
-                session_dir=session_dir / "neutral",
-            )
+            if style_name in PROGRAMMATIC_STYLES:
+                # ── programmatic avatar — neutral ────────────────
+                svg_path = neutral_path.with_suffix(".svg")
+                create_programmatic_avatar(
+                    person_name,
+                    out_path=svg_path,
+                    size=size,
+                    demographics=demo,
+                    expression="neutral",
+                    style=style_name,
+                )
+                svg_to_png(svg_path.read_bytes(), neutral_path)
+            else:
+                # ── LLM — neutral portrait ──────────────────────
+                generate_avatar_image(
+                    persona_path,
+                    style=style_arg,
+                    expression={"name": "neutral", "expressions_yml": EXPRESSIONS_YML},
+                    gateway_url=_GATEWAY_URL,
+                    width=request.width,
+                    height=request.height,
+                    seed=request.seed,
+                    out_path=neutral_path,
+                    session_dir=session_dir / "neutral",
+                )
         except Exception as exc:
             raise HTTPException(status_code=500, detail=f"Image generation failed: {exc}") from exc
 
         expr_results["neutral"] = base64.b64encode(neutral_path.read_bytes()).decode()
 
-        # ── Step F — expression variants (if requested) ───────────────────
+        # ── expression variants ───────────────────────────────────
         for expr_id in [e for e in expressions_to_generate if e != "neutral"]:
             expr_path = session_dir / f"{expr_id}.png"
             try:
-                generate_avatar_image(
-                    persona_path,
-                    style=style_arg,
-                    expression={"name": expr_id, "expressions_yml": EXPRESSIONS_YML},
-                    reference_image=neutral_path,
-                    gateway_url=_GATEWAY_URL,
-                    width=request.width,
-                    height=request.height,
-                    seed=request.seed,
-                    out_path=expr_path,
-                    session_dir=session_dir / expr_id,
-                )
+                if style_name in PROGRAMMATIC_STYLES:
+                    svg_path = expr_path.with_suffix(".svg")
+                    create_programmatic_avatar(
+                        person_name,
+                        out_path=svg_path,
+                        size=size,
+                        demographics=demo,
+                        expression=expr_id,
+                        style=style_name,
+                    )
+                    svg_to_png(svg_path.read_bytes(), expr_path)
+                else:
+                    generate_avatar_image(
+                        persona_path,
+                        style=style_arg,
+                        expression={"name": expr_id, "expressions_yml": EXPRESSIONS_YML},
+                        reference_image=neutral_path,
+                        gateway_url=_GATEWAY_URL,
+                        width=request.width,
+                        height=request.height,
+                        seed=request.seed,
+                        out_path=expr_path,
+                        session_dir=session_dir / expr_id,
+                    )
                 expr_results[expr_id] = base64.b64encode(expr_path.read_bytes()).decode()
             except Exception as exc:
-                logger.warning("[Step F] %s failed: %s", expr_id, exc)
+                logger.warning("expression variant %s failed: %s", expr_id, exc)
 
         # Primary image for the response (neutral)
         primary_b64 = expr_results.get("neutral", "")
 
+        # Enrich persona with style metadata and extra demographics
+        _DEMO_SKIP = {"style", "bg_color", "fg_color", "gender", "age", "name"}
+        extra_demo = {k: v for k, v in demo.items() if k not in _DEMO_SKIP and v is not None}
+        style_meta = _STYLES_INFO.get(style_name, {})
+        base_persona = avatar["avatar_persona"]
+        enriched_persona = {
+            **base_persona,
+            "style": {
+                **base_persona.get("style", {}),
+                "id": style_name,
+                "name": style_meta.get("name", style_name),
+                "description": style_meta.get("description", ""),
+                "credit": style_meta.get("credit", ""),
+            },
+            "demographics": extra_demo,
+        }
+
         return GenerateResult(
             image_b64=primary_b64,
-            avatar_persona=avatar["avatar_persona"],
+            avatar_persona=enriched_persona,
             expressions=expr_results,
             session_id=session_id,
         )

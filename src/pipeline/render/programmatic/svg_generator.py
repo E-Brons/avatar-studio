@@ -4,8 +4,11 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import subprocess
 from pathlib import Path
+
+import cairosvg
 
 from pipeline.render.programmatic.expression_mapper import EXPRESSION_OPTIONS
 
@@ -156,3 +159,20 @@ def generate_svg(
         expression=expression,
         style=style,
     )
+
+
+def svg_to_png(svg_bytes: bytes, out_path: Path) -> None:
+    """Render an SVG to a PNG at native viewBox resolution.
+
+    Works around a cairosvg bug where it ignores the viewBox→viewport transform,
+    rendering 1 SVG coordinate unit = 1 pixel.  We patch the SVG's width/height
+    to match its viewBox so the full image is produced at native resolution.
+    """
+    text = svg_bytes.decode()
+    m = re.search(r'viewBox="0 0 (\d+) (\d+)"', text)
+    if m:
+        vw, vh = m.group(1), m.group(2)
+        text = re.sub(r'\bwidth="\d+"', f'width="{vw}"', text, count=1)
+        text = re.sub(r'\bheight="\d+"', f'height="{vh}"', text, count=1)
+        svg_bytes = text.encode()
+    cairosvg.svg2png(bytestring=svg_bytes, write_to=str(out_path))
