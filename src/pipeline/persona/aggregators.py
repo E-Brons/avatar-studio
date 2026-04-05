@@ -26,14 +26,44 @@ def random_from_range(lo: int, hi: int, rng: random.Random) -> int:
     return rng.randint(lo, hi)
 
 
-def random_from_range_color(source_value: str, factor: float, darken_fn) -> str:
-    """Derive a color from *source_value* by calling *darken_fn(hex, factor)*.
+def random_from_range_color(min_hex: str, max_hex: str, rng: random.Random) -> str:
+    """Interpolate uniformly between two hex colors in YCbCr space.
 
-    *source_value* may be a single hex (``"#3B2314"``) or a space-separated
-    pair (``"#3B2314 #261508"``).  Only the first hex is used as the base.
+    A single ``t ~ Uniform(0, 1)`` is sampled (shared across all channels) so
+    the result lies on the straight line between the two endpoints in perceptual
+    YCbCr space rather than in the perceptually non-uniform RGB cube.
     """
-    base_hex = source_value.split()[0]
-    return darken_fn(base_hex, factor=factor)
+
+    def _hex_to_rgb(h: str) -> tuple[int, int, int]:
+        h = h.lstrip("#")
+        return int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+
+    def _rgb_to_ycbcr(r: int, g: int, b: int) -> tuple[float, float, float]:
+        y  =  0.299 * r + 0.587 * g + 0.114 * b
+        cb = -0.168736 * r - 0.331264 * g + 0.5 * b + 128
+        cr =  0.5 * r - 0.418688 * g - 0.081312 * b + 128
+        return y, cb, cr
+
+    def _ycbcr_to_rgb(y: float, cb: float, cr: float) -> tuple[int, int, int]:
+        cb -= 128
+        cr -= 128
+        r = y + 1.402 * cr
+        g = y - 0.344136 * cb - 0.714136 * cr
+        b = y + 1.772 * cb
+        return (
+            max(0, min(255, round(r))),
+            max(0, min(255, round(g))),
+            max(0, min(255, round(b))),
+        )
+
+    t = rng.random()
+    y1, cb1, cr1 = _rgb_to_ycbcr(*_hex_to_rgb(min_hex))
+    y2, cb2, cr2 = _rgb_to_ycbcr(*_hex_to_rgb(max_hex))
+    y  = y1 + t * (y2 - y1)
+    cb = cb1 + t * (cb2 - cb1)
+    cr = cr1 + t * (cr2 - cr1)
+    r, g, b = _ycbcr_to_rgb(y, cb, cr)
+    return "#{:02X}{:02X}{:02X}".format(r, g, b)
 
 
 def random_from_probability(options: list, weights: list[float], rng: random.Random) -> object:

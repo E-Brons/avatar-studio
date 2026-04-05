@@ -106,7 +106,7 @@ def parse_selectors(
     """
     import random as _random
 
-    from config.config import SETTINGS, _darken_hex
+    from config.config import SETTINGS
     from pipeline.persona.aggregators import (
         fallthrough,
         pool_by_gender,
@@ -142,10 +142,12 @@ def parse_selectors(
 
             elif selector == "random_from_range_color":
                 source_key = value.get("source") if isinstance(value, dict) else None
-                factor = value.get("factor", 0.7) if isinstance(value, dict) else 0.7
                 source_value = resolved.get(source_key) or result.get(source_key, "")
                 if source_value:
-                    result[key] = random_from_range_color(source_value, factor, _darken_hex)
+                    parts = source_value.split()
+                    min_hex = parts[0]
+                    max_hex = parts[1] if len(parts) > 1 else parts[0]
+                    result[key] = random_from_range_color(min_hex, max_hex, rng)
                 else:
                     logger.warning("parse_selectors: source %r not resolved for %r", source_key, key)
 

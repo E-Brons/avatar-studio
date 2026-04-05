@@ -1,6 +1,6 @@
 # avatar_persona_aggregator_from_llm
 
-**Parent**: `avatar_request_parse_selector` | **Type**: LLM call | **Testable**: intentionally skipped (low ROI)
+**Parent**: `avatar_request_parse_selector` | **Type**: LLM call | **Testable**: unittest intentionally skipped (low ROI)
 
 ## Purpose
 Calls a text LLM to select a value for an attribute, given the partially-resolved persona as context and the schema's allowed values as a constraint.
