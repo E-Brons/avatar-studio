@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Git pre-push hook — blocks 'git push' if unittest fail
+# Installed automatically by scripts/install.sh via: git config core.hooksPath .githooks
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+PYTHON="$ROOT/.venv/bin/python"
+
+# unittests (python)
+echo "githook-pre-push: running python tests …"
+$PYTHON -m pytest tests/ -m "not integration"
+
+# unittests (flutter)
+if [ -d "$ROOT/frontend" ]; then
+  echo "githook-pre-push: running flutter tests …"
+  (cd "$ROOT/frontend" && flutter test)
+fi
+
+echo "githook-pre-push: all checks passed."

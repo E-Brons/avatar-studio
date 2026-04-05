@@ -14,7 +14,7 @@ echo "── lint ────────────────────�
 "$VENV/bin/ruff" format --check src/ tests/
 
 echo "── backend tests ───────────────────────────"
-"$VENV/bin/python" -m pytest "$ROOT/tests/" -m "avatar and not integration" "$@"
+"$VENV/bin/python" -m pytest "$ROOT/tests/" -m "not integration" "$@"
 
 echo "── frontend tests ──────────────────────────"
 if command -v flutter &>/dev/null; then

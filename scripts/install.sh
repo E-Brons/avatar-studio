@@ -93,8 +93,8 @@ if [ ! -d "$VENV" ]; then
 fi
 
 echo "Installing Python dependencies …"
-"$VENV/bin/pip" install --upgrade pip
-"$VENV/bin/pip" install -e "$ROOT[dev]"
+"$VENV/bin/pip" install -q --upgrade pip
+"$VENV/bin/pip" install -q -e "$ROOT[dev]"
 
 # ── local/ directory ──────────────────────────────────────────────────
 mkdir -p "$ROOT/local"
@@ -119,4 +119,5 @@ echo "  frontend/  ✓"
 echo ""
 echo "Installing git hooks …"
 git -C "$ROOT" config core.hooksPath .githooks
-echo "  pre-commit hook active (ruff check + format)"
+echo "  pre-commit  active (ruff check + format)"
+echo "  pre-push    active (python tests + flutter tests)"
