@@ -322,7 +322,7 @@ flowchart TD
 
 ## 4. Validation
 
-Validation runs after render. Three independent scorers operate on each final PNG and write their results to the `acceptance-scores` field in the output metadata (see [Appendix A.3](#a3-png-metadata)). Scores are informational — the library returns them; the caller decides what to do with them (retry, warn, reject).
+Validation runs after render. Three independent scorers operate on each final PNG and write their results to the `acceptance-scores` field in the output metadata (see [Appendix A.3](#a3-png-metadata)). Scores are informational — the library returns them; the caller decides what to do with them (retry, warn, reject, learn...).
 
 ### 4.1 Scorers Overview
 
@@ -352,14 +352,18 @@ Asks a vision LLM to identify which facial expressions are visible in the image.
 | `reasoning` | `str` | One-sentence visual observation |
 | `raw_response` | `str` | Raw LLM YAML for debugging |
 
-**Pass evaluation — two paths**:
+**Score Evaluation**:
 
-1. **Direct match**: `top_expression` matches the expected label (case-insensitive) AND `top_score ≥ 0.35`[^expr-threshold]
-2. **Semantic fallback** (`semantic_effective_score()`): sums probabilities of all classifier output labels that a text-LLM judges semantically equivalent to the expected label (separate yes/no call per label). Allows synonyms — e.g. `"joyful"` counting toward `"happiness"`.
+- If **Direct match**: `top_expression` matches the expected label (case-insensitive) AND `top_score ≥ VALIDATION_EXPRESSION_THRESHOLD`[^expr-threshold]
+  - `Expression Score` = 1.0              # amplifying success
+- Else:
+  - **Semantic fallback** (`semantic_effective_score()`): `effective_score` sums probabilities of all classifier output labels that a text-LLM judges semantically equivalent to the expected label (separate yes/no call per label). Allows synonyms — e.g. `"joyful"` counting toward `"happiness"`.
+  - If `sum_score ≥ VALIDATION_EXPRESSION_THRESHOLD`:
+    - `Expression Score` = `sum_score`    # relative success
+  - Else: 
+    - `Expression Score` = `sum_score`^2  # amplifying failure
 
-If neither path passes, the expression score is the semantic effective score (float 0.0–1.0); the caller uses this to decide acceptance.
-
-[^expr-threshold]: Threshold 0.35 was chosen empirically during tuning. It passes clearly rendered expressions while filtering diffused scores (0.15–0.20) caused by ambiguous renderings.
+[^expr-threshold]: VALIDATION_EXPRESSION_THRESHOLD=0.50 - clearly rendered expressions while filtering diffused scores (0.15–0.20) caused by ambiguous renderings.
 
 ---
 
@@ -380,7 +384,11 @@ Asks a vision LLM to identify which style from `styles.yml` the image best repre
 | `reasoning` | `str` | One-sentence visual evidence |
 | `raw_response` | `str` | Raw LLM YAML for debugging |
 
-**Pass evaluation**: `top_style_id == expected_style_id` (exact match, no threshold).
+**Score Evaluation**:
+- If `top_style_id == expected_style_id` (exact match, no threshold):
+  - `Style Score` = `sqrt(style_score)`  # amplifying success
+Else:
+  - `Style Score` = `style_score`        # failure
 
 [^style-filter]: `random` has no visual definition and cannot be classified. Styles without `key_technical_traits` are excluded because the classifier has no discriminating criteria to apply.
 
@@ -395,25 +403,37 @@ Asks a vision LLM to identify which style from `styles.yml` the image best repre
 Verifies which visual properties from `avatar_persona.yml` are present in the image. Two scoring methods are used depending on property type:
 
 **Color properties** — `skin_tone`, `hair_color`, `eye_color`, `clothing`:
-- VLM reports `observed_hex` (`#RRGGBB`) for the dominant color of each property
-- Pass/fail is determined **programmatically** by YCbCr Euclidean distance ≤ 55.0 between observed and expected hex[^ycbcr-main]
-- The LLM's own `visible` flag is overridden by the distance check when an `observed_hex` is present
+1. VLM reports `observed_hex` (`#RRGGBB`) and `color name` for the dominant color of each property
+2. `distance` determined **programmatically** by YCbCr Euclidean distance between observed and expected hex[^ycbcr-main]
+3. If `distance` ≤ VALIDATION_COLOR_DISTANCE_THRESHOLD[^color-threshold]:
+  - `Color Score` = `distance`     # success
+  Else: 
+  - `Color Score` = `distance`^2   # amplifying failure
 
-**Structural properties** — `gender`, `hair_style`, `eye_shape`, `brows_style`, `nose_shape`, `chin_shape`, `cheeks_shape`, `accessories`:
-- VLM binary `visible: true/false` decision with a one-sentence observation note
-- No objective distance check; LLM assessment only
+**Structural properties**:
+- VLM binary `visible: true/false` decision for matching the description - maps to `Property Exist` score 1 or 0.
 
-**Output — `CategoryReport`**:
+**Weight**:
+Each persona property has a weight
+ `gender`: 30
+ `hair_style`: 15
+ `eye_shape`: 4
+ `brows_style`: 8
+ `nose_shape`: 6
+ `chin_shape`: 8
+ `cheeks_shape`: 7
+ `accessories`: 10 (each)
+ `clothing`: 5 (each)
+ `clothing color`: 5 (each)
+ `skin_tone`: 25
+ `hair_color`: 10
+ `eye_color`: 15
 
-| Field | Type | Description |
-|---|---|---|
-| `results` | `list[PropertyResult]` | Per-property: `property_name`, `expected`, `visible: bool`, `note` |
-| `score` | `float` | Fraction of passing properties (0.0–1.0) |
-| `raw_response` | `str` | Raw LLM YAML for debugging |
+**Score Evaluation**:
+`Persona Score` = Sum(weights * [`Property Exist` or `Color Score`])/Sum(weights)
 
-Mandatory phenotype attributes (SKIN_TONE, HAIR_COLOR) are among the color properties that receive the YCbCr objective check. All other attributes are best-effort (LLM judgment only).
-
-[^ycbcr-main]: YCbCr separates luminance from chrominance, tolerating the lighting variation typical of diffusion model outputs (e.g. dark brown hair appearing lighter under rendered studio lighting) while still catching genuine color-family mismatches (dark brown vs. blue). Threshold 55.0 was set empirically.
+[^ycbcr-main]: YCbCr separates luminance from chrominance, tolerating the lighting variation typical of diffusion model outputs (e.g. dark brown hair appearing lighter under rendered studio lighting) while still catching genuine color-family mismatches (dark brown vs. blue).
+[^color-threshold]: VALIDATION_COLOR_DISTANCE_THRESHOLD = 0.70 - for a close-match color
 
 ---
 

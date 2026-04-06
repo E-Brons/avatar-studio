@@ -398,6 +398,140 @@ class TestWithinColorTolerance:
         assert result is False
 
 
+# ---------------------------------------------------------------------------
+# _compute_color_score — new scoring helper
+# ---------------------------------------------------------------------------
+
+
+class TestComputeColorScore:
+    def test_exact_match_returns_one(self):
+        from tuning.classify_persona import _compute_color_score
+
+        score = _compute_color_score("#FF0000", "red (#FF0000)")
+        assert score is not None
+        assert abs(score - 1.0) < 1e-9
+
+    def test_no_hex_in_desc_returns_none(self):
+        from tuning.classify_persona import _compute_color_score
+
+        assert _compute_color_score("#FF0000", "medium brown hair") is None
+
+    def test_success_score_range(self):
+        from tuning.classify_persona import (
+            VALIDATION_COLOR_DISTANCE_THRESHOLD,
+            _compute_color_score,
+        )
+
+        score = _compute_color_score("#FF0000", "red (#FF0000)")
+        assert score is not None
+        assert score >= VALIDATION_COLOR_DISTANCE_THRESHOLD
+
+    def test_failure_score_squared(self):
+        from tuning.classify_persona import (
+            VALIDATION_COLOR_DISTANCE_THRESHOLD,
+            _compute_color_score,
+        )
+
+        score = _compute_color_score("#000000", "very light (#FFFFFF)")
+        assert score is not None
+        assert score < VALIDATION_COLOR_DISTANCE_THRESHOLD**2 + 0.01
+
+
+# ---------------------------------------------------------------------------
+# calculate_expression_score — new scoring function
+# ---------------------------------------------------------------------------
+
+
+class TestCalculateExpressionScore:
+    def test_direct_match_returns_one(self):
+        with patch("tuning.classify_expression._call_text_model", return_value="no"):
+            from tuning.classify_expression import (
+                ExpressionClassificationResult,
+                calculate_expression_score,
+            )
+
+            result = ExpressionClassificationResult(
+                top_expression="happiness",
+                scores={"happiness": 0.8, "neutral": 0.2},
+            )
+            assert calculate_expression_score(result, "happiness") == 1.0
+
+    def test_direct_match_below_threshold_falls_to_semantic(self):
+        with patch("tuning.classify_expression._call_text_model", return_value="no"):
+            from tuning.classify_expression import (
+                ExpressionClassificationResult,
+                calculate_expression_score,
+            )
+
+            result = ExpressionClassificationResult(
+                top_expression="happiness",
+                scores={"happiness": 0.3, "neutral": 0.7},
+            )
+            score = calculate_expression_score(result, "happiness")
+            assert score == 0.0
+
+    def test_semantic_match_above_threshold(self):
+        with patch("tuning.classify_expression._call_text_model", return_value="yes"):
+            from tuning.classify_expression import (
+                ExpressionClassificationResult,
+                calculate_expression_score,
+            )
+
+            result = ExpressionClassificationResult(
+                top_expression="joyful",
+                scores={"joyful": 0.4, "cheerful": 0.35, "neutral": 0.25},
+            )
+            score = calculate_expression_score(result, "happiness")
+            assert score >= 0.5
+
+    def test_semantic_failure_amplified(self):
+        with patch("tuning.classify_expression._call_text_model", return_value="no"):
+            from tuning.classify_expression import (
+                ExpressionClassificationResult,
+                calculate_expression_score,
+            )
+
+            result = ExpressionClassificationResult(
+                top_expression="angry",
+                scores={"angry": 0.4, "neutral": 0.6},
+            )
+            score = calculate_expression_score(result, "happiness")
+            assert score == 0.0
+
+
+# ---------------------------------------------------------------------------
+# calculate_style_score — new scoring function
+# ---------------------------------------------------------------------------
+
+
+class TestCalculateStyleScore:
+    def test_correct_style_sqrt_boost(self):
+        from tuning.classify_style import StyleClassificationResult, calculate_style_score
+
+        result = StyleClassificationResult(
+            top_style_id="clay",
+            scores={"clay": 0.81, "photorealistic": 0.19},
+        )
+        score = calculate_style_score(result, "clay")
+        assert abs(score - 0.9) < 1e-9  # sqrt(0.81) = 0.9
+
+    def test_wrong_style_raw_score(self):
+        from tuning.classify_style import StyleClassificationResult, calculate_style_score
+
+        result = StyleClassificationResult(
+            top_style_id="clay",
+            scores={"clay": 0.8, "photorealistic": 0.2},
+        )
+        score = calculate_style_score(result, "photorealistic")
+        assert score == 0.2
+
+    def test_correct_style_absent_score_gives_zero(self):
+        from tuning.classify_style import StyleClassificationResult, calculate_style_score
+
+        result = StyleClassificationResult(top_style_id="clay", scores={})
+        assert calculate_style_score(result, "clay") == 0.0
+
+
 class TestHexLabel:
     def test_exact_match(self):
         from tuning.classify_persona import _hex_label

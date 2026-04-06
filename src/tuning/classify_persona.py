@@ -37,10 +37,28 @@ _DEFAULT_VISUAL_DESC_MODEL: str = SETTINGS["default_visual_desc_model"]
 
 _COLOR_PROPERTIES: frozenset[str] = frozenset({"skin_tone", "hair_color", "eye_color", "clothing"})
 
-# Maximum Euclidean distance in YCbCr space to consider a color "matching".
-# ≈55 permits shade/lighting variation typical of diffusion models while
-# still catching genuinely wrong color families (e.g. dark brown vs blue).
-_YCBCR_THRESHOLD: float = 55.0
+# Approximate maximum Euclidean distance in YCbCr space between any two colors.
+_MAX_YCBCR_DISTANCE: float = 325.0
+
+# Normalized proximity threshold for color matching (proximity = 1 - dist/max).
+# Colors with proximity >= threshold are considered a close match.
+VALIDATION_COLOR_DISTANCE_THRESHOLD: float = 0.70
+
+# Per-property scoring weights (doc §4.4). Unknown properties default to 1.
+_PROPERTY_WEIGHTS: dict[str, float] = {
+    "gender": 30,
+    "hair_style": 15,
+    "eye_shape": 4,
+    "brows_style": 8,
+    "nose_shape": 6,
+    "chin_shape": 8,
+    "cheeks_shape": 7,
+    "accessories": 10,
+    "clothing": 10,  # 5 structural + 5 color (combined property)
+    "skin_tone": 25,
+    "hair_color": 10,
+    "eye_color": 15,
+}
 
 
 def _hex_to_rgb(hex_color: str) -> tuple[int, int, int] | None:
@@ -71,21 +89,52 @@ def _ycbcr_distance(hex1: str, hex2: str) -> float:
     return sum((a - b) ** 2 for a, b in zip(ycc1, ycc2)) ** 0.5
 
 
-def _within_color_tolerance(observed_hex: str, expected_desc: str) -> bool | None:
-    """Return True/False if observed_hex is within YCbCr threshold of any hex in
-    expected_desc, or None when expected_desc contains no hex values."""
+def _color_proximity(observed_hex: str, expected_desc: str) -> float | None:
+    """Return normalized proximity [0,1] between observed_hex and the nearest expected hex.
+
+    Returns None when expected_desc contains no hex values.
+    Proximity = 1 - (raw_ycbcr_distance / MAX), so 1.0 = identical, 0.0 = maximally different.
+    """
     expected_hexes = re.findall(r"#[0-9A-Fa-f]{6}", expected_desc)
     if not expected_hexes:
         return None
     min_dist = min(_ycbcr_distance(observed_hex, h) for h in expected_hexes)
+    proximity = 1.0 - min(min_dist / _MAX_YCBCR_DISTANCE, 1.0)
     logger.debug(
-        "_within_color_tolerance: observed=%s expected=%s min_dist=%.1f threshold=%.1f",
+        "_color_proximity: observed=%s expected=%s min_dist=%.1f proximity=%.3f threshold=%.2f",
         observed_hex,
         expected_hexes,
         min_dist,
-        _YCBCR_THRESHOLD,
+        proximity,
+        VALIDATION_COLOR_DISTANCE_THRESHOLD,
     )
-    return min_dist <= _YCBCR_THRESHOLD
+    return proximity
+
+
+def _within_color_tolerance(observed_hex: str, expected_desc: str) -> bool | None:
+    """Return True/False if observed_hex is within proximity threshold of any hex in
+    expected_desc, or None when expected_desc contains no hex values."""
+    proximity = _color_proximity(observed_hex, expected_desc)
+    if proximity is None:
+        return None
+    return proximity >= VALIDATION_COLOR_DISTANCE_THRESHOLD
+
+
+def _compute_color_score(observed_hex: str, expected_desc: str) -> float | None:
+    """Compute Color Score for a color property (doc §4.4).
+
+    proximity = 1 - normalized_ycbcr_distance (1=identical, 0=maximally different)
+    - success (proximity >= threshold): Color Score = proximity
+    - failure (proximity < threshold): Color Score = proximity^2  (amplifies failure)
+
+    Returns None when expected_desc contains no hex values.
+    """
+    proximity = _color_proximity(observed_hex, expected_desc)
+    if proximity is None:
+        return None
+    if proximity >= VALIDATION_COLOR_DISTANCE_THRESHOLD:
+        return proximity
+    return proximity**2
 
 
 # ---------------------------------------------------------------------------
@@ -258,6 +307,7 @@ class PropertyResult:
     expected: str
     visible: bool
     note: str = ""
+    color_score: float | None = None  # set for color properties when observed_hex is reported
 
 
 @dataclass
@@ -269,10 +319,24 @@ class CategoryReport:
 
     @property
     def score(self) -> float:
-        """Fraction of properties marked visible (0.0–1.0)."""
+        """Weighted persona score (0.0–1.0); higher = better fidelity.
+
+        Each property contributes weight × property_score where:
+        - Structural: property_score = 1.0 if visible else 0.0
+        - Color: property_score = color_score (proximity-based, §4.4)
+        Properties not in _PROPERTY_WEIGHTS default to weight 1.
+        """
         if not self.results:
             return 0.0
-        return sum(1 for r in self.results if r.visible) / len(self.results)
+        total_weight = sum(_PROPERTY_WEIGHTS.get(r.property_name, 1) for r in self.results)
+        if total_weight == 0:
+            return 0.0
+        total_score = sum(
+            _PROPERTY_WEIGHTS.get(r.property_name, 1)
+            * (r.color_score if r.color_score is not None else (1.0 if r.visible else 0.0))
+            for r in self.results
+        )
+        return total_score / total_weight
 
     def failures(self) -> list[str]:
         return [r.property_name for r in self.results if not r.visible]
@@ -380,24 +444,29 @@ def _parse_categorizer_response(raw: str, props: dict[str, str]) -> CategoryRepo
                 else (str(visible_raw).lower().strip() == "true")
             )
             note = str(entry.get("note", "")).strip()
+            color_score: float | None = None
 
-            # For color properties, override with objective YCbCr distance check.
+            # For color properties, override visible and compute color_score from YCbCr proximity.
             if prop_name in _COLOR_PROPERTIES:
                 observed_hex = str(entry.get("observed_hex", "")).strip()
                 if re.match(r"^#[0-9A-Fa-f]{6}$", observed_hex):
                     color_ok = _within_color_tolerance(observed_hex, expected_desc)
+                    score = _compute_color_score(observed_hex, expected_desc)
                     if color_ok is not None:
                         visible = color_ok
+                        color_score = score
                         logger.debug(
-                            "YCbCr override: %s observed=%s expected=%s → visible=%s",
+                            "YCbCr override: %s observed=%s expected=%s → visible=%s score=%.3f",
                             prop_name,
                             observed_hex,
                             expected_desc,
                             visible,
+                            color_score if color_score is not None else 0.0,
                         )
         else:
             visible = False
             note = ""
+            color_score = None
 
         results.append(
             PropertyResult(
@@ -405,6 +474,7 @@ def _parse_categorizer_response(raw: str, props: dict[str, str]) -> CategoryRepo
                 expected=expected_desc,
                 visible=visible,
                 note=note,
+                color_score=color_score,
             )
         )
 

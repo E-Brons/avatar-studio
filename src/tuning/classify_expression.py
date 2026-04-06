@@ -26,6 +26,8 @@ from config.gateway import GatewayClient
 
 logger = logging.getLogger(__name__)
 
+VALIDATION_EXPRESSION_THRESHOLD: float = 0.50
+
 _CLASSIFIER_SYSTEM = """\
 You are an expert in facial expression analysis for portrait images.
 You will be shown an avatar portrait. Your task: identify which facial
@@ -259,6 +261,32 @@ def semantic_effective_score(
 
     logger.debug("semantic_effective_score: expected=%r, total=%.2f", expected, total)
     return total
+
+
+def calculate_expression_score(
+    result: ExpressionClassificationResult,
+    expected: str,
+    *,
+    gateway_url: str = "http://127.0.0.1:4096",
+    timeout: int = 30,
+) -> float:
+    """Compute the Expression Score for *result* against *expected* label.
+
+    Returns 1.0 on direct match, semantic effective score on semantic match,
+    or semantic score squared to amplify failure.
+    """
+    if (
+        result.top_expression.lower() == expected.lower()
+        and result.top_score() >= VALIDATION_EXPRESSION_THRESHOLD
+    ):
+        return 1.0
+
+    sum_score = semantic_effective_score(
+        result.scores, expected, gateway_url=gateway_url, timeout=timeout
+    )
+    if sum_score >= VALIDATION_EXPRESSION_THRESHOLD:
+        return sum_score
+    return sum_score**2
 
 
 def _parse_expression_response(

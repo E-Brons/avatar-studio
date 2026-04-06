@@ -178,3 +178,15 @@ def _parse_classification_response(raw: str, style_ids: list[str]) -> StyleClass
         scores=scores,
         reasoning=reasoning,
     )
+
+
+def calculate_style_score(result: StyleClassificationResult, expected_style_id: str) -> float:
+    """Compute the Style Score for *result* against *expected_style_id*.
+
+    Returns sqrt of the style's score on correct classification (amplifying success),
+    or the raw score on mismatch.
+    """
+    style_score = result.scores.get(expected_style_id, 0.0)
+    if result.top_style_id == expected_style_id:
+        return style_score**0.5
+    return style_score
