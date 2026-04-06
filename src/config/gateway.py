@@ -32,7 +32,9 @@ class GatewayClient:
         """Call POST /text_gen and return the response content string."""
         payload: dict = {"messages": messages, "max_retries": max_retries}
         if output_config is not None:
-            payload["output_config"] = output_config
+            schema = output_config.get("format", {}).get("schema")
+            if schema:
+                payload["response_schema"] = schema
         resp = requests.post(
             f"{self.base_url}/text_gen",
             json=payload,
@@ -96,7 +98,9 @@ class GatewayClient:
             "max_retries": max_retries,
         }
         if output_config is not None:
-            payload["output_config"] = output_config
+            schema = output_config.get("format", {}).get("schema")
+            if schema:
+                payload["response_schema"] = schema
         resp = requests.post(
             f"{self.base_url}/image_inspector",
             json=payload,
