@@ -27,11 +27,15 @@ class GatewayClient:
         *,
         max_retries: int = 3,
         timeout: int = 120,
+        output_config: dict | None = None,
     ) -> str:
         """Call POST /text_gen and return the response content string."""
+        payload: dict = {"messages": messages, "max_retries": max_retries}
+        if output_config is not None:
+            payload["output_config"] = output_config
         resp = requests.post(
             f"{self.base_url}/text_gen",
-            json={"messages": messages, "max_retries": max_retries},
+            json=payload,
             timeout=timeout,
         )
         resp.raise_for_status()
@@ -80,18 +84,22 @@ class GatewayClient:
         *,
         max_retries: int = 3,
         timeout: int = 120,
+        output_config: dict | None = None,
     ) -> str:
         """Call POST /image_inspector and return the response content string."""
         import base64
 
+        payload: dict = {
+            "image_b64": base64.b64encode(image_bytes).decode(),
+            "system": system,
+            "prompt": prompt,
+            "max_retries": max_retries,
+        }
+        if output_config is not None:
+            payload["output_config"] = output_config
         resp = requests.post(
             f"{self.base_url}/image_inspector",
-            json={
-                "image_b64": base64.b64encode(image_bytes).decode(),
-                "system": system,
-                "prompt": prompt,
-                "max_retries": max_retries,
-            },
+            json=payload,
             timeout=timeout,
         )
         resp.raise_for_status()

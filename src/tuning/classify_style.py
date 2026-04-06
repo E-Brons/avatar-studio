@@ -10,28 +10,43 @@ Used by:
 
 from __future__ import annotations
 
+import json
 import logging
-import re
 from dataclasses import dataclass, field
-
-import yaml
 
 from config.gateway import GatewayClient
 
 logger = logging.getLogger(__name__)
 
+# JSON schema for the vision model response.
+_STYLE_SCHEMA: dict = {
+    "type": "object",
+    "properties": {
+        "top_style": {"type": "string"},
+        "scores": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "style_id": {"type": "string"},
+                    "score": {"type": "number"},
+                },
+                "required": ["style_id", "score"],
+                "additionalProperties": False,
+            },
+        },
+        "reasoning": {"type": "string"},
+    },
+    "required": ["top_style", "scores", "reasoning"],
+    "additionalProperties": False,
+}
+
+_STYLE_OUTPUT_CONFIG: dict = {"format": {"type": "json_schema", "schema": _STYLE_SCHEMA}}
+
 _CLASSIFIER_SYSTEM = """\
 You are an expert visual style analyst for AI-generated portrait images.
 You will be shown an avatar portrait and a list of named visual styles, each with key technical traits.
 Your task: identify which style the portrait most closely represents.
-
-Output ONLY YAML in this exact format (no markdown fences):
-
-top_style: <style_id>
-scores:
-  <style_id>: <float 0.0-1.0>
-  ...
-reasoning: <one sentence citing key visual cues that determined the top style>
 
 Assign higher scores to styles whose technical traits are clearly visible in the image.
 Be specific — cite evidence such as "thick dark outlines", "subsurface scattering", "flat fills", etc."""
@@ -66,7 +81,11 @@ def _call_vision_model(
 ) -> str:
     """Call a vision-capable LLM via the gateway and return the raw text response."""
     return GatewayClient(gateway_url).image_inspector(
-        image_bytes_decoded, system, prompt, timeout=timeout
+        image_bytes_decoded,
+        system,
+        prompt,
+        timeout=timeout,
+        output_config=_STYLE_OUTPUT_CONFIG,
     )
 
 
@@ -110,17 +129,13 @@ def classify_image_style(
     style_block = "\n".join(style_lines)
 
     style_ids = [s["id"] for s in checkable]
-    yaml_template = "\n".join(f"  {sid}: 0.0" for sid in style_ids)
 
     user_text = (
         "Examine this avatar portrait carefully.\n\n"
         "Available styles and their key visual traits:\n"
         f"{style_block}\n\n"
         f"Choose the best matching style_id from: {', '.join(style_ids)}\n\n"
-        "Reply ONLY as YAML (no markdown fences):\n"
-        f"top_style: <one of the style_ids above>\n"
-        f"scores:\n{yaml_template}\n"
-        "reasoning: <one sentence citing key visual evidence>"
+        "Return scores for every style_id listed above."
     )
 
     try:
@@ -141,14 +156,11 @@ def classify_image_style(
 
 
 def _parse_classification_response(raw: str, style_ids: list[str]) -> StyleClassificationResult:
-    """Parse the LLM YAML response into a StyleClassificationResult."""
-    cleaned = re.sub(r"^```(?:ya?ml)?\s*\n?", "", raw.strip(), flags=re.MULTILINE)
-    cleaned = re.sub(r"\n?```\s*$", "", cleaned.strip())
-
+    """Parse the LLM JSON response into a StyleClassificationResult."""
     try:
-        parsed = yaml.safe_load(cleaned) or {}
-    except yaml.YAMLError as exc:
-        logger.warning("classify: YAML parse failed: %s — raw=%r", exc, raw[:200])
+        parsed = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        logger.warning("classify_style: JSON parse failed: %s — raw=%r", exc, raw[:200])
         parsed = {}
 
     if not isinstance(parsed, dict):
@@ -158,14 +170,17 @@ def _parse_classification_response(raw: str, style_ids: list[str]) -> StyleClass
     if top not in style_ids:
         top = ""
 
-    raw_scores = parsed.get("scores", {})
+    raw_scores = parsed.get("scores", [])
     scores: dict[str, float] = {}
-    if isinstance(raw_scores, dict):
-        for sid in style_ids:
-            try:
-                scores[sid] = float(raw_scores.get(sid, 0.0))
-            except TypeError, ValueError:
-                scores[sid] = 0.0
+    if isinstance(raw_scores, list):
+        for entry in raw_scores:
+            if isinstance(entry, dict):
+                sid = str(entry.get("style_id", "")).strip()
+                if sid in style_ids:
+                    try:
+                        scores[sid] = float(entry.get("score", 0.0))
+                    except TypeError, ValueError:
+                        scores[sid] = 0.0
 
     # If top wasn't parsed but scores exist, derive top from highest score.
     if not top and scores:

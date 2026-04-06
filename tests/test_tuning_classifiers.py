@@ -85,55 +85,48 @@ class TestExpressionClassificationResult:
 
 
 class TestParseExpressionResponse:
-    def test_parses_valid_yaml(self):
+    def test_parses_valid_json(self):
         from tuning.classify_expression import _parse_expression_response
 
-        raw = "top_expression: happy\nexpressions:\n  happy: 0.7\n  sad: 0.3\nreasoning: looks joyful\n"
+        raw = '{"top_expression": "happy", "expressions": [{"name": "happy", "score": 0.7}, {"name": "sad", "score": 0.3}], "reasoning": "looks joyful"}'
         result = _parse_expression_response(raw, [])
         assert result.top_expression == "happy"
         assert result.scores["happy"] == 0.7
         assert result.reasoning == "looks joyful"
 
-    def test_strips_code_fences(self):
-        from tuning.classify_expression import _parse_expression_response
-
-        raw = "```yaml\ntop_expression: sad\nexpressions:\n  sad: 0.8\n```"
-        result = _parse_expression_response(raw, [])
-        assert result.top_expression == "sad"
-
     def test_hint_labels_ensured(self):
         from tuning.classify_expression import _parse_expression_response
 
-        raw = "top_expression: happy\nexpressions:\n  happy: 0.9\n"
+        raw = '{"top_expression": "happy", "expressions": [{"name": "happy", "score": 0.9}], "reasoning": "smiling"}'
         result = _parse_expression_response(raw, ["Sadness", "Anger"])
         assert "Sadness" in result.scores
         assert "Anger" in result.scores
 
-    def test_invalid_yaml_returns_empty(self):
+    def test_invalid_json_returns_empty(self):
         from tuning.classify_expression import _parse_expression_response
 
-        raw = ": : : invalid yaml :::"
+        raw = ": : : invalid :::"
         result = _parse_expression_response(raw, [])
         assert result.top_expression == "" or isinstance(result.top_expression, str)
 
-    def test_non_dict_yaml_returns_empty(self):
+    def test_non_dict_json_returns_empty(self):
         from tuning.classify_expression import _parse_expression_response
 
-        raw = "- item1\n- item2\n"
+        raw = "[1, 2, 3]"
         result = _parse_expression_response(raw, [])
         assert result.scores == {}
 
     def test_derives_top_from_highest_score(self):
         from tuning.classify_expression import _parse_expression_response
 
-        raw = "expressions:\n  happy: 0.1\n  surprised: 0.8\nreasoning: wide eyes\n"
+        raw = '{"expressions": [{"name": "happy", "score": 0.1}, {"name": "surprised", "score": 0.8}], "reasoning": "wide eyes"}'
         result = _parse_expression_response(raw, [])
         assert result.top_expression == "surprised"
 
     def test_invalid_score_defaults_to_zero(self):
         from tuning.classify_expression import _parse_expression_response
 
-        raw = "top_expression: happy\nexpressions:\n  happy: not_a_number\n  sad: 0.3\n"
+        raw = '{"top_expression": "happy", "expressions": [{"name": "happy", "score": "not_a_number"}, {"name": "sad", "score": 0.3}], "reasoning": ""}'
         result = _parse_expression_response(raw, [])
         assert result.scores["happy"] == 0.0
 
@@ -144,9 +137,7 @@ class TestParseExpressionResponse:
 
 
 class TestClassifyImageExpression:
-    _RESPONSE = (
-        "top_expression: happy\nexpressions:\n  happy: 0.8\n  neutral: 0.2\nreasoning: smile\n"
-    )
+    _RESPONSE = '{"top_expression": "happy", "expressions": [{"name": "happy", "score": 0.8}, {"name": "neutral", "score": 0.2}], "reasoning": "smile"}'
 
     def test_returns_result(self):
         with patch(
@@ -200,7 +191,7 @@ class TestSemanticEffectiveScore:
     def test_yes_answer_adds_score(self):
         with patch(
             "tuning.classify_expression._call_text_model",
-            return_value="yes",
+            return_value='{"matches": true}',
         ):
             from tuning.classify_expression import semantic_effective_score
 
@@ -210,7 +201,7 @@ class TestSemanticEffectiveScore:
     def test_no_answer_zero_contribution(self):
         with patch(
             "tuning.classify_expression._call_text_model",
-            return_value="no",
+            return_value='{"matches": false}',
         ):
             from tuning.classify_expression import semantic_effective_score
 
@@ -222,7 +213,7 @@ class TestSemanticEffectiveScore:
 
         def _capture(gateway_url, prompt, timeout):
             calls.append(prompt)
-            return "yes"
+            return '{"matches": true}'
 
         with patch("tuning.classify_expression._call_text_model", side_effect=_capture):
             from tuning.classify_expression import semantic_effective_score
@@ -271,10 +262,10 @@ class TestStyleClassificationResult:
 
 
 class TestParseClassificationResponse:
-    def test_parses_valid_yaml(self):
+    def test_parses_valid_json(self):
         from tuning.classify_style import _parse_classification_response
 
-        raw = "top_style: photorealistic\nscores:\n  photorealistic: 0.8\n  clay: 0.2\nreasoning: detailed\n"
+        raw = '{"top_style": "photorealistic", "scores": [{"style_id": "photorealistic", "score": 0.8}, {"style_id": "clay", "score": 0.2}], "reasoning": "detailed"}'
         result = _parse_classification_response(raw, ["photorealistic", "clay"])
         assert result.top_style_id == "photorealistic"
         assert result.scores["clay"] == 0.2
@@ -282,22 +273,22 @@ class TestParseClassificationResponse:
     def test_top_not_in_style_ids_cleared(self):
         from tuning.classify_style import _parse_classification_response
 
-        raw = "top_style: unknown_style\nscores:\n  photorealistic: 0.9\n"
+        raw = '{"top_style": "unknown_style", "scores": [{"style_id": "photorealistic", "score": 0.9}], "reasoning": ""}'
         result = _parse_classification_response(raw, ["photorealistic"])
         assert result.top_style_id == "photorealistic"  # derived from scores
 
-    def test_invalid_yaml_returns_empty(self):
+    def test_invalid_json_returns_empty(self):
         from tuning.classify_style import _parse_classification_response
 
         result = _parse_classification_response(": : invalid :", ["photorealistic"])
         assert result.top_style_id in ("", "photorealistic")
 
-    def test_strips_code_fences(self):
+    def test_non_dict_json_returns_empty(self):
         from tuning.classify_style import _parse_classification_response
 
-        raw = "```yaml\ntop_style: clay\nscores:\n  clay: 0.9\n```"
-        result = _parse_classification_response(raw, ["clay"])
-        assert result.top_style_id == "clay"
+        raw = "[1, 2]"
+        result = _parse_classification_response(raw, ["photorealistic"])
+        assert result.scores == {} or result.top_style_id in ("", "photorealistic")
 
 
 class TestClassifyImageStyle:
@@ -315,7 +306,7 @@ class TestClassifyImageStyle:
     ]
 
     def test_returns_result(self):
-        raw = "top_style: clay\nscores:\n  photorealistic: 0.2\n  clay: 0.8\nreasoning: matte\n"
+        raw = '{"top_style": "clay", "scores": [{"style_id": "photorealistic", "score": 0.2}, {"style_id": "clay", "score": 0.8}], "reasoning": "matte"}'
         with patch("tuning.classify_style._call_vision_model", return_value=raw):
             from tuning.classify_style import classify_image_style
 
@@ -417,6 +408,7 @@ class TestComputeColorScore:
         assert _compute_color_score("#FF0000", "medium brown hair") is None
 
     def test_success_score_range(self):
+        # A close color should give a score in [threshold, 1.0]
         from tuning.classify_persona import (
             VALIDATION_COLOR_DISTANCE_THRESHOLD,
             _compute_color_score,
@@ -427,6 +419,7 @@ class TestComputeColorScore:
         assert score >= VALIDATION_COLOR_DISTANCE_THRESHOLD
 
     def test_failure_score_squared(self):
+        # Black vs white → large distance → score = proximity^2 < threshold
         from tuning.classify_persona import (
             VALIDATION_COLOR_DISTANCE_THRESHOLD,
             _compute_color_score,
@@ -434,7 +427,7 @@ class TestComputeColorScore:
 
         score = _compute_color_score("#000000", "very light (#FFFFFF)")
         assert score is not None
-        assert score < VALIDATION_COLOR_DISTANCE_THRESHOLD**2 + 0.01
+        assert score < VALIDATION_COLOR_DISTANCE_THRESHOLD**2 + 0.01  # squared proximity
 
 
 # ---------------------------------------------------------------------------
@@ -444,7 +437,9 @@ class TestComputeColorScore:
 
 class TestCalculateExpressionScore:
     def test_direct_match_returns_one(self):
-        with patch("tuning.classify_expression._call_text_model", return_value="no"):
+        with patch(
+            "tuning.classify_expression._call_text_model", return_value='{"matches": false}'
+        ):
             from tuning.classify_expression import (
                 ExpressionClassificationResult,
                 calculate_expression_score,
@@ -457,7 +452,9 @@ class TestCalculateExpressionScore:
             assert calculate_expression_score(result, "happiness") == 1.0
 
     def test_direct_match_below_threshold_falls_to_semantic(self):
-        with patch("tuning.classify_expression._call_text_model", return_value="no"):
+        with patch(
+            "tuning.classify_expression._call_text_model", return_value='{"matches": false}'
+        ):
             from tuning.classify_expression import (
                 ExpressionClassificationResult,
                 calculate_expression_score,
@@ -468,10 +465,11 @@ class TestCalculateExpressionScore:
                 scores={"happiness": 0.3, "neutral": 0.7},
             )
             score = calculate_expression_score(result, "happiness")
+            # low top_score → no direct match → semantic all false → 0^2 = 0
             assert score == 0.0
 
     def test_semantic_match_above_threshold(self):
-        with patch("tuning.classify_expression._call_text_model", return_value="yes"):
+        with patch("tuning.classify_expression._call_text_model", return_value='{"matches": true}'):
             from tuning.classify_expression import (
                 ExpressionClassificationResult,
                 calculate_expression_score,
@@ -481,11 +479,14 @@ class TestCalculateExpressionScore:
                 top_expression="joyful",
                 scores={"joyful": 0.4, "cheerful": 0.35, "neutral": 0.25},
             )
+            # semantic matches all → sum ≥ 0.50
             score = calculate_expression_score(result, "happiness")
             assert score >= 0.5
 
     def test_semantic_failure_amplified(self):
-        with patch("tuning.classify_expression._call_text_model", return_value="no"):
+        with patch(
+            "tuning.classify_expression._call_text_model", return_value='{"matches": false}'
+        ):
             from tuning.classify_expression import (
                 ExpressionClassificationResult,
                 calculate_expression_score,
@@ -496,6 +497,7 @@ class TestCalculateExpressionScore:
                 scores={"angry": 0.4, "neutral": 0.6},
             )
             score = calculate_expression_score(result, "happiness")
+            # semantic all false → sum=0 → 0^2 = 0
             assert score == 0.0
 
 
@@ -591,7 +593,7 @@ class TestParseCategoryResponse:
     def test_parses_visible_true(self):
         from tuning.classify_persona import _parse_categorizer_response
 
-        raw = "skin_tone:\n  visible: true\n  note: warm tone\n"
+        raw = '{"properties": [{"name": "skin_tone", "visible": true, "note": "warm tone", "observed_hex": ""}]}'
         result = _parse_categorizer_response(raw, {"skin_tone": "warm (#D4A76A)"})
         assert len(result.results) == 1
         assert result.results[0].visible is True
@@ -599,28 +601,28 @@ class TestParseCategoryResponse:
     def test_parses_visible_false(self):
         from tuning.classify_persona import _parse_categorizer_response
 
-        raw = "skin_tone:\n  visible: false\n  note: unclear\n"
+        raw = '{"properties": [{"name": "skin_tone", "visible": false, "note": "unclear", "observed_hex": ""}]}'
         result = _parse_categorizer_response(raw, {"skin_tone": "dark (#3D1C02)"})
         assert result.results[0].visible is False
 
-    def test_invalid_yaml_all_not_visible(self):
+    def test_invalid_json_all_not_visible(self):
         from tuning.classify_persona import _parse_categorizer_response
 
-        result = _parse_categorizer_response(": invalid yaml :::", {"skin_tone": "desc"})
+        result = _parse_categorizer_response(": invalid json :::", {"skin_tone": "desc"})
         assert all(not r.visible for r in result.results)
 
     def test_color_property_ycbcr_override(self):
         from tuning.classify_persona import _parse_categorizer_response
 
         # observed_hex matches expected hex → visible overridden to True
-        raw = "skin_tone:\n  visible: false\n  observed_hex: '#D4A76A'\n  note: seen\n"
+        raw = '{"properties": [{"name": "skin_tone", "visible": false, "note": "seen", "observed_hex": "#D4A76A"}]}'
         result = _parse_categorizer_response(raw, {"skin_tone": "honey tan (#D4A76A)"})
         assert result.results[0].visible is True
 
-    def test_non_dict_entry_defaults_not_visible(self):
+    def test_missing_entry_defaults_not_visible(self):
         from tuning.classify_persona import _parse_categorizer_response
 
-        raw = "skin_tone: some_string_not_a_dict\n"
+        raw = '{"properties": []}'
         result = _parse_categorizer_response(raw, {"skin_tone": "desc"})
         assert result.results[0].visible is False
 
@@ -697,7 +699,7 @@ class TestClassifyImageStyleExtra:
     ]
 
     def test_raw_response_stored(self):
-        raw = "top_style: photorealistic\nscores:\n  photorealistic: 0.9\nreasoning: detailed\n"
+        raw = '{"top_style": "photorealistic", "scores": [{"style_id": "photorealistic", "score": 0.9}], "reasoning": "detailed"}'
         with patch("tuning.classify_style._call_vision_model", return_value=raw):
             from tuning.classify_style import classify_image_style
 
@@ -960,12 +962,12 @@ class TestDescribePropertiesMissingBranches:
 
 
 class TestParseCategorizeResponseNonDict:
-    def test_list_yaml_treated_as_empty(self):
+    def test_non_dict_json_treated_as_empty(self):
         from tuning.classify_persona import _parse_categorizer_response
 
-        raw = "- item1\n- item2\n"
+        raw = "[1, 2]"
         result = _parse_categorizer_response(raw, {"skin_tone": "desc"})
-        # list YAML parsed but not a dict → line 371 fires → all results invisible
+        # non-dict JSON → all results invisible
         assert result.results[0].visible is False
 
 
@@ -976,7 +978,7 @@ class TestParseCategorizeResponseNonDict:
 
 class TestCategorizeAvatarImageSuccess:
     def test_success_path_returns_report(self):
-        raw = "skin_tone:\n  visible: true\n  note: matches\n"
+        raw = '{"properties": [{"name": "skin_tone", "visible": true, "note": "matches", "observed_hex": ""}]}'
         with patch("tuning.classify_persona.GatewayClient") as MockClient:
             MockClient.return_value.image_inspector.return_value = raw
             from tuning.classify_persona import categorize_avatar_image
@@ -993,10 +995,10 @@ class TestCategorizeAvatarImageSuccess:
 
 
 class TestParseClassificationResponseNonFloatScore:
-    def test_dict_score_defaults_to_zero(self):
+    def test_invalid_score_defaults_to_zero(self):
         from tuning.classify_style import _parse_classification_response
 
         # A dict value for a score triggers TypeError inside float()
-        raw = "top_style: photorealistic\nscores:\n  photorealistic: {nested: value}\n"
+        raw = '{"top_style": "photorealistic", "scores": [{"style_id": "photorealistic", "score": {"nested": "value"}}], "reasoning": ""}'
         result = _parse_classification_response(raw, ["photorealistic"])
         assert result.scores.get("photorealistic", 0.0) == 0.0

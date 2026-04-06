@@ -18,11 +18,10 @@ Usage
 
 from __future__ import annotations
 
+import json
 import logging
 import re
 from dataclasses import dataclass, field
-
-import yaml
 
 from config.config import SETTINGS
 from config.gateway import GatewayClient
@@ -355,14 +354,46 @@ class CategoryReport:
 # Main categorizer function
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Main categorizer function
+# ---------------------------------------------------------------------------
+
+# JSON schema for the vision model response. observed_hex is always present
+# (empty string for structural properties that have no color).
+_PERSONA_PROPERTY_SCHEMA: dict = {
+    "type": "object",
+    "properties": {
+        "name": {"type": "string"},
+        "visible": {"type": "boolean"},
+        "note": {"type": "string"},
+        "observed_hex": {"type": "string"},
+    },
+    "required": ["name", "visible", "note", "observed_hex"],
+    "additionalProperties": False,
+}
+
+_PERSONA_SCHEMA: dict = {
+    "type": "object",
+    "properties": {
+        "properties": {
+            "type": "array",
+            "items": _PERSONA_PROPERTY_SCHEMA,
+        }
+    },
+    "required": ["properties"],
+    "additionalProperties": False,
+}
+
+_PERSONA_OUTPUT_CONFIG: dict = {"format": {"type": "json_schema", "schema": _PERSONA_SCHEMA}}
+
 _CATEGORIZER_SYSTEM = (
     "You are a visual property verifier for AI-generated portrait images. "
     "Given an image and a list of expected visual properties, check each property. "
-    "Reply ONLY as YAML. For each property key, output:\n"
-    "  visible: true  # or false\n"
-    "  note: <one-sentence observation>\n"
-    "For color properties (skin_tone, hair_color, eye_color, clothing), also output:\n"
-    "  observed_hex: '#RRGGBB'  # the dominant color you observe for this property\n"
+    "Return a JSON array of property results. For each property set:\n"
+    "  visible: true or false\n"
+    "  note: one-sentence observation\n"
+    "For color properties (skin_tone, hair_color, eye_color, clothing), set observed_hex "
+    "to the dominant '#RRGGBB' color you observe; set it to '' for structural properties. "
     "Be strict but fair for structural properties. "
     "For color properties, always report observed_hex — pass/fail is computed "
     "programmatically from the YCbCr distance between expected and observed."
@@ -384,26 +415,21 @@ def categorize_avatar_image(
 
     checklist = "\n".join(f"  {name}: {desc}" for name, desc in props.items())
 
-    color_fmt = "\n  observed_hex: '#RRGGBB'  # report the color you observe"
-    response_template = "\n".join(
-        f"{name}:\n  visible: true  # or false"
-        + (color_fmt if name in _COLOR_PROPERTIES else "")
-        + "\n  note: ..."
-        for name in props
-    )
-
     user_text = (
         "Examine this portrait image carefully.\n\n"
         "For each property below, determine if it is clearly visible.\n\n"
         "Expected properties:\n"
         f"{checklist}\n\n"
-        "Reply as YAML only, using the exact property names as keys:\n"
-        f"{response_template}"
+        "Return a result entry for every property name listed above."
     )
 
     try:
         raw = GatewayClient(gateway_url).image_inspector(
-            image_bytes, _CATEGORIZER_SYSTEM, user_text, timeout=timeout
+            image_bytes,
+            _CATEGORIZER_SYSTEM,
+            user_text,
+            timeout=timeout,
+            output_config=_PERSONA_OUTPUT_CONFIG,
         )
     except Exception as exc:
         logger.error("categorize_avatar_image: LLM call failed: %s", exc)
@@ -415,34 +441,34 @@ def categorize_avatar_image(
 
 
 def _parse_categorizer_response(raw: str, props: dict[str, str]) -> CategoryReport:
-    """Parse the LLM YAML response into a CategoryReport.
+    """Parse the LLM JSON response into a CategoryReport.
 
-    For color properties: if the LLM reports an ``observed_hex``, the
+    For color properties: if the LLM reports a non-empty observed_hex, the
     ``visible`` flag is overridden by a YCbCr distance check against the
     expected hex(es) embedded in the property description string.
     """
-    cleaned = re.sub(r"^```(?:ya?ml)?\s*\n?", "", raw.strip(), flags=re.MULTILINE)
-    cleaned = re.sub(r"\n?```\s*$", "", cleaned.strip())
-
     try:
-        parsed = yaml.safe_load(cleaned)
-    except yaml.YAMLError as exc:
-        logger.warning("categorize: YAML parse failed: %s — raw=%r", exc, raw[:200])
+        parsed = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        logger.warning("categorize: JSON parse failed: %s — raw=%r", exc, raw[:200])
         parsed = {}
 
-    results: list[PropertyResult] = []
     if not isinstance(parsed, dict):
         parsed = {}
 
+    # Build a lookup of name → entry from the array response.
+    entries: dict[str, dict] = {}
+    for item in parsed.get("properties", []):
+        if isinstance(item, dict):
+            name = str(item.get("name", "")).strip()
+            if name:
+                entries[name] = item
+
+    results: list[PropertyResult] = []
     for prop_name, expected_desc in props.items():
-        entry = parsed.get(prop_name, {})
-        if isinstance(entry, dict):
-            visible_raw = entry.get("visible", False)
-            visible = (
-                visible_raw
-                if isinstance(visible_raw, bool)
-                else (str(visible_raw).lower().strip() == "true")
-            )
+        entry = entries.get(prop_name, {})
+        if isinstance(entry, dict) and entry:
+            visible = bool(entry.get("visible", False))
             note = str(entry.get("note", "")).strip()
             color_score: float | None = None
 
