@@ -1,0 +1,23 @@
+personal:
+  name: Tems
+  gender: female
+  age: 30
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B5E3C'
+  hair_color: '#1A1A1A'
+  hair_style: braided updo
+  eye_color: '#2C1A0E'
+  clothing:
+  - item: top
+    color: '#2A2A2A'
+    description: metallic off-shoulder strapless top with sculptural edges
+  accessories:
+  - item: earrings
+    color: '#C0C0C0'
+    description: long dangling silver chain earrings with small geometric pendants

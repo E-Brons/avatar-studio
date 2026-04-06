@@ -1,0 +1,30 @@
+personal:
+  name: Emmanuel Macron
+  gender: male
+  age: 48
+  nationality: French
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  skin_tone: '#C4956B'
+  eye_color: '#7A9BB5'
+  hair_style: short, parted to the side
+  hair_color: '#3D2B1F'
+  clothing:
+  - item: jacket
+    color: '#1C1E2A'
+    description: dark navy suit jacket with a lapel pin
+  - item: shirt
+    color: '#D8DCE2'
+    description: light grey-white dress shirt with spread collar
+  - item: tie
+    color: '#3A4450'
+    description: dark grey-blue necktie
+  accessories:
+  - item: lapel pin
+    color: '#E02020'
+    description: small red and gold pin on left lapel

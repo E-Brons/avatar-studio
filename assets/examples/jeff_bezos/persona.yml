@@ -1,0 +1,17 @@
+personal:
+  name: Jeff Bezos
+  gender: male
+  age: 62
+  nationality: American
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#c8956c'
+  clothing:
+    top:
+      type: button-up shirt
+      color: '#1a2540'
+      pattern: solid

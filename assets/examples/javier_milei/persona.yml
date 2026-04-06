@@ -1,0 +1,29 @@
+personal:
+  name: Javier Milei
+  gender: male
+  age: 55
+  nationality: Argentine
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_style: medium-length, tousled, wavy, voluminous
+  hair_color: '#5C4033'
+  skin_tone: '#D4A88C'
+  eye_color: '#7A9BB5'
+  clothing:
+  - item: suit jacket
+    color: '#1A1A1A'
+    description: dark black formal suit jacket with notch lapels and a breast pocket
+  - item: dress shirt
+    color: '#D6DCEA'
+    description: light blue collared dress shirt visible at the collar and chest
+  - item: necktie
+    color: '#111111'
+    description: solid black necktie
+  accessories:
+  - item: portfolio/folder
+    color: '#1C1C1C'
+    description: dark leather portfolio or document folder held in both hands

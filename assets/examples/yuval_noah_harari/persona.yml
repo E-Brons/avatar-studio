@@ -1,0 +1,21 @@
+personal:
+  name: Yuval Noah Harari
+  gender: male
+  age: 50
+  nationality: Israeli
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    type: crewneck sweater
+    color: '#2D2D2F'
+    description: dark charcoal knit crewneck sweater
+  - item: top
+    type: collared shirt
+    color: '#3A5A6E'
+    description: dark teal-blue button-up dress shirt worn under the sweater, collar
+      visible

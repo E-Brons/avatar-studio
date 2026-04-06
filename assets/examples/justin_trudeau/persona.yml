@@ -1,0 +1,21 @@
+personal:
+  name: Justin Trudeau
+  gender: male
+  age: 54
+  nationality: Canadian
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    color: '#2C2F33'
+    description: dark charcoal suit jacket
+  - item: shirt
+    color: '#D4DCE6'
+    description: light blue dress shirt with spread collar
+  - item: tie
+    color: '#8B1A2B'
+    description: red patterned tie with small geometric print

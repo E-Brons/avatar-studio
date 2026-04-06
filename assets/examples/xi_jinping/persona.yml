@@ -1,0 +1,21 @@
+personal:
+  name: Xi Jinping
+  gender: male
+  age: 72
+  nationality: Chinese
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    color: '#1E1E3A'
+    description: dark navy suit jacket
+  - item: shirt
+    color: '#F0E8E0'
+    description: white dress shirt with visible collar
+  - item: tie
+    color: '#6B3A5E'
+    description: purple/maroon patterned tie

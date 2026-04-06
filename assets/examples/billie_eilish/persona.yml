@@ -1,0 +1,23 @@
+personal:
+  name: Billie Eilish
+  gender: female
+  age: 24
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      type: turtleneck or mock-neck top
+      color: '#8B2020'
+  accessories:
+    necklace_1:
+      type: chunky gold chain necklace
+      color: '#C8A840'
+    necklace_2:
+      type: delicate gold chain necklace
+      color: '#C8A840'
+  face_shape: round

@@ -1,0 +1,30 @@
+personal:
+  name: Beyoncé
+  gender: female
+  age: 44
+  nationality: American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C68642'
+  hair_color: '#B8960C'
+  hair_style: sleek center-parted low ponytail
+  eye_color: '#6B3A2A'
+  clothing:
+    top:
+      style: color-block bateau neck top
+      colors:
+      - '#1A1A1A'
+      - '#F5F5F5'
+      color_labels:
+      - black
+      - white
+  accessories:
+    earrings:
+      type: stud/small drop
+      material: crystal/diamond
+      color: '#E8E8E8'
+  face_shape: oval

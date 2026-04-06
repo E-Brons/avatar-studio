@@ -1,0 +1,28 @@
+personal:
+  name: Summer McIntosh
+  gender: female
+  age: 19
+  nationality: Canadian
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    primary_color: '#F0F0F0'
+    secondary_color: '#CC2233'
+    pattern: printed graphic pattern
+    neckline: zip-up collar
+  - item: flag draped over shoulders
+    primary_color: '#FFFFFF'
+    secondary_color: '#E02030'
+    pattern: Canadian flag maple leaf and bars
+  accessories:
+  - item: gold medal
+    color: '#C8A84E'
+    detail: round medal on dark blue ribbon
+  - item: earrings
+    color: '#A8D8D8'
+    detail: small stud earrings

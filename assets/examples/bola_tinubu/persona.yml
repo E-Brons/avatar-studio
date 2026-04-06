@@ -1,0 +1,29 @@
+personal:
+  name: Bola Tinubu
+  gender: male
+  age: 74
+  nationality: Nigerian
+  religion: Muslim
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    visible_items:
+    - top
+    top:
+      type: agbada
+      primary_color: '#C8D8F0'
+      secondary_color: '#3A5A9E'
+      pattern: embroidered vertical stripes
+      neckline: round
+  accessories:
+  - type: glasses
+    style: round
+    frame_color: '#C8A860'
+  - type: hat
+    style: fila (traditional cap)
+    primary_color: '#8B1A2B'
+    secondary_color: '#4A8E9E'
+    pattern: embroidered geometric motifs

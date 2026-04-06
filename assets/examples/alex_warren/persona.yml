@@ -1,0 +1,25 @@
+personal:
+  name: Alex Warren
+  gender: male
+  age: 25
+  nationality: American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_style: short, tousled
+  hair_color: '#B5623A'
+  skin_tone: '#D4A982'
+  clothing:
+  - item: top
+    description: red Hummel Denmark (DBU) soccer jersey with white trim
+    primary_color: '#E03030'
+    secondary_color: '#FFFFFF'
+  accessories:
+  - item: guitar
+    description: black acoustic guitar with floral design
+  - item: microphone
+    description: stage microphone on stand
+  eye_color: '#5A4030'

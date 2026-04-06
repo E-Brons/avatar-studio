@@ -1,0 +1,28 @@
+personal:
+  name: Recep Tayyip Erdoğan
+  gender: male
+  age: 72
+  nationality: Turkish
+  religion: Muslim
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C68642'
+  hair_color: '#4A4A4A'
+  hair_style: short, side-parted, salt and pepper
+  eye_color: '#4B3C2A'
+  clothing:
+  - item: jacket
+    color: '#3A5FA0'
+    pattern: blue and dark navy checkered/plaid
+  - item: shirt
+    color: '#A8C8E8'
+    pattern: solid light blue
+  accessories:
+  - item: ring
+    color: '#C0C0C0'
+  - item: lapel pin
+    color: '#1A1A2E'
+  face_shape: rectangular

@@ -1,0 +1,23 @@
+personal:
+  name: Shohei Ohtani
+  gender: male
+  age: 31
+  nationality: Japanese
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    visible_items:
+    - top
+    - cap
+    top_color: '#FFFFFF'
+    top_style: athletic jersey
+    top_accent_color: '#BA0C2F'
+  accessories:
+    visible_items:
+    - baseball cap
+    hat_color: '#BA0C2F'
+    hat_style: baseball cap

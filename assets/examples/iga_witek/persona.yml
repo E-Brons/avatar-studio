@@ -1,0 +1,20 @@
+personal:
+  name: Iga Świątek
+  gender: female
+  age: 24
+  nationality: Polish
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    type: sleeveless dress
+    color: '#0A0A0A'
+    description: Black sleeveless fitted dress with a round neckline
+  accessories:
+  - item: watch
+    color: '#C4A86B'
+    description: Gold-toned wristwatch on left wrist

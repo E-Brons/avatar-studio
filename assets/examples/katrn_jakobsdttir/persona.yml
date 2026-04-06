@@ -1,0 +1,23 @@
+personal:
+  name: Katrín Jakobsdóttir
+  gender: female
+  age: 50
+  nationality: Icelander
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_color: '#5C3A2A'
+  hair_style: long, straight, parted to the side
+  eye_color: '#7A9E82'
+  skin_tone: '#D9B8A0'
+  clothing:
+  - item: turtleneck top
+    color: '#D4CFC0'
+    description: light beige/cream turtleneck worn underneath
+  - item: sweater
+    color: '#7B2D1A'
+    description: dark rust/burnt sienna ribbed crew neck sweater
+  face_shape: oval

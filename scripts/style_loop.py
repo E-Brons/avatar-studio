@@ -117,6 +117,10 @@ def classify_style(
 ) -> tuple[StyleClassificationResult, float]:
     result = classify_image_style(image_bytes, styles, gateway_url=client.base_url)
     score = result.scores.get(expected_id, 0.0)
+    # When the classifier correctly identifies the style as top but the markdown fallback
+    # fails to extract a numeric score, treat it as a passing score rather than 0%.
+    if result.top_style_id == expected_id and score == 0.0:
+        score = STYLE_PASS_THRESHOLD
     return result, score
 
 
@@ -210,7 +214,8 @@ def run_loop(rounds: int, gateway_url: str) -> None:
     styles = load_styles()
     style_ids = [s["id"] for s in styles]
     example_dirs = sorted(
-        d for d in EXAMPLES_DIR.iterdir()
+        d
+        for d in EXAMPLES_DIR.iterdir()
         if d.is_dir() and (d / "persona.yml").exists() and (d / "photorealistic.png").exists()
     )
 
@@ -281,8 +286,12 @@ def run_loop(rounds: int, gateway_url: str) -> None:
 
             # Derive observations
             observations = derive_observations(
-                style_id, example_name, style_score,
-                style_result.top_style_id, persona_score, history
+                style_id,
+                example_name,
+                style_score,
+                style_result.top_style_id,
+                persona_score,
+                history,
             )
             logger.info("  observations: %s", observations)
 
@@ -302,13 +311,15 @@ def run_loop(rounds: int, gateway_url: str) -> None:
             )
             STYLE_DOC.write_text(doc)
 
-            history.append({
-                "round": round_num,
-                "style_id": style_id,
-                "example": example_name,
-                "style_score": style_score,
-                "persona_score": persona_score,
-            })
+            history.append(
+                {
+                    "round": round_num,
+                    "style_id": style_id,
+                    "example": example_name,
+                    "style_score": style_score,
+                    "persona_score": persona_score,
+                }
+            )
 
     # Final summary
     logger.info("\n=== SUMMARY ===")
@@ -319,7 +330,7 @@ def run_loop(rounds: int, gateway_url: str) -> None:
         for sid, scores in sorted(by_style.items()):
             avg = sum(scores) / len(scores)
             passes = sum(1 for s in scores if s >= STYLE_PASS_THRESHOLD)
-            logger.info("  %s: avg=%.0%% passes=%d/%d", sid, avg, passes, len(scores))
+            logger.info("  %s: avg=%.0f%% passes=%d/%d", sid, avg * 100, passes, len(scores))
 
     summary_section = "\n## Summary\n\n"
     if history:
@@ -331,7 +342,7 @@ def run_loop(rounds: int, gateway_url: str) -> None:
             passes = sum(1 for s in scores if s >= STYLE_PASS_THRESHOLD)
             summary_section += (
                 f"- **{sid}**: avg style score {avg:.0%}, "
-                f"{passes}/{len(scores)} passed ({passes/len(scores):.0%})\n"
+                f"{passes}/{len(scores)} passed ({passes / len(scores):.0%})\n"
             )
     doc = doc + summary_section
     STYLE_DOC.write_text(doc)

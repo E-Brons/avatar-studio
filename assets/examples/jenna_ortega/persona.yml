@@ -1,0 +1,20 @@
+personal:
+  name: Jenna Ortega
+  gender: female
+  age: 23
+  nationality: American
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    color: '#1A1A1A'
+    material: sheer knit
+    neckline: off-shoulder / wide V-neck
+  accessories:
+  - item: earring
+    description: small dangling earring on left ear
+    color: '#C0C0C0'

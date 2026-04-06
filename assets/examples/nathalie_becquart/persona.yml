@@ -1,0 +1,29 @@
+personal:
+  name: Nathalie Becquart
+  gender: female
+  age: 57
+  nationality: French
+  religion: Christian
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A882'
+  clothing:
+  - item: jacket
+    color: '#1A1A1A'
+    description: black blazer
+  - item: top
+    color: '#F0EEEA'
+    description: white crew neck t-shirt
+  accessories:
+  - item: glasses
+    color: '#3B2020'
+    description: dark rectangular frames
+  - item: necklace
+    color: '#C0C0C0'
+    description: thin silver chain with small pendant
+  - item: ring
+    color: '#C0C0C0'
+    description: thin silver band on finger

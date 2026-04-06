@@ -1,0 +1,24 @@
+personal:
+  name: Kylian Mbappé
+  gender: male
+  age: 27
+  nationality: French
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    type: suit jacket
+    color_hex: '#2C2C30'
+    description: dark charcoal tailored suit jacket with black buttons
+  - item: shirt
+    type: dress shirt
+    color_hex: '#FFFFFF'
+    description: white dress shirt with spread collar
+  accessories:
+  - item: watch
+    description: luxury chronograph wristwatch with black dial and silver case
+    color_hex: '#C0C0C0'

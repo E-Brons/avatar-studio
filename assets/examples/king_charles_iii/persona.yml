@@ -1,0 +1,33 @@
+personal:
+  name: King Charles III
+  gender: male
+  age: 77
+  nationality: British
+  religion: Christian
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A088'
+  hair_color: '#C0B8B0'
+  hair_style: short, parted, grey-white
+  eye_color: '#6B8EAD'
+  clothing:
+  - item: coronation robe
+    primary_color: '#F5F0E8'
+    secondary_color: '#D4A017'
+    description: White ermine fur robe with black tail spots, gold and purple stole
+      underneath
+  - item: stole
+    primary_color: '#7B2D8E'
+    secondary_color: '#D4A017'
+    description: Purple and gold ceremonial stole worn beneath the robe
+  accessories:
+  - item: crown
+    color: '#C0C0C0'
+    description: Imperial State Crown with purple velvet cap, diamonds, emeralds,
+      sapphires, rubies, and pearl accents with ermine fur band
+  - item: chain necklace
+    color: '#D4A017'
+    description: Gold ceremonial chain with ornate pendant and jeweled medallion

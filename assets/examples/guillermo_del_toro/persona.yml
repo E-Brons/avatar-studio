@@ -1,0 +1,26 @@
+personal:
+  name: Guillermo del Toro
+  gender: male
+  age: 61
+  nationality: Mexican
+  religion: Catholic
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4A082'
+  hair_color: '#5A4A3A'
+  hair_style: curly, medium length, tousled
+  eye_color: '#6B8E9F'
+  face_shape: round
+  clothing:
+  - item: top
+    color: '#3E3545'
+    description: dark purple-grey collared shirt
+  - item: jacket
+    color: '#1A1A22'
+    description: dark navy/black blazer
+  accessories:
+  - item: glasses
+    description: round tortoiseshell frames

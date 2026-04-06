@@ -1,0 +1,28 @@
+personal:
+  name: Ayra Starr
+  gender: female
+  age: 23
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  accessories:
+  - type: hair beads
+    description: clear crystal/gem beads and cowrie shells woven into braids
+    color: '#D4CFC8'
+  - type: necklace
+    description: delicate silver/crystal chain necklace
+    color: '#C0C0C0'
+  - type: earring
+    description: small stud earring visible on left ear
+    color: '#C0C0C0'
+  skin_tone: '#8B6914'
+  hair_color: '#1A1A1A'
+  hair_style: thick box braids with decorative crystal beads and cowrie shells
+  eye_color: '#2C1A0E'
+  eye_shape: almond
+  face_shape: oval
+  nose_shape: broad, rounded tip

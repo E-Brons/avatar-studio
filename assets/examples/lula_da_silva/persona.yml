@@ -1,0 +1,30 @@
+personal:
+  name: Lula da Silva
+  gender: male
+  age: 80
+  nationality: Brazilian
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956B'
+  hair_color: '#8C8A85'
+  hair_style: short, curly, gray
+  eye_color: '#3D2B1A'
+  face_shape: round
+  clothing:
+  - item: suit jacket
+    color: '#1C1E2A'
+    description: dark navy formal suit jacket with a lapel pin
+  - item: dress shirt
+    color: '#FFFFFF'
+    description: white collared dress shirt
+  - item: tie
+    color: '#2B3D3B'
+    description: dark green and silver diagonal striped tie
+  accessories:
+  - item: lapel pin
+    color: '#C5A033'
+    description: small gold lapel pin on left jacket lapel

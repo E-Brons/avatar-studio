@@ -1,0 +1,24 @@
+personal:
+  name: Vanessa Nakate
+  gender: female
+  age: 29
+  nationality: Ugandan
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#5C3A2A'
+  clothing:
+  - type: top
+    description: long-sleeve striped blouse with ruffle detail and gold buttons, high
+      collar
+    primary_color: '#8B2232'
+    secondary_colors:
+    - '#A8B0B8'
+    - '#1E2A6E'
+  - type: bottoms
+    description: dark wash skinny jeans
+    primary_color: '#2B3044'
+    secondary_colors: []

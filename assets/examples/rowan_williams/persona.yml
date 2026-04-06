@@ -1,0 +1,29 @@
+personal:
+  name: Rowan Williams
+  gender: male
+  age: 75
+  nationality: British
+  religion: Christian
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  accessories:
+  - type: glasses
+    style: round
+    color: '#4A3A2A'
+  - type: necklace
+    style: pectoral cross on chain
+    color: '#C0C0B0'
+  clothing:
+  - type: clerical collar
+    color: '#FFFFFF'
+  - type: cassock
+    color: '#1A1A1A'
+  - type: chimere
+    color: '#5C1A2A'
+  - type: rochet
+    color: '#F0F0F0'
+  - type: tippet
+    color: '#C41E1E'

@@ -1,0 +1,21 @@
+personal:
+  name: Lin-Manuel Miranda
+  gender: male
+  age: 46
+  nationality: American
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#B8956E'
+  hair_color: '#1A1210'
+  hair_style: pulled back, slicked down with loose strands
+  eye_color: '#3D2B1A'
+  face_shape: oval
+  clothing:
+  - item: high-collar cravat/neckcloth
+    color: '#E8E0D4'
+  - item: jacket/coat collar
+    color: '#D9CF9A'

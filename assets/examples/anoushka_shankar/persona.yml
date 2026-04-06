@@ -1,0 +1,28 @@
+personal:
+  name: Anoushka Shankar
+  gender: female
+  age: 44
+  nationality: Indian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    description: oversized crewneck sweatshirt with balloon sleeves
+    color_hex: '#C4B49A'
+  - item: pants
+    description: wide-leg flowing black trousers
+    color_hex: '#1C1C1E'
+  accessories:
+  - item: earrings
+    description: large silver hoop earrings
+    color_hex: '#C0C0C0'
+  - item: ring
+    description: large turquoise statement ring on right hand
+    color_hex: '#5EC4B8'
+  - item: instrument
+    description: sitar held across lap
+    color_hex: '#2E2422'

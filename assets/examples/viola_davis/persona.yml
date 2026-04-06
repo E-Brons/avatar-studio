@@ -1,0 +1,26 @@
+personal:
+  name: Viola Davis
+  gender: female
+  age: 60
+  nationality: American
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#6B4226'
+  hair_color: '#1A1A1A'
+  hair_style: shoulder-length wavy
+  eye_color: '#3D2B1F'
+  clothing:
+  - item: top
+    color: '#A8DCD9'
+    description: sleeveless light aqua/mint textured top
+  accessories:
+  - item: earrings
+    color: '#D4A5A5'
+    description: small drop earrings
+  - item: ring
+    color: '#C0C0C0'
+    description: large cocktail ring on right hand

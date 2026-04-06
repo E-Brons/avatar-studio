@@ -1,0 +1,27 @@
+personal:
+  name: Zendaya
+  gender: female
+  age: 29
+  nationality: American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956E'
+  hair_color: '#3B2218'
+  hair_style: straight, center-parted, shoulder-length
+  eye_color: '#5C3A1E'
+  face_shape: oval
+  clothing:
+  - item: off-shoulder top
+    color: '#1A4D45'
+    material: velvet
+  accessories:
+  - item: necklace
+    description: diamond tennis necklace
+    color: '#D4D4D4'
+  - item: earrings
+    description: diamond stud earrings
+    color: '#D4D4D4'

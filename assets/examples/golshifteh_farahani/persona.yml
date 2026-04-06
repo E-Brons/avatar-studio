@@ -1,0 +1,24 @@
+personal:
+  name: Golshifteh Farahani
+  gender: female
+  age: 42
+  nationality: Iranian-French
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956A'
+  clothing:
+    top:
+      type: sleeveless lace dress
+      color: '#1B2A4A'
+      pattern: floral lace with cutwork detail
+      neckline: high mandarin collar
+  accessories:
+    earrings:
+      type: drop earrings
+      color: '#C9A84C'
+      material: gold-tone metal
+      style: ornate cross/floral pendant

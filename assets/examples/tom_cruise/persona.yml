@@ -1,0 +1,21 @@
+personal:
+  name: Tom Cruise
+  gender: male
+  age: 63
+  nationality: American
+  religion: Scientology
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C68B6A'
+  face_shape: oval
+  clothing:
+    top:
+      type: polo shirt
+      color: '#2A2A2A'
+      pattern: solid
+  eye_color: '#7A9272'
+  hair_color: '#3B2A1E'
+  hair_style: medium length, wavy, tousled

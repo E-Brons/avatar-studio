@@ -1,0 +1,25 @@
+personal:
+  name: Lydia Ko
+  gender: female
+  age: 29
+  nationality: New Zealander
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: polo shirt
+    color: '#D9634A'
+    description: coral/salmon collared polo shirt visible at neckline
+  - item: sweater/pullover
+    color: '#3A3530'
+    description: dark brown or charcoal sweater layered over polo
+  accessories:
+  - item: baseball cap
+    color: '#E8E4E0'
+    description: white Callaway branded golf cap
+  - item: sunglasses
+    color: '#4A4240'
+    description: dark-lensed sunglasses resting on top of cap

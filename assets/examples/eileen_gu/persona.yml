@@ -1,0 +1,21 @@
+personal:
+  name: Eileen Gu
+  gender: female
+  age: 22
+  nationality: Chinese-American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E8C4A0'
+  hair_color: '#3D2314'
+  hair_style: ponytail, pulled back with loose strands framing face
+  eye_color: '#7B5C3A'
+  clothing:
+  - item: jacket
+    color: '#CC1A1A'
+  accessories:
+  - item: earrings
+    color: '#D4D4D4'

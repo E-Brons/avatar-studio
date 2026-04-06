@@ -1,0 +1,28 @@
+personal:
+  name: Dua Lipa
+  gender: female
+  age: 30
+  nationality: Albanian
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A98C'
+  hair_color: '#1A1210'
+  hair_style: braided updo, slicked back with cornrows into a high bun
+  eye_color: '#5C3A1E'
+  face_shape: oval
+  accessories:
+  - type: earrings
+    description: dangling silver/crystal chandelier earrings with geometric pendant
+    color: '#C0C0C0'
+  - type: necklace
+    description: delicate gold chain necklace
+    color: '#D4A340'
+  - type: ear_cuff
+    description: small gold hoop on upper ear
+    color: '#C8A24E'
+  eye_shape: almond
+  nose_shape: straight

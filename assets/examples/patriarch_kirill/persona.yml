@@ -1,0 +1,35 @@
+personal:
+  name: Patriarch Kirill
+  gender: male
+  age: 79
+  nationality: Russian
+  religion: Christian
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: liturgical robe
+    color: '#1A1A1A'
+    pattern: embroidered with gold and silver motifs
+    material: heavy brocade
+  - item: white klobuk (patriarchal headdress)
+    color: '#F0EDE8'
+    pattern: solid with ornate gold medallion and cross at crown
+    material: fabric with rigid structure
+  - item: veil
+    color: '#F0EDE8'
+    pattern: solid white, draping from headdress
+    material: silk or satin
+  accessories:
+  - item: pectoral cross
+    color: '#C8B050'
+    description: ornate gold cross on chain, worn at chest
+  - item: headdress medallion
+    color: '#D4AF37'
+    description: elaborate gold beaded medallion with gemstone center on front of
+      klobuk
+  - item: crown cross
+    color: '#D4AF37'
+    description: small gold cross atop the headdress

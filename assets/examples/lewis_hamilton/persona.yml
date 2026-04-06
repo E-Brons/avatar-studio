@@ -1,0 +1,27 @@
+personal:
+  name: Lewis Hamilton
+  gender: male
+  age: 41
+  nationality: British
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_color: '#1A1008'
+  hair_style: braided cornrows with blonde highlights at front
+  eye_color: '#2C1A0E'
+  face_shape: oval
+  nose_shape: broad
+  clothing:
+  - item: top
+    color: '#2A2A2E'
+    description: dark crew neck shirt with Tommy Hilfiger branded collar trim in navy,
+      white, and red
+  accessories:
+  - item: earring
+    description: small silver hoop earring in left ear
+  - item: nose stud
+    description: small metallic nose piercing on left nostril

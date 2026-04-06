@@ -1,0 +1,26 @@
+personal:
+  name: Rayssa Leal
+  gender: female
+  age: 18
+  nationality: Brazilian
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - type: top
+    description: white long-sleeve Adidas t-shirt with CBSk logo
+    primary_color: '#F5F0EB'
+    secondary_color: '#2D2D2D'
+  accessories:
+  - type: helmet
+    description: black matte skate helmet with chin strap
+    color: '#2A2A2A'
+  - type: earrings
+    description: small gold hoop earrings
+    color: '#C9A84C'
+  - type: nose piercing
+    description: small nose stud on left nostril
+    color: '#C9A84C'

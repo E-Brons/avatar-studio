@@ -1,0 +1,29 @@
+personal:
+  name: Alok Vaid-Menon
+  gender: non-binary
+  age: 34
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    color_hex_primary: '#D4785A'
+    color_hex_secondary: '#3A4E8C'
+    pattern: abstract print
+    description: coral-orange and blue patterned long-sleeve top with abstract brushstroke
+      design
+  accessories:
+  - item: necklace
+    color_hex: '#B5A682'
+    description: ornate silver/antique gold statement necklace with dangling pendants,
+      traditional South Asian style
+  - item: earrings
+    color_hex: '#8B7355'
+    description: large hoop earrings with decorative beading
+  - item: bracelet
+    color_hex: '#A8A095'
+    description: wide silver ornate cuff bracelet on right wrist

@@ -1,0 +1,15 @@
+personal:
+  name: Sri Sri Ravi Shankar
+  gender: male
+  age: 69
+  nationality: Indian
+  religion: Hindu
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    color: '#F0EDE8'
+    description: white collared garment or kurta

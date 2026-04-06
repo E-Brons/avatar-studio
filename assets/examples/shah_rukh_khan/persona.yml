@@ -1,0 +1,28 @@
+personal:
+  name: Shah Rukh Khan
+  gender: male
+  age: 60
+  nationality: Indian
+  religion: Muslim
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  skin_tone: '#9B7A5C'
+  eye_color: '#5C3A1E'
+  eye_shape: almond
+  nose_shape: straight
+  hair_style: swept back
+  hair_color: '#0F0A06'
+  clothing:
+  - item: jacket
+    color: '#1A1A1E'
+    style: suit jacket
+  - item: shirt
+    color: '#1F1F22'
+    style: dress shirt
+  - item: tie
+    color: '#151517'
+    style: necktie

@@ -1,0 +1,23 @@
+personal:
+  name: Shakib Al Hasan
+  gender: male
+  age: 39
+  nationality: Bangladeshi
+  religion: unknown
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      type: polo shirt / sports jersey
+      primary_color: '#1a8a30'
+      secondary_colors:
+      - '#cc1a1a'
+      - '#c8e8c0'
+  skin_tone: '#8B6914'
+  hair_color: '#1A1A1A'
+  hair_style: short, thick, slightly wavy, textured crop
+  eye_color: '#3D2B1F'
+  face_shape: oval

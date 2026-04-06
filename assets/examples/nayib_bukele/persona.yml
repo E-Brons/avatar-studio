@@ -1,0 +1,25 @@
+personal:
+  name: Nayib Bukele
+  gender: male
+  age: 44
+  nationality: Salvadoran
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8956A'
+  hair_color: '#1A1008'
+  hair_style: pulled back, slicked
+  eye_color: '#3D1F0A'
+  clothing:
+  - item: jacket
+    color: '#1B2A4A'
+  - item: top
+    color: '#F5F0E0'
+  - item: sash
+    colors:
+    - '#1E3FA8'
+    - '#FFFFFF'
+  face_shape: oval

@@ -1,0 +1,20 @@
+personal:
+  name: Sherin Khankan
+  gender: female
+  age: 51
+  nationality: Danish
+  religion: Muslim
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A68C'
+  hair_color: '#5C3A1E'
+  hair_style: long, straight, flowing past shoulders with center part
+  eye_color: '#7A9BAE'
+  face_shape: oval
+  clothing:
+  - item: scarf/shawl
+    color: '#6B8A8E'
+    description: teal-grey draped shawl or wrap around shoulders

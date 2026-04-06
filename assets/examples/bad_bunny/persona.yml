@@ -1,0 +1,24 @@
+personal:
+  name: Bad Bunny
+  gender: male
+  age: 32
+  nationality: Puerto Rican
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C68642'
+  hair_color: '#1A1008'
+  hair_style: short curly
+  eye_color: '#4A3728'
+  clothing:
+  - item: top
+    color: '#F0E6D0'
+  accessories:
+  - item: earring
+    color: '#C9A84C'
+  - item: necklace
+    color: '#C9A84C'
+  face_shape: oval

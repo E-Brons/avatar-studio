@@ -1,0 +1,48 @@
+personal:
+  name: Diamond Platnumz
+  gender: male
+  age: 36
+  nationality: Tanzanian
+  religion: Muslim
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_style: not visible
+  hair_color: '#2B2B2B'
+  eye_color: not visible
+  clothing:
+  - item: jacket
+    color: '#FFFFFF'
+    detail: white tuxedo jacket with black velvet shawl lapel
+  - item: shirt
+    color: '#FFFFFF'
+    detail: white dress shirt with mandarin/band collar
+  - item: bow_tie
+    color: '#0A0A0A'
+    detail: black velvet bow tie
+  - item: vest
+    color: '#0A0A0A'
+    detail: black velvet vest
+  accessories:
+  - item: hat
+    color: '#E8E8E8'
+    detail: white fedora with black ribbon band
+  - item: sunglasses
+    color: '#C8A862'
+    detail: gold-framed aviator-style sunglasses with brown gradient lenses
+  - item: earring
+    color: '#C0C0C0'
+    detail: small silver stud earring on left ear
+  - item: earring
+    color: '#C0C0C0'
+    detail: small silver stud earring on right ear
+  - item: ring
+    color: '#C0C0C0'
+    detail: silver ring on right hand
+  - item: cigar
+    color: '#8B5E3C'
+    detail: lit cigar held between fingers
+  face_shape: oval

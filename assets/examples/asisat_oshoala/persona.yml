@@ -1,0 +1,33 @@
+personal:
+  name: Asisat Oshoala
+  gender: female
+  age: 31
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_color: '#1A1008'
+  hair_style: cornrow braids pulled back
+  eye_color: '#2C1A0E'
+  face_shape: oval
+  clothing:
+  - item: top
+    type: athletic jersey
+    primary_color: '#2E8B37'
+    secondary_color: '#FFFFFF'
+    description: green Nike Nigeria Football Federation jersey with white shoulder
+      panels and round crest
+  accessories:
+  - item: earrings
+    type: stud
+    color: '#D4A730'
+    description: small gold stud earrings
+  - item: necklace
+    type: chain
+    color: '#D4A730'
+    description: thin gold chain necklace
+  eye_shape: almond

@@ -1,0 +1,24 @@
+personal:
+  name: Lamine Yamal
+  gender: male
+  age: 18
+  nationality: Spanish
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    visible_items:
+    - jacket
+    - shirt
+    - bow tie
+    jacket_color_hex: '#0F0F0F'
+    shirt_color_hex: '#1A1A1A'
+    bow_tie_color_hex: '#0F0F0F'
+    style: formal tuxedo
+  accessories:
+    visible_items:
+    - braces/dental braces
+    braces_color_hex: '#C0C0C0'

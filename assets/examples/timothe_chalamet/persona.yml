@@ -1,0 +1,23 @@
+personal:
+  name: Timothée Chalamet
+  gender: male
+  age: 30
+  nationality: French
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      type: leather jacket
+      color: '#1A1A1A'
+      details: silver button snaps, zipper, collar
+  face_shape: oval
+  skin_tone: '#E8C8B0'
+  eye_color: '#6B7E5A'
+  eye_shape: hooded
+  nose_shape: straight
+  hair_style: curly
+  hair_color: '#3A2518'

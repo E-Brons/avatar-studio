@@ -1,0 +1,20 @@
+personal:
+  name: Glennon Doyle
+  gender: female
+  age: 50
+  nationality: American
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E8C4A8'
+  hair_color: '#C9A96E'
+  hair_style: medium length, loose waves, parted to the side
+  eye_color: '#8B9B7A'
+  accessories:
+  - type: earrings
+    description: small silver/crystal hoop or stud earrings
+    color: '#C8C8C8'
+  face_shape: oval

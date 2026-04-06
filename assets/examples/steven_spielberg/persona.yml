@@ -1,0 +1,25 @@
+personal:
+  name: Steven Spielberg
+  gender: male
+  age: 79
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    color: '#1A1A1A'
+    description: black formal tuxedo jacket
+  - item: shirt
+    color: '#FFFFFF'
+    description: white dress shirt
+  - item: bow tie
+    color: '#111111'
+    description: black bow tie
+  accessories:
+  - item: glasses
+    color: '#2B2222'
+    description: round tortoiseshell-style eyeglasses with dark frames

@@ -1,0 +1,24 @@
+personal:
+  name: Jamie Windust
+  gender: non-binary
+  age: 29
+  nationality: British
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E8CEB8'
+  eye_color: '#5A8BB0'
+  clothing:
+  - item: turtleneck
+    color: '#1A1A1A'
+    material: knit
+  - item: blazer
+    color: '#C8C820'
+    material: leather
+  accessories:
+  - item: earring
+    description: star-shaped dangle earring
+    color: '#D4C8A0'

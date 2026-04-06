@@ -1,0 +1,26 @@
+personal:
+  name: Tim Cook
+  gender: male
+  age: 65
+  nationality: American
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  accessories:
+  - type: glasses
+    description: thin rimless rectangular frames with silver metal bridge and temples
+  clothing:
+  - item: jacket
+    color: '#1A1F3A'
+    description: dark navy zip-up fleece/sweater jacket
+  - item: top
+    color: '#89B8D8'
+    description: light blue collared dress shirt
+  hair_style: short, straight, neatly combed back
+  hair_color: '#B0B0B0'
+  skin_tone: '#D4A983'
+  eye_color: '#6E8BA8'
+  face_shape: rectangular

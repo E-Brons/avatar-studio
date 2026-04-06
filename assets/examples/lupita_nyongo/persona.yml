@@ -1,0 +1,23 @@
+personal:
+  name: Lupita Nyong'o
+  gender: female
+  age: 43
+  nationality: Kenyan-Mexican
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#5C3D2E'
+  hair_color: '#1A1210'
+  hair_style: short natural afro, swept back
+  eye_color: '#2B1A10'
+  face_shape: oval
+  clothing:
+  - item: top
+    color: '#D6D6CC'
+    description: white and sheer striped V-neck blouse
+  accessories:
+  - item: earrings
+    description: small diamond or crystal studs

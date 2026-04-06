@@ -1,0 +1,22 @@
+personal:
+  name: Tsitsi Dangarembga
+  gender: female
+  age: 50
+  nationality: Zimbabwean
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#5C3A1E'
+  hair_color: '#1A0A00'
+  hair_style: long dreadlocks
+  eye_color: '#4A2C0A'
+  clothing:
+    top:
+      type: sleeveless top
+      color: '#F5EFE0'
+      pattern: floral
+  accessories:
+    nose_ring: true

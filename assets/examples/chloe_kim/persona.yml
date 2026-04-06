@@ -1,0 +1,31 @@
+personal:
+  name: Chloe Kim
+  gender: female
+  age: 26
+  nationality: Korean-American
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_style: long, loose, slightly wavy
+  hair_color: '#B8944E'
+  skin_tone: '#D4A574'
+  eye_color: '#3B2A1A'
+  face_shape: oval
+  clothing:
+  - item: jacket
+    color: '#4A5D7A'
+    description: navy blue zip-up athletic winter jacket with white logo
+  - item: gloves
+    color: '#3A3D5C'
+    description: dark navy blue winter gloves
+  accessories:
+  - item: gold medal
+    color: '#D4A017'
+    description: Olympic gold medal on a red lanyard with 'Beijing' text
+  - item: bouquet
+    color: '#FFFFFF'
+    description: knitted ceremonial bouquet with red, white, yellow, and green flowers
+      tied with a purple ribbon

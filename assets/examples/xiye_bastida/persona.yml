@@ -1,0 +1,30 @@
+personal:
+  name: Xiye Bastida
+  gender: female
+  age: 24
+  nationality: Mexican
+  religion: unknown
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8845A'
+  clothing:
+  - item: top
+    type: knit sweater
+    base_color: '#F5ECD7'
+    pattern: landscape scene with stripes
+    colors:
+    - '#F5ECD7'
+    - '#E8A830'
+    - '#5BB8D4'
+    - '#C03040'
+    - '#8B4A1A'
+    - '#2D1A0A'
+    - '#4A8A3A'
+  accessories:
+  - item: earrings
+    type: rectangular drop
+    color: '#D4A017'
+    material: gold

@@ -1,0 +1,26 @@
+personal:
+  name: Michelle Yeoh
+  gender: female
+  age: 63
+  nationality: Malaysian
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    visible_items:
+    - top
+    primary_color: '#7A9DB8'
+    description: light blue embellished/beaded V-neck top or dress with floral appliqué
+      detailing
+  accessories:
+    visible_items:
+    - earrings
+    description: pearl drop earrings
+  skin_tone: '#C4956E'
+  hair_color: '#3B2218'
+  hair_style: updo with loose curled tendrils framing the face
+  eye_color: '#2E1A0E'
+  face_shape: oval

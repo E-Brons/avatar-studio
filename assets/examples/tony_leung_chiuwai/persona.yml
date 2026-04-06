@@ -1,0 +1,22 @@
+personal:
+  name: Tony Leung Chiu-wai
+  gender: male
+  age: 63
+  nationality: Hong Kong
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  clothing:
+    top:
+      type: dress shirt
+      color: '#0d0d0d'
+    jacket:
+      type: suit jacket
+      color: '#0d0d0d'
+  nose_shape: broad
+  hair_style: short, side-parted, swept back
+  eye_shape: monolid

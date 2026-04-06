@@ -1,0 +1,24 @@
+personal:
+  name: Khaby Lame
+  gender: male
+  age: 26
+  nationality: Senegalese-Italian
+  religion: Muslim
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#5C3A2A'
+  hair_color: '#1A1210'
+  hair_style: very short buzz cut
+  eye_color: '#3B2A1E'
+  face_shape: oval
+  clothing:
+  - type: top
+    description: white crew-neck t-shirt with 'KHABY' logo on left chest
+    color: '#F0F0F0'
+  accessories:
+  - type: necklace
+    description: thin dark chain, partially hidden under shirt collar
+    color: '#2A2A2A'

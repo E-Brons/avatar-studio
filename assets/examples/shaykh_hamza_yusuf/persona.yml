@@ -1,0 +1,32 @@
+personal:
+  name: Shaykh Hamza Yusuf
+  gender: male
+  age: 66
+  nationality: American
+  religion: Muslim
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4A082'
+  hair_color: '#9E9E9E'
+  hair_style: short, gray, slightly visible beneath hat
+  eye_color: '#5C4A3A'
+  clothing:
+  - item: jacket
+    color: '#7A7265'
+    description: brown-gray herringbone tweed blazer
+  - item: sweater
+    color: '#8B2040'
+    description: deep crimson V-neck sweater
+  - item: shirt
+    color: '#E8E4DC'
+    description: white collared dress shirt
+  accessories:
+  - item: glasses
+    color: '#8B6533'
+    description: round tortoiseshell eyeglasses
+  - item: hat
+    color: '#B82028'
+    description: red fez with white base band

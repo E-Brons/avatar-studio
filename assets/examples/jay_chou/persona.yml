@@ -1,0 +1,32 @@
+personal:
+  name: Jay Chou
+  gender: male
+  age: 47
+  nationality: Taiwanese
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      type: bomber jacket
+      primary_color: '#1a1a1a'
+      secondary_colors:
+      - '#f5f5f5'
+      - '#e8829a'
+      pattern: graphic print with calligraphy-style white text on left sleeve, pink
+        floral on right
+      material: satin-like
+    hoodie:
+      type: pullover hoodie
+      color: '#c8c8c8'
+    top:
+      type: t-shirt
+      color: '#1a1a1a'
+      detail: small white logo/text
+  accessories:
+    ring:
+      finger: right ring finger
+      color: '#c8a84b'

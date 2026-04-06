@@ -1,0 +1,29 @@
+personal:
+  name: Cyril Ramaphosa
+  gender: male
+  age: 73
+  nationality: South African
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    color_hex: '#1E2433'
+    description: dark navy formal suit jacket
+  - item: shirt
+    color_hex: '#F0EDE8'
+    description: white dress shirt with spread collar
+  - item: tie
+    color_hex: '#8B1A1A'
+    description: red patterned silk tie
+  accessories:
+  - item: lapel pin
+    description: South African flag pin on left lapel
+  skin_tone: '#5C3A2A'
+  hair_style: short cropped
+  hair_color: '#2A2A2A'
+  eye_color: '#3D2B1F'
+  face_shape: round

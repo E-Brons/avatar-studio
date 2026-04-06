@@ -1,0 +1,23 @@
+personal:
+  name: Erling Haaland
+  gender: male
+  age: 25
+  nationality: Norwegian
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_color: '#C4A96A'
+  hair_style: slicked back, pulled into a low bun/ponytail
+  eye_color: '#7A9BB5'
+  skin_tone: '#C9A882'
+  clothing:
+  - type: jacket
+    primary_color: '#2B3A5C'
+    secondary_color: '#9DC4DB'
+    pattern: geometric/abstract camouflage
+    description: Puma Manchester City zip-up warm-up jacket with navy and light blue
+      geometric pattern
+  face_shape: square/angular

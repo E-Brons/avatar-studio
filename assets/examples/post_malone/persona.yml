@@ -1,0 +1,18 @@
+personal:
+  name: Post Malone
+  gender: male
+  age: 30
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A574'
+  hair_color: '#5C3A1E'
+  hair_style: curly
+  eye_color: '#6B8FAD'
+  face_shape: round
+  accessories:
+  - grillz on upper teeth

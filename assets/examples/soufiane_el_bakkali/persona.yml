@@ -1,0 +1,29 @@
+personal:
+  name: Soufiane El Bakkali
+  gender: male
+  age: 30
+  nationality: Moroccan
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8956A'
+  hair_color: '#1A1412'
+  hair_style: short, fade sides, slicked back on top
+  eye_color: '#4A3728'
+  clothing:
+  - item: jacket
+    color: '#C8152A'
+    pattern: subtle dark print pattern
+    brand: KELME
+  accessories:
+  - item: medal lanyard
+    color: '#7BAFD4'
+  - item: gold medal
+    color: '#D4AF37'
+  - item: wristband
+    color: '#C8152A'
+  face_shape: oval
+  nose_shape: straight

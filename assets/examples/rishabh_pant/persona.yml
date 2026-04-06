@@ -1,0 +1,22 @@
+personal:
+  name: Rishabh Pant
+  gender: male
+  age: 28
+  nationality: Indian
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    type: cricket jersey
+    color_primary: '#2E7BD6'
+    color_secondary: '#FFFFFF'
+    pattern: solid with printed graphics
+    text: INDIA
+  accessories:
+  - item: necklace
+    type: chain
+    color: '#D4AF37'

@@ -1,0 +1,20 @@
+personal:
+  name: Cillian Murphy
+  gender: male
+  age: 49
+  nationality: Irish
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    color: '#1C1A1E'
+    pattern: subtle pinstripe
+    material: wool
+  - item: shirt
+    color: '#F0EDE8'
+    pattern: solid
+    style: dress shirt, open collar

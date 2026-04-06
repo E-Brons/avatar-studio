@@ -1,0 +1,31 @@
+personal:
+  name: Sadhguru
+  gender: male
+  age: 68
+  nationality: Indian
+  religion: Hindu
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_color: '#C8C0B0'
+  hair_style: curly, shoulder-length, mostly hidden under turban
+  eye_color: '#4A3520'
+  face_shape: oval
+  clothing:
+  - item: turban
+    color: '#E8DFC8'
+    description: cream/off-white wrapped turban
+  - item: top
+    color: '#2E3D4E'
+    description: dark teal-blue long-sleeved tunic/kurta
+  - item: shawl
+    color: '#C4A84E'
+    description: golden-tan embroidered shawl/dupatta draped over shoulders with dark
+      blue and gold border pattern
+  accessories:
+  - item: necklace
+    color: '#B8932E'
+    description: gold chain/mala necklace

@@ -1,0 +1,22 @@
+personal:
+  name: Tobi Eriksen
+  gender: male
+  age: 22
+  nationality: Danish
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A586'
+  hair_color: '#8B6E4B'
+  hair_style: short, swept back and to the side, undercut
+  eye_color: '#5B7A5E'
+  face_shape: oval
+  clothing:
+  - type: top
+    description: red Denmark national team soccer jersey with white chevron details
+      on shoulders, number 10, Hummel brand, DBU crest
+    primary_color: '#C4243C'
+    secondary_color: '#FFFFFF'

@@ -1,0 +1,27 @@
+personal:
+  name: Sam Smith
+  gender: non-binary
+  age: 33
+  nationality: British
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A98C'
+  hair_color: '#6B4F3A'
+  hair_style: short, swept back, tapered sides
+  eye_color: '#7A9BB5'
+  clothing:
+  - item: jacket
+    color: '#1A1A1E'
+    description: dark pinstripe blazer
+  - item: top
+    color: '#0F0F11'
+    description: black crew neck shirt
+  accessories:
+  - item: earring
+    color: '#C0C0C0'
+    description: small silver stud earring in left ear
+  face_shape: round

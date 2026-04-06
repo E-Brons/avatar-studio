@@ -1,0 +1,23 @@
+personal:
+  name: Lionel Messi
+  gender: male
+  age: 38
+  nationality: Argentine
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  skin_tone: '#B8896A'
+  eye_color: '#4A3728'
+  nose_shape: straight
+  hair_style: short, slightly messy, swept to the side
+  hair_color: '#3D2E22'
+  clothing:
+  - item: top
+    description: striped jersey with blue and deep red/maroon vertical stripes, yellow
+      collar trim
+    primary_color: '#1A5BA0'
+    secondary_color: '#A31545'

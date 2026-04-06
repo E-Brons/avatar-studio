@@ -1,0 +1,47 @@
+personal:
+  name: Janelle Monáe
+  gender: non-binary
+  age: 40
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - type: jacket
+    primary_colors:
+    - '#0A0A0A'
+    - '#E02020'
+    - '#5BB8E8'
+    - '#2DB85A'
+    - '#F5E642'
+    - '#F5A0BF'
+    - '#FFFFFF'
+    pattern: colorful geometric color-block checkerboard
+    neckline: high/crew with front zipper
+    sleeve_style: long with black ribbed cuffs
+  accessories:
+  - type: hat
+    style: wide-brim flat-top hat / bolero
+    color: '#1A1A1A'
+  - type: earrings
+    style: large geometric drop earrings with layered shapes
+    colors:
+    - '#FFFFFF'
+    - '#F5E642'
+    - '#E02020'
+    - '#1A1A1A'
+  - type: rings
+    style: small rings on fingers
+    colors:
+    - '#C0C0C0'
+    - '#FFD700'
+  - type: hair_ties
+    style: yellow bands segmenting the braid
+    color: '#F5E642'
+  skin_tone: '#8B6442'
+  hair_color: '#1A1A1A'
+  hair_style: long braided ponytail
+  eye_color: '#3D2B1F'

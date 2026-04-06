@@ -1,0 +1,17 @@
+personal:
+  name: Cristiano Ronaldo
+  gender: male
+  age: 41
+  nationality: Portuguese
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  skin_tone: '#C4A882'
+  eye_color: '#3B2A1A'
+  nose_shape: straight
+  hair_style: short textured quiff with faded sides
+  hair_color: '#1C1410'

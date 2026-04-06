@@ -1,0 +1,28 @@
+personal:
+  name: Grand Ayatollah Ali al-Sistani
+  gender: male
+  age: 95
+  nationality: Iraqi
+  religion: Muslim
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956A'
+  face_shape: oval
+  clothing:
+  - item: top
+    color: '#1A1A1A'
+    description: black robe/cloak
+  - item: headwear
+    color: '#1C1C1C'
+    description: black turban
+  accessories:
+    headwear:
+      type: turban
+      color: '#1C1C22'
+      description: large black wrapped turban
+  hair_color: '#C8C4B8'
+  hair_style: not visible
+  eye_color: '#4A3B2E'

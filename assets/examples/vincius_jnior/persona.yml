@@ -1,0 +1,21 @@
+personal:
+  name: Vinícius Júnior
+  gender: male
+  age: 25
+  nationality: Brazilian
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - type: hoodie
+    color: '#F0EBE4'
+    description: White zip-up hoodie with Adidas logo, Real Madrid crest, and Emirates
+      Fly Better sponsor
+  skin_tone: '#4A2F1E'
+  hair_color: '#1A1008'
+  hair_style: short curly fade
+  eye_color: '#2B1A0E'
+  face_shape: oval

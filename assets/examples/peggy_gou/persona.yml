@@ -1,0 +1,18 @@
+personal:
+  name: Peggy Gou
+  gender: female
+  age: 34
+  nationality: South Korean
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    items:
+    - top
+    top_type: button-up collared shirt
+    top_color: '#1A1A1E'
+    top_material: cotton or linen
+    top_style: casual, partially unbuttoned

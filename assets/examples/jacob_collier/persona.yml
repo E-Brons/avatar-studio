@@ -1,0 +1,23 @@
+personal:
+  name: Jacob Collier
+  gender: male
+  age: 31
+  nationality: British
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      type: shirt
+      color: '#1A1A2E'
+      description: dark navy/black button-up shirt
+    jacket:
+      type: blazer
+      color: '#C0A020'
+      description: multicolor sequin blazer with gold, blue, teal, pink, and red sequins
+  accessories:
+    visible_accessories: []
+    notable_details: none visible

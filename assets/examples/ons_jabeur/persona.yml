@@ -1,0 +1,28 @@
+personal:
+  name: Ons Jabeur
+  gender: female
+  age: 31
+  nationality: Tunisian
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    visible_items:
+    - top
+    - headband
+    top_color: '#F0ECE8'
+    top_style: athletic short-sleeve shirt
+    headband_color: '#FFFFFF'
+  accessories:
+  - type: headband
+    color: '#FFFFFF'
+    description: white athletic headband with black diamond logo
+  - type: earring
+    color: '#C0C0C0'
+    description: small silver stud earring on left ear
+  - type: necklace
+    color: '#C0C0C0'
+    description: thin silver chain necklace

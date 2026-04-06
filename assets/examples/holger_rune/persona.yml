@@ -1,0 +1,26 @@
+personal:
+  name: Holger Rune
+  gender: male
+  age: 23
+  nationality: Danish
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    type: t-shirt
+    color: '#F0EDE8'
+    description: white crew-neck t-shirt
+  accessories:
+  - item: hat
+    type: baseball cap
+    color: '#1E4A5E'
+    description: dark teal baseball cap worn backwards
+  skin_tone: '#D4A088'
+  hair_color: '#4A3728'
+  hair_style: not visible
+  eye_color: '#7A9BB5'
+  face_shape: oval

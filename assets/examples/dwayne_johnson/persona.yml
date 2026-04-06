@@ -1,0 +1,20 @@
+personal:
+  name: Dwayne Johnson
+  gender: male
+  age: 53
+  nationality: American-Samoan
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    color_hex: '#B8B4AE'
+    pattern: glen plaid / prince of wales check
+    material: wool blend
+  - item: top
+    color_hex: '#F5F5F5'
+    pattern: solid
+    material: cotton

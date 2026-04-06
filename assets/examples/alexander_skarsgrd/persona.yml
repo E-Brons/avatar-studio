@@ -1,0 +1,21 @@
+personal:
+  name: Alexander Skarsgård
+  gender: male
+  age: 49
+  nationality: Swedish
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    type: crew neck knit sweater
+    color: '#1A1A1A'
+    material: knit wool
+  skin_tone: '#C4A08A'
+  hair_color: '#6B5540'
+  hair_style: short, straight, side-parted, slightly tousled
+  eye_color: '#7A9BAE'
+  face_shape: oval, angular jawline

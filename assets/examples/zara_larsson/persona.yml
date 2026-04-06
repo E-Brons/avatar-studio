@@ -1,0 +1,20 @@
+personal:
+  name: Zara Larsson
+  gender: female
+  age: 28
+  nationality: Swedish
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_color: '#D4B96E'
+  hair_style: long, wavy, center-parted
+  eye_color: '#7A9A8B'
+  skin_tone: '#E8C4A8'
+  clothing:
+  - item: top
+    color: '#F5D89A'
+    description: pale yellow sleeveless top with ruffle detail and cutout at neckline
+  face_shape: oval

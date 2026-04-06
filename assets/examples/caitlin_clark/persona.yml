@@ -1,0 +1,25 @@
+personal:
+  name: Caitlin Clark
+  gender: female
+  age: 24
+  nationality: American
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8906A'
+  hair_color: '#1A1008'
+  hair_style: long, straight, worn down
+  eye_color: '#4A3728'
+  clothing:
+  - item: top
+    type: basketball jersey
+    primary_color: '#1C2B4A'
+    secondary_color: '#F5A800'
+    pattern: solid with striped collar trim
+  accessories:
+  - item: earrings
+    color: '#C0C0C0'
+    style: small stud

@@ -1,0 +1,24 @@
+personal:
+  name: Sid Sriram
+  gender: male
+  age: 35
+  nationality: Indian
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_color: '#1A1A1A'
+  hair_style: short curly
+  eye_color: '#2C1A0E'
+  clothing:
+  - type: top
+    description: embroidered mandarin-collar kurta
+    color: '#3E4F5E'
+    pattern: tonal embroidery with vertical floral/vine motifs
+  accessories:
+  - type: earring
+    description: small gold hoop earring on left ear
+    color: '#D4A017'

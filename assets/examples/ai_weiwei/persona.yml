@@ -1,0 +1,23 @@
+personal:
+  name: Ai Weiwei
+  gender: male
+  age: 68
+  nationality: Chinese
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4A882'
+  hair_color: '#2E2A27'
+  hair_style: short, tousled, unkempt with volume on top
+  eye_color: '#3B2F28'
+  face_shape: round
+  clothing:
+  - item: jacket
+    color: '#384258'
+    description: dark navy blue utility jacket with snap buttons and chest pocket
+  - item: top
+    color: '#1A1A1A'
+    description: black crew neck undershirt visible at collar

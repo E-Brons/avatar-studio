@@ -1,0 +1,20 @@
+personal:
+  name: Jackson Wang
+  gender: male
+  age: 32
+  nationality: Hong Kong
+  religion: unknown
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    visible_items:
+    - top
+    top_description: grey-blue V-neck collarless top with a single button detail
+    top_color: '#8A9199'
+  skin_tone: '#E8C8B0'
+  hair_color: '#3D2B1F'
+  hair_style: short, side-parted, swept back
+  eye_color: '#2C1A0E'

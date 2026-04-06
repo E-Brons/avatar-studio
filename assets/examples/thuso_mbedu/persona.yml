@@ -1,0 +1,30 @@
+personal:
+  name: Thuso Mbedu
+  gender: female
+  age: 34
+  nationality: South African
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6342'
+  hair_color: '#B8863E'
+  hair_style: short natural curls
+  eye_color: '#3D2B1A'
+  face_shape: oval
+  clothing:
+  - item: top
+    primary_color: '#6B7F4A'
+    secondary_colors:
+    - '#A8C4E0'
+    - '#E8B8C4'
+    - '#4A6B8A'
+    pattern: 3D floral appliqué
+    neckline: round
+  accessories:
+  - item: earrings
+    type: drop/chandelier
+    color: '#C0C0C0'
+    material: crystal/diamond

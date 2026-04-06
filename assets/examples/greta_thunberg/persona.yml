@@ -1,0 +1,22 @@
+personal:
+  name: Greta Thunberg
+  gender: female
+  age: 23
+  nationality: Swedish
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - type: top
+    color: '#C8A99A'
+    description: light pink knit sweater
+  face_shape: oval
+  skin_tone: '#D4A98C'
+  eye_color: '#7A9E8B'
+  eye_shape: round
+  nose_shape: button
+  hair_style: braided pigtails
+  hair_color: '#4A3728'

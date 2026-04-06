@@ -1,0 +1,23 @@
+personal:
+  name: LeBron James
+  gender: male
+  age: 41
+  nationality: American
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B5E3C'
+  hair_color: '#1A1A1A'
+  hair_style: short buzz cut
+  eye_color: '#3D2B1F'
+  face_shape: square
+  clothing:
+  - item: top
+    description: Los Angeles Lakers basketball jersey, sleeveless
+    primary_color: '#FDB927'
+    secondary_color: '#552583'
+    details: Gold jersey with purple trim, 'LAKERS' text across chest, Nike swoosh,
+      Bibigo sponsor patch, NBA 75th anniversary patch with number 6

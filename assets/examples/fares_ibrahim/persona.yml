@@ -1,0 +1,20 @@
+personal:
+  name: Fares Ibrahim
+  gender: male
+  age: 27
+  nationality: Qatari
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_style: curly
+  hair_color: '#1A1008'
+  eye_color: '#3D2A1A'
+  skin_tone: '#C49A78'
+  clothing:
+  - type: jacket
+    color: '#8B2A2A'
+    description: zip-up windbreaker jacket with white piping trim and a small logo
+      on the left chest

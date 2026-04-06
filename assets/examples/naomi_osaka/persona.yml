@@ -1,0 +1,27 @@
+personal:
+  name: Naomi Osaka
+  gender: female
+  age: 28
+  nationality: Japanese
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: athletic tank top
+    primary_color_hex: '#5B8EC9'
+    secondary_color_hex: '#F54B7A'
+    pattern: color-blocked with pink and blue panels
+  - item: visor
+    primary_color_hex: '#E8E8EA'
+    secondary_color_hex: '#1A1A1A'
+    pattern: solid white with dark brim underside
+  accessories:
+  - item: earrings
+    description: small silver/white drop earrings
+    color_hex: '#D4D4D4'
+  - item: necklace
+    description: thin delicate chain necklace
+    color_hex: '#C8B898'

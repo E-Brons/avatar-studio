@@ -1,0 +1,26 @@
+personal:
+  name: Shelly-Ann Fraser-Pryce
+  gender: female
+  age: 39
+  nationality: Jamaican
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#5C3A2A'
+  hair_color: '#C8E040'
+  hair_style: pulled back with colorful streaks
+  eye_color: '#3B2518'
+  face_shape: oval
+  clothing:
+  - item: athletic tank top
+    color: '#E8D830'
+    brand: Puma
+    details: Jamaica national team jersey with Jamaican flag patch
+  accessories:
+  - item: earrings
+    type: stud
+    color: '#C0C0C0'
+    description: sparkly silver/crystal stud earrings in both ears

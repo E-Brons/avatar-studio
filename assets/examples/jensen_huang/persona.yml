@@ -1,0 +1,25 @@
+personal:
+  name: Jensen Huang
+  gender: male
+  age: 63
+  nationality: Taiwanese-American
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#B8956E'
+  hair_color: '#3D3D3D'
+  hair_style: short, swept back, graying at temples
+  eye_color: '#3B2A1A'
+  face_shape: round
+  clothing:
+  - item: jacket
+    color: '#1A1A1A'
+    material: leather
+    description: black leather jacket with zippered details
+  accessories:
+  - item: glasses
+    color: '#2C2C2C'
+    description: rectangular thin-framed eyeglasses, dark metal frames

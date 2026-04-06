@@ -1,0 +1,28 @@
+personal:
+  name: Linda Caicedo
+  gender: female
+  age: 21
+  nationality: Colombian
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#5C3A2A'
+  hair_color: '#1A1A1A'
+  hair_style: braided, pulled back
+  eye_color: '#2B1D15'
+  face_shape: oval
+  clothing:
+  - item: top
+    type: soccer jersey
+    primary_color: '#F5E020'
+    secondary_color: '#1C2340'
+    details: Colombia national team jersey, number 18, Adidas logo, navy blue stripes
+      on shoulders, red trim at collar and sleeve cuffs
+  accessories:
+  - item: earring
+    location: right ear
+    color: '#C0C0C0'
+    details: small stud earring

@@ -1,0 +1,23 @@
+personal:
+  name: Morgan Wallen
+  gender: male
+  age: 32
+  nationality: American
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A987'
+  hair_color: '#5C3A1E'
+  hair_style: long, wavy, shoulder-length with curled ends
+  eye_color: '#6B8E9F'
+  face_shape: oval
+  clothing:
+  - type: jacket
+    color: '#8B5A2B'
+    description: brown denim trucker jacket with silver snap buttons and chest pockets
+  - type: top
+    color: '#1A1A1A'
+    description: black button-up shirt worn open at the collar

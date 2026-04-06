@@ -1,0 +1,17 @@
+personal:
+  name: Jay Shetty
+  gender: male
+  age: 38
+  nationality: British
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: top
+    description: dark brown long-sleeve polo or rugby shirt with white collar and
+      button placket
+    primary_color: '#2C2016'
+    secondary_color: '#E8DDD0'

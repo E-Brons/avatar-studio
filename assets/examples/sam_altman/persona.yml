@@ -1,0 +1,21 @@
+personal:
+  name: Sam Altman
+  gender: male
+  age: 40
+  nationality: American
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8956A'
+  hair_color: '#7B3F1E'
+  hair_style: short, swept back, slightly tousled
+  eye_color: '#7A9BA8'
+  clothing:
+    top:
+      type: button-up shirt
+      primary_color: '#1A1F2E'
+      pattern: small white polka dots
+  face_shape: oval

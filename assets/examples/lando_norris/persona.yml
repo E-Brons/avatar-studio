@@ -1,0 +1,26 @@
+personal:
+  name: Lando Norris
+  gender: male
+  age: 26
+  nationality: British
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956E'
+  hair_color: '#3B2A1A'
+  hair_style: short curly
+  eye_color: '#5A7A5C'
+  face_shape: oval
+  clothing:
+  - item: racing suit
+    primary_color: '#1E5FAE'
+    secondary_color: '#E88C2A'
+    pattern: horizontal stripes on lower section
+  accessories:
+  - item: racing helmet (held)
+    color: '#D4E522'
+  - item: wristwatch
+    color: '#E85A20'

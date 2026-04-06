@@ -1,0 +1,20 @@
+personal:
+  name: Wagner Moura
+  gender: male
+  age: 49
+  nationality: Brazilian
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    color: '#B89B6E'
+    material: suede or nubuck leather
+    style: casual collared jacket
+  - item: top
+    color: '#7A6B60'
+    material: fabric
+    style: crew or v-neck undershirt, barely visible

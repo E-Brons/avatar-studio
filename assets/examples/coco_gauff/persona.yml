@@ -1,0 +1,36 @@
+personal:
+  name: Coco Gauff
+  gender: female
+  age: 22
+  nationality: American
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#5C3A1E'
+  eye_color: '#3D2B1F'
+  eye_shape: almond
+  hair_color: '#1A0F0A'
+  hair_style: box braids pulled back, secured with headband
+  face_shape: oval
+  clothing:
+    top:
+      type: athletic tank top / tennis dress
+      primary_color: '#DDEAF5'
+      secondary_color: '#A8BDD4'
+      pattern: geometric line pattern
+      brand_visible: New Balance, Barilla sponsor patch
+  accessories:
+    headband:
+      type: athletic headband
+      color: '#2C2C2C'
+      pattern: textured dark with New Balance logo in white
+    wristband:
+      type: tennis wristband
+      color: '#F0EDE8'
+      brand_visible: New Balance
+    watch_or_band:
+      type: black sport band / fitness tracker
+      color: '#1A1A1A'

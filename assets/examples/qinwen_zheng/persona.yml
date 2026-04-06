@@ -1,0 +1,25 @@
+personal:
+  name: Qinwen Zheng
+  gender: female
+  age: 23
+  nationality: Chinese
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - type: jacket
+    color: '#A8AE9C'
+    description: Sage green Nike zip-up hoodie with dark trim
+  - type: top
+    color: '#D4E620'
+    description: Neon yellow-green athletic shirt visible at neckline
+  accessories:
+  - type: necklace
+    color: '#C0C0C0'
+    description: Delicate silver chain necklace
+  - type: earrings
+    color: '#C0C0C0'
+    description: Small silver stud earring visible on left ear

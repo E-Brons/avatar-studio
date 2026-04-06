@@ -1,0 +1,28 @@
+personal:
+  name: HoYeon Jung
+  gender: female
+  age: 31
+  nationality: South Korean
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    visible_items:
+    - jacket
+    descriptions:
+    - item: jacket
+      type: tweed button-up jacket with high collar
+      primary_color: '#2E6EB5'
+      secondary_color: '#1A1A1A'
+      pattern: tweed weave
+      details: silver metallic buttons, large black satin bow at collar
+  accessories:
+    visible_items:
+    - earrings
+    descriptions:
+    - item: earrings
+      type: small silver hoop earrings, multiple piercings
+      color: '#C0C0C0'

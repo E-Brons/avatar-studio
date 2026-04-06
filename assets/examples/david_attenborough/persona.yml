@@ -1,0 +1,29 @@
+personal:
+  name: David Attenborough
+  gender: male
+  age: 99
+  nationality: British
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      type: dress shirt
+      color: '#F2F0EC'
+      description: white collared dress shirt, open at neck
+    jacket:
+      type: blazer
+      color: '#3A4E6B'
+      description: navy blue blazer
+    inner_layer:
+      type: v-neck sweater or vest
+      color: '#8FA8A8'
+      description: light teal/grey v-neck visible beneath shirt collar
+  skin_tone: '#D4A98C'
+  hair_color: '#E0DDD8'
+  hair_style: short, swept back, wispy
+  eye_color: '#7A8FA0'
+  face_shape: oval

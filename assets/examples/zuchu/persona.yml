@@ -1,0 +1,34 @@
+personal:
+  name: Zuchu
+  gender: female
+  age: 32
+  nationality: Tanzanian
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_color: '#1A1A1A'
+  hair_style: long braids
+  eye_color: '#3D2B1F'
+  clothing:
+  - item: top
+    description: sheer mesh blouse with ornate sequin swirl embroidery
+    primary_color: '#1A1A1A'
+    secondary_colors:
+    - '#1B6B6B'
+    - '#1E3A6E'
+  accessories:
+  - item: earrings
+    description: large geometric cross-shaped drop earrings with multicolored gemstone
+      inlays
+    primary_color: '#8B1A1A'
+    secondary_colors:
+    - '#D4A017'
+    - '#2E5E2E'
+    - '#E8751A'
+  - item: nose piercing
+    description: small stud on left nostril
+    primary_color: '#C0C0C0'

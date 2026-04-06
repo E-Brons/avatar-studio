@@ -1,0 +1,25 @@
+personal:
+  name: Hamed Sinno
+  gender: non-binary
+  age: 37
+  nationality: Lebanese
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    color: '#1C1E22'
+    description: dark navy/black lightweight zip-up jacket
+  - item: top
+    color: '#F0EDE8'
+    description: white crew-neck t-shirt
+  accessories:
+  - item: glasses
+    color: '#3B3530'
+    description: round tortoiseshell-frame eyeglasses with clear lenses
+  - item: earring
+    color: '#4A4E52'
+    description: small dark circular stud earring in left ear

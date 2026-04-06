@@ -1,0 +1,25 @@
+personal:
+  name: Chella Man
+  gender: non-binary
+  age: 27
+  nationality: American-Chinese
+  religion: Jewish
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_style: short, swept to the side, textured and voluminous on top with shorter
+    sides
+  hair_color: '#2B1F1A'
+  skin_tone: '#D4A98C'
+  eye_color: '#3B2A1E'
+  clothing:
+  - type: top
+    subtype: t-shirt
+    color: '#E8DDD6'
+    description: light beige/off-white crew neck t-shirt
+  accessories:
+  - type: necklace
+    color: '#C0C0C0'
+    description: layered silver chain necklaces, two chains of different lengths

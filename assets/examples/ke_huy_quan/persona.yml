@@ -1,0 +1,22 @@
+personal:
+  name: Ke Huy Quan
+  gender: male
+  age: 54
+  nationality: Vietnamese
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - type: jacket
+    color: '#0F0F0F'
+    description: black double-breasted blazer with decorative stitching along lapels
+  - type: shirt
+    color: '#F5F5F5'
+    description: white button-down dress shirt with collar, worn open at the neck
+  accessories:
+  - type: glasses
+    color: '#0D0D0D'
+    description: black round-framed eyeglasses with thick rims

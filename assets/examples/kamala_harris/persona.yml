@@ -1,0 +1,28 @@
+personal:
+  name: Kamala Harris
+  gender: female
+  age: 61
+  nationality: American
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: jacket
+    color: '#1B2340'
+    description: dark navy blue tailored blazer
+  - item: top
+    color: '#0F0F0F'
+    description: black round-neck top underneath blazer
+  accessories:
+  - item: necklace
+    color: '#D4C5A9'
+    description: layered pearl and gold chain necklace
+  - item: earrings
+    color: '#D4C5A9'
+    description: pearl stud earrings
+  - item: pin
+    color: '#C0392B'
+    description: small American flag lapel pin

@@ -1,0 +1,39 @@
+personal:
+  name: Vandana Shiva
+  gender: female
+  age: 73
+  nationality: Indian
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+  - item: shawl
+    primary_color: '#3B4A6B'
+    secondary_colors:
+    - '#C85A9A'
+    - '#6B3F7A'
+    - '#D4A855'
+    pattern: striped/bordered
+    material_appearance: silk or woven textile
+  - item: top
+    primary_color: '#E84B8A'
+    pattern: solid
+  accessories:
+  - item: ring
+    location: right hand
+    color: '#C0C0C0'
+    material_appearance: silver
+  - item: ring
+    location: right hand index finger
+    color: '#C0C0C0'
+    material_appearance: silver with dark stone
+  - item: earring
+    location: ear
+    color: '#C0A060'
+    material_appearance: gold
+  - item: microphone
+    location: right hand
+    color: '#4A4A4A'

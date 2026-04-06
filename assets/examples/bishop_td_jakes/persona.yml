@@ -1,0 +1,37 @@
+personal:
+  name: Bishop T.D. Jakes
+  gender: male
+  age: 68
+  nationality: American
+  religion: Christian
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B5E3C'
+  hair_style: bald
+  hair_color: '#4A4A4A'
+  face_shape: round
+  eye_color: '#3B2A1A'
+  clothing:
+  - item: jacket
+    type: pinstriped suit jacket
+    primary_color: '#4A5568'
+    secondary_color: '#5C6B7F'
+    pattern: pinstripe
+  - item: shirt
+    type: dress shirt, open collar
+    primary_color: '#F5F5F5'
+    secondary_color: null
+    pattern: solid
+  - item: pocket_square
+    type: decorative pocket square
+    primary_color: '#E8A035'
+    secondary_color: '#4A3080'
+    pattern: multicolor patterned
+  accessories:
+  - item: pocket square
+    color_primary: '#D4782F'
+    color_secondary: '#2B2D5E'
+    pattern: multicolor patterned

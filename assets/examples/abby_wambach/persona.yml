@@ -1,0 +1,25 @@
+personal:
+  name: Abby Wambach
+  gender: female
+  age: 45
+  nationality: American
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_color: '#8B6B3D'
+  hair_style: pulled back, slicked
+  eye_color: '#6B8FA3'
+  skin_tone: '#C4956E'
+  clothing:
+  - item: jersey
+    color: '#2A2D35'
+    description: dark navy athletic jersey with red trim at collar and a crest/badge
+      on the chest
+  face_shape: oval
+  accessories:
+  - item: hair tie
+    color: '#C42020'
+    description: red hair tie or scrunchie holding the ponytail

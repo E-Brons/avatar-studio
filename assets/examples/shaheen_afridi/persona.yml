@@ -1,0 +1,17 @@
+personal:
+  name: Shaheen Afridi
+  gender: male
+  age: 26
+  nationality: Pakistani
+  religion: Muslim
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  clothing:
+    top:
+      type: jersey/polo
+      color: '#1a4a2e'
+      pattern: solid with emblem

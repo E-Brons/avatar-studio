@@ -1,0 +1,24 @@
+personal:
+  name: Cameron Winter
+  gender: male
+  age: 26
+  nationality: American
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  clothing:
+  - type: top
+    subtype: polo shirt
+    brand: Fred Perry
+    color_primary: '#6B7A56'
+    color_secondary: '#2E3440'
+    details: olive green Fred Perry twin-tipped polo with navy blue tipped collar
+      and placket, laurel wreath logo on chest
+  skin_tone: '#D4B09A'
+  eye_color: '#6B7B5A'
+  hair_style: medium-length wavy
+  hair_color: '#4A3628'
