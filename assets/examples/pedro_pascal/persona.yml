@@ -1,6 +1,7 @@
 personal:
   name: Pedro Pascal
   gender: male
+  pronouns: he/him
   age: 51
   nationality: Chilean
   religion: unknown

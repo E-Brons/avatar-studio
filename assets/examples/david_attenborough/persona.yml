@@ -1,6 +1,7 @@
 personal:
   name: David Attenborough
   gender: male
+  pronouns: he/him
   age: 99
   nationality: British
   religion: unknown

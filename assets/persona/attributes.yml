@@ -53,6 +53,21 @@ attributes:
         label: Select
     default_mode: random
 
+  - id: pronouns
+    label: Pronouns
+    category: demographics
+    type: choice
+    source: "demographics.yml:pronouns"
+    depends_on: gender
+    selection_modes:
+      - id: random
+        label: Random
+      - id: inherited
+        label: Auto (from gender)
+      - id: select
+        label: Select
+    default_mode: inherited
+
   - id: age
     label: Age
     category: demographics

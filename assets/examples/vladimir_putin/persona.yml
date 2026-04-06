@@ -1,6 +1,7 @@
 personal:
   name: Vladimir Putin
   gender: male
+  pronouns: he/him
   age: 73
   nationality: Russian
   religion: unknown
