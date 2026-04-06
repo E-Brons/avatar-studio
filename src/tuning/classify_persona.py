@@ -443,15 +443,32 @@ def categorize_avatar_image(
 def _parse_categorizer_response(raw: str, props: dict[str, str]) -> CategoryReport:
     """Parse the LLM JSON response into a CategoryReport.
 
+    Handles three response formats in priority order:
+    1. Plain JSON object: {"properties": [{name, visible, note, observed_hex}, ...]}
+    2. Plain JSON array (model skipped the wrapper): [{name, visible, note, observed_hex}, ...]
+    3. JSON in markdown code fences (either object or array)
+
     For color properties: if the LLM reports a non-empty observed_hex, the
     ``visible`` flag is overridden by a YCbCr distance check against the
     expected hex(es) embedded in the property description string.
     """
+    # Strip code fences if present
+    text = raw.strip()
+    fence_match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+    if fence_match:
+        text = fence_match.group(1).strip()
+
+    parsed: dict | list = {}
     try:
-        parsed = json.loads(raw)
+        candidate = json.loads(text)
+        if isinstance(candidate, (dict, list)):
+            parsed = candidate
     except json.JSONDecodeError as exc:
         logger.warning("categorize: JSON parse failed: %s — raw=%r", exc, raw[:200])
-        parsed = {}
+
+    # Accept bare array (model returned items directly without the wrapper object)
+    if isinstance(parsed, list):
+        parsed = {"properties": parsed}
 
     if not isinstance(parsed, dict):
         parsed = {}
@@ -460,7 +477,7 @@ def _parse_categorizer_response(raw: str, props: dict[str, str]) -> CategoryRepo
     entries: dict[str, dict] = {}
     for item in parsed.get("properties", []):
         if isinstance(item, dict):
-            name = str(item.get("name", "")).strip()
+            name = str(item.get("name", "") or item.get("property", "")).strip()
             if name:
                 entries[name] = item
 

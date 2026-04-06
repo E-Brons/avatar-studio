@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from dataclasses import dataclass, field
 
 from config.gateway import GatewayClient
@@ -263,7 +264,11 @@ def semantic_effective_score(
         )
         try:
             raw = _call_text_model(gateway_url=gateway_url, prompt=prompt, timeout=timeout)
-            parsed = json.loads(raw)
+            text = raw.strip()
+            fence_match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+            if fence_match:
+                text = fence_match.group(1).strip()
+            parsed = json.loads(text)
             matched = bool(parsed.get("matches", False))
         except Exception as exc:
             logger.warning(
@@ -315,14 +320,18 @@ def _parse_expression_response(
     hint_labels: list[str],
 ) -> ExpressionClassificationResult:
     """Parse the LLM JSON response into an ExpressionClassificationResult."""
+    text = raw.strip()
+    fence_match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+    if fence_match:
+        text = fence_match.group(1).strip()
+
+    parsed: dict = {}
     try:
-        parsed = json.loads(raw)
+        candidate = json.loads(text)
+        if isinstance(candidate, dict):
+            parsed = candidate
     except json.JSONDecodeError as exc:
         logger.warning("classify_expression: JSON parse failed: %s — raw=%r", exc, raw[:200])
-        parsed = {}
-
-    if not isinstance(parsed, dict):
-        parsed = {}
 
     raw_expressions = parsed.get("expressions", [])
     scores: dict[str, float] = {}

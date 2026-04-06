@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from dataclasses import dataclass, field
 
 from config.gateway import GatewayClient
@@ -156,15 +157,26 @@ def classify_image_style(
 
 
 def _parse_classification_response(raw: str, style_ids: list[str]) -> StyleClassificationResult:
-    """Parse the LLM JSON response into a StyleClassificationResult."""
-    try:
-        parsed = json.loads(raw)
-    except json.JSONDecodeError as exc:
-        logger.warning("classify_style: JSON parse failed: %s — raw=%r", exc, raw[:200])
-        parsed = {}
+    """Parse the LLM JSON response into a StyleClassificationResult.
 
-    if not isinstance(parsed, dict):
-        parsed = {}
+    Handles three response formats in priority order:
+    1. Plain JSON object matching _STYLE_SCHEMA
+    2. JSON object wrapped in markdown code fences (```json ... ```)
+    3. Free-form Markdown analysis (regex fallback)
+    """
+    # Strip code fences if present
+    text = raw.strip()
+    fence_match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+    if fence_match:
+        text = fence_match.group(1).strip()
+
+    parsed: dict = {}
+    try:
+        candidate = json.loads(text)
+        if isinstance(candidate, dict):
+            parsed = candidate
+    except json.JSONDecodeError:
+        pass
 
     top = str(parsed.get("top_style", "")).strip()
     if top not in style_ids:
@@ -182,11 +194,55 @@ def _parse_classification_response(raw: str, style_ids: list[str]) -> StyleClass
                     except TypeError, ValueError:
                         scores[sid] = 0.0
 
+    reasoning = str(parsed.get("reasoning", "")).strip()
+
+    # ── Markdown regex fallback ──────────────────────────────────────────────
+    if not top or not scores:
+        # Extract top style: **Best Match: `id`** or **top_style: id** etc.
+        top_match = re.search(
+            r"(?:Best [Mm]atch|[Tt]op(?:_style)?|[Vv]erdict)\s*[:\-–]?\s*[`'\"]?(\w+)[`'\"]?",
+            raw,
+        )
+        if top_match:
+            candidate_top = top_match.group(1).strip()
+            if candidate_top in style_ids:
+                top = candidate_top
+
+        # Extract scores: `id` ... N/100  OR  | id | N |  OR  id — Score: N
+        for sid in style_ids:
+            if sid in scores:
+                continue
+            # table/bold pattern: id ... score N (0–100)
+            pattern = rf"[`'\"]?{re.escape(sid)}[`'\"]?[^|\n]*?[Ss]core[^\d]*(\d+(?:\.\d+)?)"
+            m = re.search(pattern, raw)
+            if not m:
+                # inline: id | N |
+                m = re.search(rf"\b{re.escape(sid)}\b[^|\n]*\|\s*\*{{0,2}}(\d+(?:\.\d+)?)", raw)
+            if not m:
+                # bold score: **N** near id
+                m = re.search(
+                    rf"\b{re.escape(sid)}\b[^\n]{{0,60}}\*{{1,2}}(\d+(?:\.\d+)?)\*{{0,2}}",
+                    raw,
+                )
+            if m:
+                raw_val = float(m.group(1))
+                # Normalize: scores > 1 are assumed out of 100
+                scores[sid] = raw_val / 100.0 if raw_val > 1.0 else raw_val
+
+        if not reasoning:
+            # Use the first non-header line as reasoning excerpt
+            for line in raw.splitlines():
+                line = line.strip().lstrip("#").strip()
+                if line and not line.startswith("**"):
+                    reasoning = line[:300]
+                    break
+
     # If top wasn't parsed but scores exist, derive top from highest score.
     if not top and scores:
         top = max(scores, key=lambda k: scores[k])
 
-    reasoning = str(parsed.get("reasoning", "")).strip()
+    if not top and not scores:
+        logger.warning("classify_style: JSON parse failed — raw=%r", raw[:200])
 
     return StyleClassificationResult(
         top_style_id=top,
