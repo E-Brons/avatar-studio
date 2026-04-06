@@ -1,0 +1,20 @@
+personal:
+  name: Summer McIntosh
+  gender: female
+  age: 19
+  nationality: Canadian
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: White zip-up athletic jacket with red speckled/splatter pattern across
+        the chest and shoulders
+      color: '#F0E8E8'
+    flag draped over shoulders:
+      style: Canadian flag draped over both shoulders like a cape, showing red vertical
+        bars and a central white field with red maple leaf
+      color: '#E02030'

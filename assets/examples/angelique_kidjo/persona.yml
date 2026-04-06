@@ -1,0 +1,28 @@
+personal:
+  name: Angelique Kidjo
+  gender: female
+  age: 65
+  nationality: Beninese
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    primary_color:
+      style: Solid royal-blue crew-neck t-shirt
+      color: '#2868B0'
+    style:
+      style: Casual crew-neck t-shirt paired with traditional African head wrap and
+        beaded necklace
+      color: casual with cultural accents
+  skin_tone: '#8B5E3C'
+  hair_style: not visible
+  hair_color:
+    hex_base: '#8B5E3C'
+    hex_shadow: '#452F1E'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
+  face_shape: oval

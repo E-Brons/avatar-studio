@@ -1,0 +1,25 @@
+personal:
+  name: Shelly-Ann Fraser-Pryce
+  gender: female
+  age: 39
+  nationality: Jamaican
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#5C3A2A'
+  hair_color:
+    hex_base: '#C8E040'
+    hex_shadow: '#647020'
+  hair_style: pulled back with colorful streaks
+  eye_color:
+    hex_iris: '#3B2518'
+    hex_pupil: '#1D120C'
+  face_shape: oval
+  clothing:
+    athletic tank top:
+      style: Yellow Puma racerback athletic tank top with black "JAMAICA" text across
+        the chest and a small Jamaican flag patch on the left chest
+      color: '#E8D830'

@@ -1,0 +1,27 @@
+personal:
+  name: Ino Casablanca
+  gender: male
+  age: 29
+  nationality: Moroccan
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956A'
+  hair_color:
+    hex_base: '#1A0F0A'
+    hex_shadow: '#0D0705'
+  hair_style: curly, short, partially hidden under hat
+  eye_color:
+    hex_iris: '#6B4C35'
+    hex_pupil: '#35261A'
+  clothing:
+    jacket:
+      style: wool coat with high stand collar and branded buttons
+      color: '#3B2A20'
+  accessories:
+    hat:
+      style: chunky crochet beanie
+      color: '#6B3518'

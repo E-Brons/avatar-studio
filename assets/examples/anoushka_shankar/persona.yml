@@ -1,0 +1,18 @@
+personal:
+  name: Anoushka Shankar
+  gender: female
+  age: 44
+  nationality: Indian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: oversized crewneck sweatshirt with balloon sleeves
+      color: '#C4B49A'
+    pants:
+      style: wide-leg flowing black trousers
+      color: '#1C1C1E'

@@ -1,0 +1,25 @@
+personal:
+  name: Aryna Sabalenka
+  gender: female
+  age: 27
+  nationality: Belarusian
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4967A'
+  hair_color:
+    hex_base: '#8B6B3D'
+    hex_shadow: '#45351E'
+  hair_style: bun
+  eye_color:
+    hex_iris: '#4A3528'
+    hex_pupil: '#251A14'
+  clothing:
+    top:
+      style: white sleeveless athletic tank top with Nike logo and orange/red accent
+        trim on the shoulder strap
+      color: '#F0F0F0'
+  face_shape: oval

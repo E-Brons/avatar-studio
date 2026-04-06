@@ -1,0 +1,17 @@
+personal:
+  name: Taylor Swift
+  gender: female
+  age: 36
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Sparkly sequined halter-neck top with a high collar, keyhole cutout at
+        the chest, and a multicolor rainbow gradient pattern (teal, green, blue, purple,
+        red)
+      color: '#1A6B5C'

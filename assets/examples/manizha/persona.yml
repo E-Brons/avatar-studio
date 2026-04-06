@@ -1,0 +1,18 @@
+personal:
+  name: Manizha
+  gender: female
+  age: 34
+  nationality: Russian-Tajik
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: formal blazer
+      color: '#1C1C1E'
+    shirt:
+      style: white collared button-up
+      color: '#F0F2F5'

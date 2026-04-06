@@ -1,0 +1,30 @@
+personal:
+  name: Leo Varadkar
+  gender: male
+  age: 47
+  nationality: Irish
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956B'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: short, parted, neatly groomed
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'
+  face_shape: oval
+  clothing:
+    jacket:
+      style: charcoal grey suit jacket
+      color: '#5A5A5E'
+    shirt:
+      style: light grey dress shirt with spread collar
+      color: '#D0D0D4'
+    tie:
+      style: dark navy blue necktie
+      color: '#1E2A4A'

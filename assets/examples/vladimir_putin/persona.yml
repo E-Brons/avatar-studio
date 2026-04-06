@@ -1,0 +1,21 @@
+personal:
+  name: Vladimir Putin
+  gender: male
+  age: 73
+  nationality: Russian
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: dark black formal suit jacket, single-breasted
+      color: '#1C1C1C'
+    shirt:
+      style: white dress shirt with pointed collar
+      color: '#F0EDE8'
+    tie:
+      style: dark patterned tie with small geometric gold motifs
+      color: '#3D3D32'

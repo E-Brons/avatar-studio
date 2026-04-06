@@ -1,0 +1,19 @@
+personal:
+  name: Vandana Shiva
+  gender: female
+  age: 73
+  nationality: Indian
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    shawl:
+      style: Draped shawl/dupatta with blue-grey base and pink/purple striped border
+        accents
+      color: '#3B4A6B'
+    top:
+      style: Bright pink/magenta top visible at the neckline beneath the shawl
+      color: '#E84B8A'

@@ -1,0 +1,29 @@
+personal:
+  name: Justin Welby
+  gender: male
+  age: 70
+  nationality: British
+  religion: Christian
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: grey-blue textured suit jacket
+      color: '#6B7B8A'
+    clerical shirt:
+      style: black clerical shirt with white clerical collar
+      color: '#2A2A2A'
+    clerical collar:
+      style: white clergy collar tab
+      color: '#F0F0F0'
+  hair_style: short, combed back
+  hair_color:
+    hex_base: '#C0C0C0'
+    hex_shadow: '#606060'
+  skin_tone: '#D4A989'
+  eye_color:
+    hex_iris: '#7A9BB5'
+    hex_pupil: '#3D4D5A'

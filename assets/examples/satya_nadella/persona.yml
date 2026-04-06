@@ -1,0 +1,20 @@
+personal:
+  name: Satya Nadella
+  gender: male
+  age: 58
+  nationality: Indian-American
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  skin_tone: '#8B6B4A'
+  hair_style: closely cropped / balding
+  hair_color:
+    hex_base: '#4A4A4A'
+    hex_shadow: '#252525'
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'

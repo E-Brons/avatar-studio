@@ -1,0 +1,20 @@
+personal:
+  name: Dorian Electra
+  gender: non-binary
+  age: 33
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: oversized sculptural blazer in holographic/iridescent material with exaggerated
+        padded shoulders
+      color: '#C4D6EE'
+    top:
+      style: "minimal white/cream undergarment or bare d\xE9colletage beneath open\
+        \ blazer"
+      color: '#F0E0D0'

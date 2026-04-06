@@ -1,0 +1,21 @@
+personal:
+  name: William Ruto
+  gender: male
+  age: 59
+  nationality: Kenyan
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: dark navy suit jacket
+      color: '#2B2D38'
+    shirt:
+      style: white dress shirt with spread collar
+      color: '#FFFFFF'
+    tie:
+      style: golden yellow patterned tie with small diamond-shaped geometric motifs
+      color: '#D9AB2D'

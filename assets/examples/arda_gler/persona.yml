@@ -1,0 +1,16 @@
+personal:
+  name: "Arda G\xFCler"
+  gender: male
+  age: 21
+  nationality: Turkish
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: white Nike football jersey with red accents and number 8, holding a red
+        Turkish flag captain armband
+      color: '#FFFFFF'

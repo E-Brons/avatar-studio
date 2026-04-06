@@ -1,0 +1,22 @@
+personal:
+  name: Mohammed bin Salman
+  gender: male
+  age: 40
+  nationality: Saudi
+  religion: Muslim
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    thobe:
+      style: White traditional Saudi thobe with mandarin collar and button closure
+      color: '#FFFFFF'
+    bisht:
+      style: Gold-brown ceremonial cloak with gold embroidered trim along the edges
+      color: '#B5833A'
+    shemagh:
+      style: Traditional red and white checkered headdress in houndstooth pattern,
+        secured with a black agal (double-corded headband)
+      color: '#C83B3B'

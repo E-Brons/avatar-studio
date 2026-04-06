@@ -1,0 +1,18 @@
+personal:
+  name: Dalai Lama
+  gender: male
+  age: 90
+  nationality: Tibetan
+  religion: Buddhist
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    robe:
+      style: deep maroon/crimson Buddhist robe draped over shoulders
+      color: '#7A1A2A'
+    undergarment/sash:
+      style: golden-yellow fabric visible beneath the maroon robe on the left shoulder
+      color: '#D4A020'

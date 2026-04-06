@@ -1,0 +1,24 @@
+personal:
+  name: Olivia Dean
+  gender: female
+  age: 27
+  nationality: British
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C49A6C'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  hair_style: long, wavy, voluminous, loose
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
+  clothing:
+    top:
+      style: off-shoulder, draped
+      color: '#C9B7AC'
+  face_shape: oval

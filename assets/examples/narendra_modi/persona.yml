@@ -1,0 +1,24 @@
+personal:
+  name: Narendra Modi
+  gender: male
+  age: 75
+  nationality: Indian
+  religion: Hindu
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: long-sleeve kurta underneath vest
+      color: '#E08830'
+  skin_tone: '#C68E6A'
+  hair_color:
+    hex_base: '#D4D4D4'
+    hex_shadow: '#6A6A6A'
+  hair_style: short, straight, swept back
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
+  face_shape: round

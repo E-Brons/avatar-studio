@@ -1,0 +1,15 @@
+personal:
+  name: Mads Mikkelsen
+  gender: male
+  age: 60
+  nationality: Danish
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: dark navy high-collar button-up jacket or shirt
+      color: '#1E2130'

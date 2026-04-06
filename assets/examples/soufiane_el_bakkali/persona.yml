@@ -1,0 +1,26 @@
+personal:
+  name: Soufiane El Bakkali
+  gender: male
+  age: 30
+  nationality: Moroccan
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8956A'
+  hair_color:
+    hex_base: '#1A1412'
+    hex_shadow: '#0D0A09'
+  hair_style: short, fade sides, slicked back on top
+  eye_color:
+    hex_iris: '#4A3728'
+    hex_pupil: '#251B14'
+  clothing:
+    jacket:
+      style: Red zip-up athletic track jacket with subtle tonal camo/geometric pattern,
+        KELME logo on right chest, high collar with dark green/black accent trim
+      color: '#D42035'
+  face_shape: oval
+  nose_shape: straight

@@ -1,0 +1,23 @@
+personal:
+  name: Tems
+  gender: female
+  age: 30
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B5E3C'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: braided updo
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'
+  clothing:
+    top:
+      style: metallic off-shoulder strapless top with sculptural edges
+      color: '#3B3B3B'

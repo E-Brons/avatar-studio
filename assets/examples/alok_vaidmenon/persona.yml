@@ -1,0 +1,16 @@
+personal:
+  name: Alok Vaid-Menon
+  gender: non-binary
+  age: 34
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: coral-orange and blue patterned long-sleeve top with abstract brushstroke
+        design
+      color: '#D4785A'

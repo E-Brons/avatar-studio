@@ -1,0 +1,24 @@
+personal:
+  name: Florence Pugh
+  gender: female
+  age: 30
+  nationality: British
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: white lace halter-neck top with floral embroidery and high collar
+      color: '#F5EDE5'
+  skin_tone: '#E8C4B0'
+  hair_color:
+    hex_base: '#D4C8A0'
+    hex_shadow: '#6A6450'
+  hair_style: short spiky pixie cut
+  eye_color:
+    hex_iris: '#7A8B52'
+    hex_pupil: '#3D4529'
+  face_shape: oval

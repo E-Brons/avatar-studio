@@ -1,0 +1,15 @@
+personal:
+  name: "Iga \u015Awi\u0105tek"
+  gender: female
+  age: 24
+  nationality: Polish
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Black sleeveless fitted dress with a round neckline
+      color: '#0A0A0A'

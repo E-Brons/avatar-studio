@@ -1,0 +1,28 @@
+personal:
+  name: Dina Asher-Smith
+  gender: female
+  age: 30
+  nationality: British
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#6B3A2A'
+  hair_color:
+    hex_base: '#1A0F0A'
+    hex_shadow: '#0D0705'
+  hair_style: slicked back bun
+  eye_color:
+    hex_iris: '#3D2314'
+    hex_pupil: '#1E110A'
+  clothing:
+    top:
+      style: strappy sports bra with mesh detailing
+      color: '#2A2A2A'
+  accessories:
+    earrings:
+      style: small stud
+      color: '#D4D4D4'
+  face_shape: oval

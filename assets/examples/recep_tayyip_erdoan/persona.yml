@@ -1,0 +1,27 @@
+personal:
+  name: "Recep Tayyip Erdo\u011Fan"
+  gender: male
+  age: 72
+  nationality: Turkish
+  religion: Muslim
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C68642'
+  hair_color:
+    hex_base: '#4A4A4A'
+    hex_shadow: '#252525'
+  hair_style: short, side-parted, salt and pepper
+  eye_color:
+    hex_iris: '#4B3C2A'
+    hex_pupil: '#251E15'
+  clothing:
+    jacket:
+      style: Blue checkered/plaid blazer with a small grid pattern
+      color: '#4A6FA5'
+    shirt:
+      style: Light blue dress shirt, open collar, no tie
+      color: '#A8C8E8'
+  face_shape: rectangular

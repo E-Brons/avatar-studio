@@ -1,0 +1,24 @@
+personal:
+  name: Zendaya
+  gender: female
+  age: 29
+  nationality: American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956E'
+  hair_color:
+    hex_base: '#3B2218'
+    hex_shadow: '#1D110C'
+  hair_style: straight, center-parted, shoulder-length
+  eye_color:
+    hex_iris: '#5C3A1E'
+    hex_pupil: '#2E1D0F'
+  face_shape: oval
+  clothing:
+    off-shoulder top:
+      style: Dark emerald-green velvet off-the-shoulder top with a structured neckline
+      color: '#1A4D45'

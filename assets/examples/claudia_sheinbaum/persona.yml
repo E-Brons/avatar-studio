@@ -1,0 +1,19 @@
+personal:
+  name: Claudia Sheinbaum
+  gender: female
+  age: 63
+  nationality: Mexican
+  religion: Jewish
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: black crew neck top
+      color: '#141414'
+    jacket:
+      style: cream/off-white open-front shawl-collar cardigan with black blanket stitch
+        embroidery along the edges
+      color: '#EDE5D8'

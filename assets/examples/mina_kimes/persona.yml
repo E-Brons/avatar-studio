@@ -1,0 +1,24 @@
+personal:
+  name: Mina Kimes
+  gender: female
+  age: 40
+  nationality: American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: black high-neck cold-shoulder top with cutout shoulders
+      color: '#0E0E0E'
+  face_shape: oval
+  skin_tone: '#D4A574'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: long, wavy, parted to the side
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'

@@ -1,0 +1,24 @@
+personal:
+  name: Keir Starmer
+  gender: male
+  age: 63
+  nationality: British
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  skin_tone: '#D4A98C'
+  eye_color:
+    hex_iris: '#7A9BB5'
+    hex_pupil: '#3D4D5A'
+  hair_style: short, swept back, side-parted
+  hair_color:
+    hex_base: '#A8A8A0'
+    hex_shadow: '#545450'
+  clothing:
+    garment:
+      style: dress shirt with spread collar, worn under a dark suit jacket
+      color: '#F2EDE6'

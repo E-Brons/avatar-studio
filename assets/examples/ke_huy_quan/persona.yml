@@ -1,0 +1,15 @@
+personal:
+  name: Ke Huy Quan
+  gender: male
+  age: 54
+  nationality: Vietnamese
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: white button-down dress shirt with collar, worn open at the neck
+      color: '#F0F0F0'

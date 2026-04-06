@@ -1,0 +1,18 @@
+personal:
+  name: Rowan Williams
+  gender: male
+  age: 75
+  nationality: British
+  religion: Christian
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: White rochet (surplice) with gathered front and wide sleeves, worn over
+        a black chimere with red lining visible at the shoulders, layered above a
+        purple/magenta cassock with a white clerical collar; a silver pectoral cross
+        hangs on a chain over the rochet
+      color: '#F0EDE8'

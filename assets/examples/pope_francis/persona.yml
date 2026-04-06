@@ -1,0 +1,32 @@
+personal:
+  name: Pope Francis
+  gender: male
+  age: 89
+  nationality: Argentine
+  religion: Christian
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8967A'
+  eye_color:
+    hex_iris: '#6B5B4E'
+    hex_pupil: '#352D27'
+  hair_color:
+    hex_base: '#D8D4CC'
+    hex_shadow: '#6C6A66'
+  hair_style: short, sparse white hair visible under white zucchetto cap
+  clothing:
+    papal cassock:
+      style: White buttoned cassock with a Mandarin collar and a vertical row of fabric-covered
+        buttons down the center front
+      color: '#F2EDDC'
+    mozzetta (cape):
+      style: Short elbow-length shoulder cape in a satin-like fabric with a slight
+        sheen, worn open over the cassock
+      color: '#E5DCBE'
+    zucchetto (skull cap):
+      style: Small round skullcap (solideo) sitting on the crown of the head, made
+        of watered-silk fabric
+      color: '#F0EBD8'

@@ -1,0 +1,19 @@
+personal:
+  name: Lisa Su
+  gender: female
+  age: 56
+  nationality: Taiwanese-American
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: Dark charcoal single-breasted blazer with a subtle windowpane/plaid pattern,
+        notch lapels
+      color: '#2F3332'
+    top:
+      style: Light blush-pink crew-neck top worn underneath the blazer
+      color: '#C9B2A8'

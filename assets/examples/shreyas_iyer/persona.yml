@@ -1,0 +1,16 @@
+personal:
+  name: Shreyas Iyer
+  gender: male
+  age: 31
+  nationality: Indian
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: Blue Adidas cricket jersey with diagonal line pattern and orange accents
+        on collar and shoulders
+      color: '#2196D3'

@@ -1,0 +1,29 @@
+personal:
+  name: Sombr
+  gender: male
+  age: 21
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  skin_tone: '#D4B096'
+  eye_color:
+    hex_iris: '#4A2810'
+    hex_pupil: '#251408'
+  eye_shape: almond
+  nose_shape: straight
+  hair_style: curly, medium-length, tousled
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  clothing:
+    jacket:
+      style: Black velvet blazer with satin lapels
+      color: '#0C0C0C'
+    shirt:
+      style: Light blue chambray button-up shirt, worn open at the collar
+      color: '#A3BAC8'

@@ -1,0 +1,23 @@
+personal:
+  name: Tyler, the Creator
+  gender: male
+  age: 35
+  nationality: American
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#6B3A2A'
+  hair_color:
+    hex_base: '#1A0A05'
+    hex_shadow: '#0D0502'
+  hair_style: not visible
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'
+  clothing:
+    top:
+      style: polo shirt with white collar
+      color: '#F5E6E8'

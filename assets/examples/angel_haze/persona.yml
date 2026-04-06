@@ -1,0 +1,25 @@
+personal:
+  name: Angel Haze
+  gender: non-binary
+  age: 34
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: long, straight, worn down past shoulders
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'
+  eye_shape: almond
+  face_shape: oval
+  clothing:
+    jacket:
+      style: black leather biker jacket worn off the shoulders
+      color: '#111111'

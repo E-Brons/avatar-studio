@@ -1,0 +1,24 @@
+personal:
+  name: Tyla
+  gender: female
+  age: 24
+  nationality: South African
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B5E3C'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  hair_style: braided updo with curly ends
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'
+  face_shape: oval
+  clothing:
+    top:
+      style: off-shoulder distressed denim
+      color: '#8BA7B8'

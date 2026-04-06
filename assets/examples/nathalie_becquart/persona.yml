@@ -1,0 +1,19 @@
+personal:
+  name: Nathalie Becquart
+  gender: female
+  age: 57
+  nationality: French
+  religion: Christian
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A882'
+  clothing:
+    jacket:
+      style: black blazer
+      color: '#1A1A1A'
+    top:
+      style: white crew neck t-shirt
+      color: '#F0EEEA'

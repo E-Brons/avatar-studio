@@ -1,0 +1,23 @@
+personal:
+  name: Nemonte Nenquimo
+  gender: female
+  age: 39
+  nationality: Ecuadorian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: long straight
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
+  clothing:
+    tank top:
+      style: brown/mauve sleeveless tank top with thin shoulder straps
+      color: '#8B6B5A'

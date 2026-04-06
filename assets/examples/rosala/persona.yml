@@ -1,0 +1,26 @@
+personal:
+  name: "Rosal\xEDa"
+  gender: female
+  age: 33
+  nationality: Spanish
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956E'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: high ponytail, slicked back
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
+  clothing:
+    jacket:
+      style: red leather jacket with pointed collar and braided belt at waist
+      color: '#B92020'
+    pants:
+      style: dark red leather pants with ruched/gathered texture
+      color: '#7A1A1A'

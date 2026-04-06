@@ -1,0 +1,27 @@
+personal:
+  name: Selena Gomez
+  gender: female
+  age: 33
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: round to oval
+  clothing:
+    top:
+      style: Silver/metallic embellished top, barely visible at the very bottom edge
+        of the frame near the neckline
+      color: '#C0C0C0'
+  skin_tone: '#C4956E'
+  eye_color:
+    hex_iris: '#5C3A1E'
+    hex_pupil: '#2E1D0F'
+  eye_shape: almond
+  nose_shape: straight
+  hair_style: long straight with side-swept bangs
+  hair_color:
+    hex_base: '#3A2518'
+    hex_shadow: '#1D120C'

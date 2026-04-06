@@ -1,0 +1,22 @@
+personal:
+  name: Dua Lipa
+  gender: female
+  age: 30
+  nationality: Albanian
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A98C'
+  hair_color:
+    hex_base: '#1A1210'
+    hex_shadow: '#0D0908'
+  hair_style: braided updo, slicked back with cornrows into a high bun
+  eye_color:
+    hex_iris: '#5C3A1E'
+    hex_pupil: '#2E1D0F'
+  face_shape: oval
+  eye_shape: almond
+  nose_shape: straight

@@ -1,0 +1,15 @@
+personal:
+  name: Autumn Peltier
+  gender: female
+  age: 21
+  nationality: Canadian
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: off-shoulder white fringed top with layered capelet
+      color: '#E8DFD0'

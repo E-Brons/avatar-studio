@@ -1,0 +1,30 @@
+personal:
+  name: Eminem
+  gender: male
+  age: 53
+  nationality: American
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    cap:
+      style: black fitted cap worn under hood with small white logo/text on front
+      color: '#1A1A1A'
+    hoodie:
+      style: dark black pullover hoodie with hood pulled up over cap
+      color: '#1C1C1E'
+    t-shirt:
+      style: white crew-neck t-shirt visible underneath hoodie
+      color: '#E8E4DF'
+  skin_tone: '#C4956B'
+  hair_color:
+    hex_base: '#4A3728'
+    hex_shadow: '#251B14'
+  hair_style: not visible
+  eye_color:
+    hex_iris: '#7A9BBF'
+    hex_pupil: '#3D4D5F'
+  face_shape: oval

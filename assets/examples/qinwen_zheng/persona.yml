@@ -1,0 +1,15 @@
+personal:
+  name: Qinwen Zheng
+  gender: female
+  age: 23
+  nationality: Chinese
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: Neon yellow-green athletic shirt visible at neckline
+      color: '#C8E600'

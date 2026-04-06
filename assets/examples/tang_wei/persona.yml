@@ -1,0 +1,18 @@
+personal:
+  name: Tang Wei
+  gender: female
+  age: 46
+  nationality: Chinese
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: black blazer
+      color: '#1C1C1E'
+    top:
+      style: white v-neck top underneath blazer
+      color: '#F0EDE8'

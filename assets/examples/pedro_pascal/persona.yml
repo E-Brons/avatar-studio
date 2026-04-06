@@ -1,0 +1,15 @@
+personal:
+  name: Pedro Pascal
+  gender: male
+  age: 51
+  nationality: Chilean
+  religion: unknown
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Black crewneck t-shirt
+      color: '#1A1A1A'

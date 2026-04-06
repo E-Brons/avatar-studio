@@ -1,0 +1,24 @@
+personal:
+  name: LeBron James
+  gender: male
+  age: 41
+  nationality: American
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B5E3C'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: short buzz cut
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
+  face_shape: square
+  clothing:
+    top:
+      style: Los Angeles Lakers basketball jersey, sleeveless
+      color: '#FDB927'

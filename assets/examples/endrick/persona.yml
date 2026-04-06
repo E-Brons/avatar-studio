@@ -1,0 +1,30 @@
+personal:
+  name: Endrick
+  gender: male
+  age: 19
+  nationality: Brazilian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#3D1F0D'
+  hair_color:
+    hex_base: '#1A0A05'
+    hex_shadow: '#0D0502'
+  hair_style: short curly
+  face_shape: round
+  clothing:
+    top:
+      style: Brazil national team away jersey number 21, blue with dark horizontal
+        stripe pattern, mint/teal v-neck collar and sleeve cuffs, Nike swoosh, CBF
+        Brasil crest with stars, gold number 21
+      color: '#3566B5'
+    shorts:
+      style: white football shorts with CBF Brasil badge and number 21 in blue/teal,
+        Nike swoosh
+      color: '#F0EDE8'
+    socks:
+      style: teal/mint football socks
+      color: '#5AAEA2'

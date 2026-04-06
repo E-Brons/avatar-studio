@@ -1,0 +1,20 @@
+personal:
+  name: Mahesh Itadi
+  gender: non-binary
+  age: 29
+  nationality: Indian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: round
+  skin_tone: '#8B6914'
+  hair_style: short, slightly tousled
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'

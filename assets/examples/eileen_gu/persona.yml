@@ -1,0 +1,24 @@
+personal:
+  name: Eileen Gu
+  gender: female
+  age: 22
+  nationality: Chinese-American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E8C4A0'
+  hair_color:
+    hex_base: '#3D2314'
+    hex_shadow: '#1E110A'
+  hair_style: ponytail, pulled back with loose strands framing face
+  eye_color:
+    hex_iris: '#7B5C3A'
+    hex_pupil: '#3D2E1D'
+  clothing:
+    jacket:
+      style: "Red flag or banner draped over shoulders, with yellow accent visible\
+        \ at neckline \u2014 appears to be a national flag rather than a jacket"
+      color: '#E02020'

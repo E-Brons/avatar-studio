@@ -1,0 +1,27 @@
+personal:
+  name: Mette Frederiksen
+  gender: female
+  age: 48
+  nationality: Danish
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A882'
+  hair_color:
+    hex_base: '#C4A96A'
+    hex_shadow: '#625435'
+  hair_style: pulled back bun, slicked
+  eye_color:
+    hex_iris: '#6B8E7A'
+    hex_pupil: '#35473D'
+  clothing:
+    jacket:
+      style: Single-breasted dark charcoal blazer with notch lapels
+      color: '#3B3539'
+    top:
+      style: White V-neck blouse with a soft open collar, visible at the neckline
+        beneath the blazer
+      color: '#F0EDE8'

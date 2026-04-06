@@ -1,0 +1,11 @@
+personal:
+  name: Sasha Velour
+  gender: non-binary
+  age: 38
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

@@ -1,0 +1,26 @@
+personal:
+  name: Simone Biles
+  gender: female
+  age: 29
+  nationality: American
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#7B4A2D'
+  hair_color:
+    hex_base: '#0A0805'
+    hex_shadow: '#050402'
+  hair_style: braided crown cornrows
+  eye_color:
+    hex_iris: '#1C1008'
+    hex_pupil: '#0E0804'
+  eye_shape: almond
+  clothing:
+    top:
+      style: Blue gymnastics leotard with sheer mesh sleeves, red trim along the V-neckline,
+        and rhinestone/crystal embellishments
+      color: '#2B4BA8'
+  face_shape: round

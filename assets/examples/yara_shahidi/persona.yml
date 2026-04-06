@@ -1,0 +1,23 @@
+personal:
+  name: Yara Shahidi
+  gender: female
+  age: 26
+  nationality: American
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C08A6B'
+  hair_color:
+    hex_base: '#1A1209'
+    hex_shadow: '#0D0904'
+  hair_style: curly, voluminous, shoulder-length
+  eye_color:
+    hex_iris: '#3D2413'
+    hex_pupil: '#1E1209'
+  clothing:
+    top:
+      style: button-up collared plaid shirt
+      color: '#3C3848'

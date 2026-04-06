@@ -1,0 +1,27 @@
+personal:
+  name: Chloe Kim
+  gender: female
+  age: 26
+  nationality: Korean-American
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_style: long, loose, slightly wavy
+  hair_color:
+    hex_base: '#B8944E'
+    hex_shadow: '#5C4A27'
+  skin_tone: '#D4A574'
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
+  face_shape: oval
+  clothing:
+    jacket:
+      style: navy blue zip-up athletic winter jacket with white logo
+      color: '#4A5D7A'
+    gloves:
+      style: dark navy blue winter gloves
+      color: '#3A3D5C'

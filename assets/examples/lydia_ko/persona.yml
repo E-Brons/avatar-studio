@@ -1,0 +1,18 @@
+personal:
+  name: Lydia Ko
+  gender: female
+  age: 29
+  nationality: New Zealander
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    polo shirt:
+      style: coral/salmon collared polo shirt visible at neckline
+      color: '#E0735A'
+    sweater/pullover:
+      style: dark charcoal sweater layered over polo
+      color: '#332F2B'

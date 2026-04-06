@@ -1,0 +1,24 @@
+personal:
+  name: Greta Gerwig
+  gender: female
+  age: 42
+  nationality: American
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: dark forest green single-breasted blazer with notched lapels
+      color: '#1B5B47'
+    top:
+      style: white button-up collared shirt with pointed collar and small gold button
+        detail
+      color: '#F2EFE8'
+  accessories:
+    necklace:
+      style: not visible
+      color: '#000000'
+  face_shape: round

@@ -1,0 +1,25 @@
+personal:
+  name: Tobi Amusan
+  gender: female
+  age: 29
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#6B4226'
+  hair_style: short cropped
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'
+  face_shape: oval
+  clothing:
+    athletic tank top:
+      style: Green and yellow-green striped athletic racing singlet with 'QNB AMUSAN'
+        bib number attached, featuring Nigeria team design
+      color: '#2D7A3A'

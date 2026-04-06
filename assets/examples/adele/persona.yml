@@ -1,0 +1,24 @@
+personal:
+  name: Adele
+  gender: female
+  age: 37
+  nationality: British
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E8C9A0'
+  hair_color:
+    hex_base: '#8B6914'
+    hex_shadow: '#45340A'
+  hair_style: medium length bob, half-up style, wavy, ombre blonde highlights
+  eye_color:
+    hex_iris: '#7A8B5A'
+    hex_pupil: '#3D452D'
+  eye_shape: almond
+  clothing:
+    top:
+      style: black lace high-neck top
+      color: '#0A0A0A'

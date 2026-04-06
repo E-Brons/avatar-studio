@@ -1,0 +1,33 @@
+personal:
+  name: Ana de Armas
+  gender: female
+  age: 37
+  nationality: Cuban
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8906A'
+  hair_color:
+    hex_base: '#2C1A0E'
+    hex_shadow: '#160D07'
+  hair_style: long, wavy, voluminous, loosely tousled
+  eye_color:
+    hex_iris: '#7A5C35'
+    hex_pupil: '#3D2E1A'
+  eye_shape: almond
+  clothing:
+    top:
+      style: off-shoulder ruffled smocked top
+      color: '#1A1A1A'
+  accessories:
+    necklace:
+      style: tennis necklace / diamond choker
+      color: '#C0C0C0'
+    earrings:
+      style: small huggie hoop earrings
+      color: '#C0C0C0'
+  face_shape: oval
+  nose_shape: straight
