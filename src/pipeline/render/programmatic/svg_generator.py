@@ -4,8 +4,11 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import subprocess
 from pathlib import Path
+
+import cairosvg
 
 from pipeline.render.programmatic.expression_mapper import EXPRESSION_OPTIONS
 
@@ -48,7 +51,7 @@ def create_programmatic_avatar(
     size:
         Pixel dimensions of the rendered SVG canvas (width = height).
     demographics:
-        Optional demographics dict from Step A.  When provided, the
+        Optional demographics dict.  When provided, the
         following fields are forwarded as style options:
 
         ============  ========================
@@ -71,7 +74,7 @@ def create_programmatic_avatar(
         *out_path* after the file has been written.
     """
     logger.info(
-        "[Step D] START — make_programmatic_avatar (name=%s, style=%s, expression=%s)",
+        "START — make_programmatic_avatar (name=%s, style=%s, expression=%s)",
         name,
         style,
         expression,
@@ -100,7 +103,7 @@ def create_programmatic_avatar(
             options.update(expr_opts)
         else:
             logger.warning(
-                "[Step D] Unknown expression %r for style %r — skipping. Known: %s",
+                "Unknown expression %r for style %r — skipping. Known: %s",
                 expression,
                 style,
                 ", ".join(style_map),
@@ -123,7 +126,7 @@ def create_programmatic_avatar(
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    logger.debug("[Step D] cmd: %s", " ".join(cmd))
+    logger.debug("cmd: %s", " ".join(cmd))
     result = subprocess.run(
         cmd,
         check=True,
@@ -132,9 +135,9 @@ def create_programmatic_avatar(
         cwd=str(vendor),
     )
     if result.stderr:
-        logger.debug("[Step D] stderr: %s", result.stderr.strip())
+        logger.debug("stderr: %s", result.stderr.strip())
 
-    logger.info("[Step D] DONE  — %s", out_path)
+    logger.info("DONE  — %s", out_path)
     return out_path
 
 
@@ -156,3 +159,20 @@ def generate_svg(
         expression=expression,
         style=style,
     )
+
+
+def svg_to_png(svg_bytes: bytes, out_path: Path) -> None:
+    """Render an SVG to a PNG at native viewBox resolution.
+
+    Works around a cairosvg bug where it ignores the viewBox→viewport transform,
+    rendering 1 SVG coordinate unit = 1 pixel.  We patch the SVG's width/height
+    to match its viewBox so the full image is produced at native resolution.
+    """
+    text = svg_bytes.decode()
+    m = re.search(r'viewBox="0 0 (\d+) (\d+)"', text)
+    if m:
+        vw, vh = m.group(1), m.group(2)
+        text = re.sub(r'\bwidth="\d+"', f'width="{vw}"', text, count=1)
+        text = re.sub(r'\bheight="\d+"', f'height="{vh}"', text, count=1)
+        svg_bytes = text.encode()
+    cairosvg.svg2png(bytestring=svg_bytes, write_to=str(out_path))

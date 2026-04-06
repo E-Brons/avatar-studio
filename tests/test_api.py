@@ -83,9 +83,16 @@ class TestConfigLoaderLoad:
             missing = required - attr.keys()
             assert not missing, f"Attribute '{attr['id']}' missing keys: {missing}"
 
-    def test_categories_cover_all_four_groups(self):
+    def test_categories_cover_all_groups(self):
         cats = {a["category"] for a in self.config["attributes"]}
-        assert cats == {"demographics", "phenotype", "appearance", "advisor"}
+        assert cats == {
+            "style",
+            "demographics",
+            "personal",
+            "phenotype",
+            "appearance",
+            "personality",
+        }
 
     # ── gender ───────────────────────────────────────────────────────────────
 
@@ -179,35 +186,29 @@ class TestConfigLoaderLoad:
 
     # ── style ─────────────────────────────────────────────────────────────────
 
-    def test_style_has_six_options(self):
-        assert len(self.attrs["style"]["options"]) == 6
+    def test_style_has_ten_options(self):
+        assert len(self.attrs["style"]["options"]) == 10
 
     def test_style_option_ids(self):
         ids = {o["id"] for o in self.attrs["style"]["options"]}
-        assert ids == {"random", "studio_3d", "korean", "photorealistic", "lineart", "clay"}
+        assert ids == {
+            "studio_3d",
+            "korean",
+            "photorealistic",
+            "lineart",
+            "clay",
+            "toon-head",
+            "avataaars",
+            "bottts",
+            "micah",
+            "opeeps",
+        }
 
     def test_style_options_have_description_extra(self):
         for opt in self.attrs["style"]["options"]:
             assert "description" in opt.get("extra", {}), (
                 f"style option '{opt['id']}' missing description"
             )
-
-    # ── llm_generated advisor fields ──────────────────────────────────────────
-
-    def test_education_is_llm_generated(self):
-        assert self.attrs["education"]["llm_generated"] is True
-
-    def test_education_default_mode_is_llm(self):
-        assert self.attrs["education"]["default_mode"] == "llm"
-
-    def test_hair_style_default_mode_is_llm(self):
-        assert self.attrs["hair_style"]["default_mode"] == "llm"
-
-    def test_role_is_text_type(self):
-        assert self.attrs["role"]["type"] == "text"
-
-    def test_role_has_suggestions(self):
-        assert len(self.attrs["role"].get("suggestions", [])) > 0
 
     # ── hair_style is depends_on gender + llm_generated ──────────────────────
 

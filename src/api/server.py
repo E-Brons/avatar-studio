@@ -108,7 +108,7 @@ def process_advisor(
         create_programmatic_avatar(name, pa_path, size=size, demographics=demographics)
         print(f"  [programmatic-avatar] {pa_path}")
     except Exception as exc:
-        logger.warning("[Step D] programmatic-avatar failed (non-fatal): %s", exc)
+        logger.warning("programmatic-avatar failed (non-fatal): %s", exc)
         pa_filename = None
 
     picture: dict = {

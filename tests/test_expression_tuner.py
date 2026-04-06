@@ -566,14 +566,6 @@ class TestGenerateDiversePersonas:
                     "name": "Alice",
                 },
             ),
-            patch(
-                "tuning.expression_tuner.generate_advisor_profile",
-                return_value={
-                    "education": ["MBA"],
-                    "experience": ["5 years"],
-                    "traits": ["analytical"],
-                },
-            ),
             patch("tuning.expression_tuner.select_features", return_value={"HAIR_STYLE": "bob"}),
             patch("tuning.expression_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
         ]
@@ -582,7 +574,7 @@ class TestGenerateDiversePersonas:
         from tuning.expression_tuner import _generate_diverse_personas
 
         patches = self._mock_pipeline()
-        with patches[0], patches[1], patches[2], patches[3]:
+        with patches[0], patches[1], patches[2]:
             result = _generate_diverse_personas(
                 ["female"], base_seed=42, gateway_url="http://gw", tmp_dir=tmp_path
             )
@@ -602,7 +594,7 @@ class TestGenerateDiversePersonas:
                 },
             ),
             patch(
-                "tuning.expression_tuner.generate_advisor_profile",
+                "tuning.expression_tuner.select_features",
                 side_effect=RuntimeError("B down"),
             ),
             patch("tuning.expression_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
@@ -638,7 +630,6 @@ class TestGenerateDiversePersonas:
 
         with (
             patch("tuning.expression_tuner.pick_demographics", side_effect=_cap_demo),
-            patch("tuning.expression_tuner.generate_advisor_profile", side_effect=RuntimeError),
             patch("tuning.expression_tuner.build_avatar_charachter", return_value=_FAKE_AVATAR),
         ):
             _generate_diverse_personas(

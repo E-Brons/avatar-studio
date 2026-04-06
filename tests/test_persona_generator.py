@@ -81,15 +81,12 @@ _FAKE_DEMOGRAPHICS = {
 }
 
 _FAKE_ADVISOR = {
-    "role": "Advisor",
     "traits": ["analytical"],
-    "education": ["MBA"],
-    "experience": ["10 years"],
 }
 
 _FAKE_AVATAR = {
     "personal": {"name": "Alice Smith", "gender": "female"},
-    "advisor": _FAKE_ADVISOR,
+    "personality": _FAKE_ADVISOR,
     "appearance": {},
 }
 
@@ -100,10 +97,6 @@ class TestGeneratePersona:
             patch(
                 "pipeline.persona.generator.pick_demographics",
                 return_value=_FAKE_DEMOGRAPHICS.copy(),
-            ),
-            patch(
-                "pipeline.persona.aggregator_llm.generate_advisor_profile",
-                return_value=_FAKE_ADVISOR.copy(),
             ),
             patch("pipeline.persona.aggregator_llm.select_features", return_value={}),
             patch(
@@ -121,10 +114,6 @@ class TestGeneratePersona:
             patch(
                 "pipeline.persona.generator.pick_demographics",
                 return_value=_FAKE_DEMOGRAPHICS.copy(),
-            ),
-            patch(
-                "pipeline.persona.aggregator_llm.generate_advisor_profile",
-                return_value=_FAKE_ADVISOR.copy(),
             ),
             patch("pipeline.persona.aggregator_llm.select_features", return_value={}),
             patch(
@@ -146,10 +135,6 @@ class TestGeneratePersona:
                 "pipeline.persona.generator.pick_demographics",
                 return_value=_FAKE_DEMOGRAPHICS.copy(),
             ),
-            patch(
-                "pipeline.persona.aggregator_llm.generate_advisor_profile",
-                return_value=_FAKE_ADVISOR.copy(),
-            ),
             patch("pipeline.persona.aggregator_llm.select_features", return_value={}),
             patch(
                 "pipeline.persona.generator.build_avatar_charachter",
@@ -161,15 +146,11 @@ class TestGeneratePersona:
             result = generate_persona(persona_file)
             assert isinstance(result, dict)
 
-    def test_step_b_failure_graceful(self):
+    def test_feature_selection_failure_graceful(self):
         with (
             patch(
                 "pipeline.persona.generator.pick_demographics",
                 return_value=_FAKE_DEMOGRAPHICS.copy(),
-            ),
-            patch(
-                "pipeline.persona.aggregator_llm.generate_advisor_profile",
-                side_effect=RuntimeError("LLM unavailable"),
             ),
             patch("pipeline.persona.aggregator_llm.select_features", return_value={}),
             patch(
@@ -182,19 +163,15 @@ class TestGeneratePersona:
             result = generate_persona()
             assert isinstance(result, dict)
 
-    def test_step_c_failure_graceful(self):
+    def test_select_features_failure_graceful(self):
         with (
             patch(
                 "pipeline.persona.generator.pick_demographics",
                 return_value=_FAKE_DEMOGRAPHICS.copy(),
             ),
             patch(
-                "pipeline.persona.aggregator_llm.generate_advisor_profile",
-                return_value=_FAKE_ADVISOR.copy(),
-            ),
-            patch(
                 "pipeline.persona.aggregator_llm.select_features",
-                side_effect=RuntimeError("step C down"),
+                side_effect=RuntimeError("feature selection down"),
             ),
             patch(
                 "pipeline.persona.generator.build_avatar_charachter",
@@ -217,10 +194,6 @@ class TestGeneratePersona:
             patch(
                 "pipeline.persona.generator.pick_demographics",
                 return_value=_FAKE_DEMOGRAPHICS.copy(),
-            ),
-            patch(
-                "pipeline.persona.aggregator_llm.generate_advisor_profile",
-                return_value=_FAKE_ADVISOR.copy(),
             ),
             patch("pipeline.persona.aggregator_llm.select_features", side_effect=_capture_select),
             patch(

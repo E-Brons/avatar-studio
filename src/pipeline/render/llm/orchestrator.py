@@ -1,4 +1,4 @@
-"""LLM render orchestrator — single entry point for both Step E and Step F."""
+"""LLM render orchestrator — single entry point for neutral portrait and expression variant generation."""
 
 from __future__ import annotations
 
@@ -43,22 +43,22 @@ def generate_avatar_image(
     out_path: Path,
     session_dir: Path | None = None,
 ) -> Path:
-    """Generate an avatar portrait (Step E) or expression variant (Step F).
+    """Generate an avatar portrait (neutral) or expression variant (with reference image).
 
     Parameters
     ----------
     avatar_persona_path:
-        Path to the ``avatar_persona.yml`` file produced by Step C.
+        Path to the ``avatar_persona.yml`` file produced by feature selection.
     style:
         ``{"name": str, "bg_color": str, "styles_yml": Path}``
         *name* is the style ID to look up in styles_yml.
         *bg_color* replaces the ``[BG_COLOR]`` placeholder in the style directive.
     expression:
         ``{"name": str, "expressions_yml": Path}``
-        *name* defaults to ``"neutral"`` for Step E.
+        *name* defaults to ``"neutral"`` for the neutral portrait.
     reference_image:
-        None for Step E (neutral portrait).
-        Path to the neutral portrait PNG for Step F (expression variants).
+        None for the neutral portrait.
+        Path to the neutral portrait PNG for expression variants.
     gateway_url:
         Base URL of the LLM Gateway server.
     out_path:
@@ -66,7 +66,7 @@ def generate_avatar_image(
     session_dir:
         When provided, session artifacts are written here before calling the
         image model: ``prompt_system.txt``, ``prompt_user.txt``, ``style.yml``,
-        ``expression.yml``, ``reference_person.png`` (Step F only),
+        ``expression.yml``, ``reference_person.png`` (expression variant only),
         ``output.png`` (copy of out_path).
 
     Raises
@@ -74,13 +74,11 @@ def generate_avatar_image(
     RuntimeError
         When the gateway returns no image data.
     """
-    step = "E" if reference_image is None else "F"
     expr_name = expression["name"]
     style_name = style["name"]
 
     logger.info(
-        "[Step %s] START — generate_avatar_image expression=%s style=%s gateway_url=%s",
-        step,
+        "START — generate_avatar_image expression=%s style=%s gateway_url=%s",
         expr_name,
         style_name,
         gateway_url,
@@ -105,7 +103,7 @@ def generate_avatar_image(
 
     # --- Build prompt ---
     # Strip the 'style' key — it holds post-processing metadata (bg_color, fg_color)
-    # for Step G and is not visual identity data for the image model.
+    # and is not visual identity data for the image model.
     persona_for_prompt = {k: v for k, v in persona.items() if k != "style"}
     persona_yaml = yaml.dump(
         persona_for_prompt, default_flow_style=False, sort_keys=False, allow_unicode=True
@@ -131,13 +129,12 @@ def generate_avatar_image(
     # --- Log inputs + prompt ---
     _SEP = "─" * 60
     logger.info(
-        "\n%s\n  [Step %s] gateway_url=%s | style=%s | expression=%s | reference=%s\n\n"
+        "\n%s\n  gateway_url=%s | style=%s | expression=%s | reference=%s\n\n"
         "STYLE DIRECTIVE:\n%s\n\n"
         "PERSONA:\n%s\n"
         "EXPRESSION:\n%s\n"
         'PROMPT:\n"""\n%s\n"""\n%s',
         _SEP,
-        step,
         gateway_url,
         style_name,
         expr_name,
@@ -164,9 +161,9 @@ def generate_avatar_image(
                 )
             if reference_image is not None and reference_image.exists():
                 shutil.copy2(reference_image, session_dir / "reference_person.png")
-            logger.info("[Step %s] Writing session artifacts to %s", step, session_dir)
+            logger.info("Writing session artifacts to %s", session_dir)
         except Exception as exc:
-            logger.warning("[Step %s] Failed to write session artifacts: %s", step, exc)
+            logger.warning("Failed to write session artifacts: %s", exc)
 
     # --- Call LLM Gateway ---
     client = GatewayClient(gateway_url)
@@ -202,9 +199,9 @@ def generate_avatar_image(
         try:
             img.save(str(session_dir / "output.png"), pnginfo=meta)
         except Exception as exc:
-            logger.warning("[Step %s] Failed to save output.png to session_dir: %s", step, exc)
+            logger.warning("Failed to save output.png to session_dir: %s", exc)
 
-    logger.info("[Step %s] DONE — %s", step, out_path)
+    logger.info("DONE — %s", out_path)
     return out_path
 
 
@@ -222,7 +219,7 @@ def render_llm(
     out_path: Path,
     session_dir: Path | None = None,
 ) -> Path:
-    """Generate an avatar image via the LLM Gateway (Step E or F).
+    """Generate an avatar image via the LLM Gateway (neutral portrait or expression variant).
 
     Thin delegation to ``generate_avatar_image`` with a normalized interface.
     """

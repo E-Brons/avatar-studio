@@ -14,7 +14,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from pipeline.persona.aggregator_llm import generate_advisor_profile, select_features
+from pipeline.persona.aggregator_llm import select_features
 from pipeline.persona.generator import build_avatar_charachter, pick_demographics
 from pipeline.render.expression_resolver import EXPRESSIONS_YML
 from pipeline.render.llm.orchestrator import (
@@ -35,19 +35,16 @@ _PASS_THRESHOLD = 0.75
 
 
 def _run_pipeline(
-    role: str,
     gateway: "GatewayClient",  # noqa: F821
     style: str = "photorealistic",
     size: int = 256,
     seed: int | None = None,
 ) -> tuple[bytes, dict]:
-    """Run Stages A–E and return (raw_portrait_bytes, avatar_persona)."""
+    """Run the full persona + image pipeline and return (raw_portrait_bytes, avatar_persona)."""
     url = gateway.base_url
 
     demo = pick_demographics(style=style, seed=seed)
-
-    profile = generate_advisor_profile(role, demo, gateway_url=url)
-    advisor = {"role": role, **profile}
+    advisor: dict = {}
 
     features = select_features(demo, advisor, gateway_url=url)
     avatar = build_avatar_charachter(advisor, demo, features)
@@ -91,24 +88,10 @@ def test_gateway_health(gateway):
     assert r.status_code == 200
 
 
-def test_step_b_generates_valid_profile(gateway):
-    """Step B: generate_advisor_profile returns education/experience/traits."""
-    demo = pick_demographics(seed=42)
-    profile = generate_advisor_profile("Financial Advisor", demo, gateway_url=gateway.base_url)
-    assert isinstance(profile.get("education"), list) and profile["education"]
-    assert isinstance(profile.get("experience"), list) and profile["experience"]
-    assert isinstance(profile.get("traits"), list) and profile["traits"]
-
-
-def test_step_c_selects_features(gateway):
-    """Step C: select_features returns a non-empty feature dict."""
+def test_select_features(gateway):
+    """Feature selection returns a non-empty feature dict."""
     demo = pick_demographics(seed=99)
-    advisor = {
-        "role": "Wealth Manager",
-        "traits": ["analytical"],
-        "education": [],
-        "experience": [],
-    }
+    advisor: dict = {}
     features = select_features(demo, advisor, gateway_url=gateway.base_url)
     assert features
     assert "HAIR_STYLE" in features
@@ -117,15 +100,15 @@ def test_step_c_selects_features(gateway):
 
 def test_pipeline_produces_valid_png(gateway):
     """Stages A–E: full pipeline generates a valid PNG."""
-    raw, _ = _run_pipeline("Financial Advisor", gateway)
+    raw, _ = _run_pipeline(gateway)
     assert raw[:4] == b"\x89PNG", "Output is not a valid PNG"
     assert len(raw) > 1024, "PNG is suspiciously small"
 
 
 def test_pipeline_persona_has_required_sections(gateway):
     """Pipeline persona contains all required sections with non-empty appearance."""
-    _, persona = _run_pipeline("Portfolio Manager", gateway)
-    for section in ("personal", "style", "advisor", "appearance"):
+    _, persona = _run_pipeline(gateway)
+    for section in ("personal", "style", "personality", "appearance"):
         assert section in persona, f"Missing section: {section}"
     assert persona["personal"].get("name")
     assert persona["appearance"]
@@ -134,7 +117,7 @@ def test_pipeline_persona_has_required_sections(gateway):
 def test_pipeline_categorizer_score(gateway):
     """Categorizer identifies ≥ 75 % of persona properties in the generated image."""
     # seed=21: male, upturned eyes, long straight nose, long full brows, squared chin, medium-brown skin
-    raw, persona = _run_pipeline("Risk Analyst", gateway, seed=21)
+    raw, persona = _run_pipeline(gateway, seed=21)
     report = categorize_avatar_image(raw, persona, gateway_url=gateway.base_url)
     report = categorize_avatar_image(raw, persona, gateway_url=gateway.base_url)
     assert report.score >= _PASS_THRESHOLD, (
@@ -148,7 +131,7 @@ def test_pipeline_categorizer_score(gateway):
 def test_circle_frame_categorizer(gateway):
     """Circle-framed portrait still scores ≥ 65 % with the categorizer."""
     # seed=4: male, almond eyes, bulbous tip nose, high arch thick brows — clear features
-    raw, persona = _run_pipeline("Compliance Officer", gateway, size=256, seed=4)
+    raw, persona = _run_pipeline(gateway, size=256, seed=4)
     bg = persona.get("style", {}).get("bg_color", "#4A90D9")
     framed = apply_circle_frame(raw, bg, 256)
     report = categorize_avatar_image(framed, persona, gateway_url=gateway.base_url)

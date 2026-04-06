@@ -1,4 +1,4 @@
-"""Neutral portrait generator — Step E (no reference image)."""
+"""Neutral portrait generator — no reference image."""
 
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ def generate_neutral_portrait(
     out_path: Path,
     session_dir: Path | None = None,
 ) -> Path:
-    """Generate the neutral portrait (Step E).
+    """Generate the neutral portrait.
 
     Delegates to ``render_llm`` with ``expression="neutral"`` and no reference.
     """

@@ -40,9 +40,6 @@ class TestMarshalAvatarPersona:
         "fg_color": "#FFFFFF",
     }
     _ADVISOR = {
-        "role": "Financial Advisor",
-        "education": ["MBA"],
-        "experience": ["10 years"],
         "traits": ["analytical"],
     }
 
@@ -50,7 +47,7 @@ class TestMarshalAvatarPersona:
         persona = marshal_avatar_persona(self._DEMOGRAPHICS, self._ADVISOR, None)
         assert "personal" in persona
         assert "style" in persona
-        assert "advisor" in persona
+        assert "personality" in persona
         assert persona["personal"]["gender"] == "female"
         assert persona["personal"]["age"] == 35
         assert persona["style"]["bg_color"] == "#4A90D9"
@@ -94,24 +91,18 @@ class TestVisualOnlyPersona:
     def test_removes_text_fields(self):
         persona = {
             "personal": {"name": "Alice", "gender": "female", "age": 35},
-            "advisor": {
-                "role": "Advisor",
-                "education": ["MBA"],
-                "experience": ["10 years"],
+            "personality": {
                 "traits": ["smart"],
             },
             "appearance": {"hair_style": "bob", "eye_shape": "almond"},
         }
         visual = visual_only_persona(persona)
         assert "name" not in visual.get("personal", {})
-        assert "education" not in visual.get("advisor", {})
-        assert "experience" not in visual.get("advisor", {})
-        assert "traits" not in visual.get("advisor", {})
+        assert "personality" not in visual
 
     def test_excludes_eye_shape(self):
         persona = {
             "personal": {"gender": "female", "age": 30},
-            "advisor": {"role": "Advisor"},
             "appearance": {"hair_style": "bob", "eye_shape": "almond"},
         }
         visual = visual_only_persona(persona)
@@ -120,17 +111,15 @@ class TestVisualOnlyPersona:
     def test_keeps_hair_style(self):
         persona = {
             "personal": {"gender": "female"},
-            "advisor": {"role": "Advisor"},
             "appearance": {"hair_style": "braids"},
         }
         visual = visual_only_persona(persona)
         assert visual["appearance"].get("hair_style") == "braids"
 
     def test_dict_appearance_value_sanitized(self):
-        """Covers the `elif isinstance(v, dict)` branch (lines 120-121)."""
+        """Covers the `elif isinstance(v, dict)` branch."""
         persona = {
             "personal": {"gender": "female"},
-            "advisor": {"role": "Advisor"},
             "appearance": {"color_pair": {"primary": "red", "secondary": "blue"}},
         }
         visual = visual_only_persona(persona)
@@ -139,27 +128,26 @@ class TestVisualOnlyPersona:
 
 class TestMarshalAvatarPersonaElseBranch:
     def test_non_hex_non_dict_key_stored(self):
-        """Covers the else branch (line 75): key not in HEX or DICT_PASSTHROUGH sets."""
+        """Covers the else branch: key not in HEX or DICT_PASSTHROUGH sets."""
         demographics = {"gender": "female", "age": 30, "style": "photorealistic"}
-        advisor = {"role": "Advisor", "traits": [], "education": [], "experience": []}
-        # HAIR_STYLE is not a hex field and not a dict-passthrough field
+        advisor = {"traits": []}
         features = {"HAIR_STYLE": "bob cut"}
         result = marshal_avatar_persona(demographics, advisor, features)
         assert result["appearance"].get("hair_style") == "bob cut"
 
     def test_dict_passthrough_key_stored_as_dict(self):
-        """Covers the _DICT_PASSTHROUGH_KEYS branch (line 73): CLOTHING is passthrough."""
+        """Covers the _DICT_PASSTHROUGH_KEYS branch: CLOTHING is passthrough."""
         demographics = {"gender": "female", "age": 30, "style": "photorealistic"}
-        advisor = {"role": "Advisor", "traits": [], "education": [], "experience": []}
+        advisor = {"traits": []}
         clothing_val = {"top": "blazer", "bottom": "trousers"}
         features = {"CLOTHING": clothing_val}
         result = marshal_avatar_persona(demographics, advisor, features)
         assert result["appearance"].get("clothing") == clothing_val
 
     def test_hex_field_parsed_from_string(self):
-        """Covers the _HEX_FIELD_NAMES branch (line 75): HAIR_COLOR parsed."""
+        """Covers the _HEX_FIELD_NAMES branch: HAIR_COLOR parsed."""
         demographics = {"gender": "female", "age": 30, "style": "photorealistic"}
-        advisor = {"role": "Advisor", "traits": [], "education": [], "experience": []}
+        advisor = {"traits": []}
         features = {"HAIR_COLOR": "#8B5E3C #5C3D1E"}
         result = marshal_avatar_persona(demographics, advisor, features)
         assert "hair_color" in result["appearance"]

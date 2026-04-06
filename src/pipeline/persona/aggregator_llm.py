@@ -1,4 +1,4 @@
-"""LLM-based aggregator — advisor profile generation and per-field feature selection."""
+"""LLM-based aggregator — per-field feature selection."""
 
 from __future__ import annotations
 
@@ -16,117 +16,12 @@ logger = logging.getLogger(__name__)
 
 _MAX_RETRIES: int = SETTINGS["max_retries"]
 
-# ---------------------------------------------------------------------------
-# Advisor profile generation (from step_b)
-# ---------------------------------------------------------------------------
-
-
-def generate_advisor_profile(
-    role: str,
-    demographics: dict,
-    *,
-    gateway_url: str = "http://127.0.0.1:4096",
-    max_retries: int = _MAX_RETRIES,
-) -> dict:
-    """Generate education, experience, and traits from role via LLM.
-
-    Returns: {"education": [...], "experience": [...], "traits": [...]}
-    """
-    gender = demographics.get("gender", "person")
-    age = demographics.get("age", 40)
-
-    logger.info("[Step B] START — generate_cv (gateway=%s)", gateway_url)
-    system_msg = (
-        "You are an advisor profile generator. "
-        "Given a role, gender, and age, create a realistic professional profile. "
-        "Reply ONLY as YAML with exactly three keys: education, experience, traits. "
-        "Each key maps to a short list. "
-        "Experience entries must be SHORT: job title and employer only, no dates or descriptions."
-    )
-    user_msg = (
-        f"Generate a realistic advisor profile for a {gender}, age {age}, "
-        f"working as a {role}.\n\n"
-        f"Reply as YAML only:\n"
-        f"education:\n"
-        f"  - <degree or certification 1>\n"
-        f"  - <degree or certification 2>\n"
-        f"experience:\n"
-        f"  - <Job Title, Employer>  # e.g. Senior Analyst, Goldman Sachs\n"
-        f"  - <Job Title, Employer>\n"
-        f"  - <Job Title, Employer>  # optional 3rd\n"
-        f"traits:\n"
-        f"  - <personality trait 1>\n"
-        f"  - <personality trait 2>\n"
-        f"  - <personality trait 3>\n"
-    )
-
-    messages: list[dict] = [
-        {"role": "system", "content": system_msg},
-        {"role": "user", "content": user_msg},
-    ]
-
-    client = GatewayClient(gateway_url)
-
-    for attempt in range(1, max_retries + 1):
-        try:
-            content = client.text_gen(messages, max_retries=max_retries)
-            if not content or not content.strip():
-                logger.warning("Profile gen attempt %d/%d: empty response", attempt, max_retries)
-                continue
-
-            # Strip code fences
-            cleaned = re.sub(r"^```(?:ya?ml)?\s*\n?", "", content.strip(), flags=re.MULTILINE)
-            cleaned = re.sub(r"\n?```\s*$", "", cleaned.strip())
-
-            parsed = yaml.safe_load(cleaned)
-            if not isinstance(parsed, dict):
-                logger.warning(
-                    "Profile gen attempt %d/%d: expected dict, got %s",
-                    attempt,
-                    max_retries,
-                    type(parsed).__name__,
-                )
-                continue
-
-            education = parsed.get("education", [])
-            experience = parsed.get("experience", [])
-            traits = parsed.get("traits", [])
-
-            # Validate: at least one item in each
-            if not education or not experience or not traits:
-                logger.warning(
-                    "Profile gen attempt %d/%d: missing fields (edu=%d, exp=%d, traits=%d)",
-                    attempt,
-                    max_retries,
-                    len(education),
-                    len(experience),
-                    len(traits),
-                )
-                continue
-
-            # Normalize to lists of strings
-            result = {
-                "education": [str(e) for e in education][:2],
-                "experience": [str(e) for e in experience][:3],
-                "traits": [str(t) for t in traits][:3],
-            }
-            logger.info("Generated advisor profile: %s", result)
-            logger.info("[Step B] DONE  — role=%s, traits=%d", role, len(result.get("traits", [])))
-            return result
-
-        except Exception as exc:
-            if attempt == max_retries:
-                raise
-            logger.warning("Profile gen attempt %d/%d failed: %s", attempt, max_retries, exc)
-
-    raise ValueError(f"Failed to generate advisor profile after {max_retries} attempts")
-
 
 # ---------------------------------------------------------------------------
-# Feature selection (from step_c)
+# Feature selection
 # ---------------------------------------------------------------------------
 
-# Step C system prompt — inlined (was generate_features_system_prompt.yml).
+# System prompt — inlined (was generate_features_system_prompt.yml).
 _STEP_C_SYSTEM_PROMPT = (
     "you are: a graphics designer for professional avatar illustrations\n"
     "task: Given the following advisor profile, select EXACTLY ONE value\n"
@@ -136,15 +31,10 @@ _STEP_C_SYSTEM_PROMPT = (
 
 _NONE_PATTERNS = re.compile(r"^(none|n/a|no|nothing|null|empty|-|—)$", re.IGNORECASE)
 
-# Fields that are simple pick-one-from-list — LLM-selected presentation only.
-_SIMPLE_FIELDS = [
-    "HAIR_STYLE",
-]
-
 
 def _load_required_feature_keys() -> list[str]:
-    """Return the keys Step C LLM must produce (from step_c schema in settings)."""
-    return list(SETTINGS.get("step_c", {}).get("schema", {}).keys())
+    """Return the keys the feature selection LLM must produce (from schema in settings)."""
+    return list(SETTINGS.get("feature_selection", {}).get("schema", {}).keys())
 
 
 _REQUIRED_FEATURE_KEYS = _load_required_feature_keys()
@@ -158,7 +48,7 @@ def _filter_none_values(d: dict) -> dict:
 
 
 def _load_user_prompt_options(gender: str | None = None, *, hard_type: bool = False) -> dict:
-    """Return gender-filtered option lists for Step C LLM fields."""
+    """Return gender-filtered option lists for feature selection LLM fields."""
 
     def _flatten(opt_src: dict | list) -> list:
         if isinstance(opt_src, list):
@@ -192,19 +82,14 @@ def _load_user_prompt_options(gender: str | None = None, *, hard_type: bool = Fa
 
 
 def _format_profile(demographics: dict, advisor: dict) -> str:
-    """Build a short advisor profile string for per-field prompts."""
-    role = advisor.get("role", "Advisor")
+    """Build a short persona profile string for per-field prompts."""
     traits = advisor.get("traits", [])
     traits_str = ", ".join(traits) if traits else "professional"
-    return (
-        f"Gender: {demographics['gender']}\n"
-        f"Age: {demographics['age']}\n"
-        f"Role: {role}, Traits: {traits_str}"
-    )
+    return f"Gender: {demographics['gender']}\nAge: {demographics['age']}\nTraits: {traits_str}"
 
 
 def _build_feature_prompt(demographics: dict, advisor: dict) -> tuple[str, str]:
-    """Build the Step C prompt for a per-field LLM call.
+    """Build the feature selection prompt for a per-field LLM call.
 
     Returns (system_message, user_message).
     """
@@ -498,6 +383,182 @@ def _select_feature_field(
     raise ValueError(f"Failed to select {key} after {max_retries} attempts")
 
 
+def _parse_dict_field(
+    raw: object,
+    key: str,
+    options: list,
+    *,
+    max_items: int,
+) -> dict | None:
+    """Parse a YAML dict field (CLOTHING or ACCESSORIES) from a batch response.
+
+    Returns a dict on success, None if the value is structurally invalid.
+    """
+    if raw is None:
+        return {}
+    if isinstance(raw, str) and _NONE_PATTERNS.match(raw.strip()):
+        return {}
+    if not isinstance(raw, dict):
+        return None
+
+    _PERSONA_KEYS = {"advisor_persona", "personal", "advisor", "appearance", "personality"}
+    if _PERSONA_KEYS.intersection(raw.keys()):
+        return None  # echoed persona — reject
+
+    if key == "CLOTHING":
+        if any(not isinstance(v, str) for v in raw.values()):
+            return None
+
+    def _norm(s: str) -> str:
+        return s.strip().lower().replace(" ", "_").replace("-", "_")
+
+    if options:
+        valid = {_norm(str(o)) for o in options}
+        raw = {k: v for k, v in raw.items() if _norm(k) in valid}
+
+    if len(raw) > max_items:
+        raw = dict(list(raw.items())[:max_items])
+
+    return raw
+
+
+def _select_appearance_batch(
+    profile: str,
+    system_msg: str,
+    options: dict,
+    context_features: dict,
+    demographics: dict,
+    advisor: dict,
+    *,
+    gateway_url: str = "http://127.0.0.1:4096",
+    max_retries: int = _MAX_RETRIES,
+) -> dict:
+    """Select HAIR_STYLE, CLOTHING, and ACCESSORIES in a single LLM call."""
+    hair_opts = options.get("HAIR_STYLE", [])
+    clothing_opts = options.get("CLOTHING", [])
+    accessories_opts = options.get("ACCESSORIES", [])
+
+    context = ""
+    if context_features:
+        persona = marshal_avatar_persona(demographics, advisor, context_features)
+        persona_yaml = yaml.dump(
+            persona, default_flow_style=False, sort_keys=False, allow_unicode=True
+        )
+        context = f"\nCurrent persona:\n{persona_yaml}"
+
+    user_content = (
+        f"{profile}{context}\n\n"
+        f"Select appearance attributes. Reply as YAML only — no extra text.\n\n"
+        f"HAIR_STYLE: pick ONE from: {', '.join(str(o) for o in hair_opts)}\n"
+        f"CLOTHING: pick 1-4 items from: {', '.join(str(o) for o in clothing_opts)}\n"
+        f"  (key = item name, value = hex color #RRGGBB)\n"
+        f"ACCESSORIES: pick 0-3 items from: {', '.join(str(o) for o in accessories_opts)}\n"
+        f"  (key = item name, value = brief description — or write the word 'none')\n\n"
+        f"Example:\n"
+        f"HAIR_STYLE: bob cut\n"
+        f"CLOTHING:\n"
+        f'  blazer: "#3C3C3C"\n'
+        f'  shirt: "#A8C4E0"\n'
+        f"ACCESSORIES:\n"
+        f"  glasses: thin-frame rectangular\n"
+    )
+
+    messages: list[dict] = [
+        {"role": "system", "content": system_msg},
+        {"role": "user", "content": user_content},
+    ]
+
+    client = GatewayClient(gateway_url)
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            content = client.text_gen(messages)
+        except Exception as exc:
+            if attempt == max_retries:
+                raise
+            logger.warning("Appearance batch attempt %d/%d error: %s", attempt, max_retries, exc)
+            continue
+
+        if not content or not content.strip():
+            logger.warning("Appearance batch attempt %d/%d: empty response", attempt, max_retries)
+            continue
+
+        try:
+            cleaned = re.sub(r"^```(?:ya?ml)?\s*\n?", "", content.strip(), flags=re.MULTILINE)
+            cleaned = re.sub(r"\n?```\s*$", "", cleaned.strip())
+            parsed = yaml.safe_load(cleaned)
+
+            if not isinstance(parsed, dict):
+                logger.warning(
+                    "Appearance batch attempt %d/%d: expected dict, got %s",
+                    attempt,
+                    max_retries,
+                    type(parsed).__name__,
+                )
+                continue
+
+            # --- HAIR_STYLE ---
+            hair_raw = parsed.get("HAIR_STYLE") or parsed.get("hair_style", "")
+            hair = str(hair_raw).strip()
+            if hair_opts:
+                opts_lower = {str(o).strip().lower(): str(o).strip() for o in hair_opts}
+                if hair.lower() not in opts_lower:
+                    logger.warning(
+                        "Appearance batch attempt %d/%d: HAIR_STYLE %r not in options",
+                        attempt,
+                        max_retries,
+                        hair,
+                    )
+                    continue
+                hair = opts_lower[hair.lower()]
+
+            # --- CLOTHING ---
+            clothing = _parse_dict_field(
+                parsed.get("CLOTHING") or parsed.get("clothing"),
+                "CLOTHING",
+                clothing_opts,
+                max_items=4,
+            )
+            if clothing is None:
+                logger.warning(
+                    "Appearance batch attempt %d/%d: CLOTHING invalid", attempt, max_retries
+                )
+                continue
+
+            # --- ACCESSORIES ---
+            accessories = _parse_dict_field(
+                parsed.get("ACCESSORIES") or parsed.get("accessories"),
+                "ACCESSORIES",
+                accessories_opts,
+                max_items=3,
+            )
+            if accessories is None:
+                logger.warning(
+                    "Appearance batch attempt %d/%d: ACCESSORIES invalid", attempt, max_retries
+                )
+                continue
+
+            logger.info(
+                "Appearance batch OK — HAIR_STYLE=%r CLOTHING=%r ACCESSORIES=%r",
+                hair,
+                clothing,
+                accessories,
+            )
+            return {
+                "HAIR_STYLE": hair,
+                "CLOTHING": _filter_none_values(clothing),
+                "ACCESSORIES": _filter_none_values(accessories),
+            }
+
+        except Exception as exc:
+            logger.warning(
+                "Appearance batch attempt %d/%d: parse error: %s", attempt, max_retries, exc
+            )
+            continue
+
+    raise ValueError(f"Failed to select appearance after {max_retries} attempts")
+
+
 def _warmup_model(
     *,
     gateway_url: str = "http://127.0.0.1:4096",
@@ -552,44 +613,23 @@ def select_features(
             features[key] = demographics[key]
             logger.info("Pre-seeded from §A — %s: %s", key, demographics[key])
 
-    # Simple pick-from-list fields
-    for key in _SIMPLE_FIELDS:
-        features[key] = _select_feature_field(
-            key,
-            profile,
-            system_msg,
-            options.get(key, []),
-            features,
-            demographics,
-            advisor,
-            **llm_kwargs,
-        )
-        logger.info("Selected %s: %s", key, features[key])
-
-    # Structured dict fields
-    features["CLOTHING"] = _select_feature_field(
-        "CLOTHING",
+    # Batch: HAIR_STYLE + CLOTHING + ACCESSORIES in a single LLM call.
+    appearance = _select_appearance_batch(
         profile,
         system_msg,
-        options.get("CLOTHING", []),
+        options,
         features,
         demographics,
         advisor,
         **llm_kwargs,
     )
-    logger.info("Selected CLOTHING: %s", features["CLOTHING"])
-
-    features["ACCESSORIES"] = _select_feature_field(
-        "ACCESSORIES",
-        profile,
-        system_msg,
-        options.get("ACCESSORIES", []),
-        features,
-        demographics,
-        advisor,
-        **llm_kwargs,
+    features.update(appearance)
+    logger.info(
+        "Selected appearance batch — HAIR_STYLE=%r CLOTHING=%r ACCESSORIES=%r",
+        features.get("HAIR_STYLE"),
+        features.get("CLOTHING"),
+        features.get("ACCESSORIES"),
     )
-    logger.info("Selected ACCESSORIES: %s", features["ACCESSORIES"])
 
     if session_dir is not None:
         try:
@@ -604,12 +644,12 @@ def select_features(
                     allow_unicode=True,
                 )
             logger.info(
-                "[Step C] DONE  — %d features selected, persona.yml written to %s",
+                "DONE  — %d features selected, persona.yml written to %s",
                 len(features or {}),
                 session_dir,
             )
         except Exception as exc:
-            logger.warning("[Step C] Failed to write persona.yml to %s: %s", session_dir, exc)
+            logger.warning("Failed to write persona.yml to %s: %s", session_dir, exc)
 
     return features
 
@@ -632,7 +672,6 @@ def from_llm(
     """
     demographics = {k: resolved[k] for k in ("gender", "age") if k in resolved}
     advisor = {
-        "role": resolved.get("role", "Professional Advisor"),
         "traits": resolved.get("traits", []),
     }
     profile = _format_profile(demographics, advisor)

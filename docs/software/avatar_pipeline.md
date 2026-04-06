@@ -13,10 +13,10 @@
 3. [Avatar Creation Pipeline](#3-avatar-creation-pipeline)
    - [3.1 Generate Avatar Persona](#31-generate-avatar-persona)
    - [3.2 Render Avatars](#32-render-avatars)
-     - [Programmatic Avatar](pipeline/step_d2.md)
-     - [Neutral Portrait](pipeline/step_e.md)
-     - [Expression Variants](pipeline/step_f.md)
-     - [Post-process / Apply Background](pipeline/step_g.md)
+     - [Programmatic Avatar](pipeline/render/avatar_render_programmatic.md)
+     - [Neutral Portrait](pipeline/render/avatar_render_llm_neutral_portrait.md)
+     - [Expression Variants](pipeline/render/avatar_render_llm_expression_variants.md)
+     - [Post-process / Apply Background](pipeline/render/avatar_postprocessor.md)
 4. [Validation](#4-validation)
    - [4.1 Scorers Overview](#41-scorers-overview)
    - [4.2 Expression Classifier](pipeline/scoring_expression_classifier.md)
@@ -264,11 +264,11 @@ flowchart TD
 2. **Expression set resolution** — `expression_id` is resolved to a concrete list of expression names: single name, explicit list, `"all"` (every expression in `expressions.yml`), or `"random"` (one uniform pick).
 3. **Path branch on style family** — LLM styles → LLM render; Programmatic styles → Programmatic render.
 
-4. (🤖) **LLM — Neutral Portrait** · [SRS →](pipeline/step_e.md) — one image model call; establishes visual identity. Prompt combines the style directive, a sanitized persona YAML, and the neutral expression.[^persona-sanitize] Output PNG is the reference image for all expression variants.
-5. (🤖) **LLM — Expression Variants** · [SRS →](pipeline/step_f.md) — N calls (one per non-neutral expression), each receiving the neutral portrait as a reference image to anchor identity.[^ref-img-f] Individual failures are non-fatal.
-6. (🐍) **Programmatic — Expression Set** · [SRS →](pipeline/step_d2.md) — N SVG generations via DiceBear (Node.js), seeded deterministically from the persona name. Expression controlled by pre-mapped component overrides — no neutral reference needed. Failure is non-fatal.
+4. (🤖) **LLM — Neutral Portrait** · [SRS →](pipeline/render/avatar_render_llm_neutral_portrait.md) — one image model call; establishes visual identity. Prompt combines the style directive, a sanitized persona YAML, and the neutral expression.[^persona-sanitize] Output PNG is the reference image for all expression variants.
+5. (🤖) **LLM — Expression Variants** · [SRS →](pipeline/render/avatar_render_llm_expression_variants.md) — N calls (one per non-neutral expression), each receiving the neutral portrait as a reference image to anchor identity.[^ref-img-f] Individual failures are non-fatal.
+6. (🐍) **Programmatic — Expression Set** · [SRS →](pipeline/render/avatar_render_programmatic.md) — N SVG generations via DiceBear (Node.js), seeded deterministically from the persona name. Expression controlled by pre-mapped component overrides — no neutral reference needed. Failure is non-fatal.
 7. (🐍) **Post-processing** - transforming SVG to PNG
-8. **Post-processing** · [SRS →](pipeline/step_g.md) — applied to outputs from both paths: background removal (LLM path only) then composite layout.[^no-bg-in-style]
+8. **Post-processing** · [SRS →](pipeline/render/avatar_postprocessor.md) — applied to outputs from both paths: background removal (LLM path only) then composite layout.[^no-bg-in-style]
 
 [^persona-sanitize]: Text-heavy fields (name, CV, traits) are excluded from the image prompt — the model may render them as literal text. `eye_shape` is excluded because rendering is owned by the style system prompt; persona-level eye shape would conflict.
 
@@ -448,6 +448,9 @@ personal:
   gender: <str>           # male | female | non-binary
   age-group: <str>        # baby | toddler | adult | senior | etc.
   age: <int>
+  nationality: <str>
+  religion: <str>
+  zodiac: <str>
 
 appearance:
   skin_tone: <hex>
@@ -465,10 +468,15 @@ appearance:
   chin_shape: <str>
   cheeks_shape: <str>
   clothing:
-    <garment>: <hex>       # 1–4 items
+    <garment>: <hex>       # 1–3 items
     ...
   accessories:
-    <accessory>: <desc>    # 0–3 items
+    <accessory>: <desc>    # 0–2 items
+    ...
+
+personality:
+  traits:
+    <str>                  # 1-4 items
     ...
 
 post-process:              # ⚠️ NOT passed to the image model — compositing metadata only

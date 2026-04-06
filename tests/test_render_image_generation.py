@@ -1,4 +1,4 @@
-"""Tests for step_ef_generate_image — mocked GatewayClient."""
+"""Tests for the image generation pipeline — mocked GatewayClient."""
 
 from __future__ import annotations
 
@@ -86,7 +86,7 @@ class TestResolveUnilateral:
 
 
 # ---------------------------------------------------------------------------
-# generate_avatar_image — neutral portrait (step E)
+# generate_avatar_image — neutral portrait
 # ---------------------------------------------------------------------------
 
 
@@ -293,7 +293,7 @@ class TestGenerateAvatarImage:
 
 
 # ---------------------------------------------------------------------------
-# step_a — while-loop fill branches (lines 198, 205)
+# pick_diverse_demographics — while-loop fill branches (lines 198, 205)
 # ---------------------------------------------------------------------------
 
 
@@ -324,7 +324,7 @@ class TestPickDiverseDemographicsWhileLoops:
 
 
 # ---------------------------------------------------------------------------
-# step_d — _vendor_dir raises FileNotFoundError (line 87)
+# svg_generator — _vendor_dir raises FileNotFoundError (line 87)
 # ---------------------------------------------------------------------------
 
 

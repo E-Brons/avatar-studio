@@ -1,7 +1,5 @@
 """Persona marshalling — combine demographics + advisor + features into the
 canonical ``avatar_persona`` dict used by the image prompt and the UI panel.
-
-Moved here from ``step_c_select_features.py``.
 """
 
 from __future__ import annotations
@@ -52,10 +50,7 @@ def marshal_avatar_persona(demographics: dict, advisor: dict, features: dict | N
             "bg_color": demographics.get("bg_color", "#4A90D9"),
             "fg_color": demographics.get("fg_color", "#FFFFFF"),
         },
-        "advisor": {
-            "role": advisor.get("role", "Advisor"),
-            "education": advisor.get("education", []),
-            "experience": advisor.get("experience", []),
+        "personality": {
             "traits": advisor.get("traits", []),
         },
     }
@@ -94,12 +89,12 @@ def sanitize_str(v: str, max_chars: int = 100) -> str:
 def visual_only_persona(persona: dict) -> dict:
     """Return a stripped persona with only visual cues for the image model.
 
-    Removes text-heavy fields (education, experience, traits, name) that
-    the image model may render as literal text.  Sanitizes all string values
-    to strip any system-prompt contamination that leaked from the text LLM.
+    Removes text-heavy fields (traits, name) that the image model may render
+    as literal text.  Sanitizes all string values to strip any system-prompt
+    contamination that leaked from the text LLM.  `eye_shape` is excluded
+    because rendering is owned by the style system prompt.
     """
     personal = persona.get("personal", {})
-    advisor = persona.get("advisor", {})
     appearance = persona.get("appearance", {})
 
     visual_personal = {}
@@ -107,8 +102,6 @@ def visual_only_persona(persona: dict) -> dict:
         v = personal.get(k)
         if v is not None:
             visual_personal[k] = sanitize_str(str(v)) if isinstance(v, str) else v
-
-    visual_advisor = {"role": sanitize_str(str(advisor.get("role", "professional")))}
 
     _APPEARANCE_EXCLUDE = {"eye_shape"}
     visual_appearance: dict = {}
@@ -124,6 +117,5 @@ def visual_only_persona(persona: dict) -> dict:
 
     return {
         "personal": visual_personal,
-        "advisor": visual_advisor,
         "appearance": visual_appearance,
     }

@@ -16,4 +16,8 @@ echo "githook-pre-commit: running ruff check …"
 "$RUFF" check src/ tests/
 "$RUFF" format --check src/ tests/
 
+# terminology guard
+echo "githook-pre-commit: checking for old step/stage terminology …"
+"$ROOT/scripts/find_old_terminology.sh"
+
 echo "githook-pre-commit: all checks passed."

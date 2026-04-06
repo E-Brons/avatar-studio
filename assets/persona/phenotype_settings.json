@@ -1,5 +1,4 @@
 {
-  "__comment_step_a": "=== Step A: Randomise Phenotype (random pick) ===",
   "_comment_genders": "--- gender may control other selections which are gender-based ---",
   "genders": ["male", "female", "non-binary"],
   "_comment_age_grp": "--- age or age_group may control other selections which are age-based ---",

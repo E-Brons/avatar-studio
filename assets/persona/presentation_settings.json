@@ -1,5 +1,4 @@
 {
-  "_comment_step_c": "=== Step C: Presentation (LLM text model) ===",
   "temperature": 0.5,
   "max_tokens": 256,
   "schema": {
@@ -59,8 +58,6 @@
     ]
   },
 
-  "_comment_step_c_persona": "=== Step C → E/F: Avatar Persona (marshalled dict) ===",
-  "_comment_step_c_persona_note": "Structural metadata for _marshal_avatar_persona. Determines which appearance fields are multi-hex dicts vs dict-passthrough vs plain string.",
   "persona_hex_fields": {
     "HAIR_COLOR": ["hex_base", "hex_shadow"],
     "EYE_COLOR": ["hex_iris", "hex_pupil"]

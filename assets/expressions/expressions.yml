@@ -26,7 +26,7 @@ expressions:
       distinguishes genuine happiness from a polite smile.
 
   - expression: Surprise
-    synonyms: [Amazement, Astonishment, Surprised, Shocked]
+    synonyms: [Amazement, Astonishment, Surprised, Shocked, Alert, Startled]
     facs_action_units: "AU1 (marked), AU2 (marked), AU5 (moderate), AU26 (moderate)"
     description: >
       Full brow arch — both inner and outer brows raised high, creating
@@ -34,7 +34,7 @@ expressions:
       open. No tension anywhere in the face — pure open, unguarded reaction.
 
   - expression: Anger
-    synonyms: [Rage, Fury, Angry, Furious]
+    synonyms: [Rage, Fury, Angry, Furious, Stern, Hostile, Grumpy, Stressed, Menacing]
     facs_action_units: "AU4 (marked), AU7 (moderate), AU23 (moderate)"
     description: >
       Brows pulled hard down and together, forming a deep V-furrow between
@@ -52,7 +52,7 @@ expressions:
       The face is heavy and still — no tension, just weight.
 
   - expression: Contempt
-    synonyms: [Scorn, Disdain, Contemptuous, Scornful, Disdainful]
+    synonyms: [Scorn, Disdain, Contemptuous, Scornful, Disdainful, Skeptical, Smug, Sly, Dismissive]
     facs_action_units: "AU14x (moderate), AU12x (trace)"
     description: >
       Strictly unilateral — one side of the face only. A single dimple

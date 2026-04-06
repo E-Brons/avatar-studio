@@ -19,20 +19,19 @@ The LLM Gateway client (`GatewayClient`) is patched at the module boundary. No r
 | File | Covers |
 |------|--------|
 | `test_api.py` | `ConfigLoader.load()` (attribute count, option shapes, dual-color extras, gender-bucket tags, formula/depends_on fields, style options), `_demo_key` (all 15 ID mappings + unknown returns None), `_demo_to_response` (key casing, value preservation), `_resolve_demographics` (no constraints, single overrides, hair_color → brows re-derive, random mode ignored, None value skipped, multiple constraints) |
-| `test_avatar_features.py` | Step A (`_pick_diverse_demographics`, `_pool_by_gender`), Step B (`_generate_advisor_profile`: YAML parsing, code-fence stripping, list truncation, retry on empty/missing fields, exhaustion raises), Step C (`_select_features`, `_select_feature_field`, `_marshal_avatar_persona`, `_build_feature_prompt`, warmup failure non-fatal, context accumulates, hard-type-gender pool filtering), pipeline wiring (features → persona) |
-| `test_avatar_stages.py` | `config` (WCAG utils, hex helpers, palette filtering), Step A (`_pick_colors`, `_pick_name`, `_pick_demographics`: required keys, gender valid, age in range, seeded determinism, bg_color WCAG pass), Step D abbreviation (valid PNG, correct size, RGBA, transparent corners, opaque center, white border ring), Step D toon-head (`create_toon_head_avatar`: creates file, returns path, SVG content, parent dirs, seed forwarded, bg_color option, no-options without demographics, Node error raises), Step E/F (`create_face_avatar`: neutral failure returns null map, success returns filenames, partial expression failure, feature failure non-fatal, demographics returned) |
+| `test_avatar_features.py` | Demographics randomization (`_pick_diverse_demographics`, `_pool_by_gender`), CV generation (`_generate_advisor_profile`: YAML parsing, code-fence stripping, list truncation, retry on empty/missing fields, exhaustion raises), feature selection (`_select_features`, `_select_feature_field`, `_marshal_avatar_persona`, `_build_feature_prompt`, warmup failure non-fatal, context accumulates, hard-type-gender pool filtering), pipeline wiring (features → persona) |
+| `test_avatar_stages.py` | `config` (WCAG utils, hex helpers, palette filtering), demographics (`_pick_colors`, `_pick_name`, `_pick_demographics`: required keys, gender valid, age in range, seeded determinism, bg_color WCAG pass), abbreviation (valid PNG, correct size, RGBA, transparent corners, opaque center, white border ring), toon-head (`create_toon_head_avatar`: creates file, returns path, SVG content, parent dirs, seed forwarded, bg_color option, no-options without demographics, Node error raises), portrait generation (`create_face_avatar`: neutral failure returns null map, success returns filenames, partial expression failure, feature failure non-fatal, demographics returned) |
 
 ### Mocking Strategy
 
 | External dependency | Patched at |
 |--------------------|------------|
 | `pick_demographics` (http_server) | `api.http_server.pick_demographics` |
-| Text LLM (Step B) | `pipeline.step_b_generate_cv.GatewayClient` |
-| Text LLM (Step C) | `pipeline.step_c_select_features.GatewayClient` |
-| Image generation | `pipeline.step_ef_generate_image.generate_avatar_image` |
-| Demographics | `pipeline.step_ef_generate_image.pick_demographics` |
-| Feature selection | `pipeline.step_ef_generate_image.select_features` |
-| Node.js ToonHead (Step D) | `pipeline.step_d_make_toon_head.subprocess.run` |
+| Text LLM (feature selection) | `pipeline.persona.aggregator_llm.GatewayClient` |
+| Image generation | `pipeline.render.llm.orchestrator.generate_avatar_image` |
+| Demographics | `pipeline.render.llm.orchestrator.pick_demographics` |
+| Feature selection | `pipeline.render.renderer.select_features` |
+| Node.js programmatic avatar | `pipeline.render.programmatic.svg_generator.subprocess.run` |
 
 ---
 
@@ -49,7 +48,7 @@ These call the live LLM Gateway and run real LLM calls through the full pipeline
 | File | Covers |
 |------|--------|
 | `conftest.py` | `gateway` session fixture: connects to `OLLAMA_URL` (default `http://127.0.0.1:4096`), auto-skips all integration tests if unreachable |
-| `test_avatar_integration.py` | Gateway health check, Step B live (profile has education/experience/traits), Step C live (features non-empty, HAIR_STYLE and CLOTHING present), full A→E pipeline (valid PNG output, persona has all required sections), `test_pipeline_categorizer_score` (categorizer ≥ 75% on seed=21), `test_circle_frame_categorizer` (framed portrait ≥ 65% on seed=4) |
+| `test_avatar_integration.py` | Gateway health check, CV generation live (profile has education/experience/traits), feature selection live (features non-empty, HAIR_STYLE and CLOTHING present), full pipeline (valid PNG output, persona has all required sections), `test_pipeline_categorizer_score` (categorizer ≥ 75% on seed=21), `test_circle_frame_categorizer` (framed portrait ≥ 65% on seed=4) |
 
 **The categorizer tests are the primary quality gate.** They generate a real portrait via the LLM Gateway and score it against the persona using `classify_persona`. These tests fail when prompt quality degrades — see `docs/plans/2026-04-02-image-prompt-improvement.md`.
 
@@ -61,7 +60,7 @@ These call the live LLM Gateway and run real LLM calls through the full pipeline
 # Unit tests (no services required)
 pytest tests/ -m "avatar and not integration" -v
 
-# API layer only (fastest — no pipeline imports needed beyond config + step_a)
+# API layer only (fastest — no pipeline imports needed beyond config + demographics)
 pytest tests/test_api.py -v
 
 # With coverage
@@ -80,7 +79,7 @@ pytest tests/ -m "avatar and integration" -v
 
 - Files: `test_avatar_<scope>.py` — one file per pipeline area
 - Functions: `test_<function>_<scenario>` — e.g. `test_create_face_avatar_neutral_failure_returns_null_map`
-- Mocking: gateway client patched at the module where it is imported — e.g. `pipeline.step_c_select_features.GatewayClient`
+- Mocking: gateway client patched at the module where it is imported — e.g. `pipeline.persona.aggregator_llm.GatewayClient`
 
 ---
 

@@ -9,7 +9,7 @@
 ## Table of Contents
 
 1. [Overview](#1-overview)
-2. [Pipeline Stages (A→G)](#2-pipeline-stages-ag)
+2. [Pipeline Phases](#2-pipeline-phases)
 3. [Package Structure](#3-package-structure)
 4. [Data Flow](#4-data-flow)
 5. [LLM Usage](#5-llm-usage)
@@ -21,7 +21,7 @@
 
 ## 1. Overview
 
-Avatar Studio generates avatars through a 7-stage pipeline. Each stage is independently testable; the pipeline can be run end-to-end or stage-by-stage.
+Avatar Studio generates avatars through a multi-phase pipeline. Each phase is independently testable; the pipeline can be run end-to-end or phase-by-phase.
 
 All LLM calls are routed through the LLM Gateway at `http://127.0.0.1:4096`.
 
@@ -32,13 +32,13 @@ graph LR
     classDef llmImage fill:#E67E22,color:#fff,stroke:#C46A1A
     classDef pil      fill:#1A6A9A,color:#fff,stroke:#0D4F7A
 
-    A["A · Randomise Person"]:::code
-    B["B · Generate CV"]:::llmText
-    C["C · Select Features"]:::llmText
-    D["D · Abbreviation + ToonHead"]:::pil
-    E["E · Canonical Portrait"]:::llmImage
-    F["F · Expression Variants"]:::llmImage
-    G["G · Postprocess"]:::pil
+    A["Randomise Person"]:::code
+    B["Generate CV"]:::llmText
+    C["Select Features"]:::llmText
+    D["Abbreviation + ToonHead"]:::pil
+    E["Canonical Portrait"]:::llmImage
+    F["Expression Variants"]:::llmImage
+    G["Postprocess"]:::pil
 
     A --> B --> C --> D
     C --> E --> F --> G
@@ -46,7 +46,7 @@ graph LR
 
 ---
 
-## 2. Pipeline Stages (A→G)
+## 2. Pipeline Phases
 
 see [Avatar Pipeline Software Architecture](avatar_pipeline.md)
 
@@ -60,13 +60,20 @@ src/
 │   ├── config.py           # Settings, WCAG utils, color helpers
 │   └── gateway.py          # LLM Gateway client
 ├── pipeline/
-│   ├── step_a_randomise_person.py
-│   ├── step_b_generate_cv.py
-│   ├── step_c_select_features.py
-│   ├── step_d_make_abbreviation.py
-│   ├── step_d_make_toon_head.py
-│   ├── step_ef_generate_image.py
-│   └── step_g_postprocess.py
+│   ├── persona/
+│   │   ├── generator.py          # Demographics randomization
+│   │   ├── aggregator_llm.py     # Feature selection (LLM)
+│   │   ├── aggregator_inherited.py
+│   │   └── marshal.py
+│   └── render/
+│       ├── renderer.py           # Orchestrates portrait + expression generation
+│       ├── programmatic/
+│       │   └── svg_generator.py  # Programmatic avatar (Node.js DiceBear)
+│       └── llm/
+│           ├── orchestrator.py   # LLM image generation
+│           ├── prompt_builder.py
+│           ├── neutral_portrait.py
+│           └── expression_variants.py
 ├── api/
 │   ├── config_loader.py     # Loads attributes.yml; resolves source: refs → option lists
 │   ├── http_server.py       # FastAPI HTTP server (port 8080); browser-shutdown WS
@@ -83,9 +90,9 @@ assets/
 │   └── expressions.yml               # Expression definitions: FACS, synonyms, descriptions
 ├── persona/
 │   ├── attributes.yml                # Master UI attribute definitions (19 attrs)
-│   ├── cv_settings.json              # Step B: LLM params + CV schema
-│   ├── phenotype_settings.json       # Step A: age groups, names, phenotype options, palette
-│   └── presentation_settings.json   # Step C: LLM params + hair/clothing/accessories options
+│   ├── cv_settings.json              # CV generation: LLM params + CV schema
+│   ├── phenotype_settings.json       # Demographics: age groups, names, phenotype options, palette
+│   └── presentation_settings.json   # Feature selection: LLM params + hair/clothing/accessories options
 └── styles/
     ├── styles.yml                    # Style definitions: system prompts, technical traits
     └── avatar_style_<style>_<gender>.png  # 15 reference PNGs (5 styles × 3 genders)
@@ -105,9 +112,9 @@ frontend/                             # Flutter web app
 tests/
 ├── conftest.py
 ├── test_api.py                   # ConfigLoader + http_server helpers (no services)
-├── test_avatar_features.py       # Step B/C: LLM mocks, feature selection
+├── test_avatar_features.py       # CV generation/feature selection: LLM mocks
 ├── test_avatar_integration.py    # Integration tests (require OLLAMA_URL)
-└── test_avatar_stages.py         # Step A/D/E/F: randomise, PIL, create_face_avatar
+└── test_avatar_stages.py         # Demographics randomization, PIL, create_face_avatar
 ```
 
 ---
@@ -117,19 +124,19 @@ tests/
 ```mermaid
 sequenceDiagram
     participant Client
-    participant StepA as Step A<br>(randomise)
-    participant StepBC as Steps B+C<br>(text LLM)
-    participant StepD as Step D<br>(PIL + Node)
-    participant StepEF as Steps E+F<br>(image LLM)
-    participant StepG as Step G<br>(PIL + rembg)
+    participant RandPhase as Randomise Person
+    participant TextPhase as CV + Feature Selection<br>(text LLM)
+    participant ProgPhase as Abbreviation + ToonHead<br>(PIL + Node)
+    participant ImgPhase as Neutral Portrait + Expressions<br>(image LLM)
+    participant PostPhase as Postprocess<br>(PIL + rembg)
 
-    Client->>StepA: role, optional seed
-    StepA-->>StepBC: demographics dict
-    StepBC-->>StepEF: avatar_persona.yml
-    StepA-->>StepD: bg_color, name
-    StepD-->>Client: abbreviation.png + toon-head.svg
-    StepEF-->>StepG: neutral.png, expression_N.png
-    StepG-->>Client: framed PNGs
+    Client->>RandPhase: role, optional seed
+    RandPhase-->>TextPhase: demographics dict
+    TextPhase-->>ImgPhase: avatar_persona.yml
+    RandPhase-->>ProgPhase: bg_color, name
+    ProgPhase-->>Client: abbreviation.png + toon-head.svg
+    ImgPhase-->>PostPhase: neutral.png, expression_N.png
+    PostPhase-->>Client: framed PNGs
 ```
 
 ---
@@ -140,19 +147,19 @@ All LLM calls go through the **LLM Gateway** (`config/gateway.py`, default `http
 
 | Gateway endpoint | Protocol | Used by |
 |-----------------|----------|---------|
-| `POST /text_gen` | `{messages, max_retries}` → `{content}` | Steps B, C |
-| `POST /image_gen` | `{prompt, width, height, seed?, reference_images_b64?}` → `{image_b64}` | Steps E, F |
+| `POST /text_gen` | `{messages, max_retries}` → `{content}` | CV generation, feature selection |
+| `POST /image_gen` | `{prompt, width, height, seed?, reference_images_b64?}` → `{image_b64}` | Neutral portrait, expression variants |
 | `POST /image_inspector` | `{image_b64, system, prompt, max_retries}` → `{content}` | Classifiers |
 | `GET /api/tags` | — → `{models: [{name}]}` | Model discovery (startup) |
 
-### Per-stage breakdown
+### Per-phase breakdown
 
-| Step | Gateway endpoint | Key inputs | Output |
-|------|-----------------|------------|--------|
-| B | `POST /text_gen` | Role + demographics as messages | YAML: education / experience / traits |
-| C | `POST /text_gen` | Profile + selected-so-far as messages (one call per field) | One field value per call |
-| E | `POST /image_gen` | Prompt from `persona.yml` + style directive; no reference image | PNG portrait (neutral) |
-| F | `POST /image_gen` | Same prompt + `reference_images_b64` = Step E portrait | PNG expression variant |
+| Phase | Gateway endpoint | Key inputs | Output |
+|-------|-----------------|------------|--------|
+| CV generation | `POST /text_gen` | Role + demographics as messages | YAML: education / experience / traits |
+| Feature selection | `POST /text_gen` | Profile + selected-so-far as messages (one call per field) | One field value per call |
+| Neutral portrait | `POST /image_gen` | Prompt from `persona.yml` + style directive; no reference image | PNG portrait (neutral) |
+| Expression variants | `POST /image_gen` | Same prompt + `reference_images_b64` = neutral portrait | PNG expression variant |
 | Classifiers | `POST /image_inspector` | Generated PNG + system prompt with label hints | YAML scores |
 
 Model selection and gateway URL are resolved at runtime from `assets/persona/cv_settings.json` and `assets/persona/presentation_settings.json`.
@@ -194,8 +201,8 @@ Pass: classifier top expression matches label (exact or semantic), probability �
 |--------|------|---------|
 | `GET` | `/health` | Liveness check → `{"status": "ok"}` |
 | `GET` | `/api/config` | Returns all 19 attribute definitions with resolved options (fast, no LLM) |
-| `POST` | `/api/avatar/randomize` | Runs Step A + applies constraint overrides → resolved attribute values |
-| `POST` | `/api/avatar/generate` | Full A→E pipeline in thread executor → base64 PNG + `avatar_persona` |
+| `POST` | `/api/avatar/randomize` | Runs demographics randomization + applies constraint overrides → resolved attribute values |
+| `POST` | `/api/avatar/generate` | Full demographics→portrait pipeline in thread executor → base64 PNG + `avatar_persona` |
 | `WS` | `/api/ws/keepalive` | Browser presence channel; drives auto-shutdown |
 
 ### Configuration loading (`api/config_loader.py`)
@@ -241,8 +248,8 @@ AVATAR_BROWSER_SHUTDOWN=1 .venv/bin/uvicorn api.http_server:app \
 
 | Sub-command | What it does |
 |-------------|--------------|
-| `stage-b` | Run Step B only (LLM feature selection), print YAML |
-| `generate` | Full A→G pipeline for one or more advisor YAML files |
+| `select-features` | Run CV generation only (LLM feature selection), print YAML |
+| `generate` | Full pipeline for one or more advisor YAML files |
 | `gen-examples` | Generate style reference portraits (all styles × genders) |
 
 ---

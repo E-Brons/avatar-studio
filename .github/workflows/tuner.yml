@@ -20,7 +20,7 @@ jobs:
   autotuner:
     name: Expression Autotuner
     runs-on: ubuntu-latest
-    if: ${{ vars.OLLAMA_URL \!= '' }}
+    if: ${{ vars.OLLAMA_URL != '' }}
     steps:
       - uses: actions/checkout@v4
 

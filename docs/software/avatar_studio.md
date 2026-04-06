@@ -22,8 +22,8 @@ Avatar Studio generates avatars through a multi-step pipeline that involves two 
 
 | Backend | Purpose | Typical latency |
 |---------|---------|-----------------|
-| **Text LLM** | Profile generation (Step B) + feature selection (Step C) — picks name, skin tone, hair, clothing, etc. | TBD (needs logging) |
-| **Image LLM** | Portrait & expression generation (Steps E, F) — renders PNG images via the LLM Gateway | 10–60 s per image |
+| **Text LLM** | CV generation + feature selection — picks name, skin tone, hair, clothing, etc. | TBD (needs logging) |
+| **Image LLM** | Portrait & expression generation — renders PNG images via the LLM Gateway | 10–60 s per image |
 
 The API exposes stateless HTTP endpoints. Each endpoint performs a single, well-scoped operation and returns when done. There is no server-side session state for avatar generation — the caller owns the pipeline orchestration and artifact dependencies.
 
@@ -80,7 +80,7 @@ Returns all attribute definitions used to build the UI dynamically. Reads `asset
 
 #### `POST /api/avatar/randomize`
 
-Runs Step A (`pick_demographics`) and applies any fixed constraints. Returns resolved attribute values without calling any LLM.
+Runs demographics randomization (`pick_demographics`) and applies any fixed constraints. Returns resolved attribute values without calling any LLM.
 
 **Request:**
 ```json
@@ -109,7 +109,7 @@ Runs Step A (`pick_demographics`) and applies any fixed constraints. Returns res
 
 #### `POST /api/avatar/generate`
 
-Runs the full pipeline (Steps A→B→C→E, neutral portrait only for MVP) in a thread executor. Returns a base64 PNG plus the full `avatar_persona` dict.
+Runs the full pipeline (demographics → CV → features → neutral portrait, neutral portrait only for MVP) in a thread executor. Returns a base64 PNG plus the full `avatar_persona` dict.
 
 **Request:**
 ```json
@@ -146,7 +146,7 @@ Browser presence channel. Each Flutter tab connects here on startup and holds th
 sequenceDiagram
     participant B as Browser (Flutter)
     participant S as HTTP Server
-    participant P as Pipeline (A→E)
+    participant P as Pipeline (demographics→portrait)
     participant G as LLM Gateway
 
     B->>S: GET /api/config
@@ -157,11 +157,11 @@ sequenceDiagram
 
     B->>S: POST /api/avatar/generate {selections}
     S->>P: pick_demographics() + apply overrides
-    P->>G: Step B text_gen (advisor profile)
+    P->>G: text_gen (advisor CV profile)
     G-->>P: education / experience / traits
-    P->>G: Step C text_gen (hair, clothing, accessories)
+    P->>G: text_gen (hair, clothing, accessories)
     G-->>P: features
-    P->>G: Step E image_gen (neutral portrait)
+    P->>G: image_gen (neutral portrait)
     G-->>P: PNG bytes
     S-->>B: {image_b64, avatar_persona, session_id}
 ```
@@ -183,7 +183,7 @@ before proceeding.
 ```mermaid
 flowchart TD
     INPUT["<b>Persona Input</b><br/><i>role only</i>"]
-    CANDIDATES["<b>N × rand</b><br/><i>Step A: randomise demographics</i><br/><i>Step B: LLM profile generation</i><br/><i>Step C: LLM feature selection</i><br/><br/>Produces: N avatar_personas"]
+    CANDIDATES["<b>N × rand</b><br/><i>Demographics randomization</i><br/><i>CV generation (LLM)</i><br/><i>Feature selection (LLM)</i><br/><br/>Produces: N avatar_personas"]
     CAND_IMAGES["<b>N × (abbreviation ∥ neutral)</b><br/><i>Abbreviation: code only</i><br/><i>Neutral: Image LLM × max N concurrent</i>"]
     SELECTION{{"<b>Caller Decision</b><br/><i>Pick 1 candidate / Re-run</i>"}}
     APPROVAL{{"<b>Caller Decision</b><br/><i>Proceed / Regenerate / Stop</i>"}}
@@ -212,11 +212,11 @@ flowchart TD
 
 | Artifact | Depends on | Can run in parallel with |
 |----------|-----------|------------------------|
-| **rand** (Steps A+B+C) × N | persona input (role) | each other (all N in parallel) |
-| **abbreviation** (Step D) × N | rand (needs NAME) | neutral for same candidate |
-| **neutral** portrait (Step E) × N | rand (needs avatar_persona) | abbreviation; other candidates (up to N) |
+| **rand** (demographics + CV + features) × N | persona input (role) | each other (all N in parallel) |
+| **abbreviation** × N | rand (needs NAME) | neutral portrait for same candidate |
+| **neutral** portrait × N | rand (needs avatar_persona) | abbreviation; other candidates (up to N) |
 | **candidate selection** | all N candidates complete | — |
-| **expressions** (Step F) | candidate selected + neutral portrait available | each other (up to N) |
+| **expressions** (expression variants) | candidate selected + neutral portrait available | each other (up to N) |
 
 ### Concurrency
 
@@ -235,28 +235,28 @@ each image's folder (see §5).
 
 ### Log format
 
-Logs use a timestamped `[Step X] START/DONE` format. The Python logging format
+Logs use a timestamped `[module] START/DONE` format. The Python logging format
 string is `"%(asctime)s.%(msecs)03d %(levelname)s %(message)s"` with
 `datefmt="%Y-%m-%d %H:%M:%S"`.
 
 **Example output:**
 ```
-2026-03-25 14:32:01.123 INFO [Step A] START — randomise_person (seed=42)
-2026-03-25 14:32:01.145 INFO [Step A] DONE  — gender=male, age=52, skin_tone=#5C3010
-2026-03-25 14:32:01.150 INFO [Step B] START — generate_cv (model=ollama/qwen2.5:7b)
-2026-03-25 14:32:03.890 INFO [Step B] DONE  — role=CEO, traits=3
-2026-03-25 14:32:03.895 INFO [Step C] START — select_features (model=ollama/qwen2.5:7b)
-2026-03-25 14:32:12.456 INFO [Step C] DONE  — 12 features selected, persona.yml written
-2026-03-25 14:32:12.460 INFO [Step D] START — make_abbreviation (name=Marcus Washington)
-2026-03-25 14:32:12.512 INFO [Step D] DONE  — /tmp/.../abbreviation.png
-2026-03-25 14:32:12.515 INFO [Step E] START — generate_portrait neutral (model=x/flux2-klein:4b, style=clay)
-2026-03-25 14:32:12.516 INFO [Step E] Writing session artifacts to /tmp/.../neutral/
-2026-03-25 14:32:45.789 INFO [Step E] DONE  — /tmp/.../neutral/output.png
-2026-03-25 14:32:45.800 INFO [Step F] START — generate_expression happy (ref=neutral/output.png)
-2026-03-25 14:32:45.801 INFO [Step F] Writing session artifacts to /tmp/.../happy/
-2026-03-25 14:33:18.234 INFO [Step F] DONE  — /tmp/.../happy/output.png
-2026-03-25 14:33:18.240 INFO [Step G] START — postprocess circle_frame
-2026-03-25 14:33:18.345 INFO [Step G] DONE  — /tmp/.../final.png
+2026-03-25 14:32:01.123 INFO [randomise_person] START — (seed=42)
+2026-03-25 14:32:01.145 INFO [randomise_person] DONE  — gender=male, age=52, skin_tone=#5C3010
+2026-03-25 14:32:01.150 INFO [generate_cv] START — (model=ollama/qwen2.5:7b)
+2026-03-25 14:32:03.890 INFO [generate_cv] DONE  — role=CEO, traits=3
+2026-03-25 14:32:03.895 INFO [select_features] START — (model=ollama/qwen2.5:7b)
+2026-03-25 14:32:12.456 INFO [select_features] DONE  — 12 features selected, persona.yml written
+2026-03-25 14:32:12.460 INFO [make_abbreviation] START — (name=Marcus Washington)
+2026-03-25 14:32:12.512 INFO [make_abbreviation] DONE  — /tmp/.../abbreviation.png
+2026-03-25 14:32:12.515 INFO [generate_portrait] START — neutral (model=x/flux2-klein:4b, style=clay)
+2026-03-25 14:32:12.516 INFO [generate_portrait] Writing session artifacts to /tmp/.../neutral/
+2026-03-25 14:32:45.789 INFO [generate_portrait] DONE  — /tmp/.../neutral/output.png
+2026-03-25 14:32:45.800 INFO [generate_expression] START — happy (ref=neutral/output.png)
+2026-03-25 14:32:45.801 INFO [generate_expression] Writing session artifacts to /tmp/.../happy/
+2026-03-25 14:33:18.234 INFO [generate_expression] DONE  — /tmp/.../happy/output.png
+2026-03-25 14:33:18.240 INFO [postprocess] START — circle_frame
+2026-03-25 14:33:18.345 INFO [postprocess] DONE  — /tmp/.../final.png
 ```
 
 ### Dual output
@@ -269,19 +269,19 @@ Each image generation writes logs to two destinations simultaneously:
 
 | Event | Log level | Details |
 |-------|-----------|---------|
-| Step START | INFO | step letter, function name, key parameters |
-| Step DONE | INFO | step letter, key output values |
+| Module START | INFO | module name, function name, key parameters |
+| Module DONE | INFO | module name, key output values |
 | Session artifacts written | INFO | folder path |
 | Image saved to disk | INFO | file path, size bytes |
 | Error | ERROR | full exception with traceback |
 
 ### Timing
 
-The pipeline records wall-clock time for every step:
-- **Profile generation**: text LLM call (Step B)
-- **Feature selection**: text LLM call (Step C)
-- **Image generation**: image LLM call per image (Steps E, F)
-- **Abbreviation**: expected <100ms, no LLM (Step D)
+The pipeline records wall-clock time for every module:
+- **CV generation**: text LLM call
+- **Feature selection**: text LLM call
+- **Image generation**: image LLM call per image (neutral portrait + expression variants)
+- **Abbreviation**: expected <100ms, no LLM
 
 Timing is returned in every response (`duration_ms`) and written to the session log file.
 
@@ -294,7 +294,7 @@ organised by persona name and run timestamp:
 
 ```
 /tmp/avatar_studio/{persona_name}/{YYYYMMDD_HHMMSS}/
-  persona.yml                       ← written by step C (shared for all expressions)
+  persona.yml                       ← written by feature selection (shared for all expressions)
   neutral/
     style.yml
     expression.yml
@@ -306,7 +306,7 @@ organised by persona name and run timestamp:
     style.yml
     expression.yml
     style_example_{gender}.png
-    reference_person.png             ← step F only (copy of neutral/output.png)
+    reference_person.png             ← expression variants only (copy of neutral/output.png)
     prompt.txt
     output.png
     session.log
@@ -318,14 +318,14 @@ organised by persona name and run timestamp:
 
 | File | Written at | Content |
 |------|-----------|---------|
-| `persona.yml` | Before calling image model (step C output) | Full `avatar_persona` dict as YAML |
+| `persona.yml` | Before calling image model (feature selection output) | Full `avatar_persona` dict as YAML |
 | `style.yml` | Before calling image model | Extracted style entry from `styles.yml` for the selected `style_id` |
 | `expression.yml` | Before calling image model | Extracted expression entry from `expressions.yml` for the target expression |
 | `style_example_{gender}.png` | Before calling image model | Copy of the style's example image from `assets/styles/` |
-| `reference_person.png` | Before step F (expression variants only) | Copy of `neutral/output.png` used as identity anchor |
+| `reference_person.png` | Before expression variant generation | Copy of `neutral/output.png` used as identity anchor |
 | `prompt.txt` | Before calling image model | The combined prompt sent to the image model |
 | `output.png` | After image model returns | The generated image |
-| `session.log` | Throughout the generation | Timestamped `[Step X] START/DONE` log for this image |
+| `session.log` | Throughout the generation | Timestamped `[module] START/DONE` log for this image |
 
 ### Lifecycle
 
@@ -337,7 +337,7 @@ organised by persona name and run timestamp:
 
 ## 6. Error Handling
 
-### Per-step error behavior
+### Per-phase error behavior
 
 | Step | On failure | Caller handling |
 |------|-----------|-----------------|

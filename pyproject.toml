@@ -22,6 +22,7 @@ avatar-studio = "api.cli:main"
 avatar-style-tuner = "tuning.style_tuner:main"
 avatar-expression-tuner = "tuning.expression_tuner:main"
 avatar-expression-autotuner = "tuning.expression_autotuner:main"
+avatar-programmatic-expression-tuner = "tuning.programmatic_expression_tuner:main"
 
 [project.optional-dependencies]
 dev = [

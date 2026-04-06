@@ -1,4 +1,4 @@
-"""Tests for step_d_make_programmatic_avatar — mocked subprocess."""
+"""Tests for svg_generator — mocked subprocess."""
 
 from __future__ import annotations
 

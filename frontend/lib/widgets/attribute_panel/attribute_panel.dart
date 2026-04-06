@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/api/api_models.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../features/avatar/providers/selections_provider.dart';
 import 'mode_selector.dart';
 import 'content/choice_content.dart';
@@ -9,6 +10,7 @@ import 'content/dual_color_content.dart';
 import 'content/integer_content.dart';
 import 'content/text_content.dart';
 import 'content/list_content.dart';
+import 'content/style_picker_content.dart';
 
 class AttributePanel extends ConsumerWidget {
   final AttributeDef attribute;
@@ -16,42 +18,66 @@ class AttributePanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectionsState = ref.watch(selectionsProvider);
     final notifier = ref.read(selectionsProvider.notifier);
-    final currentMode = notifier.getModeFor(attribute.id);
+    // ignore: unused_local_variable — watch ensures rebuild when selections change
+    ref.watch(selectionsProvider);
+    final currentMode = notifier.getModeFor(attribute.id, fallback: attribute.defaultMode);
     final currentValue = notifier.getValueFor(attribute.id);
 
-    final isRandomMode = currentMode == 'random' || currentMode == 'inherited';
+    final isStyleAttr = attribute.id == 'style';
+    final isRandomMode = !isStyleAttr && (currentMode == 'random' || currentMode == 'inherited');
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: isDark ? StudioColors.surfaceElevated : StudioLightColors.surfaceElevated,
+        borderRadius: BorderRadius.circular(9),
+        border: Border.all(
+          color: isDark ? StudioColors.surfaceBorderSubtle : StudioLightColors.surfaceBorder,
+        ),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ── Label + mode selector row ───────────────────────────────────
             Row(
               children: [
                 Expanded(
                   child: Text(
                     attribute.label,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: StudioColors.textPrimary,
+                    ),
                   ),
                 ),
                 ModeSelector(
                   modes: attribute.selectionModes,
                   currentMode: currentMode,
-                  onModeChanged: (newMode) =>
-                      notifier.setSelection(attribute.id, newMode, null),
+                  onModeChanged: (m) => notifier.setSelection(attribute.id, m, null),
                 ),
               ],
             ),
-            if (!isRandomMode) ...[
+
+            // ── Content ─────────────────────────────────────────────────────
+            if (isStyleAttr) ...[
               const SizedBox(height: 8),
+              StylePickerContent(
+                attribute: attribute,
+                mode: currentMode,
+                value: currentValue?.toString(),
+                onChanged: (v) => notifier.setSelection(attribute.id, currentMode, v),
+              ),
+            ] else if (!isRandomMode) ...[
+              const SizedBox(height: 7),
               _buildContent(context, ref, currentMode, currentValue, notifier),
             ] else ...[
               const SizedBox(height: 4),
-              _buildRandomPreview(context, currentValue),
+              _buildRandomPreview(currentValue),
             ],
           ],
         ),
@@ -59,16 +85,17 @@ class AttributePanel extends ConsumerWidget {
     );
   }
 
-  Widget _buildRandomPreview(BuildContext context, dynamic value) {
+  Widget _buildRandomPreview(dynamic value) {
     if (value == null) return const SizedBox.shrink();
-    String displayText = value is Map ? value.toString() : value.toString();
-    if (displayText.length > 40) displayText = '${displayText.substring(0, 40)}…';
+    var text = value is Map ? value.toString() : value.toString();
+    if (text.length > 48) text = '${text.substring(0, 48)}…';
     return Text(
-      displayText,
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.outline,
-            fontStyle: FontStyle.italic,
-          ),
+      text,
+      style: const TextStyle(
+        fontSize: 11,
+        color: StudioColors.textDisabled,
+        fontStyle: FontStyle.italic,
+      ),
     );
   }
 
@@ -118,7 +145,8 @@ class AttributePanel extends ConsumerWidget {
           onChanged: (v) => notifier.setSelection(attribute.id, mode, v),
         );
       default:
-        return Text('Unknown type: ${attribute.type}');
+        return Text('Unknown type: ${attribute.type}',
+            style: const TextStyle(fontSize: 11, color: StudioColors.textDisabled));
     }
   }
 }

@@ -21,6 +21,18 @@
 
 attributes:
 
+  # ─── Art Style ────────────────────────────────────────────────────
+
+  - id: style
+    label: Art Style
+    category: style
+    type: choice
+    source: "styles.yml:styles"
+    selection_modes:
+      - id: select
+        label: Select
+    default_mode: select
+
   # ─── Demographics ──────────────────────────────────────────────────────────
 
   - id: gender
@@ -56,13 +68,35 @@ attributes:
         label: Select
     default_mode: random
 
-  # ─── Appearance (style) ────────────────────────────────────────────────────
-
-  - id: style
-    label: Art Style
-    category: appearance
+  - id: nationality
+    label: Nationality/Ethnicity
+    category: demographics
     type: choice
-    source: "styles.yml:styles"
+    source: "demographics.yml:nationality"
+    selection_modes:
+      - id: random
+        label: Random
+      - id: select
+        label: Select
+    default_mode: random
+
+  - id: religion
+    label: Religion
+    category: demographics
+    type: choice
+    source: "demographics.yml:religion"
+    selection_modes:
+      - id: random
+        label: Random
+      - id: select
+        label: Select
+    default_mode: random
+
+  - id: zodiac
+    label: Zodiac
+    category: personal
+    type: choice
+    source: "demographics.yml:zodiac"
     selection_modes:
       - id: random
         label: Random
@@ -80,9 +114,11 @@ attributes:
     selection_modes:
       - id: random
         label: Random
+      - id: llm
+        label: Bot
       - id: select
         label: Select
-    default_mode: random
+    default_mode: llm
 
   - id: hair_color
     label: Hair Color
@@ -93,6 +129,8 @@ attributes:
     selection_modes:
       - id: random
         label: Random
+      - id: llm
+        label: Bot
       - id: select
         label: Select
     default_mode: random
@@ -106,9 +144,11 @@ attributes:
     selection_modes:
       - id: random
         label: Random
+      - id: llm
+        label: Bot
       - id: select
         label: Select
-    default_mode: random
+    default_mode: llm
 
   - id: brows_color
     label: Brows Color
@@ -122,6 +162,8 @@ attributes:
         label: Auto (from hair)
       - id: select
         label: Select
+      - id: llm
+        label: Bot
     default_mode: inherited
     depends_on: hair_color
     formula: "darken_hex_base(factor=0.7)"
@@ -136,9 +178,11 @@ attributes:
     selection_modes:
       - id: random
         label: Random
+      - id: llm
+        label: Bot
       - id: select
         label: Select
-    default_mode: random
+    default_mode: llm
 
   - id: brows_style
     label: Brow Style
@@ -149,6 +193,8 @@ attributes:
     selection_modes:
       - id: random
         label: Random
+      - id: llm
+        label: Bot
       - id: select
         label: Select
     default_mode: random
@@ -161,9 +207,11 @@ attributes:
     selection_modes:
       - id: random
         label: Random
+      - id: llm
+        label: Bot
       - id: select
         label: Select
-    default_mode: random
+    default_mode: llm
 
   - id: chin_shape
     label: Chin Shape
@@ -174,9 +222,11 @@ attributes:
     selection_modes:
       - id: random
         label: Random
+      - id: llm
+        label: Bot
       - id: select
         label: Select
-    default_mode: random
+    default_mode: llm
 
   - id: cheeks_shape
     label: Cheeks Shape
@@ -187,6 +237,8 @@ attributes:
     selection_modes:
       - id: random
         label: Random
+      - id: llm
+        label: Bot
       - id: select
         label: Select
     default_mode: random
@@ -201,6 +253,8 @@ attributes:
     depends_on: gender
     llm_generated: true
     selection_modes:
+      - id: random
+        label: Random
       - id: llm
         label: Bot
       - id: select
@@ -215,6 +269,8 @@ attributes:
     depends_on: gender
     llm_generated: true
     selection_modes:
+      - id: random
+        label: Random
       - id: llm
         label: Bot
       - id: select
@@ -229,63 +285,19 @@ attributes:
     depends_on: gender
     llm_generated: true
     selection_modes:
-      - id: llm
-        label: Bot
-      - id: select
-        label: Select
-    default_mode: llm
-
-  # ─── Advisor ───────────────────────────────────────────────────────────────
-
-  - id: role
-    label: Role / Job Title
-    category: advisor
-    type: text
-    suggestions:
-      - "Software Engineer"
-      - "Product Manager"
-      - "Data Scientist"
-      - "UX Designer"
-      - "Marketing Manager"
-      - "Sales Representative"
-      - "Financial Analyst"
-      - "HR Manager"
-      - "Operations Director"
-      - "Customer Success Manager"
-    selection_modes:
       - id: random
         label: Random
-      - id: select
-        label: Select
-    default_mode: random
-
-  - id: education
-    label: Education
-    category: advisor
-    type: list
-    llm_generated: true
-    selection_modes:
       - id: llm
         label: Bot
       - id: select
         label: Select
     default_mode: llm
 
-  - id: experience
-    label: Experience
-    category: advisor
-    type: list
-    llm_generated: true
-    selection_modes:
-      - id: llm
-        label: Bot
-      - id: select
-        label: Select
-    default_mode: llm
+  # ─── Personality ───────────────────────────────────────────────────────────────
 
   - id: traits
     label: Personality Traits
-    category: advisor
+    category: personality
     type: list
     llm_generated: true
     selection_modes:
@@ -293,4 +305,4 @@ attributes:
         label: Bot
       - id: select
         label: Select
-    default_mode: llm
+    default_mode: select

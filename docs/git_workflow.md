@@ -51,7 +51,7 @@ Examples: `candidate/v0.2.0`, `release/v0.2.0`
 | Prefix | Purpose | Example |
 |--------|---------|---------|
 | `feat/` | New user-facing feature | `feat/2026_04_05-expression-autotuner` |
-| `fix/` | Bug fix | `fix/2026_04_03-step-c-retry-empty-response` |
+| `fix/` | Bug fix | `fix/2026_04_03-feature-selection-retry-empty-response` |
 | `refactor/` | Internal restructure (no behaviour change) | `refactor/2026_04_10-split-pipeline-api` |
 | `test/` | Test additions or updates | `test/2026_04_05-add-diversity-tests` |
 | `docs/` | Documentation only | `docs/2026_04_02-architecture-spec` |
@@ -89,13 +89,13 @@ Commits follow a simplified [Conventional Commits](https://www.conventionalcommi
 | `chore` | Maintenance, dependency upgrade |
 | `ci` | CI pipeline configuration |
 
-Scope (optional) narrows the area of change — e.g. `fix(step-c):`, `feat(tuner):`.
+Scope (optional) narrows the area of change — e.g. `fix(feature-selection):`, `feat(tuner):`.
 
 Examples:
 ```
 feat(tuner): add self-refining expression autotuner
-fix(step-ef): use data/ path for YAML files in src layout
-refactor: rename aip_* modules to step_* in pipeline package
+fix(image-gen): use data/ path for YAML files in src layout
+refactor: rename aip_* modules to descriptive names in pipeline package
 ci: add integration-avatar job gated on OLLAMA_URL
 ```
 
@@ -228,8 +228,8 @@ test(tuner): add autotuner convergence tests          ← separate test commit
 2. **Green commit** — apply the fix; the same test now passes.
 
 ```
-test: RED – step-c retry fails on empty LLM response  ← fails CI
-fix(step-c): retry field selection when response empty ← test goes green
+test: RED – feature-selection retry fails on empty LLM response  ← fails CI
+fix(feature-selection): retry field selection when response empty ← test goes green
 ```
 
 This ensures the test genuinely catches the regression and prevents silent reappearance.
