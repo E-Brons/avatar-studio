@@ -8,7 +8,7 @@ EXPRESSION_OPTIONS: dict[str, dict[str, dict]] = {
         "neutral": {"eyes": ["humble"], "mouth": ["smile"], "eyebrows": ["neutral"]},
         "happiness": {"eyes": ["happy"], "mouth": ["laugh"], "eyebrows": ["happy"]},
         "surprise": {"eyes": ["wide"], "mouth": ["agape"], "eyebrows": ["raised"]},
-        "anger": {"eyes": ['happy'], "mouth": ['agape'], "eyebrows": ['angry']},
+        "anger": {"eyes": ["happy"], "mouth": ["agape"], "eyebrows": ["angry"]},
         "sadness": {"eyes": ["humble"], "mouth": ["sad"], "eyebrows": ["sad"]},
         "contempt": {"eyes": ["humble"], "mouth": ["smile"], "eyebrows": ["angry"]},
     },
