@@ -10,11 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C4956A'
-  hair_color: '#8B7355'
+  hair_color:
+    hex_base: '#8B7355'
+    hex_shadow: '#45392A'
   hair_style: short, straight, light brown
-  eye_color: '#6B9BC3'
+  eye_color:
+    hex_iris: '#6B9BC3'
+    hex_pupil: '#354D61'
   clothing:
     top:
-      type: t-shirt or crew neck
-      color: '#1A2B4A'
+      style: t-shirt or crew neck
+      color: '#1A1A1A'
   face_shape: oval

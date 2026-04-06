@@ -8,20 +8,4 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance:
-  clothing:
-    items:
-    - type: top
-      description: sheer lavender high-neck bodysuit with black and silver sequin/paillette
-        embellishments and mesh netting details
-      primary_color: '#B8B0C8'
-      secondary_color: '#C0C0C0'
-      accent_color: '#1A1A1A'
-  accessories:
-  - type: earrings
-    description: long gold geometric chandelier earrings with square links and iridescent
-      crystal drops
-    color: '#D4A840'
-  - type: nails
-    description: long stiletto-shaped nails painted in blue with white marbled design
-    color: '#3A5A8C'
+appearance: {}

@@ -10,9 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#1A1A1A'
-    style: formal blazer
-  - item: shirt
-    color: '#FFFFFF'
-    style: white collared button-up
+    jacket:
+      style: formal blazer
+      color: '#1C1C1E'
+    shirt:
+      style: white collared button-up
+      color: '#F0F2F5'

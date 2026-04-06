@@ -1,5 +1,5 @@
 personal:
-  name: Rosalía
+  name: "Rosal\xEDa"
   gender: female
   age: 33
   nationality: Spanish
@@ -10,22 +10,17 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C4956E'
-  hair_color: '#1A1A1A'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
   hair_style: high ponytail, slicked back
-  eye_color: '#3B2A1A'
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
   clothing:
-  - item: jacket
-    color: '#B22222'
-    material: leather
-    description: red leather jacket with collar and braided belt
-  - item: pants
-    color: '#8B1A1A'
-    material: leather
-    description: dark red leather pants
-  accessories:
-  - item: nail art
-    color: '#C0C0C0'
-    description: long ornate silver/crystal stiletto nails
-  - item: belt
-    color: '#2A1A0A'
-    description: dark braided leather belt
+    jacket:
+      style: red leather jacket with pointed collar and braided belt at waist
+      color: '#B92020'
+    pants:
+      style: dark red leather pants with ruched/gathered texture
+      color: '#7A1A1A'

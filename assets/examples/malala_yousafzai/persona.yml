@@ -10,12 +10,16 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C4956E'
-  hair_color: '#1A1A1A'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
   hair_style: straight, center-parted, mostly covered by headscarf
-  eye_color: '#3D2B1A'
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'
   face_shape: oval
   clothing:
-  - item: headscarf/dupatta
-    color: '#D42A2A'
-    pattern: floral and paisley print with green, gold, and blue accents
-    material: lightweight fabric
+    headscarf/dupatta:
+      style: Red dupatta with multicolor floral and paisley print, draped over the
+        head and around the shoulders
+      color: '#CC2A2A'

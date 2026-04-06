@@ -10,11 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#1C1A1E'
-    pattern: subtle pinstripe
-    material: wool
-  - item: shirt
-    color: '#F0EDE8'
-    pattern: solid
-    style: dress shirt, open collar
+    jacket:
+      style: dark pinstripe suit jacket
+      color: '#1C1A1E'
+    shirt:
+      style: dress shirt, open collar
+      color: '#F0EDE8'

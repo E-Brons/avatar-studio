@@ -10,25 +10,24 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#8B6914'
-  hair_color: '#1A1A1A'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
   hair_style: short curly afro
-  eye_color: '#3D2B1F'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
   face_shape: round
   clothing:
-  - item: jacket
-    color: '#1C1C1C'
-    description: black formal tuxedo jacket with peaked lapels
-  - item: shirt
-    color: '#FFFFFF'
-    description: white formal dress shirt with standing collar
-  - item: bow_tie
-    color: '#0A0A0A'
-    description: black satin bow tie
-  - item: vest
-    color: '#1E1E1E'
-    description: black vest with celestial pattern featuring gold stars, suns, and
-      moons
-  accessories:
-  - item: vest_buttons
-    color: '#C8A832'
-    description: decorative star-shaped buttons on vest
+    jacket:
+      style: black formal tuxedo jacket with peaked lapels
+      color: '#1C1C1C'
+    shirt:
+      style: white formal dress shirt with spread collar
+      color: '#F0F0F0'
+    bow_tie:
+      style: black satin bow tie
+      color: '#0A0A0A'
+    vest:
+      style: black vest with celestial pattern featuring gold stars, suns, and moons
+      color: '#1E1E1E'

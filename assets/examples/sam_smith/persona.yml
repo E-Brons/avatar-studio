@@ -10,18 +10,18 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#D4A98C'
-  hair_color: '#6B4F3A'
+  hair_color:
+    hex_base: '#6B4F3A'
+    hex_shadow: '#35271D'
   hair_style: short, swept back, tapered sides
-  eye_color: '#7A9BB5'
+  eye_color:
+    hex_iris: '#7A9BB5'
+    hex_pupil: '#3D4D5A'
   clothing:
-  - item: jacket
-    color: '#1A1A1E'
-    description: dark pinstripe blazer
-  - item: top
-    color: '#0F0F11'
-    description: black crew neck shirt
-  accessories:
-  - item: earring
-    color: '#C0C0C0'
-    description: small silver stud earring in left ear
+    jacket:
+      style: dark pinstripe blazer
+      color: '#1C1C22'
+    top:
+      style: black crew neck shirt
+      color: '#101012'
   face_shape: round

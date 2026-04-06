@@ -11,22 +11,16 @@ style:
 appearance:
   clothing:
     jacket:
-      type: bomber jacket
-      primary_color: '#1a1a1a'
-      secondary_colors:
-      - '#f5f5f5'
-      - '#e8829a'
-      pattern: graphic print with calligraphy-style white text on left sleeve, pink
-        floral on right
-      material: satin-like
-    hoodie:
-      type: pullover hoodie
-      color: '#c8c8c8'
-    top:
-      type: t-shirt
+      style: bomber jacket with white graphic lettering on right sleeve and pink graphic
+        on left shoulder
       color: '#1a1a1a'
-      detail: small white logo/text
+    hoodie:
+      style: zip-up hoodie layered under jacket
+      color: '#b5b5b5'
+    top:
+      style: crew-neck t-shirt
+      color: '#111111'
   accessories:
     ring:
-      finger: right ring finger
-      color: '#c8a84b'
+      style: simple band ring worn on right ring finger
+      color: '#c8964b'

@@ -10,12 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#E8C4A0'
-  hair_color: '#3D2314'
+  hair_color:
+    hex_base: '#3D2314'
+    hex_shadow: '#1E110A'
   hair_style: ponytail, pulled back with loose strands framing face
-  eye_color: '#7B5C3A'
+  eye_color:
+    hex_iris: '#7B5C3A'
+    hex_pupil: '#3D2E1D'
   clothing:
-  - item: jacket
-    color: '#CC1A1A'
-  accessories:
-  - item: earrings
-    color: '#D4D4D4'
+    jacket:
+      style: "Red flag or banner draped over shoulders, with yellow accent visible\
+        \ at neckline \u2014 appears to be a national flag rather than a jacket"
+      color: '#E02020'

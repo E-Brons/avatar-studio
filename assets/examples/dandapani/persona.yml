@@ -11,16 +11,19 @@ style:
 appearance:
   skin_tone: '#8B5E3C'
   hair_style: bald
-  hair_color: '#1A1A1A'
-  eye_color: '#7B6E5A'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  eye_color:
+    hex_iris: '#7B6E5A'
+    hex_pupil: '#3D372D'
   face_shape: oval
   clothing:
     top:
-      type: t-shirt
-      color: '#A8A09A'
+      style: t-shirt
+      color: '#B5ADA6'
   accessories:
     necklace:
-      type: rudraksha mala beads
-      color: '#7B3A1E'
-      accent_color: '#3A7A5A'
+      style: rudraksha mala beads with green spacer beads
+      color: '#8B4523'
   nose_shape: broad, straight bridge

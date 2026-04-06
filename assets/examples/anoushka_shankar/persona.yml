@@ -10,19 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    description: oversized crewneck sweatshirt with balloon sleeves
-    color_hex: '#C4B49A'
-  - item: pants
-    description: wide-leg flowing black trousers
-    color_hex: '#1C1C1E'
-  accessories:
-  - item: earrings
-    description: large silver hoop earrings
-    color_hex: '#C0C0C0'
-  - item: ring
-    description: large turquoise statement ring on right hand
-    color_hex: '#5EC4B8'
-  - item: instrument
-    description: sitar held across lap
-    color_hex: '#2E2422'
+    top:
+      style: oversized crewneck sweatshirt with balloon sleeves
+      color: '#C4B49A'
+    pants:
+      style: wide-leg flowing black trousers
+      color: '#1C1C1E'

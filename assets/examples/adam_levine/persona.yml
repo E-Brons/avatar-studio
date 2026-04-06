@@ -29,7 +29,11 @@ appearance:
   cheeks_shape: narrow and lean
   hair_style: short textured spiky top with faded sides
   clothing:
-    sweater: '#808080'
+    sweater:
+      style: dark charcoal knit sweater with a wide cowl/shawl collar
+      color: '#4A4A4E'
   accessories:
-    stubble beard: short dark stubble beard
+    stubble beard:
+      style: short dark stubble beard with medium coverage
+      color: '#4B3A2E'
   face_shape: oval

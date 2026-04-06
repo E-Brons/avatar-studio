@@ -1,5 +1,5 @@
 personal:
-  name: Timothée Chalamet
+  name: "Timoth\xE9e Chalamet"
   gender: male
   age: 30
   nationality: French
@@ -11,13 +11,16 @@ style:
 appearance:
   clothing:
     jacket:
-      type: leather jacket
+      style: leather jacket with snap buttons and collar
       color: '#1A1A1A'
-      details: silver button snaps, zipper, collar
   face_shape: oval
   skin_tone: '#E8C8B0'
-  eye_color: '#6B7E5A'
+  eye_color:
+    hex_iris: '#6B7E5A'
+    hex_pupil: '#353F2D'
   eye_shape: hooded
   nose_shape: straight
   hair_style: curly
-  hair_color: '#3A2518'
+  hair_color:
+    hex_base: '#3A2518'
+    hex_shadow: '#1D120C'

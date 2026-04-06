@@ -10,19 +10,8 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    type: halter neck
-    color_primary: '#1A5C6B'
-    color_secondary: '#2E8B3E'
-    pattern: multicolor sequin/sparkle gradient
-    material: sequined/beaded fabric
-    additional_colors:
-    - '#7B1F7B'
-    - '#B81C1C'
-    - '#1A3D8B'
-  accessories:
-  - item: earrings
-    type: drop/dangle
-    color: '#D4C5A9'
-    material: crystal/rhinestone
-    description: sparkly chandelier-style drop earrings
+    top:
+      style: Sparkly sequined halter-neck top with a high collar, keyhole cutout at
+        the chest, and a multicolor rainbow gradient pattern (teal, green, blue, purple,
+        red)
+      color: '#1A6B5C'

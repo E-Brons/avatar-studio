@@ -11,16 +11,18 @@ style:
 appearance:
   clothing:
     top:
-      type: v-neck sweater over collared shirt
-      color_sweater: '#5A6047'
-      color_shirt: '#B8C8D8'
+      style: v-neck sweater over collared shirt
+      color: '#5A5D4E'
   accessories:
     glasses:
-      frame_shape: rectangular
-      frame_color: '#2A1A0A'
-      lens_tint: clear
+      style: rectangular dark tortoiseshell frames
+      color: '#3B2A1A'
   face_shape: oval
   skin_tone: '#D4A882'
-  eye_color: '#7A9BB5'
+  eye_color:
+    hex_iris: '#7A9BB5'
+    hex_pupil: '#3D4D5A'
   hair_style: short, wavy, parted to the side
-  hair_color: '#A8A49C'
+  hair_color:
+    hex_base: '#A8A49C'
+    hex_shadow: '#54524E'

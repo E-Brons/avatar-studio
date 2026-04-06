@@ -11,38 +11,20 @@ style:
 appearance:
   skin_tone: '#8B6914'
   hair_style: not visible
-  hair_color: '#2B2B2B'
-  eye_color: not visible
+  hair_color:
+    hex_base: '#2B2B2B'
+    hex_shadow: '#151515'
   clothing:
-  - item: jacket
-    color: '#FFFFFF'
-    detail: white tuxedo jacket with black velvet shawl lapel
-  - item: shirt
-    color: '#FFFFFF'
-    detail: white dress shirt with mandarin/band collar
-  - item: bow_tie
-    color: '#0A0A0A'
-    detail: black velvet bow tie
-  - item: vest
-    color: '#0A0A0A'
-    detail: black velvet vest
-  accessories:
-  - item: hat
-    color: '#E8E8E8'
-    detail: white fedora with black ribbon band
-  - item: sunglasses
-    color: '#C8A862'
-    detail: gold-framed aviator-style sunglasses with brown gradient lenses
-  - item: earring
-    color: '#C0C0C0'
-    detail: small silver stud earring on left ear
-  - item: earring
-    color: '#C0C0C0'
-    detail: small silver stud earring on right ear
-  - item: ring
-    color: '#C0C0C0'
-    detail: silver ring on right hand
-  - item: cigar
-    color: '#8B5E3C'
-    detail: lit cigar held between fingers
+    jacket:
+      style: White tuxedo jacket with black satin shawl lapels
+      color: '#FFFFFF'
+    shirt:
+      style: White dress shirt with a mandarin/band collar
+      color: '#FFFFFF'
+    bow_tie:
+      style: Black oversized butterfly bow tie, satin finish
+      color: '#0A0A0A'
+    vest:
+      style: Black vest with a deep V-cut, velvet or satin texture
+      color: '#0A0A0A'
   face_shape: oval

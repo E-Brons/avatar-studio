@@ -10,15 +10,19 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-    visible_items:
-    - jacket
-    - shirt
-    - bow tie
-    jacket_color_hex: '#0F0F0F'
-    shirt_color_hex: '#1A1A1A'
-    bow_tie_color_hex: '#0F0F0F'
-    style: formal tuxedo
+    jacket_color_hex:
+      style: Black tuxedo jacket with satin lapels
+      color: '#1A1A1A'
+    shirt_color_hex:
+      style: Black dress shirt
+      color: '#1C1C1C'
+    bow_tie_color_hex:
+      style: Black satin bow tie
+      color: '#111111'
+    style:
+      style: All-black formal tuxedo ensemble
+      color: formal tuxedo
   accessories:
-    visible_items:
-    - braces/dental braces
-    braces_color_hex: '#C0C0C0'
+    braces_color_hex:
+      style: Metallic dental braces across upper teeth
+      color: '#C0C0C0'

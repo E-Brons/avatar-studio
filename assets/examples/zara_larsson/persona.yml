@@ -9,12 +9,16 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_color: '#D4B96E'
+  hair_color:
+    hex_base: '#D4B96E'
+    hex_shadow: '#6A5C37'
   hair_style: long, wavy, center-parted
-  eye_color: '#7A9A8B'
+  eye_color:
+    hex_iris: '#7A9A8B'
+    hex_pupil: '#3D4D45'
   skin_tone: '#E8C4A8'
   clothing:
-  - item: top
-    color: '#F5D89A'
-    description: pale yellow sleeveless top with ruffle detail and cutout at neckline
+    top:
+      style: pale yellow sleeveless top with ruffle detail and cutout at neckline
+      color: '#F2D49B'
   face_shape: oval

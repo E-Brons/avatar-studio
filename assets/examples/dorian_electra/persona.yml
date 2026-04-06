@@ -10,18 +10,11 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#A8D4F0'
-    material: holographic iridescent
-    style: oversized structured blazer
-  - item: top
-    color: '#F5E8DA'
-    material: fabric
-    style: low-cut / open neckline
-  accessories:
-  - item: necklace
-    color: '#D4A860'
-    style: delicate chain pendant
-  - item: rings
-    color: '#D4A860'
-    style: gold rings on fingers
+    jacket:
+      style: oversized sculptural blazer in holographic/iridescent material with exaggerated
+        padded shoulders
+      color: '#C4D6EE'
+    top:
+      style: "minimal white/cream undergarment or bare d\xE9colletage beneath open\
+        \ blazer"
+      color: '#F0E0D0'

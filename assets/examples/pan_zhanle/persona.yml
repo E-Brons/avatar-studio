@@ -10,14 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: jacket
-    primary_color: '#FFFFFF'
-    secondary_color: '#D42B1E'
-    description: white and red athletic zip-up jacket with Chinese flag patch
-  accessories:
-  - type: medal
-    color: '#D4A843'
-    description: gold medal on dark navy lanyard reading 'World Aquatics'
-  - type: lanyard
-    color: '#1B2340'
-    description: dark navy ribbon with white text
+    garment:
+      style: white and red athletic zip-up jacket with Chinese flag patch
+      color: '#FFFFFF'

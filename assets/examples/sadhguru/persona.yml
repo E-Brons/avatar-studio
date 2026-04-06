@@ -10,22 +10,22 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#8B6914'
-  hair_color: '#C8C0B0'
+  hair_color:
+    hex_base: '#C8C0B0'
+    hex_shadow: '#646058'
   hair_style: curly, shoulder-length, mostly hidden under turban
-  eye_color: '#4A3520'
+  eye_color:
+    hex_iris: '#4A3520'
+    hex_pupil: '#251A10'
   face_shape: oval
   clothing:
-  - item: turban
-    color: '#E8DFC8'
-    description: cream/off-white wrapped turban
-  - item: top
-    color: '#2E3D4E'
-    description: dark teal-blue long-sleeved tunic/kurta
-  - item: shawl
-    color: '#C4A84E'
-    description: golden-tan embroidered shawl/dupatta draped over shoulders with dark
-      blue and gold border pattern
-  accessories:
-  - item: necklace
-    color: '#B8932E'
-    description: gold chain/mala necklace
+    turban:
+      style: cream/off-white wrapped turban
+      color: '#E8DFC8'
+    top:
+      style: dark teal-blue long-sleeved tunic/kurta
+      color: '#2F4050'
+    shawl:
+      style: golden-tan embroidered shawl/dupatta draped over shoulders with dark
+        blue and gold border pattern
+      color: '#C4A84E'

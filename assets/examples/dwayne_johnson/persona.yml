@@ -10,11 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color_hex: '#B8B4AE'
-    pattern: glen plaid / prince of wales check
-    material: wool blend
-  - item: top
-    color_hex: '#F5F5F5'
-    pattern: solid
-    material: cotton
+    jacket:
+      style: Light grey glen plaid/Prince of Wales check blazer with notch lapel
+      color: '#B8B4AE'
+    top:
+      style: White V-neck t-shirt
+      color: '#F5F5F5'

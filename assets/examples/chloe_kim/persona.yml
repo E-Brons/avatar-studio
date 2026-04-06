@@ -10,22 +10,18 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   hair_style: long, loose, slightly wavy
-  hair_color: '#B8944E'
+  hair_color:
+    hex_base: '#B8944E'
+    hex_shadow: '#5C4A27'
   skin_tone: '#D4A574'
-  eye_color: '#3B2A1A'
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
   face_shape: oval
   clothing:
-  - item: jacket
-    color: '#4A5D7A'
-    description: navy blue zip-up athletic winter jacket with white logo
-  - item: gloves
-    color: '#3A3D5C'
-    description: dark navy blue winter gloves
-  accessories:
-  - item: gold medal
-    color: '#D4A017'
-    description: Olympic gold medal on a red lanyard with 'Beijing' text
-  - item: bouquet
-    color: '#FFFFFF'
-    description: knitted ceremonial bouquet with red, white, yellow, and green flowers
-      tied with a purple ribbon
+    jacket:
+      style: navy blue zip-up athletic winter jacket with white logo
+      color: '#4A5D7A'
+    gloves:
+      style: dark navy blue winter gloves
+      color: '#3A3D5C'

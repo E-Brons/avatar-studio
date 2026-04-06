@@ -10,9 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#C2BAA9'
-    style: structured blazer with peaked lapels
-  - item: shirt
-    color: '#9E968E'
-    style: collared dress shirt, open neck
+    jacket:
+      style: structured blazer with notched lapels
+      color: '#C2B9A8'
+    shirt:
+      style: collared dress shirt, open neck
+      color: '#A8A0B0'

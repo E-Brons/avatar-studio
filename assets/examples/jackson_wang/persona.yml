@@ -10,11 +10,17 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-    visible_items:
-    - top
-    top_description: grey-blue V-neck collarless top with a single button detail
-    top_color: '#8A9199'
+    top_description:
+      style: Grey-blue V-neck collarless top with a single button detail
+      color: '#8A9199'
+    top_color:
+      style: Grey-blue V-neck collarless top with a single button detail
+      color: '#8B9BA3'
   skin_tone: '#E8C8B0'
-  hair_color: '#3D2B1F'
+  hair_color:
+    hex_base: '#3D2B1F'
+    hex_shadow: '#1E150F'
   hair_style: short, side-parted, swept back
-  eye_color: '#2C1A0E'
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'

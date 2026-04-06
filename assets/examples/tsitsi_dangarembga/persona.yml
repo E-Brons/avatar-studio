@@ -10,13 +10,14 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#5C3A1E'
-  hair_color: '#1A0A00'
+  hair_color:
+    hex_base: '#1A0A00'
+    hex_shadow: '#0D0500'
   hair_style: long dreadlocks
-  eye_color: '#4A2C0A'
+  eye_color:
+    hex_iris: '#4A2C0A'
+    hex_pupil: '#251605'
   clothing:
     top:
-      type: sleeveless top
-      color: '#F5EFE0'
-      pattern: floral
-  accessories:
-    nose_ring: true
+      style: sleeveless top with subtle floral or botanical print
+      color: '#E8E0D0'

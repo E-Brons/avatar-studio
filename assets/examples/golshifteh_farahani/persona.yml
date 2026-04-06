@@ -12,13 +12,10 @@ appearance:
   skin_tone: '#C4956A'
   clothing:
     top:
-      type: sleeveless lace dress
-      color: '#1B2A4A'
-      pattern: floral lace with cutwork detail
-      neckline: high mandarin collar
+      style: sleeveless high-neck lace dress with floral/paisley embroidery and fabric-covered
+        buttons
+      color: '#1E2A3A'
   accessories:
     earrings:
-      type: drop earrings
+      style: ornate gold cross/snowflake pendant drop earrings
       color: '#C9A84C'
-      material: gold-tone metal
-      style: ornate cross/floral pendant

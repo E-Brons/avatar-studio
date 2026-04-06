@@ -10,16 +10,7 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: jacket
-    color_hex: '#1D3D2A'
-    pattern: green and navy plaid/tartan
-  - type: top
-    color_hex: '#7DA8C4'
-    pattern: light blue with purple geometric print
-  - type: undershirt/collar
-    color_hex: '#C8B88A'
-    pattern: solid, tan/beige with button collar
-  accessories:
-  - type: necklace
-    description: dark red/garnet beaded statement necklace
-    color_hex: '#6B1A1A'
+    garment:
+      style: Green-and-navy tartan plaid flannel jacket layered over a light-blue
+        shirt with purple geometric print and a beige button-up collar underneath
+      color: '#1B3D2F'

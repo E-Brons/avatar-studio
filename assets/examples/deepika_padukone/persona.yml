@@ -10,6 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: top
-    color: '#FFFFFF'
-    description: white sleeveless or thin-strap top
+    garment:
+      style: white thin-strap top
+      color: '#E8E0D8'

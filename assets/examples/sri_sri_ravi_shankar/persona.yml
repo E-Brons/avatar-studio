@@ -10,6 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    color: '#F0EDE8'
-    description: white collared garment or kurta
+    top:
+      style: white collarless kurta or shawl-draped garment
+      color: '#E8E4DF'

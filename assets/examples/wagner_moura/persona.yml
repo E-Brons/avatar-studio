@@ -10,11 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#B89B6E'
-    material: suede or nubuck leather
-    style: casual collared jacket
-  - item: top
-    color: '#7A6B60'
-    material: fabric
-    style: crew or v-neck undershirt, barely visible
+    jacket:
+      style: casual collared jacket
+      color: '#B89B6E'
+    top:
+      style: crew or v-neck undershirt, barely visible
+      color: '#7A6B60'

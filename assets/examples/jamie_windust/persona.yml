@@ -10,15 +10,13 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#E8CEB8'
-  eye_color: '#5A8BB0'
+  eye_color:
+    hex_iris: '#5A8BB0'
+    hex_pupil: '#2D4558'
   clothing:
-  - item: turtleneck
-    color: '#1A1A1A'
-    material: knit
-  - item: blazer
-    color: '#C8C820'
-    material: leather
-  accessories:
-  - item: earring
-    description: star-shaped dangle earring
-    color: '#D4C8A0'
+    turtleneck:
+      style: fitted black knit turtleneck
+      color: '#1A1A1A'
+    blazer:
+      style: structured chartreuse leather or satin blazer with peaked lapels
+      color: '#C8C820'

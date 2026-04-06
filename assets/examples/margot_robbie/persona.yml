@@ -11,12 +11,16 @@ style:
 appearance:
   face_shape: oval
   skin_tone: '#E8C8B0'
-  eye_color: '#8FA5A3'
+  eye_color:
+    hex_iris: '#8FA5A3'
+    hex_pupil: '#475251'
   eye_shape: almond
   nose_shape: straight
   hair_style: short bob, swept back
-  hair_color: '#B8955E'
+  hair_color:
+    hex_base: '#B8955E'
+    hex_shadow: '#5C4A2F'
   clothing:
-  - item: top
-    color: '#F2E0D0'
-    description: off-shoulder blush/cream top with feathered or fringed texture
+    top:
+      style: off-shoulder blush/cream top with feathered or fringed texture
+      color: '#F0DDD0'

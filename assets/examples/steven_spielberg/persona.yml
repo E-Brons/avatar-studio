@@ -10,16 +10,12 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#1A1A1A'
-    description: black formal tuxedo jacket
-  - item: shirt
-    color: '#FFFFFF'
-    description: white dress shirt
-  - item: bow tie
-    color: '#111111'
-    description: black bow tie
-  accessories:
-  - item: glasses
-    color: '#2B2222'
-    description: round tortoiseshell-style eyeglasses with dark frames
+    jacket:
+      style: black formal tuxedo jacket
+      color: '#1A1A1A'
+    shirt:
+      style: white dress shirt
+      color: '#F0F0F0'
+    bow tie:
+      style: black bow tie
+      color: '#111111'

@@ -10,20 +10,24 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C4956A'
-  hair_color: '#1A1008'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
   hair_style: updo, pulled back under headscarf
-  eye_color: '#6B3A2A'
+  eye_color:
+    hex_iris: '#6B3A2A'
+    hex_pupil: '#351D15'
   eye_shape: almond
   nose_shape: straight, medium
   face_shape: oval
   clothing:
     headscarf:
+      style: black fabric headscarf loosely draped around head and neck
       color: '#1A1A1A'
-      description: black fabric headscarf loosely draped
     top:
+      style: dark brown traditional robe/thobe with gold embroidery trim at neckline
+        and shoulders
       color: '#5C4A2A'
-      description: dark brown traditional robe/thobe with gold embroidery trim at
-        neckline and shoulders
     belt:
-      color: '#1A1A1A'
-      description: dark belt at waist
+      style: gold embroidered waistband/belt
+      color: '#8B7535'

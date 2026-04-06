@@ -10,7 +10,7 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    type: denim jacket
-    color: '#3A4E5C'
-    material: denim
+    jacket:
+      style: Dark-wash denim jacket with a classic collar, visible stitching, and
+        metal snap/button closure
+      color: '#2F4456'

@@ -11,15 +11,17 @@ style:
 appearance:
   face_shape: round to oval
   clothing:
-    necklace_visible: true
-    top: not fully visible
-  accessories:
-  - type: necklace
-    color: '#C0C0C0'
-    description: silver chain necklace, partially visible at bottom of frame
+    top:
+      style: Silver/metallic embellished top, barely visible at the very bottom edge
+        of the frame near the neckline
+      color: '#C0C0C0'
   skin_tone: '#C4956E'
-  eye_color: '#5C3A1E'
+  eye_color:
+    hex_iris: '#5C3A1E'
+    hex_pupil: '#2E1D0F'
   eye_shape: almond
   nose_shape: straight
   hair_style: long straight with side-swept bangs
-  hair_color: '#3A2518'
+  hair_color:
+    hex_base: '#3A2518'
+    hex_shadow: '#1D120C'

@@ -10,12 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C8956A'
-  hair_color: '#7B3F1E'
+  hair_color:
+    hex_base: '#7B3F1E'
+    hex_shadow: '#3D1F0F'
   hair_style: short, swept back, slightly tousled
-  eye_color: '#7A9BA8'
+  eye_color:
+    hex_iris: '#7A9BA8'
+    hex_pupil: '#3D4D54'
   clothing:
     top:
-      type: button-up shirt
-      primary_color: '#1A1F2E'
-      pattern: small white polka dots
+      style: button-up shirt with small polka dot pattern
+      color: '#1E2333'
   face_shape: oval

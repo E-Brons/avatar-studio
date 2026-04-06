@@ -10,13 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#2A2338'
-    description: dark navy fitted blazer
-  - item: top
-    color: '#C4D4E0'
-    description: light blue collared button-up shirt
-  accessories:
-  - item: earrings
-    color: '#8C7A5E'
-    description: small stud earrings
+    jacket:
+      style: dark navy fitted blazer
+      color: '#2B2D42'
+    top:
+      style: light blue collared button-up shirt
+      color: '#C4D4E0'

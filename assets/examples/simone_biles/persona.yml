@@ -10,22 +10,17 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#7B4A2D'
-  hair_color: '#0A0805'
+  hair_color:
+    hex_base: '#0A0805'
+    hex_shadow: '#050402'
   hair_style: braided crown cornrows
-  eye_color: '#1C1008'
+  eye_color:
+    hex_iris: '#1C1008'
+    hex_pupil: '#0E0804'
   eye_shape: almond
-  accessories:
-  - type: earrings
-    description: small pearl/crystal stud earrings
-    color: '#F5F0EB'
-  - type: nose stud
-    description: small nose piercing stud
-    color: '#E8E0D8'
   clothing:
-  - item: top
-    type: gymnastics leotard
-    primary_color: '#3A4BC7'
-    secondary_color: '#C8172A'
-    details: blue leotard with red rhinestone-trimmed V-neckline and scattered crystal
-      embellishments
+    top:
+      style: Blue gymnastics leotard with sheer mesh sleeves, red trim along the V-neckline,
+        and rhinestone/crystal embellishments
+      color: '#2B4BA8'
   face_shape: round

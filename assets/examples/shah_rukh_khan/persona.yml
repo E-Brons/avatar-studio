@@ -11,18 +11,22 @@ style:
 appearance:
   face_shape: oval
   skin_tone: '#9B7A5C'
-  eye_color: '#5C3A1E'
+  eye_color:
+    hex_iris: '#5C3A1E'
+    hex_pupil: '#2E1D0F'
   eye_shape: almond
   nose_shape: straight
   hair_style: swept back
-  hair_color: '#0F0A06'
+  hair_color:
+    hex_base: '#0F0A06'
+    hex_shadow: '#070503'
   clothing:
-  - item: jacket
-    color: '#1A1A1E'
-    style: suit jacket
-  - item: shirt
-    color: '#1F1F22'
-    style: dress shirt
-  - item: tie
-    color: '#151517'
-    style: necktie
+    jacket:
+      style: suit jacket
+      color: '#1A1A1E'
+    shirt:
+      style: dress shirt with tonal stripe pattern
+      color: '#1C1C20'
+    tie:
+      style: necktie
+      color: '#151517'

@@ -11,13 +11,14 @@ style:
 appearance:
   clothing:
     top:
-      type: polo shirt / sports jersey
-      primary_color: '#1a8a30'
-      secondary_colors:
-      - '#cc1a1a'
-      - '#c8e8c0'
+      style: collared sports jersey with red and light green accent stripes
+      color: '#2d9e3e'
   skin_tone: '#8B6914'
-  hair_color: '#1A1A1A'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
   hair_style: short, thick, slightly wavy, textured crop
-  eye_color: '#3D2B1F'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
   face_shape: oval

@@ -10,19 +10,10 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#2F3332'
-    pattern: subtle plaid
-    material: wool blend
-  - item: top
-    color: '#D4C4B8'
-    pattern: solid
-    material: knit
-  accessories:
-  - item: glasses
-    type: rimless
-    color: '#C4B09A'
-  - item: necklace
-    type: pendant
-    color: '#C0C0C0'
-    description: delicate chain with small teardrop pendant
+    jacket:
+      style: Dark charcoal single-breasted blazer with a subtle windowpane/plaid pattern,
+        notch lapels
+      color: '#2F3332'
+    top:
+      style: Light blush-pink crew-neck top worn underneath the blazer
+      color: '#C9B2A8'

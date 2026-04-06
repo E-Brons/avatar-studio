@@ -10,20 +10,21 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color_hex: '#1E2433'
-    description: dark navy formal suit jacket
-  - item: shirt
-    color_hex: '#F0EDE8'
-    description: white dress shirt with spread collar
-  - item: tie
-    color_hex: '#8B1A1A'
-    description: red patterned silk tie
-  accessories:
-  - item: lapel pin
-    description: South African flag pin on left lapel
+    jacket:
+      style: dark navy formal suit jacket
+      color: '#2B3044'
+    shirt:
+      style: white dress shirt with spread collar
+      color: '#F0EDE8'
+    tie:
+      style: red patterned silk tie with small geometric dot motif
+      color: '#B32428'
   skin_tone: '#5C3A2A'
   hair_style: short cropped
-  hair_color: '#2A2A2A'
-  eye_color: '#3D2B1F'
+  hair_color:
+    hex_base: '#2A2A2A'
+    hex_shadow: '#151515'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
   face_shape: round

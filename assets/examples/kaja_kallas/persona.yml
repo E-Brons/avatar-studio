@@ -11,13 +11,7 @@ style:
 appearance:
   skin_tone: '#E8C4A8'
   clothing:
-  - item: top
-    pattern: houndstooth
-    primary_color: '#3A3A3A'
-    secondary_color: '#D4D0C8'
-    neckline: round
-  accessories:
-  - item: earrings
-    type: stud
-    color: '#C0C0C0'
+    top:
+      style: Round-neck houndstooth check blouse or dress with long sleeves
+      color: '#7A7A7A'
   face_shape: oval

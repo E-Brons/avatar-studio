@@ -10,21 +10,8 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: athletic crop top
-    color: '#4A4A8A'
-    pattern: vertical pinstripes
-    details: USA team uniform with 'RICHARDSON' name plate, 'PARIS 2024' text, American
-      flag, and Olympic rings
-  accessories:
-  - item: necklace
-    color: '#C0C0C0'
-    details: silver chain with circular pendant
-  - item: decorative nails
-    color: '#FF4500'
-    details: long ornate nails with multicolored embellishments and flag-themed designs
-  - item: bracelet
-    color: '#CC0000'
-    details: red beaded bracelet on right wrist
-  - item: rings
-    color: '#C0C0C0'
-    details: silver rings on multiple fingers
+    athletic crop top:
+      style: Sleeveless USA team athletic crop top with vertical blue and white pinstripes,
+        featuring a white bib panel with "USA" text, American flag, "PARIS 2024" branding,
+        "RICHARDSON" name plate, and Olympic rings
+      color: '#5B5B99'

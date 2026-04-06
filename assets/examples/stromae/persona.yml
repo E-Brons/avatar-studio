@@ -10,16 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: jacket
-    primary_color: '#4A2832'
-    secondary_color: '#5A6B3A'
-    pattern: geometric print
-    material: velvet
-  - type: shirt
-    primary_color: '#FFFFFF'
-    pattern: solid
-    style: dress shirt with buttoned collar
-  - type: bow tie
-    primary_color: '#1A1A1A'
-    pattern: solid
-    style: slim bow tie
+    garment:
+      style: slim bow tie
+      color: '#1A1A1A'

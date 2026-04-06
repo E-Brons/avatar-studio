@@ -10,13 +10,8 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-    visible_items:
-    - top
     top:
-      type: racing suit
-      primary_color: '#F58220'
-      secondary_colors:
-      - '#1A1A1A'
-      - '#1B7A6D'
-      pattern: solid with sponsor logos
-      neckline: high collar
+      style: McLaren F1 racing suit with black collar/neck gaiter, black panel accents,
+        and multiple sponsor logos (Android, OKX, Dell Technologies, Cisco, Allwyn,
+        DP World, Mastercard, Monster Energy, Hilton, McLaren)
+      color: '#F58220'

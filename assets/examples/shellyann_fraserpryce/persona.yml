@@ -10,17 +10,16 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#5C3A2A'
-  hair_color: '#C8E040'
+  hair_color:
+    hex_base: '#C8E040'
+    hex_shadow: '#647020'
   hair_style: pulled back with colorful streaks
-  eye_color: '#3B2518'
+  eye_color:
+    hex_iris: '#3B2518'
+    hex_pupil: '#1D120C'
   face_shape: oval
   clothing:
-  - item: athletic tank top
-    color: '#E8D830'
-    brand: Puma
-    details: Jamaica national team jersey with Jamaican flag patch
-  accessories:
-  - item: earrings
-    type: stud
-    color: '#C0C0C0'
-    description: sparkly silver/crystal stud earrings in both ears
+    athletic tank top:
+      style: Yellow Puma racerback athletic tank top with black "JAMAICA" text across
+        the chest and a small Jamaican flag patch on the left chest
+      color: '#E8D830'

@@ -10,14 +10,17 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#8B6914'
-  hair_color: '#1A1008'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
   hair_style: curly with bangs
-  eye_color: '#3D2B1A'
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'
   face_shape: oval
   clothing:
-  - item: top
-    color: '#7A1A1A'
-    material: satin
-    neckline: boat neck
+    top:
+      style: Satin boat-neck top with long sleeves
+      color: '#7A1A1A'
   eye_shape: almond
   nose_shape: broad, rounded tip

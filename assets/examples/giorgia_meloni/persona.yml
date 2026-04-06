@@ -10,14 +10,10 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#C0282D'
-    description: red blazer with structured shoulders
-  - item: top
-    color: '#1A1A1A'
-    description: black inner top
-  accessories:
-  - item: earrings
-    color: '#D4A843'
-    description: gold drop earrings
+    jacket:
+      style: red blazer with structured shoulders
+      color: '#C23B3B'
+    top:
+      style: black inner top with a rounded or V-neckline
+      color: '#1A1A1A'
   face_shape: oval

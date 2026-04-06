@@ -10,27 +10,18 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#8B6244'
-  hair_color: '#2A2A2A'
+  hair_color:
+    hex_base: '#2A2A2A'
+    hex_shadow: '#151515'
   hair_style: natural afro, tightly coiled curls, voluminous
-  eye_color: '#3D2B1F'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
   face_shape: round
   clothing:
-  - item: jacket
-    color: '#1C2340'
-    description: dark navy blue blazer, formal, tailored
-  - item: top
-    color: '#F0EDE8'
-    description: white collared dress shirt, open at the neck
-  accessories:
-  - item: glasses
-    color: '#E8453C'
-    description: rimless rectangular glasses with red/coral temple arms
-  - item: brooch
-    color: '#C5A44E'
-    description: gold circular wreath-style brooch on left lapel
-  - item: necklace
-    color: '#C0C0C0'
-    description: delicate silver cross pendant necklace
-  - item: earrings
-    color: '#C5A44E'
-    description: small gold stud earrings
+    jacket:
+      style: dark navy blue blazer, formal, tailored
+      color: '#1C2340'
+    top:
+      style: white collared dress shirt, open at the neck
+      color: '#F0EDE8'

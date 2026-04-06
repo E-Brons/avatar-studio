@@ -9,11 +9,7 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  accessories:
-  - type: glasses
-    description: rectangular dark tortoiseshell frame glasses
-    color: '#2C1E0E'
   clothing:
-  - type: top
-    description: dark navy knit zip-up sweater or jacket
-    color: '#1C1C2A'
+    garment:
+      style: dark navy knit zip-up sweater or jacket
+      color: '#1C1C2A'

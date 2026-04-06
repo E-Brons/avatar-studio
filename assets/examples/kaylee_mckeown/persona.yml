@@ -10,16 +10,16 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C4956E'
-  hair_color: '#1E1610'
+  hair_color:
+    hex_base: '#1E1610'
+    hex_shadow: '#0F0B08'
   hair_style: pulled back
-  eye_color: '#3B2A1A'
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
   face_shape: oval
   clothing:
-  - item: swimsuit
-    color: '#8ED6C8'
-    pattern: abstract splatter print
-    brand: Speedo
-  accessories:
-  - item: earring
-    description: small gold hoop earring on left ear
-    color: '#D4A847'
+    swimsuit:
+      style: Speedo one-piece racing swimsuit with solid aqua/mint straps and a mottled
+        grey-green camouflage-patterned body panel; yellow Speedo logo on the chest
+      color: '#9CBFB2'

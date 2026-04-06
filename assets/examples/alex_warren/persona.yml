@@ -10,16 +10,14 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   hair_style: short, tousled
-  hair_color: '#B5623A'
+  hair_color:
+    hex_base: '#B5623A'
+    hex_shadow: '#5A311D'
   skin_tone: '#D4A982'
   clothing:
-  - item: top
-    description: red Hummel Denmark (DBU) soccer jersey with white trim
-    primary_color: '#E03030'
-    secondary_color: '#FFFFFF'
-  accessories:
-  - item: guitar
-    description: black acoustic guitar with floral design
-  - item: microphone
-    description: stage microphone on stand
-  eye_color: '#5A4030'
+    top:
+      style: red Hummel Denmark (DBU) soccer jersey with white trim
+      color: '#E03030'
+  eye_color:
+    hex_iris: '#5A4030'
+    hex_pupil: '#2D2018'

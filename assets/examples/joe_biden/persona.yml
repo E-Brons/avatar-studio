@@ -10,25 +10,22 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C68642'
-  hair_color: '#C0BDB8'
+  hair_color:
+    hex_base: '#C0BDB8'
+    hex_shadow: '#605E5C'
   hair_style: short, combed back, silver-white
-  eye_color: '#5B7FA6'
+  eye_color:
+    hex_iris: '#5B7FA6'
+    hex_pupil: '#2D3F53'
   eye_shape: almond
   face_shape: oval
   clothing:
-  - item: suit jacket
-    color: '#1C2340'
-    description: dark navy pinstripe suit jacket with white pinstripes
-  - item: dress shirt
-    color: '#F5F5F5'
-    description: white dress shirt with visible cuffs
-  - item: tie
-    color: '#2B4EA0'
-    description: blue and white diagonal striped tie
-  accessories:
-  - item: watch
-    color: '#C0C0C0'
-    description: silver-toned wristwatch on left wrist
-  - item: lapel pin
-    color: '#B22234'
-    description: small American flag pin on left lapel
+    suit jacket:
+      style: dark navy pinstripe suit jacket with subtle light pinstripes
+      color: '#1C2340'
+    dress shirt:
+      style: white dress shirt with visible cuffs
+      color: '#F5F5F5'
+    tie:
+      style: blue and white diagonal striped tie
+      color: '#3565A5'

@@ -10,21 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: jacket
-    color_hex: '#1C1C1C'
-    material: satin
-    style: button-up shirt jacket
-  - type: top
-    color_hex: '#141428'
-    material: knit
-    style: crew neck t-shirt
-  accessories:
-  - type: earring
-    description: diamond stud earring, right ear
-    color_hex: '#E8E8E8'
-  - type: necklace
-    description: layered beaded necklaces with gold, blue, brown, and crystal beads
-    color_hex: '#D4A843'
-  - type: necklace
-    description: diamond/crystal choker chain
-    color_hex: '#C0C0C0'
+    garment:
+      style: crew neck t-shirt
+      color: '#0F0F1E'

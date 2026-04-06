@@ -10,18 +10,14 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#6B3A2A'
-  hair_color: '#1A0A05'
+  hair_color:
+    hex_base: '#1A0A05'
+    hex_shadow: '#0D0502'
   hair_style: not visible
-  eye_color: '#2C1A0E'
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'
   clothing:
-  - item: top
-    type: polo shirt
-    color: '#F5E6E8'
-  accessories:
-  - item: hat
-    type: baseball cap
-    color: '#3D1F0F'
-    details: brown cap with light blue 'G' logo patch
-  - item: earrings
-    type: stud earrings
-    color: '#D4AF37'
+    top:
+      style: polo shirt with white collar
+      color: '#F5E6E8'

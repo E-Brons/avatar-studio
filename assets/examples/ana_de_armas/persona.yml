@@ -10,21 +10,24 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C8906A'
-  hair_color: '#2C1A0E'
+  hair_color:
+    hex_base: '#2C1A0E'
+    hex_shadow: '#160D07'
   hair_style: long, wavy, voluminous, loosely tousled
-  eye_color: '#7A5C35'
+  eye_color:
+    hex_iris: '#7A5C35'
+    hex_pupil: '#3D2E1A'
   eye_shape: almond
   clothing:
     top:
-      type: off-shoulder ruffled top
-      color: '#0D0D0D'
-      material: sheer/semi-transparent fabric
+      style: off-shoulder ruffled smocked top
+      color: '#1A1A1A'
   accessories:
     necklace:
-      type: tennis necklace / diamond choker
-      color: '#D4D4D4'
+      style: tennis necklace / diamond choker
+      color: '#C0C0C0'
     earrings:
-      type: small hoop earrings
-      color: '#C8C8C8'
+      style: small huggie hoop earrings
+      color: '#C0C0C0'
   face_shape: oval
   nose_shape: straight

@@ -1,5 +1,5 @@
 personal:
-  name: Recep Tayyip Erdoğan
+  name: "Recep Tayyip Erdo\u011Fan"
   gender: male
   age: 72
   nationality: Turkish
@@ -10,19 +10,18 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C68642'
-  hair_color: '#4A4A4A'
+  hair_color:
+    hex_base: '#4A4A4A'
+    hex_shadow: '#252525'
   hair_style: short, side-parted, salt and pepper
-  eye_color: '#4B3C2A'
+  eye_color:
+    hex_iris: '#4B3C2A'
+    hex_pupil: '#251E15'
   clothing:
-  - item: jacket
-    color: '#3A5FA0'
-    pattern: blue and dark navy checkered/plaid
-  - item: shirt
-    color: '#A8C8E8'
-    pattern: solid light blue
-  accessories:
-  - item: ring
-    color: '#C0C0C0'
-  - item: lapel pin
-    color: '#1A1A2E'
+    jacket:
+      style: Blue checkered/plaid blazer with a small grid pattern
+      color: '#4A6FA5'
+    shirt:
+      style: Light blue dress shirt, open collar, no tie
+      color: '#A8C8E8'
   face_shape: rectangular

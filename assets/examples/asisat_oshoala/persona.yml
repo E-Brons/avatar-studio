@@ -10,24 +10,17 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#8B6914'
-  hair_color: '#1A1008'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
   hair_style: cornrow braids pulled back
-  eye_color: '#2C1A0E'
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'
   face_shape: oval
   clothing:
-  - item: top
-    type: athletic jersey
-    primary_color: '#2E8B37'
-    secondary_color: '#FFFFFF'
-    description: green Nike Nigeria Football Federation jersey with white shoulder
-      panels and round crest
-  accessories:
-  - item: earrings
-    type: stud
-    color: '#D4A730'
-    description: small gold stud earrings
-  - item: necklace
-    type: chain
-    color: '#D4A730'
-    description: thin gold chain necklace
+    top:
+      style: green Nike Nigeria Football Federation jersey with white shoulder panels
+        and round crest
+      color: '#2D8C3C'
   eye_shape: almond

@@ -10,19 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: button-up shirt
-    color: '#6B5A4E'
-    pattern: ribbed/textured vertical stripes
-    material: corduroy or ribbed cotton
-  - type: top (underneath)
-    color: '#1C1C1C'
-    pattern: solid
-    material: cotton
-  accessories:
-  - type: necklace
-    description: beaded charm necklace with colorful beads and small pendants
-    color: '#D4A76A'
+    garment:
+      style: Ribbed, collared button-up overshirt with a relaxed fit, worn open over
+        a black crew-neck top
+      color: '#7A6652'
   skin_tone: '#8B5E3C'
-  hair_color: '#1A1210'
+  hair_color:
+    hex_base: '#1A1210'
+    hex_shadow: '#0D0908'
   hair_style: bantu knots with loose curly tendrils
-  eye_color: '#3D2B1A'
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'

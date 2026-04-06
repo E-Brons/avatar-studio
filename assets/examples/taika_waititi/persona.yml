@@ -10,14 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#1A1A2E'
-    description: Dark navy denim jacket with red contrast stitching
-  - item: top
-    color: '#3C3C4A'
-    description: Dark grey shirt or undershirt visible at the collar
-  accessories:
-  - item: watch
-    color: '#C0C0C0'
-    description: Silver-toned wristwatch with white dial and metal case on dark leather
-      strap
+    jacket:
+      style: Dark navy denim jacket with red contrast stitching
+      color: '#1A1A2E'
+    top:
+      style: Dark grey shirt or undershirt visible at the collar
+      color: '#4A4A55'

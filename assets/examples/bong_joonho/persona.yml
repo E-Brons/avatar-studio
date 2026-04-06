@@ -10,16 +10,18 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   hair_style: wavy, voluminous, tousled, medium-length
-  hair_color: '#8A8E91'
+  hair_color:
+    hex_base: '#8A8E91'
+    hex_shadow: '#454748'
   skin_tone: '#C4A882'
-  eye_color: '#3B2E1E'
+  eye_color:
+    hex_iris: '#3B2E1E'
+    hex_pupil: '#1D170F'
   face_shape: round
   clothing:
-  - item: top
-    type: crew neck t-shirt
-    color: '#0E0E0E'
-  - item: jacket
-    type: blazer
-    color: '#1C1C1E'
-  accessories:
-  - glasses
+    top:
+      style: Black crew-neck t-shirt
+      color: '#0E0E0E'
+    jacket:
+      style: Dark black blazer/suit jacket with notch lapels
+      color: '#1C1C1E'

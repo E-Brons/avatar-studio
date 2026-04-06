@@ -10,11 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    color: '#1A1A1A'
-    material: sheer knit
-    neckline: off-shoulder / wide V-neck
-  accessories:
-  - item: earring
-    description: small dangling earring on left ear
-    color: '#C0C0C0'
+    top:
+      style: Off-shoulder black semi-sheer knit top with a wide V-neckline
+      color: '#1C1C1C'

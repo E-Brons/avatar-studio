@@ -1,5 +1,5 @@
 personal:
-  name: Tadej Pogačar
+  name: "Tadej Poga\u010Dar"
   gender: male
   age: 27
   nationality: Slovenian
@@ -10,18 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: cycling jersey
-    color_hex: '#D4D4D4'
-    pattern: striped with sponsor logos
-    details: White/light jersey with 'FAB', 'e&', 'UAE' branding and vertical pinstripes
-  accessories:
-  - item: cycling helmet
-    color_hex: '#1A1A1A'
-    details: Black MET brand helmet with 'C42' and '3K CARBON' markings, integrated
-      visor pushed up
-  - item: earpiece
-    color_hex: '#1C1C1C'
-    details: Small in-ear radio earpiece with wire visible near ear
-  - item: helmet strap
-    color_hex: '#2A2A2A'
-    details: Black chin strap unfastened, hanging loosely
+    cycling jersey:
+      style: ''
+      color: '#D4D4D4'

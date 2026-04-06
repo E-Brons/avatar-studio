@@ -10,15 +10,19 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#D4A88C'
-  hair_color: '#4A3728'
+  hair_color:
+    hex_base: '#4A3728'
+    hex_shadow: '#251B14'
   hair_style: short, swept back with volume on top
-  eye_color: '#7E9BB5'
+  eye_color:
+    hex_iris: '#7E9BB5'
+    hex_pupil: '#3F4D5A'
   face_shape: oval
   clothing:
-  - item: jacket
-    color: '#2A2A2A'
-    description: dark suit jacket or blazer
-  - item: top
-    color: '#E8E0D4'
-    description: light-colored collared shirt
+    jacket:
+      style: dark suit jacket or blazer
+      color: '#2B2B2B'
+    top:
+      style: light-colored collared dress shirt
+      color: '#E5DDD0'
   nose_shape: straight

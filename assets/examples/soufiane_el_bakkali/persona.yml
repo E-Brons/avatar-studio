@@ -10,20 +10,17 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C8956A'
-  hair_color: '#1A1412'
+  hair_color:
+    hex_base: '#1A1412'
+    hex_shadow: '#0D0A09'
   hair_style: short, fade sides, slicked back on top
-  eye_color: '#4A3728'
+  eye_color:
+    hex_iris: '#4A3728'
+    hex_pupil: '#251B14'
   clothing:
-  - item: jacket
-    color: '#C8152A'
-    pattern: subtle dark print pattern
-    brand: KELME
-  accessories:
-  - item: medal lanyard
-    color: '#7BAFD4'
-  - item: gold medal
-    color: '#D4AF37'
-  - item: wristband
-    color: '#C8152A'
+    jacket:
+      style: Red zip-up athletic track jacket with subtle tonal camo/geometric pattern,
+        KELME logo on right chest, high collar with dark green/black accent trim
+      color: '#D42035'
   face_shape: oval
   nose_shape: straight

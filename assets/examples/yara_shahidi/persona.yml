@@ -10,15 +10,14 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C08A6B'
-  hair_color: '#1A1209'
+  hair_color:
+    hex_base: '#1A1209'
+    hex_shadow: '#0D0904'
   hair_style: curly, voluminous, shoulder-length
-  eye_color: '#3D2413'
+  eye_color:
+    hex_iris: '#3D2413'
+    hex_pupil: '#1E1209'
   clothing:
-  - item: top
-    color: '#3A3545'
-    pattern: plaid
-    style: button-up collared shirt
-  accessories:
-  - item: earrings
-    color: '#D4A017'
-    style: small gold hoop
+    top:
+      style: button-up collared plaid shirt
+      color: '#3C3848'

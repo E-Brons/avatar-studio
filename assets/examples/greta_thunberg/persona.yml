@@ -10,13 +10,17 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: top
-    color: '#C8A99A'
-    description: light pink knit sweater
+    garment:
+      style: light pink knit sweater
+      color: '#C9A898'
   face_shape: oval
   skin_tone: '#D4A98C'
-  eye_color: '#7A9E8B'
+  eye_color:
+    hex_iris: '#7A9E8B'
+    hex_pupil: '#3D4F45'
   eye_shape: round
   nose_shape: button
   hair_style: braided pigtails
-  hair_color: '#4A3728'
+  hair_color:
+    hex_base: '#4A3728'
+    hex_shadow: '#251B14'

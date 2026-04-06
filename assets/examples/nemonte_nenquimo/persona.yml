@@ -10,38 +10,14 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#8B6914'
-  hair_color: '#1A1A1A'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
   hair_style: long straight
-  eye_color: '#3D2B1F'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
   clothing:
-  - item: tank top
-    color: '#8B6B5A'
-    description: brown/mauve sleeveless tank top
-  accessories:
-  - item: feather headdress
-    colors:
-    - '#CC2200'
-    - '#F5C842'
-    - '#5BC8D4'
-    - '#FFFFFF'
-    description: colorful feather crown with red, yellow, turquoise and white feathers
-  - item: necklace
-    colors:
-    - '#8B3A3A'
-    - '#CC3333'
-    description: long fringed necklace made of reddish-brown threads/fibers
-  - item: beaded necklace
-    colors:
-    - '#1A1A1A'
-    - '#CC3333'
-    - '#E8D5B0'
-    description: strand of black seeds/beads with red and cream accents
-  - item: earrings
-    colors:
-    - '#E8D5B0'
-    - '#C0C0C0'
-    description: white/cream disc earrings with small metal hoop
-  - item: woven strap
-    colors:
-    - '#E8D5B0'
-    description: cream-colored woven textile strap over shoulder
+    tank top:
+      style: brown/mauve sleeveless tank top with thin shoulder straps
+      color: '#8B6B5A'

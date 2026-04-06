@@ -11,19 +11,20 @@ style:
 appearance:
   clothing:
     top:
-      type: dress shirt
-      color: '#F2F0EC'
-      description: white collared dress shirt, open at neck
+      style: dress shirt, open collar, no tie
+      color: '#F0EDE8'
     jacket:
-      type: blazer
-      color: '#3A4E6B'
-      description: navy blue blazer
+      style: blazer
+      color: '#2E3D54'
     inner_layer:
-      type: v-neck sweater or vest
-      color: '#8FA8A8'
-      description: light teal/grey v-neck visible beneath shirt collar
+      style: v-neck sweater
+      color: '#7A9EA3'
   skin_tone: '#D4A98C'
-  hair_color: '#E0DDD8'
+  hair_color:
+    hex_base: '#E0DDD8'
+    hex_shadow: '#706E6C'
   hair_style: short, swept back, wispy
-  eye_color: '#7A8FA0'
+  eye_color:
+    hex_iris: '#7A8FA0'
+    hex_pupil: '#3D4750'
   face_shape: oval

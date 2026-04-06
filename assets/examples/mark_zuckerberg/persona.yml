@@ -10,12 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    type: crew neck t-shirt
-    color: '#2E3644'
-    material: cotton
+    top:
+      style: Dark navy blue crew-neck short-sleeve t-shirt
+      color: '#2E3644'
   face_shape: oval
   skin_tone: '#D4A98C'
-  eye_color: '#6B8FB5'
+  eye_color:
+    hex_iris: '#6B8FB5'
+    hex_pupil: '#35475A'
   hair_style: short curly
-  hair_color: '#4A3728'
+  hair_color:
+    hex_base: '#4A3728'
+    hex_shadow: '#251B14'

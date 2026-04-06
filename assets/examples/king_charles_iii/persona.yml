@@ -10,24 +10,17 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#D4A088'
-  hair_color: '#C0B8B0'
+  hair_color:
+    hex_base: '#C0B8B0'
+    hex_shadow: '#605C58'
   hair_style: short, parted, grey-white
-  eye_color: '#6B8EAD'
+  eye_color:
+    hex_iris: '#6B8EAD'
+    hex_pupil: '#354756'
   clothing:
-  - item: coronation robe
-    primary_color: '#F5F0E8'
-    secondary_color: '#D4A017'
-    description: White ermine fur robe with black tail spots, gold and purple stole
-      underneath
-  - item: stole
-    primary_color: '#7B2D8E'
-    secondary_color: '#D4A017'
-    description: Purple and gold ceremonial stole worn beneath the robe
-  accessories:
-  - item: crown
-    color: '#C0C0C0'
-    description: Imperial State Crown with purple velvet cap, diamonds, emeralds,
-      sapphires, rubies, and pearl accents with ermine fur band
-  - item: chain necklace
-    color: '#D4A017'
-    description: Gold ceremonial chain with ornate pendant and jeweled medallion
+    coronation robe:
+      style: White ermine fur robe with black tail spots, gold and purple stole underneath
+      color: '#F5F0E8'
+    stole:
+      style: Purple and gold ceremonial stole worn beneath the robe
+      color: '#7B2D8E'

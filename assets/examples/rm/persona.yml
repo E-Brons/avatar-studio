@@ -10,16 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: top
-    description: black crew neck t-shirt
-    color_hex: '#1A1A1E'
-  accessories:
-  - type: in-ear monitors
-    description: clear in-ear monitors draped around neck
-    color_hex: '#C8C8CC'
-  - type: necklace
-    description: thin chain necklace
-    color_hex: '#C0C0C0'
-  - type: earrings
-    description: small hoop earrings
-    color_hex: '#A9A9A9'
+    garment:
+      style: black crew neck t-shirt
+      color: '#1A1A1E'

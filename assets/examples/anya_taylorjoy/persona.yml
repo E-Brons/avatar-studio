@@ -10,13 +10,7 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    color: '#F08060'
-    color_name: coral-peach sequin
-    description: sequined top with coral/salmon floral pattern and silver-grey accents,
-      with a turquoise blue detail
-  accessories:
-  - item: earrings
-    color: '#B8963E'
-    color_name: gold
-    description: small gold triangular/pyramid-shaped stud earrings
+    top:
+      style: sequined top with coral/salmon floral pattern and silver-grey accents,
+        with a turquoise blue detail
+      color: '#F08060'

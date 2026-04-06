@@ -12,6 +12,5 @@ appearance:
   skin_tone: '#c8956c'
   clothing:
     top:
-      type: button-up shirt
-      color: '#1a2540'
-      pattern: solid
+      style: button-up shirt
+      color: '#2b3a50'

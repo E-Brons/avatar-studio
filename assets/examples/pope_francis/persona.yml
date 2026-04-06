@@ -10,23 +10,23 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C8967A'
-  eye_color: '#6B5B4E'
-  hair_color: '#D8D4CC'
+  eye_color:
+    hex_iris: '#6B5B4E'
+    hex_pupil: '#352D27'
+  hair_color:
+    hex_base: '#D8D4CC'
+    hex_shadow: '#6C6A66'
   hair_style: short, sparse white hair visible under white zucchetto cap
   clothing:
-  - item: papal cassock
-    color: '#F5F0E0'
-    hex: '#F5F0E0'
-  - item: mozzetta (cape)
-    color: '#EDE8D5'
-    hex: '#EDE8D5'
-  - item: zucchetto (skull cap)
-    color: '#F0EDE0'
-    hex: '#F0EDE0'
-  accessories:
-  - item: pectoral cross
-    color: '#A8A8A8'
-    hex: '#A8A8A8'
-  - item: chain necklace
-    color: '#B0B0B0'
-    hex: '#B0B0B0'
+    papal cassock:
+      style: White buttoned cassock with a Mandarin collar and a vertical row of fabric-covered
+        buttons down the center front
+      color: '#F2EDDC'
+    mozzetta (cape):
+      style: Short elbow-length shoulder cape in a satin-like fabric with a slight
+        sheen, worn open over the cassock
+      color: '#E5DCBE'
+    zucchetto (skull cap):
+      style: Small round skullcap (solideo) sitting on the crown of the head, made
+        of watered-silk fabric
+      color: '#F0EBD8'

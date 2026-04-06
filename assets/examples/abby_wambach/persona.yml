@@ -9,17 +9,17 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_color: '#8B6B3D'
+  hair_color:
+    hex_base: '#8B6B3D'
+    hex_shadow: '#45351E'
   hair_style: pulled back, slicked
-  eye_color: '#6B8FA3'
+  eye_color:
+    hex_iris: '#6B8FA3'
+    hex_pupil: '#354751'
   skin_tone: '#C4956E'
   clothing:
-  - item: jersey
-    color: '#2A2D35'
-    description: dark navy athletic jersey with red trim at collar and a crest/badge
-      on the chest
+    jersey:
+      style: dark navy athletic jersey with red trim at collar and a crest/badge on
+        the chest
+      color: '#2A2D35'
   face_shape: oval
-  accessories:
-  - item: hair tie
-    color: '#C42020'
-    description: red hair tie or scrunchie holding the ponytail

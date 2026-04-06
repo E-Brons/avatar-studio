@@ -10,20 +10,20 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   hair_style: medium-length, tousled, wavy, voluminous
-  hair_color: '#5C4033'
+  hair_color:
+    hex_base: '#5C4033'
+    hex_shadow: '#2E2019'
   skin_tone: '#D4A88C'
-  eye_color: '#7A9BB5'
+  eye_color:
+    hex_iris: '#7A9BB5'
+    hex_pupil: '#3D4D5A'
   clothing:
-  - item: suit jacket
-    color: '#1A1A1A'
-    description: dark black formal suit jacket with notch lapels and a breast pocket
-  - item: dress shirt
-    color: '#D6DCEA'
-    description: light blue collared dress shirt visible at the collar and chest
-  - item: necktie
-    color: '#111111'
-    description: solid black necktie
-  accessories:
-  - item: portfolio/folder
-    color: '#1C1C1C'
-    description: dark leather portfolio or document folder held in both hands
+    suit jacket:
+      style: dark black formal suit jacket with notch lapels and a breast pocket
+      color: '#1C1C1C'
+    dress shirt:
+      style: light blue collared dress shirt visible at the collar and chest
+      color: '#CDD5E4'
+    necktie:
+      style: solid black necktie
+      color: '#111111'

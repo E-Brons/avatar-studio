@@ -12,7 +12,9 @@ appearance:
   face_shape: oval
   skin_tone: '#8B6B4A'
   hair_style: closely cropped / balding
-  hair_color: '#4A4A4A'
-  eye_color: '#3D2B1A'
-  accessories:
-  - glasses
+  hair_color:
+    hex_base: '#4A4A4A'
+    hex_shadow: '#252525'
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'

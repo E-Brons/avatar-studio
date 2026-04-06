@@ -10,23 +10,20 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C4A082'
-  hair_color: '#9E9E9E'
+  hair_color:
+    hex_base: '#9E9E9E'
+    hex_shadow: '#4F4F4F'
   hair_style: short, gray, slightly visible beneath hat
-  eye_color: '#5C4A3A'
+  eye_color:
+    hex_iris: '#5C4A3A'
+    hex_pupil: '#2E251D'
   clothing:
-  - item: jacket
-    color: '#7A7265'
-    description: brown-gray herringbone tweed blazer
-  - item: sweater
-    color: '#8B2040'
-    description: deep crimson V-neck sweater
-  - item: shirt
-    color: '#E8E4DC'
-    description: white collared dress shirt
-  accessories:
-  - item: glasses
-    color: '#8B6533'
-    description: round tortoiseshell eyeglasses
-  - item: hat
-    color: '#B82028'
-    description: red fez with white base band
+    jacket:
+      style: brown-gray herringbone tweed blazer
+      color: '#7A7265'
+    sweater:
+      style: deep crimson V-neck sweater
+      color: '#7B1A3A'
+    shirt:
+      style: white collared dress shirt
+      color: '#E8E4DC'

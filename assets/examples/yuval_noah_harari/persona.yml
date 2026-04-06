@@ -10,12 +10,7 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    type: crewneck sweater
-    color: '#2D2D2F'
-    description: dark charcoal knit crewneck sweater
-  - item: top
-    type: collared shirt
-    color: '#3A5A6E'
-    description: dark teal-blue button-up dress shirt worn under the sweater, collar
-      visible
+    top:
+      style: dark navy-blue button-up dress shirt worn under a dark charcoal crew-neck
+        sweater, collar and top button visible
+      color: '#3B5068'

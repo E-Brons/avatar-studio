@@ -9,15 +9,17 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_color: '#C4A96A'
+  hair_color:
+    hex_base: '#C4A96A'
+    hex_shadow: '#625435'
   hair_style: slicked back, pulled into a low bun/ponytail
-  eye_color: '#7A9BB5'
+  eye_color:
+    hex_iris: '#7A9BB5'
+    hex_pupil: '#3D4D5A'
   skin_tone: '#C9A882'
   clothing:
-  - type: jacket
-    primary_color: '#2B3A5C'
-    secondary_color: '#9DC4DB'
-    pattern: geometric/abstract camouflage
-    description: Puma Manchester City zip-up warm-up jacket with navy and light blue
-      geometric pattern
+    garment:
+      style: Puma Manchester City zip-up warm-up jacket with navy and light blue geometric
+        pattern
+      color: '#2B3A5C'
   face_shape: square/angular

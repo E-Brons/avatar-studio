@@ -10,9 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-    items:
-    - top
-    top_type: button-up collared shirt
-    top_color: '#1A1A1E'
-    top_material: cotton or linen
-    top_style: casual, partially unbuttoned
+    top_type:
+      style: button-up collared shirt
+      color: '#1A1A1E'
+    top_color:
+      style: very dark navy/black
+      color: '#1A1A1E'
+    top_material:
+      style: cotton or linen
+      color: '#1A1A1E'
+    top_style:
+      style: casual, partially unbuttoned
+      color: '#1A1A1E'

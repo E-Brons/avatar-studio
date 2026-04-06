@@ -11,20 +11,8 @@ style:
 appearance:
   skin_tone: '#C8845A'
   clothing:
-  - item: top
-    type: knit sweater
-    base_color: '#F5ECD7'
-    pattern: landscape scene with stripes
-    colors:
-    - '#F5ECD7'
-    - '#E8A830'
-    - '#5BB8D4'
-    - '#C03040'
-    - '#8B4A1A'
-    - '#2D1A0A'
-    - '#4A8A3A'
-  accessories:
-  - item: earrings
-    type: rectangular drop
-    color: '#D4A017'
-    material: gold
+    top:
+      style: Crew-neck knit sweater with an intarsia landscape/sunset motif featuring
+        a red sun, blue sky arc, striped dome, and green trees across the chest and
+        torso
+      color: '#F5ECD7'

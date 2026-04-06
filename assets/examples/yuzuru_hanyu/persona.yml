@@ -11,17 +11,17 @@ style:
 appearance:
   face_shape: oval
   skin_tone: '#D4A574'
-  eye_color: '#1A0F0A'
+  eye_color:
+    hex_iris: '#1A0F0A'
+    hex_pupil: '#0D0705'
   eye_shape: almond
   nose_shape: straight
   hair_style: short layered with side-swept bangs
-  hair_color: '#0F0A08'
+  hair_color:
+    hex_base: '#0F0A08'
+    hex_shadow: '#070504'
   clothing:
-  - item: top
-    type: v-neck t-shirt
-    color: '#1E1E20'
-    pattern: subtle tonal botanical print
-  accessories:
-  - item: necklace
-    type: thin leather choker with small metal bead
-    color: '#1A1210'
+    top:
+      style: Black V-neck short-sleeve t-shirt with subtle tonal floral/leaf print
+        pattern
+      color: '#1E1E20'

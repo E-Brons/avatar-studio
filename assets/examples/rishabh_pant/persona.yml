@@ -10,13 +10,8 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    type: cricket jersey
-    color_primary: '#2E7BD6'
-    color_secondary: '#FFFFFF'
-    pattern: solid with printed graphics
-    text: INDIA
-  accessories:
-  - item: necklace
-    type: chain
-    color: '#D4AF37'
+    top:
+      style: Blue India cricket jersey with collar, short sleeves, 'INDIA' text across
+        chest, Adidas three-stripe logo on left chest, ICC Champions Trophy badge,
+        and tricolor flag detail on left sleeve
+      color: '#2B80D4'

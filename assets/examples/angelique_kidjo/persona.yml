@@ -10,31 +10,19 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-    items:
-    - top
-    - headwrap
-    primary_color: '#2E6BBF'
-    secondary_colors:
-    - '#1E2D4A'
-    - '#FFFFFF'
-    style: casual with cultural accents
-  accessories:
-  - type: earrings
-    description: gold hoop earrings
-    color: '#C9A84C'
-  - type: necklace
-    description: beaded necklace with blue, brown, and gold beads
-    colors:
-    - '#3B5998'
-    - '#4A3728'
-    - '#C9A84C'
-  - type: headwrap
-    description: navy blue and white patterned fabric headwrap
-    colors:
-    - '#1E2D4A'
-    - '#D9DDE3'
+    primary_color:
+      style: Solid royal-blue crew-neck t-shirt
+      color: '#2868B0'
+    style:
+      style: Casual crew-neck t-shirt paired with traditional African head wrap and
+        beaded necklace
+      color: casual with cultural accents
   skin_tone: '#8B5E3C'
   hair_style: not visible
-  hair_color: '#8B5E3C'
-  eye_color: '#3D2B1F'
+  hair_color:
+    hex_base: '#8B5E3C'
+    hex_shadow: '#452F1E'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
   face_shape: oval

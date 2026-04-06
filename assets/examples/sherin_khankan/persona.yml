@@ -10,11 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#D4A68C'
-  hair_color: '#5C3A1E'
+  hair_color:
+    hex_base: '#5C3A1E'
+    hex_shadow: '#2E1D0F'
   hair_style: long, straight, flowing past shoulders with center part
-  eye_color: '#7A9BAE'
+  eye_color:
+    hex_iris: '#7A9BAE'
+    hex_pupil: '#3D4D57'
   face_shape: oval
   clothing:
-  - item: scarf/shawl
-    color: '#6B8A8E'
-    description: teal-grey draped shawl or wrap around shoulders
+    scarf/shawl:
+      style: teal-grey draped shawl or wrap around shoulders
+      color: '#6B8A8E'

@@ -11,13 +11,14 @@ style:
 appearance:
   clothing:
     jacket:
-      color: '#1A6B52'
-      description: dark teal/emerald green blazer
+      style: dark forest green single-breasted blazer with notched lapels
+      color: '#1B5B47'
     top:
-      color: '#F5F0E1'
-      description: cream/off-white collared blouse
+      style: white button-up collared shirt with pointed collar and small gold button
+        detail
+      color: '#F2EFE8'
   accessories:
     necklace:
-      color: '#C9A84C'
-      description: delicate gold chain necklace
+      style: not visible
+      color: '#000000'
   face_shape: round

@@ -10,21 +10,21 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: cap
-    color: '#1A1A1A'
-    description: black fitted cap worn under hood
-  - item: hoodie
-    color: '#1C1C1E'
-    description: dark black zip-up hoodie with hood pulled up over cap
-  - item: t-shirt
-    color: '#E8E4DF'
-    description: white crew-neck t-shirt visible underneath hoodie
-  accessories:
-  - item: necklace
-    color: '#C0C0C0'
-    description: silver chain with cross pendant
+    cap:
+      style: black fitted cap worn under hood with small white logo/text on front
+      color: '#1A1A1A'
+    hoodie:
+      style: dark black pullover hoodie with hood pulled up over cap
+      color: '#1C1C1E'
+    t-shirt:
+      style: white crew-neck t-shirt visible underneath hoodie
+      color: '#E8E4DF'
   skin_tone: '#C4956B'
-  hair_color: '#4A3728'
+  hair_color:
+    hex_base: '#4A3728'
+    hex_shadow: '#251B14'
   hair_style: not visible
-  eye_color: '#7A9BBF'
+  eye_color:
+    hex_iris: '#7A9BBF'
+    hex_pupil: '#3D4D5F'
   face_shape: oval

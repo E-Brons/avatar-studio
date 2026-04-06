@@ -10,14 +10,18 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C4956E'
-  hair_color: '#6B4A35'
+  hair_color:
+    hex_base: '#6B4A35'
+    hex_shadow: '#35251A'
   hair_style: curly, shoulder-length, loosely tousled
-  eye_color: '#7A8B6A'
+  eye_color:
+    hex_iris: '#7A8B6A'
+    hex_pupil: '#3D4535'
   face_shape: oval
   clothing:
-  - item: jacket
-    color: '#D4551A'
-    description: orange flight suit or technical jacket with collar
-  - item: undershirt
-    color: '#E8DDD0'
-    description: light cream or white layer visible at neckline
+    jacket:
+      style: orange flight suit or technical jacket with collar
+      color: '#D4551A'
+    undershirt:
+      style: light cream or white layer visible at neckline
+      color: '#E8DDD0'

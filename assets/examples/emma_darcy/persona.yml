@@ -11,18 +11,22 @@ style:
 appearance:
   clothing:
     jacket:
-      type: denim jacket
-      color: '#4A8AB5'
-      style: structured, distressed, double-breasted with chest pockets
+      style: structured, distressed denim jacket with collar, button front, and dual
+        chest flap pockets
+      color: '#5A9EC4'
   accessories:
     earrings:
-      type: small stud earrings
-      color: '#C0C0C0'
+      style: small hoop/drop earrings
+      color: '#C9A84E'
     necklace:
-      type: layered chain necklace with pendant
+      style: thin choker-length chain necklace with small pendant
       color: '#C8A84B'
   skin_tone: '#E8CDB8'
-  hair_color: '#3B2A1E'
+  hair_color:
+    hex_base: '#3B2A1E'
+    hex_shadow: '#1D150F'
   hair_style: short wavy bob
-  eye_color: '#7A9BAE'
+  eye_color:
+    hex_iris: '#7A9BAE'
+    hex_pupil: '#3D4D57'
   face_shape: oval

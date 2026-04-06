@@ -10,13 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#1C1C1E'
-    description: black blazer
-  - item: top
-    color: '#F0EDE8'
-    description: white v-neck top underneath blazer
-  accessories:
-  - item: earrings
-    color: '#A8A9AD'
-    description: silver chain-link drop earrings
+    jacket:
+      style: black blazer
+      color: '#1C1C1E'
+    top:
+      style: white v-neck top underneath blazer
+      color: '#F0EDE8'

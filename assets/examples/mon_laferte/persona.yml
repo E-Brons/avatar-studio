@@ -10,11 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    color: '#d4b5a3'
-    description: dusty rose/blush satin blouse with ruffled neckline and draped fabric
+    top:
+      style: dusty rose/blush satin blouse with ruffled neckline and draped fabric
+      color: '#c9a598'
   hair_style: wavy with bangs
-  hair_color: '#1a1a1a'
-  eye_color: '#4a3328'
+  hair_color:
+    hex_base: '#1a1a1a'
+    hex_shadow: '#0D0D0D'
+  eye_color:
+    hex_iris: '#4a3328'
+    hex_pupil: '#251914'
   skin_tone: '#d4a988'
   face_shape: oval

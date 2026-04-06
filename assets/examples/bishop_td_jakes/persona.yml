@@ -11,27 +11,20 @@ style:
 appearance:
   skin_tone: '#8B5E3C'
   hair_style: bald
-  hair_color: '#4A4A4A'
+  hair_color:
+    hex_base: '#4A4A4A'
+    hex_shadow: '#252525'
   face_shape: round
-  eye_color: '#3B2A1A'
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
   clothing:
-  - item: jacket
-    type: pinstriped suit jacket
-    primary_color: '#4A5568'
-    secondary_color: '#5C6B7F'
-    pattern: pinstripe
-  - item: shirt
-    type: dress shirt, open collar
-    primary_color: '#F5F5F5'
-    secondary_color: null
-    pattern: solid
-  - item: pocket_square
-    type: decorative pocket square
-    primary_color: '#E8A035'
-    secondary_color: '#4A3080'
-    pattern: multicolor patterned
-  accessories:
-  - item: pocket square
-    color_primary: '#D4782F'
-    color_secondary: '#2B2D5E'
-    pattern: multicolor patterned
+    jacket:
+      style: Pinstriped single-breasted suit jacket, notch lapel, open front
+      color: '#4E6181'
+    shirt:
+      style: White dress shirt, spread collar, open neck, no tie
+      color: '#F5F5F5'
+    pocket_square:
+      style: ''
+      color: '#E8A035'

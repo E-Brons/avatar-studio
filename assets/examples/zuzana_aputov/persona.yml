@@ -1,5 +1,5 @@
 personal:
-  name: Zuzana Čaputová
+  name: "Zuzana \u010Caputov\xE1"
   gender: female
   age: 52
   nationality: Slovak
@@ -11,15 +11,15 @@ style:
 appearance:
   clothing:
     top:
-      type: sleeveless top
+      style: sleeveless top
       color: '#F5F5F5'
-      pattern: solid
   accessories:
     earrings:
-      type: stud
+      style: small stud
       color: '#C0C0C0'
-  hair_color: '#D4A B46'
   hair_style: medium-length, wavy, side-parted
-  eye_color: '#7A8B6E'
+  eye_color:
+    hex_iris: '#7A8B6E'
+    hex_pupil: '#3D4537'
   skin_tone: '#E8C4A8'
   face_shape: oval

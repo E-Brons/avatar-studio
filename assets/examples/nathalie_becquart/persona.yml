@@ -11,19 +11,9 @@ style:
 appearance:
   skin_tone: '#D4A882'
   clothing:
-  - item: jacket
-    color: '#1A1A1A'
-    description: black blazer
-  - item: top
-    color: '#F0EEEA'
-    description: white crew neck t-shirt
-  accessories:
-  - item: glasses
-    color: '#3B2020'
-    description: dark rectangular frames
-  - item: necklace
-    color: '#C0C0C0'
-    description: thin silver chain with small pendant
-  - item: ring
-    color: '#C0C0C0'
-    description: thin silver band on finger
+    jacket:
+      style: black blazer
+      color: '#1A1A1A'
+    top:
+      style: white crew neck t-shirt
+      color: '#F0EEEA'

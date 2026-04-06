@@ -31,10 +31,18 @@ appearance:
   hair_style: disconnected undercut with shaved faded sides and thick wavy top swept
     back
   clothing:
-    leather blazer: '#1A1A1A'
-    top: '#0A0A0A'
+    leather blazer:
+      style: black leather blazer with notched lapels
+      color: '#1A1A1A'
+    top:
+      style: black scoop-neck top
+      color: '#0A0A0A'
   accessories:
-    layered chain necklaces: three layered silver chains — chunky curb link chain,
-      decorative pendant chain with clasp, thin delicate chain
-    stud earrings: ornate silver starburst cluster stud earrings
+    layered chain necklaces:
+      style: "three layered silver chains \u2014 chunky curb link chain, decorative\
+        \ pendant chain with clasp, thin delicate chain"
+      color: '#C0C0C0'
+    stud earrings:
+      style: ornate silver starburst cluster stud earrings
+      color: '#C0C0C0'
   face_shape: round

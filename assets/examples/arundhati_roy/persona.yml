@@ -10,14 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: dress
-    color: '#D4B5B8'
-    material: linen
-    style: loose-fitting, three-quarter sleeves
-  accessories:
-  - item: necklace
-    color: '#C5A035'
-    description: thin gold chain
-  - item: bracelet
-    color: '#C5A035'
-    description: thin gold bangle on right wrist
+    dress:
+      style: loose-fitting linen tunic/dress, three-quarter sleeves, round neckline
+      color: '#D8C0C4'

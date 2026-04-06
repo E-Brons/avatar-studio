@@ -10,19 +10,11 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    primary_color: '#F0F0F0'
-    secondary_color: '#CC2233'
-    pattern: printed graphic pattern
-    neckline: zip-up collar
-  - item: flag draped over shoulders
-    primary_color: '#FFFFFF'
-    secondary_color: '#E02030'
-    pattern: Canadian flag maple leaf and bars
-  accessories:
-  - item: gold medal
-    color: '#C8A84E'
-    detail: round medal on dark blue ribbon
-  - item: earrings
-    color: '#A8D8D8'
-    detail: small stud earrings
+    jacket:
+      style: White zip-up athletic jacket with red speckled/splatter pattern across
+        the chest and shoulders
+      color: '#F0E8E8'
+    flag draped over shoulders:
+      style: Canadian flag draped over both shoulders like a cape, showing red vertical
+        bars and a central white field with red maple leaf
+      color: '#E02030'

@@ -10,18 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#6B4A3A'
-  hair_color: '#1A1210'
+  hair_color:
+    hex_base: '#1A1210'
+    hex_shadow: '#0D0908'
   hair_style: braided cornrows, shoulder-length
-  eye_color: '#2C1E14'
+  eye_color:
+    hex_iris: '#2C1E14'
+    hex_pupil: '#160F0A'
   clothing:
-  - item: long-sleeve top
-    color: '#F47B20'
-    description: bright orange athletic long-sleeve crew neck top
-  accessories:
-  - item: earrings
-    color: '#D4A830'
-    description: small gold hoop or stud earrings
-  - item: ring
-    color: '#D4A830'
-    description: gold ring on left hand
+    long-sleeve top:
+      style: bright orange athletic long-sleeve crew neck top
+      color: '#F47B20'
   face_shape: oval

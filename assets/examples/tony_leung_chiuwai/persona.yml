@@ -12,10 +12,10 @@ appearance:
   face_shape: oval
   clothing:
     top:
-      type: dress shirt
-      color: '#0d0d0d'
+      style: dress shirt, buttoned to collar, no tie
+      color: '#1a1a1a'
     jacket:
-      type: suit jacket
+      style: suit jacket, notch lapel
       color: '#0d0d0d'
   nose_shape: broad
   hair_style: short, side-parted, swept back

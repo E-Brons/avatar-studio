@@ -12,21 +12,18 @@ appearance:
   skin_tone: '#C68642'
   clothing:
     top:
-      type: dress shirt
-      color: '#F5F0EE'
-      pattern: solid
+      style: white dress shirt, open collar, no tie
+      color: '#F7F7F7'
     jacket:
-      type: suit jacket
-      color: '#3A3A3A'
-      pattern: solid
+      style: suit jacket
+      color: '#2F2F2F'
     sash:
-      type: presidential/ceremonial sash
-      colors:
-      - '#C8102E'
-      - '#FFFFFF'
-      - '#003087'
-      pattern: tricolor stripes
-      orientation: diagonal, left shoulder to right hip
-  hair_color: '#2B1E18'
+      style: presidential/ceremonial sash
+      color: '#C8102E'
+  hair_color:
+    hex_base: '#2B1E18'
+    hex_shadow: '#150F0C'
   hair_style: short, side-parted, neatly combed
-  eye_color: '#3D2B1F'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'

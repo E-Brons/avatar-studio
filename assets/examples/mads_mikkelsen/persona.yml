@@ -10,6 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: top
-    description: dark navy high-collar button-up jacket or shirt
-    color: '#1C1F2A'
+    garment:
+      style: dark navy high-collar button-up jacket or shirt
+      color: '#1E2130'

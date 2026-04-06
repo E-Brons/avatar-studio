@@ -10,17 +10,21 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#6B3A2A'
-  hair_color: '#1A1008'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
   hair_style: very short buzz cut with slight fade
-  eye_color: '#2C1A0E'
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'
   clothing:
-  - item: jacket
-    color: '#1C1C1C'
-    description: dark charcoal/black suit jacket
-  - item: top
-    color: '#F5F5F5'
-    description: white dress shirt
-  - item: tie
-    color: '#1A1A1A'
-    description: black necktie
+    jacket:
+      style: dark charcoal/black suit jacket
+      color: '#2B2B2B'
+    top:
+      style: white dress shirt with spread collar
+      color: '#F0F0F0'
+    tie:
+      style: black necktie
+      color: '#1A1A1A'
   face_shape: square

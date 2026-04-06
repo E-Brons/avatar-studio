@@ -12,9 +12,9 @@ appearance:
   face_shape: round
   skin_tone: '#8B6914'
   hair_style: short, slightly tousled
-  hair_color: '#1A1A1A'
-  eye_color: '#3D2B1F'
-  accessories:
-  - glasses
-  clothing:
-  - polo shirt
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'

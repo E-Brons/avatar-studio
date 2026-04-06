@@ -10,18 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C4956E'
-  hair_color: '#3B2218'
+  hair_color:
+    hex_base: '#3B2218'
+    hex_shadow: '#1D110C'
   hair_style: straight, center-parted, shoulder-length
-  eye_color: '#5C3A1E'
+  eye_color:
+    hex_iris: '#5C3A1E'
+    hex_pupil: '#2E1D0F'
   face_shape: oval
   clothing:
-  - item: off-shoulder top
-    color: '#1A4D45'
-    material: velvet
-  accessories:
-  - item: necklace
-    description: diamond tennis necklace
-    color: '#D4D4D4'
-  - item: earrings
-    description: diamond stud earrings
-    color: '#D4D4D4'
+    off-shoulder top:
+      style: Dark emerald-green velvet off-the-shoulder top with a structured neckline
+      color: '#1A4D45'

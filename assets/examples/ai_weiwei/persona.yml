@@ -10,14 +10,18 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#C4A882'
-  hair_color: '#2E2A27'
+  hair_color:
+    hex_base: '#2E2A27'
+    hex_shadow: '#171513'
   hair_style: short, tousled, unkempt with volume on top
-  eye_color: '#3B2F28'
+  eye_color:
+    hex_iris: '#3B2F28'
+    hex_pupil: '#1D1714'
   face_shape: round
   clothing:
-  - item: jacket
-    color: '#384258'
-    description: dark navy blue utility jacket with snap buttons and chest pocket
-  - item: top
-    color: '#1A1A1A'
-    description: black crew neck undershirt visible at collar
+    jacket:
+      style: dark navy blue utility jacket with snap buttons and chest pocket
+      color: '#384258'
+    top:
+      style: black crew neck undershirt visible at collar
+      color: '#1A1A1A'

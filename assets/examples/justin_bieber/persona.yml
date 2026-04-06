@@ -10,23 +10,20 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    color: '#FFFFFF'
-    description: white crew-neck t-shirt
-  - item: jacket
-    color: '#8B1A1A'
-    description: dark red/maroon jacket partially visible on left side
-  - item: jacket
-    color: '#1A237E'
-    description: dark navy blue garment partially visible on right shoulder
-  accessories:
-  - item: necklace
-    color: '#C0C0C0'
-    description: silver ball-chain necklace
+    top:
+      style: white crew-neck t-shirt
+      color: '#F0ECE6'
+    jacket:
+      style: dark navy and burgundy plaid hoodie, partially visible on both shoulders
+      color: '#1C1044'
   face_shape: oval
   skin_tone: '#D4A983'
-  eye_color: '#3B2A1A'
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
   eye_shape: almond
   nose_shape: straight
   hair_style: side-swept bangs, layered, medium length
-  hair_color: '#8B6542'
+  hair_color:
+    hex_base: '#8B6542'
+    hex_shadow: '#453221'

@@ -11,21 +11,19 @@ style:
 appearance:
   face_shape: oval
   skin_tone: '#D4B096'
-  eye_color: '#4A2810'
+  eye_color:
+    hex_iris: '#4A2810'
+    hex_pupil: '#251408'
   eye_shape: almond
   nose_shape: straight
   hair_style: curly, medium-length, tousled
-  hair_color: '#1A1008'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
   clothing:
-  - item: jacket
-    color: '#0A0A0A'
-    material: velvet/satin
-    description: Black blazer with satin lapels
-  - item: shirt
-    color: '#A8B8C8'
-    material: chambray
-    description: Light blue button-up shirt, worn open at the collar
-  accessories:
-  - item: necklace
-    color: '#C0A870'
-    description: Thin chain necklace, partially visible at neckline
+    jacket:
+      style: Black velvet blazer with satin lapels
+      color: '#0C0C0C'
+    shirt:
+      style: Light blue chambray button-up shirt, worn open at the collar
+      color: '#A3BAC8'

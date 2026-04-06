@@ -10,11 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#6B3A2A'
-  hair_color: '#1A1008'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
   hair_style: short natural coils
-  eye_color: '#3D2B1F'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
   clothing:
     top:
-      type: jersey/athletic shirt
-      color: '#C8312A'
+      style: jersey/athletic shirt
+      color: '#E8503C'
   face_shape: oval

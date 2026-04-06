@@ -8,11 +8,4 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance:
-  accessories:
-  - type: earrings
-    description: Gold hoop earrings with small charm/pendant attachment
-    color: '#C5A44D'
-  - type: nose ring
-    description: Small gold septum ring
-    color: '#C5A44D'
+appearance: {}

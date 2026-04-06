@@ -10,16 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: top
-    color_hex: '#E8DFD0'
-    description: off-shoulder white fringed top with layered capelet
-  accessories:
-  - type: necklace
-    color_hex: '#C4724A'
-    description: long beaded necklace with coral/orange and dark green stone beads
-  - type: earrings
-    color_hex: '#2D4A3A'
-    description: dark green beaded drop earrings
-  - type: hair accessory
-    color_hex: '#E8E0D4'
-    description: white feather tucked behind left ear with colorful beaded wrap
+    garment:
+      style: off-shoulder white fringed top with layered capelet
+      color: '#E8DFD0'

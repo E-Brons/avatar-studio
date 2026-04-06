@@ -10,20 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: robe
-    color: '#7A1A2A'
-    description: deep maroon/crimson Buddhist robe draped over shoulders
-  - item: undergarment/sash
-    color: '#D4A020'
-    description: golden-yellow fabric visible beneath the maroon robe on the left
-      shoulder
-  accessories:
-  - item: glasses
-    color: '#8B7D5E'
-    description: rectangular gold-toned metal frame glasses
-  - item: prayer beads
-    color: '#A84420'
-    description: amber/reddish-brown mala beads wrapped around the right wrist
-  - item: wristwatch
-    color: '#C0C0C0'
-    description: silver metal expansion band wristwatch on right wrist
+    robe:
+      style: deep maroon/crimson Buddhist robe draped over shoulders
+      color: '#7A1A2A'
+    undergarment/sash:
+      style: golden-yellow fabric visible beneath the maroon robe on the left shoulder
+      color: '#D4A020'

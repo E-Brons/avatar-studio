@@ -10,24 +10,21 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#3D1F0D'
-  hair_color: '#1A0A05'
+  hair_color:
+    hex_base: '#1A0A05'
+    hex_shadow: '#0D0502'
   hair_style: short curly
-  eye_color: dark brown
   face_shape: round
   clothing:
-  - item: top
-    description: Brazil national team jersey number 21
-    primary_color: '#2E5FBF'
-    secondary_color: '#40E0C8'
-  - item: shorts
-    description: white football shorts with CBF Brasil badge and number 21
-    primary_color: '#E8E8E8'
-    secondary_color: '#2E5FBF'
-  - item: socks
-    description: teal/mint football socks
-    primary_color: '#40D9B8'
-    secondary_color: '#40D9B8'
-  accessories:
-  - item: wristband
-    description: blue wristband on left wrist
-    color: '#4A6BBF'
+    top:
+      style: Brazil national team away jersey number 21, blue with dark horizontal
+        stripe pattern, mint/teal v-neck collar and sleeve cuffs, Nike swoosh, CBF
+        Brasil crest with stars, gold number 21
+      color: '#3566B5'
+    shorts:
+      style: white football shorts with CBF Brasil badge and number 21 in blue/teal,
+        Nike swoosh
+      color: '#F0EDE8'
+    socks:
+      style: teal/mint football socks
+      color: '#5AAEA2'

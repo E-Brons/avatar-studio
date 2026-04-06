@@ -10,17 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: top
-    description: white long-sleeve Adidas t-shirt with CBSk logo
-    primary_color: '#F5F0EB'
-    secondary_color: '#2D2D2D'
-  accessories:
-  - type: helmet
-    description: black matte skate helmet with chin strap
-    color: '#2A2A2A'
-  - type: earrings
-    description: small gold hoop earrings
-    color: '#C9A84C'
-  - type: nose piercing
-    description: small nose stud on left nostril
-    color: '#C9A84C'
+    garment:
+      style: white long-sleeve Adidas t-shirt with CBSk logo
+      color: '#F5F0EB'

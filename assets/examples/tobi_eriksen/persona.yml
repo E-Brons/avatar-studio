@@ -10,13 +10,16 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#D4A586'
-  hair_color: '#8B6E4B'
+  hair_color:
+    hex_base: '#8B6E4B'
+    hex_shadow: '#453725'
   hair_style: short, swept back and to the side, undercut
-  eye_color: '#5B7A5E'
+  eye_color:
+    hex_iris: '#5B7A5E'
+    hex_pupil: '#2D3D2F'
   face_shape: oval
   clothing:
-  - type: top
-    description: red Denmark national team soccer jersey with white chevron details
-      on shoulders, number 10, Hummel brand, DBU crest
-    primary_color: '#C4243C'
-    secondary_color: '#FFFFFF'
+    garment:
+      style: red Denmark national team soccer jersey with white chevron details on
+        shoulders, number 10, Hummel brand, DBU crest
+      color: '#C4243C'

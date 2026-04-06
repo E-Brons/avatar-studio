@@ -10,20 +10,7 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: saree
-    primary_color: '#1B8C3A'
-    secondary_color: '#C7385F'
-    pattern: solid with woven gold and pink border
-    border_color: '#C8975A'
-  - type: blouse
-    primary_color: '#C7385F'
-    secondary_color: '#C8975A'
-    pattern: solid with gold woven cuff border
-  accessories:
-  - type: necklace
-    description: black beaded mangalsutra with ornate gold and gemstone pendant
-    primary_color: '#1A1A1A'
-    secondary_color: '#D4A843'
-  - type: earring
-    description: small gold stud earring visible on left ear
-    primary_color: '#D4A843'
+    garment:
+      style: Green silk saree with gold-and-pink zari border, worn over a pink/magenta
+        short-sleeve blouse
+      color: '#1E8C4E'

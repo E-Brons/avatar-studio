@@ -1,5 +1,5 @@
 personal:
-  name: Arda Güler
+  name: "Arda G\xFCler"
   gender: male
   age: 21
   nationality: Turkish
@@ -10,13 +10,7 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    description: white Nike football jersey with red accents and Turkish flag captain
-      armband
-    primary_color_hex: '#FFFFFF'
-    secondary_color_hex: '#E30A17'
-  accessories:
-  - item: captain armband
-    description: red armband featuring Turkish flag with white crescent and star,
-      number 8
-    color_hex: '#E30A17'
+    top:
+      style: white Nike football jersey with red accents and number 8, holding a red
+        Turkish flag captain armband
+      color: '#FFFFFF'

@@ -9,21 +9,16 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  accessories:
-  - type: glasses
-    style: rimless
-    color: '#C0C0C0'
   clothing:
-  - type: vest
-    style: Nehru/Modi vest, mandarin collar with buttons
-    primary_color: '#8B8B6E'
-    material_appearance: linen or khadi
-  - type: shirt
-    style: long-sleeve kurta underneath vest
-    primary_color: '#E08830'
-    material_appearance: cotton
+    garment:
+      style: long-sleeve kurta underneath vest
+      color: '#E08830'
   skin_tone: '#C68E6A'
-  hair_color: '#D4D4D4'
+  hair_color:
+    hex_base: '#D4D4D4'
+    hex_shadow: '#6A6A6A'
   hair_style: short, straight, swept back
-  eye_color: '#3B2A1A'
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
   face_shape: round

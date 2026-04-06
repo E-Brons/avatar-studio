@@ -11,14 +11,15 @@ style:
 appearance:
   face_shape: oval
   clothing:
-  - type: top
-    subtype: polo shirt
-    brand: Fred Perry
-    color_primary: '#6B7A56'
-    color_secondary: '#2E3440'
-    details: olive green Fred Perry twin-tipped polo with navy blue tipped collar
-      and placket, laurel wreath logo on chest
+    garment:
+      style: Fred Perry twin-tipped polo shirt with button placket and laurel wreath
+        logo on chest
+      color: '#7A8B68'
   skin_tone: '#D4B09A'
-  eye_color: '#6B7B5A'
+  eye_color:
+    hex_iris: '#6B7B5A'
+    hex_pupil: '#353D2D'
   hair_style: medium-length wavy
-  hair_color: '#4A3628'
+  hair_color:
+    hex_base: '#4A3628'
+    hex_shadow: '#251B14'

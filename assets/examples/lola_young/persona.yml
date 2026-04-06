@@ -10,33 +10,18 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#F0C4B0'
-  hair_color: '#2A1E14'
+  hair_color:
+    hex_base: '#2A1E14'
+    hex_shadow: '#150F0A'
   hair_style: long curly with bangs
-  eye_color: '#7A9B8A'
+  eye_color:
+    hex_iris: '#7A9B8A'
+    hex_pupil: '#3D4D45'
   face_shape: round
   clothing:
-  - item: top
-    color: '#F5F0E8'
-    description: white camisole with light blue ribbon detail and lace trim
-  - item: jacket
-    color: '#7A8A78'
-    description: olive green velvet jacket with puffed shoulders
-  accessories:
-  - item: earrings
-    color: '#D4A017'
-    description: large gold hoop earrings with textured design
-  - item: necklace
-    color: '#C0C0C0'
-    description: chunky silver chain-link necklace
-  - item: necklace
-    color: '#D4A017'
-    description: gold chain-link necklace layered beneath silver one
-  - item: nose ring
-    color: '#D4A017'
-    description: small gold septum ring
-  - item: nose stud
-    color: '#D4A017'
-    description: gold nostril stud on right side
-  - item: face gems
-    color: '#E0E0E0'
-    description: small rhinestone gems near eyebrow area
+    top:
+      style: white camisole with light blue ribbon detail and lace trim
+      color: '#F0EDE5'
+    jacket:
+      style: sage green velvet jacket with puffed shoulders
+      color: '#6E7D6B'

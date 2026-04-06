@@ -8,12 +8,4 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance:
-  clothing:
-    items:
-    - type: dress
-      primary_color: '#E63222'
-      secondary_color: '#F0E6D8'
-      pattern: large polka dots
-      style: long-sleeved, high neckline, bell sleeves
-      material_appearance: structured, likely satin or silk blend
+appearance: {}

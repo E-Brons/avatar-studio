@@ -10,8 +10,7 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    description: dark brown long-sleeve polo or rugby shirt with white collar and
-      button placket
-    primary_color: '#2C2016'
-    secondary_color: '#E8DDD0'
+    top:
+      style: dark brown long-sleeve polo or rugby shirt with white collar and button
+        placket
+      color: '#2C2016'

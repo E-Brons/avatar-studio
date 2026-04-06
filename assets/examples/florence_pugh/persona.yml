@@ -10,22 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    description: white lace halter-neck top with floral embroidery and high collar
-    color: '#F0E8E0'
-    color_name: ivory white
-    material: lace
-  accessories:
-  - item: earrings
-    description: delicate pearl drop earrings
-    color: '#F5EDE3'
-    color_name: pearl white
-  - item: nose ring
-    description: small gold septum ring
-    color: '#C4A04A'
-    color_name: gold
+    top:
+      style: white lace halter-neck top with floral embroidery and high collar
+      color: '#F5EDE5'
   skin_tone: '#E8C4B0'
-  hair_color: '#D4C8A0'
+  hair_color:
+    hex_base: '#D4C8A0'
+    hex_shadow: '#6A6450'
   hair_style: short spiky pixie cut
-  eye_color: '#7A8B52'
+  eye_color:
+    hex_iris: '#7A8B52'
+    hex_pupil: '#3D4529'
   face_shape: oval

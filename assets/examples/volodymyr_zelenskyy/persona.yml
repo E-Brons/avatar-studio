@@ -10,6 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - type: top
-    description: olive green military-style button-up shirt with chest pockets
-    color: '#4A5A3C'
+    garment:
+      style: olive green military-style button-up shirt with chest pockets
+      color: '#4E553E'

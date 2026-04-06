@@ -10,17 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    type: t-shirt
-    color: '#F0EDE8'
-    description: white crew-neck t-shirt
-  accessories:
-  - item: hat
-    type: baseball cap
-    color: '#1E4A5E'
-    description: dark teal baseball cap worn backwards
+    top:
+      style: white crew-neck t-shirt
+      color: '#F0EDE8'
   skin_tone: '#D4A088'
-  hair_color: '#4A3728'
+  hair_color:
+    hex_base: '#4A3728'
+    hex_shadow: '#251B14'
   hair_style: not visible
-  eye_color: '#7A9BB5'
+  eye_color:
+    hex_iris: '#7A9BB5'
+    hex_pupil: '#3D4D5A'
   face_shape: oval

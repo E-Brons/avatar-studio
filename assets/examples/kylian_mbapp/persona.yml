@@ -1,5 +1,5 @@
 personal:
-  name: Kylian Mbappé
+  name: "Kylian Mbapp\xE9"
   gender: male
   age: 27
   nationality: French
@@ -10,15 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    type: suit jacket
-    color_hex: '#2C2C30'
-    description: dark charcoal tailored suit jacket with black buttons
-  - item: shirt
-    type: dress shirt
-    color_hex: '#FFFFFF'
-    description: white dress shirt with spread collar
-  accessories:
-  - item: watch
-    description: luxury chronograph wristwatch with black dial and silver case
-    color_hex: '#C0C0C0'
+    jacket:
+      style: dark charcoal tailored suit jacket with black buttons
+      color: '#2C2C30'
+    shirt:
+      style: white dress shirt with spread collar
+      color: '#FFFFFF'

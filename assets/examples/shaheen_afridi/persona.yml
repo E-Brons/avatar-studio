@@ -12,6 +12,6 @@ appearance:
   face_shape: oval
   clothing:
     top:
-      type: jersey/polo
-      color: '#1a4a2e'
-      pattern: solid with emblem
+      style: cricket jersey with collar, featuring Pakistan star emblem and ICC T20
+        World Cup 2024 branding
+      color: '#193f28'

@@ -10,13 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    type: sleeveless crew-neck
-    color_hex: '#0E0E0E'
-  accessories:
-  - item: necklace
-    description: double-strand pearl necklace
-    color_hex: '#E8DDD0'
-  - item: earrings
-    description: diamond stud earrings
-    color_hex: '#D4D4D4'
+    top:
+      style: Sleeveless crew-neck top
+      color: '#0A0A0A'

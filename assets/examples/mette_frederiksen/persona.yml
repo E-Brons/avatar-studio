@@ -10,14 +10,18 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#D4A882'
-  hair_color: '#C4A96A'
+  hair_color:
+    hex_base: '#C4A96A'
+    hex_shadow: '#625435'
   hair_style: pulled back bun, slicked
-  eye_color: '#6B8E7A'
+  eye_color:
+    hex_iris: '#6B8E7A'
+    hex_pupil: '#35473D'
   clothing:
-  - item: jacket
-    color: '#2C2C35'
-  - item: top
-    color: '#F0EDE8'
-  accessories:
-  - item: earrings
-    color: '#B8962E'
+    jacket:
+      style: Single-breasted dark charcoal blazer with notch lapels
+      color: '#3B3539'
+    top:
+      style: White V-neck blouse with a soft open collar, visible at the neckline
+        beneath the blazer
+      color: '#F0EDE8'

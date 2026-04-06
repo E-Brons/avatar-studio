@@ -10,10 +10,10 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: blazer
-    color: '#1E1E22'
-    description: tailored black blazer with notched lapels
-  - item: top
-    color: '#161618'
-    description: black v-neck top
+    blazer:
+      style: tailored black blazer with notched lapels
+      color: '#1C1C20'
+    top:
+      style: black v-neck top
+      color: '#141416'
   face_shape: oval

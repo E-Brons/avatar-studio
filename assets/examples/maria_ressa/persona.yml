@@ -10,16 +10,9 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: jacket
-    color: '#E02020'
-    description: red blazer with structured shoulders
-  - item: top
-    color: '#1A1A1A'
-    description: black turtleneck
-  accessories:
-  - item: glasses
-    color: '#C4A668'
-    description: rectangular gold-framed eyeglasses
-  - item: earrings
-    color: '#C0C0C0'
-    description: small silver stud earring on left ear
+    jacket:
+      style: red blazer with structured shoulders
+      color: '#D92B2B'
+    top:
+      style: black turtleneck
+      color: '#1A1A1A'

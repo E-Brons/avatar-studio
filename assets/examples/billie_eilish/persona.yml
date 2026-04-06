@@ -11,13 +11,13 @@ style:
 appearance:
   clothing:
     top:
-      type: turtleneck or mock-neck top
-      color: '#8B2020'
+      style: turtleneck or mock-neck top
+      color: '#8B1A1A'
   accessories:
     necklace_1:
-      type: chunky gold chain necklace
-      color: '#C8A840'
+      style: chunky gold curb-chain necklace
+      color: '#C9A535'
     necklace_2:
-      type: delicate gold chain necklace
+      style: delicate gold chain necklace
       color: '#C8A840'
   face_shape: round

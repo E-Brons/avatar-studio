@@ -10,12 +10,15 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#E8C9A0'
-  hair_color: '#8B6914'
+  hair_color:
+    hex_base: '#8B6914'
+    hex_shadow: '#45340A'
   hair_style: medium length bob, half-up style, wavy, ombre blonde highlights
-  eye_color: '#7A8B5A'
+  eye_color:
+    hex_iris: '#7A8B5A'
+    hex_pupil: '#3D452D'
   eye_shape: almond
   clothing:
     top:
-      type: top
+      style: black lace high-neck top
       color: '#0A0A0A'
-      material: textured black fabric, possibly sequined or embroidered

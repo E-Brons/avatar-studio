@@ -10,27 +10,28 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#5C3A1E'
-  eye_color: '#3D2B1F'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
   eye_shape: almond
-  hair_color: '#1A0F0A'
+  hair_color:
+    hex_base: '#1A0F0A'
+    hex_shadow: '#0D0705'
   hair_style: box braids pulled back, secured with headband
   face_shape: oval
   clothing:
     top:
-      type: athletic tank top / tennis dress
-      primary_color: '#DDEAF5'
-      secondary_color: '#A8BDD4'
-      pattern: geometric line pattern
-      brand_visible: New Balance, Barilla sponsor patch
+      style: athletic tank top with geometric line pattern, New Balance logo, and
+        Barilla sponsor patch
+      color: '#C8D5E0'
   accessories:
     headband:
-      type: athletic headband
+      style: New Balance athletic headband with diagonal line pattern and white NB
+        logo
       color: '#2C2C2C'
-      pattern: textured dark with New Balance logo in white
     wristband:
-      type: tennis wristband
+      style: white New Balance tennis wristband with NB logo
       color: '#F0EDE8'
-      brand_visible: New Balance
     watch_or_band:
-      type: black sport band / fitness tracker
+      style: black sport wristband / sweatband
       color: '#1A1A1A'

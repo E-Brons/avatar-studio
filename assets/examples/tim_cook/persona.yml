@@ -9,18 +9,19 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  accessories:
-  - type: glasses
-    description: thin rimless rectangular frames with silver metal bridge and temples
   clothing:
-  - item: jacket
-    color: '#1A1F3A'
-    description: dark navy zip-up fleece/sweater jacket
-  - item: top
-    color: '#89B8D8'
-    description: light blue collared dress shirt
+    jacket:
+      style: dark navy zip-up knit sweater jacket
+      color: '#1B2038'
+    top:
+      style: light blue collared dress shirt
+      color: '#8AB4D4'
   hair_style: short, straight, neatly combed back
-  hair_color: '#B0B0B0'
+  hair_color:
+    hex_base: '#B0B0B0'
+    hex_shadow: '#585858'
   skin_tone: '#D4A983'
-  eye_color: '#6E8BA8'
+  eye_color:
+    hex_iris: '#6E8BA8'
+    hex_pupil: '#374554'
   face_shape: rectangular

@@ -10,7 +10,6 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   clothing:
-  - item: top
-    type: crew neck t-shirt or sweater
-    color: '#1A1A1A'
-    material: knit cotton
+    top:
+      style: Black crewneck t-shirt
+      color: '#1A1A1A'

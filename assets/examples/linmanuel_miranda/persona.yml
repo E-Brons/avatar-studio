@@ -10,12 +10,20 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   skin_tone: '#B8956E'
-  hair_color: '#1A1210'
+  hair_color:
+    hex_base: '#1A1210'
+    hex_shadow: '#0D0908'
   hair_style: pulled back, slicked down with loose strands
-  eye_color: '#3D2B1A'
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'
   face_shape: oval
   clothing:
-  - item: high-collar cravat/neckcloth
-    color: '#E8E0D4'
-  - item: jacket/coat collar
-    color: '#D9CF9A'
+    high-collar cravat/neckcloth:
+      style: White high-collar cravat wrapped snugly around the neck, folded over
+        in a period-appropriate style
+      color: '#E8E0D4'
+    jacket/coat collar:
+      style: High standing collar of a period coat or jacket, visible just below and
+        behind the cravat, with a cream/buff colored lapel
+      color: '#D9CF9A'
