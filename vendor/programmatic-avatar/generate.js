@@ -78,8 +78,28 @@ let svg;
 
 if (style === "opeeps") {
   // @opeepsfun/avatar-illustration-system — not DiceBear, different API
+  // The library always uses a 380×380 internal coordinate space regardless of `size`.
+  // Generate at native 380×380 so the viewBox matches, then clip the avatar content
+  // to the background circle so characters that extend beyond the circle are hidden.
   const { Avatar } = require("@opeepsfun/avatar-illustration-system");
-  svg = Avatar({ size, ...extraOptions });
+  const OPEEPS_NATIVE = 380;
+  const raw = Avatar({ size: OPEEPS_NATIVE, ...extraOptions });
+
+  // Inject a <defs> block with a circle clip path matching the background circle,
+  // then apply it to the avatar group so overflow is hidden.
+  const clipDefs =
+    '<defs><clipPath id="_opeeps_clip"><circle cx="190" cy="190" r="190"/></clipPath></defs>';
+  const withDefs = raw.replace(/<svg([^>]*)>/, `<svg$1>${clipDefs}`);
+  const withClip = withDefs.replace(
+    '<g id="avatar">',
+    '<g id="avatar" clip-path="url(#_opeeps_clip)">'
+  );
+
+  // Set width/height to the requested size while keeping the 380×380 viewBox so
+  // the SVG renderer scales the content correctly.
+  svg = withClip
+    .replace(/width="\d+"/, `width="${size}"`)
+    .replace(/height="\d+"/, `height="${size}"`);
 } else {
   // DiceBear styles
   let dicebearStyle;
