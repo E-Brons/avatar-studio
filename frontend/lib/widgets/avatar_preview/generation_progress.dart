@@ -96,9 +96,12 @@ class _GenerationProgressState extends State<GenerationProgress>
                     strokeWidth: 1.8, color: StudioColors.primary),
               ),
               const SizedBox(width: 10),
-              Text(
-                widget.isProgrammatic ? 'Rendering avatar…' : 'AI is generating your avatar',
-                style: Theme.of(context).textTheme.titleSmall,
+              Flexible(
+                child: Text(
+                  widget.isProgrammatic ? 'Rendering avatar…' : 'AI is generating your avatar',
+                  style: Theme.of(context).textTheme.titleSmall,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
@@ -129,11 +132,14 @@ class _GenerationProgressState extends State<GenerationProgress>
                 ),
               ),
               const SizedBox(width: 8),
-              Text(
-                widget.isProgrammatic
-                    ? 'Programmatic render — typically instant'
-                    : 'LLM pipeline — typically 30–60s',
-                style: TextStyle(fontSize: 11, color: dimColor),
+              Flexible(
+                child: Text(
+                  widget.isProgrammatic
+                      ? 'Programmatic render — typically instant'
+                      : 'LLM pipeline — typically 30–60s',
+                  style: TextStyle(fontSize: 11, color: dimColor),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

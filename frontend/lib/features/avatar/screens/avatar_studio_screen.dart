@@ -70,7 +70,7 @@ class _AvatarStudioScreenState extends ConsumerState<AvatarStudioScreen> {
               child: const Icon(Icons.face_retouching_natural, size: 15, color: Colors.white),
             ),
             const SizedBox(width: 10),
-            const Text('Avatar Studio'),
+            const Flexible(child: Text('Avatar Studio', overflow: TextOverflow.ellipsis)),
           ],
         ),
         actions: [
