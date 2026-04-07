@@ -223,10 +223,8 @@ def _describe_properties(persona: dict) -> dict[str, str]:
     # ── demographic / visible ────────────────────────────────────────────
     gender = personal.get("gender", "")
     if gender:
-        # "non-binary" is not a visually distinct category — describe the
-        # presentation style the image model actually renders instead.
         if gender.lower() == "non-binary":
-            props["gender"] = "gender-neutral or androgynous appearance"
+            props["gender"] = "androgynous or gender-neutral features"
         else:
             props["gender"] = gender
 

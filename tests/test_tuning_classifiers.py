@@ -1002,3 +1002,188 @@ class TestParseClassificationResponseNonFloatScore:
         raw = '{"top_style": "photorealistic", "scores": [{"style_id": "photorealistic", "score": {"nested": "value"}}], "reasoning": ""}'
         result = _parse_classification_response(raw, ["photorealistic"])
         assert result.scores.get("photorealistic", 0.0) == 0.0
+
+
+# ---------------------------------------------------------------------------
+# compare_side_by_side — _stitch_images
+# ---------------------------------------------------------------------------
+
+
+class TestStitchImages:
+    def test_output_dimensions(self):
+        from tuning.compare_side_by_side import _stitch_images
+
+        result = _stitch_images(_tiny_png(), _tiny_png(), "REF", "GEN")
+        img = Image.open(io.BytesIO(result))
+        assert img.width == 512 + 20 + 512  # 1044
+        assert img.height == 512 + 30  # 542
+
+    def test_output_mode_rgba(self):
+        from tuning.compare_side_by_side import _stitch_images
+
+        result = _stitch_images(_tiny_png(), _tiny_png(), "REF", "GEN")
+        img = Image.open(io.BytesIO(result))
+        assert img.mode == "RGBA"
+
+    def test_labels_visible_via_pixels(self):
+        from tuning.compare_side_by_side import _stitch_images
+
+        result = _stitch_images(_tiny_png(), _tiny_png(), "REFERENCE", "GENERATED")
+        img = Image.open(io.BytesIO(result))
+        # Footer region (y >= 512) should contain dark pixels from drawn text
+        footer_has_dark = False
+        for y in range(512, img.height):
+            for x in range(img.width):
+                r, g, b, _a = img.getpixel((x, y))
+                if r < 200 and g < 200 and b < 200:
+                    footer_has_dark = True
+                    break
+            if footer_has_dark:
+                break
+        assert footer_has_dark
+
+
+# ---------------------------------------------------------------------------
+# compare_side_by_side — ComparisonResult
+# ---------------------------------------------------------------------------
+
+
+class TestComparisonResult:
+    def test_compound_arithmetic(self):
+        from tuning.compare_side_by_side import ComparisonResult
+
+        r = ComparisonResult(
+            identity_score=0.8,
+            goal_score=0.7,
+            quality_score=0.9,
+            compound_score=0.5 * 0.8 + 0.3 * 0.7 + 0.2 * 0.9,
+        )
+        expected = 0.5 * 0.8 + 0.3 * 0.7 + 0.2 * 0.9  # 0.79
+        assert abs(r.compound_score - expected) < 1e-9
+
+    def test_default_string_fields(self):
+        from tuning.compare_side_by_side import ComparisonResult
+
+        r = ComparisonResult(
+            identity_score=0.0, goal_score=0.0, quality_score=0.0, compound_score=0.0
+        )
+        assert r.reasoning == ""
+        assert r.raw_response == ""
+
+
+# ---------------------------------------------------------------------------
+# compare_side_by_side — _parse_comparison_response
+# ---------------------------------------------------------------------------
+
+
+class TestParseComparisonResponse:
+    def test_valid_json(self):
+        from tuning.compare_side_by_side import _parse_comparison_response
+
+        raw = '{"identity_score": 80, "goal_score": 70, "quality_score": 90, "reasoning": "good match"}'
+        result = _parse_comparison_response(raw)
+        assert abs(result.identity_score - 0.8) < 1e-9
+        assert abs(result.goal_score - 0.7) < 1e-9
+        assert abs(result.quality_score - 0.9) < 1e-9
+        assert result.reasoning == "good match"
+
+    def test_score_normalisation(self):
+        from tuning.compare_side_by_side import _parse_comparison_response
+
+        raw = '{"identity_score": 100, "goal_score": 50, "quality_score": 0, "reasoning": ""}'
+        result = _parse_comparison_response(raw)
+        assert abs(result.identity_score - 1.0) < 1e-9
+        assert abs(result.goal_score - 0.5) < 1e-9
+        assert abs(result.quality_score - 0.0) < 1e-9
+
+    def test_compound_computed(self):
+        from tuning.compare_side_by_side import _parse_comparison_response
+
+        raw = '{"identity_score": 80, "goal_score": 70, "quality_score": 90, "reasoning": ""}'
+        result = _parse_comparison_response(raw)
+        expected = 0.5 * 0.8 + 0.3 * 0.7 + 0.2 * 0.9
+        assert abs(result.compound_score - expected) < 1e-9
+
+    def test_code_fence_wrapped(self):
+        from tuning.compare_side_by_side import _parse_comparison_response
+
+        raw = '```json\n{"identity_score": 60, "goal_score": 40, "quality_score": 80, "reasoning": "ok"}\n```'
+        result = _parse_comparison_response(raw)
+        assert abs(result.identity_score - 0.6) < 1e-9
+        assert result.reasoning == "ok"
+
+    def test_invalid_json_returns_zeros(self):
+        from tuning.compare_side_by_side import _parse_comparison_response
+
+        result = _parse_comparison_response(": : invalid :::")
+        assert result.identity_score == 0.0
+        assert result.goal_score == 0.0
+        assert result.quality_score == 0.0
+        assert result.compound_score == 0.0
+
+    def test_non_dict_json_returns_zeros(self):
+        from tuning.compare_side_by_side import _parse_comparison_response
+
+        result = _parse_comparison_response("[1, 2, 3]")
+        assert result.identity_score == 0.0
+
+
+# ---------------------------------------------------------------------------
+# compare_side_by_side — compare_side_by_side (mocked LLM)
+# ---------------------------------------------------------------------------
+
+
+class TestCompareSideBySide:
+    _RESPONSE = (
+        '{"identity_score": 80, "goal_score": 70, "quality_score": 90, "reasoning": "faces match"}'
+    )
+
+    def test_returns_correct_result(self):
+        with patch(
+            "tuning.compare_side_by_side._call_vision_model",
+            return_value=self._RESPONSE,
+        ):
+            from tuning.compare_side_by_side import compare_side_by_side
+
+            result = compare_side_by_side(_tiny_png(), _tiny_png(), "happiness expression")
+            assert abs(result.identity_score - 0.8) < 1e-9
+            assert abs(result.goal_score - 0.7) < 1e-9
+            assert abs(result.quality_score - 0.9) < 1e-9
+
+    def test_raw_response_stored(self):
+        with patch(
+            "tuning.compare_side_by_side._call_vision_model",
+            return_value=self._RESPONSE,
+        ):
+            from tuning.compare_side_by_side import compare_side_by_side
+
+            result = compare_side_by_side(_tiny_png(), _tiny_png(), "test goal")
+            assert result.raw_response == self._RESPONSE
+
+    def test_llm_failure_reraises(self):
+        import pytest
+
+        with patch(
+            "tuning.compare_side_by_side._call_vision_model",
+            side_effect=RuntimeError("gateway down"),
+        ):
+            from tuning.compare_side_by_side import compare_side_by_side
+
+            with pytest.raises(RuntimeError, match="gateway down"):
+                compare_side_by_side(_tiny_png(), _tiny_png(), "test goal")
+
+
+# ---------------------------------------------------------------------------
+# compare_side_by_side — _call_vision_model thin wrapper
+# ---------------------------------------------------------------------------
+
+
+class TestCallVisionModelComparison:
+    def test_delegates_to_image_inspector(self):
+        with patch("tuning.compare_side_by_side.GatewayClient") as MockClient:
+            MockClient.return_value.image_inspector.return_value = "raw response"
+            from tuning.compare_side_by_side import _call_vision_model
+
+            result = _call_vision_model("http://gw", "sys", "prompt", b"img", 30)
+            assert result == "raw response"
+            MockClient.assert_called_once_with("http://gw")

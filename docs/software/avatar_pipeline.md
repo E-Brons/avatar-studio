@@ -332,6 +332,7 @@ Validation runs after render. Three independent scorers operate on each final PN
 | Style Classifier | §6.4 Style Fidelity | `tuning/classify_style.py` | [→](pipeline/scoring_style_classifier.md) |
 | Persona Categorizer | §6.2 Phenotype Fidelity, §6.1 Identity Consistency | `tuning/classify_persona.py` | [→](pipeline/scoring_persona_categorizer.md) |
 | Technical Quality | §6.5 Technical Quality | *not yet implemented* | — |
+| Side-by-Side Comparison | §6.1 Identity Consistency | `tuning/compare_side_by_side.py` | — |
 
 ---
 
@@ -434,6 +435,60 @@ Each persona property has a weight
 
 [^ycbcr-main]: YCbCr separates luminance from chrominance, tolerating the lighting variation typical of diffusion model outputs (e.g. dark brown hair appearing lighter under rendered studio lighting) while still catching genuine color-family mismatches (dark brown vs. blue).
 [^color-threshold]: VALIDATION_COLOR_DISTANCE_THRESHOLD = 0.70 - for a close-match color
+
+### 4.5 Side-by-Side Comparison
+
+**Module**: `tuning/compare_side_by_side.py`
+**Entry point**: `compare_side_by_side(reference_bytes, generated_bytes, goal, *, reference_label, generated_label, gateway_url, timeout)`
+
+Verifies visually whether the generated image depicts the same person as a reference image and that the requested goal was achieved.
+
+1. Programmatically stitch the reference and the generated images side by side, while writing below each one its label
+
+e.g. for a style comparison:
+REFERENCE = realistic, GENERATED = studio_3d
+
+e.g. for an expression comparison:
+REFERENCE = neutral, GENERATED = happy
+
+```
++-----------------------+   +-----------------------+
+|                       |   |                       |
+|                       |   |                       |
+|                       |   |                       |
+|       512 x 512       |   |       512 x 512       |
+|        PICTURE        |   |        PICTURE        |
+|          (A)          |   |          (B)          |
+|                       |   |                       |
+|                       |   |                       |
+|                       |   |                       |
++-----------------------+   +-----------------------+
+       REFERENCE                 LLM - GENERATED
+```
+
+2. The Vision-capable LLM inputs:
+- The side-by-side image
+- A text description of the goal: `{goal}`
+- Instructions to output 0 to 100 score for the following attributes:
+  A. The persons in both pictures are the same person
+  B. The generated render achieved the {goal} well
+  C. The generated render is high quality
+
+3. The output will be all 3 scores + compound:
+  A. 50%
+  B. 30%
+  C. 20%
+
+**Output — `ComparisonResult`**:
+
+| Field | Type | Description |
+|---|---|---|
+| `identity_score` | `float` (0–1) | Score A: same-person consistency |
+| `goal_score` | `float` (0–1) | Score B: goal achievement |
+| `quality_score` | `float` (0–1) | Score C: render quality |
+| `compound_score` | `float` (0–1) | 50% A + 30% B + 20% C |
+| `reasoning` | `str` | One-sentence visual evidence |
+| `raw_response` | `str` | Raw LLM JSON for debugging |
 
 ---
 
