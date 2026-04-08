@@ -43,6 +43,47 @@ class GatewayClient:
         resp.raise_for_status()
         return resp.json()["content"]
 
+    def reasoning(
+        self,
+        messages: list[dict],
+        *,
+        thinking_budget: int | None = None,
+        timeout: int = 300,
+    ) -> str:
+        """Call POST /reasoning (claude-opus with extended thinking) and return free-form text."""
+        payload: dict = {"messages": messages}
+        if thinking_budget is not None:
+            payload["thinking_budget"] = thinking_budget
+        resp = requests.post(
+            f"{self.base_url}/reasoning",
+            json=payload,
+            timeout=timeout,
+        )
+        resp.raise_for_status()
+        return resp.json()["content"]
+
+    def general(
+        self,
+        messages: list[dict],
+        *,
+        max_retries: int = 3,
+        timeout: int = 120,
+        output_config: dict | None = None,
+    ) -> str:
+        """Call POST /general (claude-sonnet) and return the response content string."""
+        payload: dict = {"messages": messages, "max_retries": max_retries}
+        if output_config is not None:
+            schema = output_config.get("format", {}).get("schema")
+            if schema:
+                payload["response_schema"] = schema
+        resp = requests.post(
+            f"{self.base_url}/general",
+            json=payload,
+            timeout=timeout,
+        )
+        resp.raise_for_status()
+        return resp.json()["content"]
+
     def image_gen(
         self,
         prompt: str,

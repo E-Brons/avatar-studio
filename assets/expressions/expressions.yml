@@ -1,61 +1,82 @@
-# Avatar Expression Definitions
-# ─────────────────────────────────────────────────────────────
-#
-# FACS Action Unit (AU) reference:
-#   AU1  = Inner Brow Raiser       AU2  = Outer Brow Raiser
-#   AU4  = Brow Lowerer            AU5  = Upper Lid Raiser
-#   AU6  = Cheek Raiser            AU7  = Lid Tightener
-#   AU12 = Lip Corner Puller       AU14 = Dimpler (Buccinator)
-#   AU15 = Lip Corner Depressor    AU17 = Chin Raiser
-#   AU23 = Lip Tightener           AU25 = Lips Part
-#   AU26 = Jaw Drop
-#
-# Intensity scale: trace → slight → moderate → marked → extreme
-# x suffix (e.g. AU14x) = unilateral; pipeline substitutes x → R or L at generation time
-# ─────────────────────────────────────────────────────────────
-
 expressions:
+- expression: Happiness
+  synonyms:
+  - Joy
+  - Enjoyment
+  - Happy
+  - Joyful
+  - Cheerful
+  - Elated
+  - Pleased
+  facs_action_units: AU6 (marked), AU12 (marked)
+  description: 'The Duchenne smile. Cheeks lift strongly, pushing up the lower eyelids
+    and producing visible crow''s-feet at the outer eye corners. Lip corners pull
+    firmly upward and outward. The eye narrowing from the cheek lift distinguishes
+    genuine happiness from a polite smile.
 
-  - expression: Happiness
-    synonyms: [Joy, Enjoyment, Happy, Joyful]
-    facs_action_units: "AU6 (marked), AU12 (marked)"
-    description: >
-      The Duchenne smile. Cheeks lift strongly, pushing up the lower eyelids
-      and producing visible crow's-feet at the outer eye corners. Lip corners
-      pull firmly upward and outward. The eye narrowing from the cheek lift
-      distinguishes genuine happiness from a polite smile.
+    '
+- expression: Surprise
+  synonyms:
+  - Amazement
+  - Astonishment
+  - Surprised
+  - Shocked
+  - Alert
+  - Startled
+  facs_action_units: AU1 (marked), AU2 (marked), AU5 (moderate), AU26 (moderate)
+  description: 'Full brow arch — both inner and outer brows raised high, creating
+    horizontal forehead lines. Upper lids raised wide. Jaw drops, mouth open. No tension
+    anywhere in the face — pure open, unguarded reaction.
 
-  - expression: Surprise
-    synonyms: [Amazement, Astonishment, Surprised, Shocked, Alert, Startled]
-    facs_action_units: "AU1 (marked), AU2 (marked), AU5 (moderate), AU26 (moderate)"
-    description: >
-      Full brow arch — both inner and outer brows raised high, creating
-      horizontal forehead lines. Upper lids raised wide. Jaw drops, mouth
-      open. No tension anywhere in the face — pure open, unguarded reaction.
+    '
+- expression: Anger
+  synonyms:
+  - Rage
+  - Fury
+  - Angry
+  - Furious
+  - Stern
+  - Hostile
+  - Grumpy
+  - Stressed
+  - Menacing
+  facs_action_units: AU4 (marked), AU7 (moderate), AU23 (moderate)
+  description: 'Brows pulled hard down and together, forming a deep V-furrow between
+    them. Lids tighten into an intense fixed stare. Lips press firmly together, compressed
+    and thinned. Controlled, focused aggression directed at the viewer.
 
-  - expression: Anger
-    synonyms: [Rage, Fury, Angry, Furious, Stern, Hostile, Grumpy, Stressed, Menacing]
-    facs_action_units: "AU4 (marked), AU7 (moderate), AU23 (moderate)"
-    description: >
-      Brows pulled hard down and together, forming a deep V-furrow between
-      them. Lids tighten into an intense fixed stare. Lips press firmly
-      together, compressed and thinned. Controlled, focused aggression
-      directed at the viewer.
+    '
+- expression: Sadness
+  synonyms:
+  - Sorrow
+  - Grief
+  - Sad
+  - Sorrowful
+  - Melancholy
+  - Gloomy
+  - Dejected
+  facs_action_units: AU1 (moderate), AU4 (slight), AU15 (slight), AU17 (trace)
+  description: 'The oblique brow: inner corners raised (AU1), overall brow drawn slightly
+    down (AU4), producing a triangular upward-slanted inner brow shape. Lip corners
+    pulled gently downward. Chin slightly puckered. The face is heavy and still —
+    no tension, just weight.
 
-  - expression: Sadness
-    synonyms: [Sorrow, Grief, Sad, Sorrowful]
-    facs_action_units: "AU1 (moderate), AU4 (slight), AU15 (slight), AU17 (trace)"
-    description: >
-      The oblique brow: inner corners raised (AU1), overall brow drawn
-      slightly down (AU4), producing a triangular upward-slanted inner brow
-      shape. Lip corners pulled gently downward. Chin slightly puckered.
-      The face is heavy and still — no tension, just weight.
+    '
+- expression: Contempt
+  synonyms:
+  - Scorn
+  - Disdain
+  - Contemptuous
+  - Scornful
+  - Disdainful
+  - Skeptical
+  - Smug
+  - Sly
+  - Dismissive
+  - Sarcastic
+  facs_action_units: AU14x (moderate), AU12x (trace)
+  description: 'Strictly unilateral — one side of the face only. A single dimple appears
+    at one cheek corner; that lip corner lifts very slightly. The opposite side of
+    the face remains completely flat and neutral. The asymmetry is the entire signal.
 
-  - expression: Contempt
-    synonyms: [Scorn, Disdain, Contemptuous, Scornful, Disdainful, Skeptical, Smug, Sly, Dismissive]
-    facs_action_units: "AU14x (moderate), AU12x (trace)"
-    description: >
-      Strictly unilateral — one side of the face only. A single dimple
-      appears at one cheek corner; that lip corner lifts very slightly.
-      The opposite side of the face remains completely flat and neutral.
-      The asymmetry is the entire signal.
+    '

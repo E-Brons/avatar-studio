@@ -56,8 +56,8 @@ _EYE_SHAPE: dict[str, str] = {
         "prominent and expressive with a full rounded lid shape"
     ),
     "hooded": (
-        "hooded eyes: a heavy overhanging brow bone folds down and partially covers "
-        "the upper eyelid, making the crease hidden or minimal"
+        "hooded eyes: heavy overhanging brow bone drooping over the upper eyelid, "
+        "eyelid crease hidden, short brow-to-lash distance"
     ),
     "monolid": (
         "monolid eyes: single eyelid with no visible upper lid crease, "
@@ -131,8 +131,8 @@ _NOSE_SHAPE: dict[str, str] = {
         "then a gentle downward curve to a soft tip"
     ),
     "gentle button": (
-        "small cute button nose with a small rounded upturned tip, "
-        "delicate nostrils, petite and soft"
+        "classic button nose: small rounded tip curving gently upward, "
+        "short bridge, narrow delicate nostrils"
     ),
     "narrow bridge shadow": (
         "nose with a narrow elongated bridge, a slim shadow line running "
@@ -143,8 +143,8 @@ _NOSE_SHAPE: dict[str, str] = {
         "middle of the face, prominent width"
     ),
     "broad flat": (
-        "broad flat nose with wide nostrils spread across the lower face, "
-        "minimal bridge height, low projection"
+        "broad flat nose: wide nostrils spreading across the lower face, "
+        "flat low bridge with minimal projection"
     ),
     "long straight": (
         "long straight nose with an uninterrupted smooth bridge line from "
@@ -257,7 +257,7 @@ _HAIR_STYLE: dict[str, str] = {
     "side-parted short": "short hair with a clean side part, neatly combed to one side",
     "swept back": "hair swept back away from the face, slicked or pushed rearward",
     "medium layered": "medium-length hair with layered cuts adding movement and texture",
-    "medium tousled": "medium-length loosely tousled hair with natural casual waves",
+    "medium tousled": "medium-length loosely tousled hair with natural casual waves, deliberately disheveled and unkempt in appearance, not neatly styled or combed",
     "medium side-swept": "medium hair swept to one side with a gentle diagonal flow",
     "shoulder-length straight": "straight hair falling evenly to shoulder level",
     "shoulder-length wavy": "wavy hair with gentle S-curves falling to shoulder level",
@@ -275,7 +275,7 @@ _HAIR_STYLE: dict[str, str] = {
     "low bun": "hair gathered into a neat low bun at the nape of the neck",
     "high bun": "hair pulled up into a tight high bun on top of the head",
     "top knot": "hair gathered into a messy or neat knot at the very top of the head",
-    "half-up half-down": "top half of hair pulled back or up, bottom half falling loose",
+    "half-up half-down": "top half of hair visibly pulled back and secured away from the face (pinned or tied), bottom half falling loose — the upper section is clearly up, NOT fully down",
     "pixie cut": "short pixie cut: very short sides and back, slightly longer on top",
     "textured pixie": "short textured pixie cut with deliberately disheveled top",
     "bob straight": "chin-length blunt-cut bob, straight and smooth, even all around",
@@ -307,6 +307,7 @@ _HAIR_STYLE: dict[str, str] = {
     "chignon": "hair gathered into a low smooth chignon at the nape",
     "space buns": "hair divided into two buns positioned high on either side of the head",
     "two braids": "hair divided into two braids, one on each side",
+    "bantu knots": "Bantu knots hairstyle: hair divided into sections, each section tightly coiled into a small compact round spiral bun sitting flat directly ON TOP of the scalp — the entire head is covered with multiple small round spiral bun mounds close to the scalp; STRICTLY NOT dreadlocks, NOT locs, NOT rope-like hanging strands — the knots are flat coiled round buns against the head, with soft loose curly tendrils framing the face and hairline",
 }
 
 # ---------------------------------------------------------------------------
@@ -319,12 +320,17 @@ _ACCESSORY: dict[str, str] = {
     "corporate beard": "neatly trimmed short corporate beard, professional and well-groomed",
     "chevron mustache": "thick chevron mustache with straight-cut ends spanning above the lip",
     "french beard": "pointed French goatee beard: chin strip and thin connecting mustache",
-    "wristwatch": "wristwatch on the wrist",
+    "wristwatch": "a wristwatch clearly strapped on the wrist",
     "analog wristwatch": "classic analog wristwatch with a round face on the wrist",
     "sport watch": "sport watch with chunky case on the wrist",
     "dress watch": "slim elegant dress watch on the wrist",
-    "minimalist wristwatch": "thin minimalist wristwatch with a clean simple face",
-    "prominent wristwatch on wrist": "large prominent wristwatch clearly visible on the wrist",
+    "minimalist wristwatch": "slim wristwatch with a clean round face strapped on the wrist, clearly visible",
+    "prominent wristwatch on wrist": "a large prominent wristwatch strapped on the left wrist, clearly visible",
+    "thin-framed rectangular glasses": "thin metal rectangular-framed glasses sitting on the nose bridge",
+    "round wire-rimmed glasses": "delicate round wire-rimmed glasses on the nose bridge",
+    "simple pendant necklace over collar": "a simple pendant necklace draped over the collar, visible at the neckline",
+    "braided leather bracelet on wrist": "a braided leather bracelet wrapped around the wrist, clearly visible",
+    "visible ear cuff on upper ear": "a decorative ear cuff clipped to the upper ear cartilage, clearly visible",
     "chunky sport watch on wrist": "chunky bold sport watch on the wrist",
     "pair of earrings": "a matching pair of earrings in both ears",
     "stud earrings": "small stud earrings in both earlobes",
@@ -347,19 +353,48 @@ _ACCESSORY: dict[str, str] = {
     "pocket square": "a pocket square tucked into a jacket breast pocket",
     "lapel pin": "a small lapel pin on the jacket lapel",
     "nose ring": "a small nose ring or stud piercing",
+    "glasses": "eyeglasses with clearly visible frames on the nose bridge",
+    "tinted glasses": "glasses with lightly tinted semi-transparent lenses in a frame on the nose",
+    "tinted rimless glasses": "rimless glasses with subtly tinted lenses clipped to the nose bridge",
+    "patterned scarf": "a scarf with a visible decorative pattern draped loosely around the neck",
+    "silk scarf": "a smooth shiny silk scarf loosely knotted or draped at the neck",
+    "discreet lapel pin": "a small pin clearly attached to the lapel of a jacket, visible against the fabric",
+    "enamel pin": "a small colorful enamel pin clipped to the lapel or collar",
+    "hair decoration": "a decorative ornamental hair accessory visible in the hair",
+    "hearing aid": "a clearly visible hearing aid device worn on the ear",
+    "subtle face jewel": "a small glittering rhinestone gem placed on the cheekbone, catching light",
+    "traditional head wrap accessory": "a large decorative brooch pinned prominently to a fabric head wrap",
+    "woven bracelet": "a colorful handwoven fabric bracelet wrapped around the wrist",
+    "cuff bracelet": "a wide rigid metal cuff bracelet clasped around the wrist",
+    "watch": "a wristwatch on the wrist",
+    "geometric earrings": "bold geometric-shaped earrings with angular abstract forms hanging from the ears",
+    "bold geometric earrings": "large bold geometric-shaped earrings with strong angular or abstract forms, clearly visible hanging from the earlobes",
+    "choker necklace": "a tight close-fitting choker necklace sitting high on the neck",
+    "classic dress watch on wrist": "a slim elegant classic dress watch clearly visible on the wrist",
+    "tie clip": "a polished metal tie clip bar clasped horizontally across the tie at mid-chest, clearly visible",
+    "layered necklaces": "multiple necklaces of varying lengths layered together at the chest",
+    "statement necklace": "a large bold statement necklace as a focal point at the neckline",
 }
 
 # ---------------------------------------------------------------------------
 # Enrichment engine
 # ---------------------------------------------------------------------------
 
-_PROPERTY_MAPS: dict[str, dict[str, str]] = {
+_FACE_PROPERTY_MAPS: dict[str, dict[str, str]] = {
     "eye_shape": _EYE_SHAPE,
     "nose_shape": _NOSE_SHAPE,
     "brows_style": _BROWS_STYLE,
     "chin_shape": _CHIN_SHAPE,
     "cheeks_shape": _CHEEKS_SHAPE,
+}
+
+_STYLE_PROPERTY_MAPS: dict[str, dict[str, str]] = {
     "hair_style": _HAIR_STYLE,
+}
+
+_PROPERTY_MAPS: dict[str, dict[str, str]] = {
+    **_FACE_PROPERTY_MAPS,
+    **_STYLE_PROPERTY_MAPS,
 }
 
 
@@ -367,7 +402,7 @@ def _enrich_skin_tone(hex_val: str) -> str:
     """Return 'label (HEX)' — adds human-readable label to skin tone hex."""
     label = _SKIN_TONE_LABELS.get(hex_val.upper())
     if label:
-        return label
+        return f"exact skin tone — {label}"
     return hex_val
 
 
@@ -417,4 +452,15 @@ def sanitize_persona(persona: dict) -> dict:
     """
     visual = visual_only_persona(persona)
     visual["appearance"] = _enrich_appearance(visual.get("appearance", {}))
+    # Non-binary: explicitly enforce androgynous gender-neutral rendering
+    if visual.get("gender") == "non-binary":
+        visual["gender"] = (
+            "non-binary — strictly androgynous, gender-neutral presentation: "
+            "absolutely NO beard, NO stubble, NO mustache, NO prominent Adam's apple, NO strong masculine jawline, NO heavy brow ridge, NO broad masculine shoulders; "
+            "absolutely NO feminine makeup, NO mascara, NO eyeshadow, NO lipstick, NO blush, NO gendered styling or adornment; "
+            "soft symmetrical neutral facial bone structure with intermediate subtle features — "
+            "face MUST read as completely androgynous, neither male nor female, deliberately ambiguous to any observer; "
+            "photorealistic rendering MUST use soft intermediate bone structure — no angular masculine jaw, no prominent brow ridge, no feminine softness or makeup; "
+            "naturally smooth skin, neutral medium-weight brows, purely androgynous facial geometry that reads as neither male nor female in a realistic photograph"
+        )
     return visual
