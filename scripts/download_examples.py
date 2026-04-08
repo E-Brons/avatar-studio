@@ -88,7 +88,7 @@ CELEBRITIES: list[dict] = [
     {"name": "Tyler, the Creator", "age": 35, "nationality": "American", "gender": "male"},
     {"name": "Tom Cruise", "age": 63, "nationality": "American", "gender": "male"},
     {"name": "Emma D'Arcy", "age": 33, "nationality": "British", "gender": "non-binary"},
-    {"name": "Dandapani", "age": 48, "nationality": "Australian-Indian", "gender": "female"},
+    {"name": "Dandapani", "age": 48, "nationality": "Australian-Indian", "gender": "male"},
     {"name": "Tsitsi Dangarembga", "age": 50, "nationality": "Zimbabwean", "gender": "female"},
     {"name": "Alphonso Davies", "age": 25, "nationality": "Canadian-Liberian", "gender": "male"},
     {"name": "Viola Davis", "age": 60, "nationality": "American", "gender": "female"},
