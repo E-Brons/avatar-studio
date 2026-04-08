@@ -1,0 +1,25 @@
+personal:
+  name: "Alexander Skarsg\xE5rd"
+  gender: male
+  pronouns: he/him
+  age: 49
+  nationality: Swedish
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Black crew-neck knit sweater
+      color: '#1A1A1A'
+  skin_tone: '#C4A08A'
+  hair_color:
+    hex_base: '#6B5540'
+    hex_shadow: '#352A20'
+  hair_style: short, straight, side-parted, slightly tousled
+  eye_color:
+    hex_iris: '#7A9BAE'
+    hex_pupil: '#3D4D57'
+  face_shape: oval, angular jawline

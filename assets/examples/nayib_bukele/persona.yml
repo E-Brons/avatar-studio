@@ -1,0 +1,34 @@
+personal:
+  name: Nayib Bukele
+  gender: male
+  pronouns: he/him
+  age: 44
+  nationality: Salvadoran
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8956A'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  hair_style: pulled back, slicked
+  eye_color:
+    hex_iris: '#3D1F0A'
+    hex_pupil: '#1E0F05'
+  clothing:
+    jacket:
+      style: Dark navy suit jacket, single-breasted, with notch lapels, worn open
+        over a white dress shirt
+      color: '#1B2A4A'
+    top:
+      style: White dress shirt with spread collar, worn open at the neck without a
+        tie
+      color: '#F5F0E0'
+    sash:
+      style: Blue and white presidential sash worn diagonally from right shoulder
+        to left hip, with broad blue and white stripes
+      color: '#2255CC'
+  face_shape: oval

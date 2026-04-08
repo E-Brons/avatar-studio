@@ -1,0 +1,29 @@
+personal:
+  name: "Beyonc\xE9"
+  gender: female
+  pronouns: she/her
+  age: 44
+  nationality: American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C68642'
+  hair_color:
+    hex_base: '#B8960C'
+    hex_shadow: '#5C4B06'
+  hair_style: sleek center-parted low ponytail
+  eye_color:
+    hex_iris: '#6B3A2A'
+    hex_pupil: '#351D15'
+  clothing:
+    top:
+      style: color-block bateau neck top
+      color: '#1A1A1A'
+  accessories:
+    earrings:
+      style: stud/small drop
+      color: '#E8E8E8'
+  face_shape: oval

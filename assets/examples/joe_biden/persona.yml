@@ -1,0 +1,32 @@
+personal:
+  name: Joe Biden
+  gender: male
+  pronouns: he/him
+  age: 83
+  nationality: American
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C68642'
+  hair_color:
+    hex_base: '#C0BDB8'
+    hex_shadow: '#605E5C'
+  hair_style: short, combed back, silver-white
+  eye_color:
+    hex_iris: '#5B7FA6'
+    hex_pupil: '#2D3F53'
+  eye_shape: almond
+  face_shape: oval
+  clothing:
+    suit jacket:
+      style: dark navy pinstripe suit jacket with subtle light pinstripes
+      color: '#1C2340'
+    dress shirt:
+      style: white dress shirt with visible cuffs
+      color: '#F5F5F5'
+    tie:
+      style: blue and white diagonal striped tie
+      color: '#3565A5'

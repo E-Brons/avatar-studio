@@ -1,0 +1,16 @@
+personal:
+  name: Arundhati Roy
+  gender: female
+  pronouns: she/her
+  age: 64
+  nationality: Indian
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    dress:
+      style: loose-fitting linen tunic/dress, three-quarter sleeves, round neckline
+      color: '#D8C0C4'

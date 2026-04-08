@@ -1,0 +1,19 @@
+personal:
+  name: Maria Ressa
+  gender: female
+  pronouns: she/her
+  age: 62
+  nationality: Filipino
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: red blazer with structured shoulders
+      color: '#D92B2B'
+    top:
+      style: black turtleneck
+      color: '#1A1A1A'

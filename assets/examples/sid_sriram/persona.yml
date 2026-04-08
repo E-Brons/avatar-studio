@@ -1,0 +1,24 @@
+personal:
+  name: Sid Sriram
+  gender: male
+  pronouns: he/him
+  age: 35
+  nationality: Indian
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: short curly
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'
+  clothing:
+    garment:
+      style: embroidered mandarin-collar kurta
+      color: '#4A5D6E'

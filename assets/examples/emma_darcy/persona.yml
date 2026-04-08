@@ -1,0 +1,33 @@
+personal:
+  name: Emma D'Arcy
+  gender: non-binary
+  pronouns: they/them
+  age: 33
+  nationality: British
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: structured, distressed denim jacket with collar, button front, and dual
+        chest flap pockets
+      color: '#5A9EC4'
+  accessories:
+    earrings:
+      style: small hoop/drop earrings
+      color: '#C9A84E'
+    necklace:
+      style: thin choker-length chain necklace with small pendant
+      color: '#C8A84B'
+  skin_tone: '#E8CDB8'
+  hair_color:
+    hex_base: '#3B2A1E'
+    hex_shadow: '#1D150F'
+  hair_style: short wavy bob
+  eye_color:
+    hex_iris: '#7A9BAE'
+    hex_pupil: '#3D4D57'
+  face_shape: oval

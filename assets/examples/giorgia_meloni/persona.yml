@@ -1,0 +1,20 @@
+personal:
+  name: Giorgia Meloni
+  gender: female
+  pronouns: she/her
+  age: 49
+  nationality: Italian
+  religion: Catholic
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: red blazer with structured shoulders
+      color: '#C23B3B'
+    top:
+      style: black inner top with a rounded or V-neckline
+      color: '#1A1A1A'
+  face_shape: oval

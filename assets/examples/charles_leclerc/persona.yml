@@ -1,0 +1,29 @@
+personal:
+  name: Charles Leclerc
+  gender: male
+  pronouns: he/him
+  age: 28
+  nationality: Monegasque
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_style: short, tousled, wavy with fringe
+  hair_color:
+    hex_base: '#5C4A3A'
+    hex_shadow: '#2E251D'
+  eye_color:
+    hex_iris: '#4A3528'
+    hex_pupil: '#251A14'
+  skin_tone: '#B8896E'
+  face_shape: oval with defined jawline
+  clothing:
+    racing suit top:
+      style: Ferrari team racing suit, red and black with sponsor logos (Snapdragon,
+        Puma) and Ferrari prancing horse badge on yellow shield
+      color: '#E0271A'
+    turtleneck undershirt:
+      style: Red fireproof turtleneck base layer visible at the neckline
+      color: '#E0271A'

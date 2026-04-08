@@ -1,0 +1,17 @@
+personal:
+  name: Hozier
+  gender: male
+  pronouns: he/him
+  age: 36
+  nationality: Irish
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: Dark-wash denim jacket with a classic collar, visible stitching, and
+        metal snap/button closure
+      color: '#2F4456'

@@ -1,0 +1,19 @@
+personal:
+  name: Ranveer Singh
+  gender: male
+  pronouns: he/him
+  age: 40
+  nationality: Indian
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: structured blazer with notched lapels
+      color: '#C2B9A8'
+    shirt:
+      style: collared dress shirt, open neck
+      color: '#A8A0B0'

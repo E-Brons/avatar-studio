@@ -1,0 +1,28 @@
+personal:
+  name: Hina Rabbani Khar
+  gender: female
+  pronouns: she/her
+  age: 48
+  nationality: Pakistani
+  religion: Muslim
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A574'
+  hair_color:
+    hex_base: '#2B1E1A'
+    hex_shadow: '#150F0D'
+  hair_style: short, side-parted, swept to the side
+  eye_color:
+    hex_iris: '#3D2418'
+    hex_pupil: '#1E120C'
+  face_shape: oval
+  clothing:
+    top:
+      style: light turquoise/aqua traditional kameez with mandarin/band collar
+      color: '#7ACEC6'
+    dupatta:
+      style: sheer turquoise/aqua dupatta draped over head and shoulders
+      color: '#96E3D8'

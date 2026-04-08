@@ -1,0 +1,24 @@
+personal:
+  name: Viola Davis
+  gender: female
+  pronouns: she/her
+  age: 60
+  nationality: American
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#6B4226'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: shoulder-length wavy
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
+  clothing:
+    top:
+      style: sleeveless light aqua/mint textured top
+      color: '#B2E4E0'

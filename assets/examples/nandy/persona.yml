@@ -1,0 +1,25 @@
+personal:
+  name: Nandy
+  gender: female
+  pronouns: she/her
+  age: 33
+  nationality: Tanzanian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956E'
+  hair_color:
+    hex_base: '#1A1110'
+    hex_shadow: '#0D0808'
+  hair_style: long, straight, parted in the middle
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
+  clothing:
+    top:
+      style: light grey textured round-neck top or jacket with a zip front
+      color: '#A8A8A8'
+  face_shape: oval

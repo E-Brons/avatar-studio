@@ -1,0 +1,21 @@
+personal:
+  name: Mikaela Shiffrin
+  gender: female
+  pronouns: she/her
+  age: 31
+  nationality: American
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    ski racing bib:
+      style: FIS World Cup ski racing bib with large yellow 'RAUCH' sponsor oval on
+        the chest, green body fabric
+      color: '#1A6B2A'
+    base layer/jacket:
+      style: White ski race suit top visible at shoulders and upper arms, with national
+        team patches (US flag, sponsor logos) on the sleeves
+      color: '#F0F0F0'

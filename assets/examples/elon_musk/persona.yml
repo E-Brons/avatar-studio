@@ -1,0 +1,29 @@
+personal:
+  name: Elon Musk
+  gender: male
+  pronouns: he/him
+  age: 54
+  nationality: South African-American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A88C'
+  hair_color:
+    hex_base: '#4A3728'
+    hex_shadow: '#251B14'
+  hair_style: short, swept back with volume on top
+  eye_color:
+    hex_iris: '#7E9BB5'
+    hex_pupil: '#3F4D5A'
+  face_shape: oval
+  clothing:
+    jacket:
+      style: dark suit jacket or blazer
+      color: '#2B2B2B'
+    top:
+      style: light-colored collared dress shirt
+      color: '#E5DDD0'
+  nose_shape: straight

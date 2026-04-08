@@ -1,0 +1,28 @@
+personal:
+  name: "Katr\xEDn Jakobsd\xF3ttir"
+  gender: female
+  pronouns: she/her
+  age: 50
+  nationality: Icelander
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_color:
+    hex_base: '#5C3A2A'
+    hex_shadow: '#2E1D15'
+  hair_style: long, straight, parted to the side
+  eye_color:
+    hex_iris: '#7A9E82'
+    hex_pupil: '#3D4F41'
+  skin_tone: '#D9B8A0'
+  clothing:
+    turtleneck top:
+      style: light beige/cream turtleneck worn underneath
+      color: '#D4CFC0'
+    sweater:
+      style: dark rust/burnt sienna ribbed crew neck sweater
+      color: '#7B2D1A'
+  face_shape: oval

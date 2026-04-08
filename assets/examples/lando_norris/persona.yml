@@ -1,0 +1,27 @@
+personal:
+  name: Lando Norris
+  gender: male
+  pronouns: he/him
+  age: 26
+  nationality: British
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956E'
+  hair_color:
+    hex_base: '#3B2A1A'
+    hex_shadow: '#1D150D'
+  hair_style: short curly
+  eye_color:
+    hex_iris: '#5A7A5C'
+    hex_pupil: '#2D3D2E'
+  face_shape: oval
+  clothing:
+    racing suit:
+      style: Long-sleeve McLaren F1 racing suit with sponsor logos (Splunk, Dell Technologies,
+        Huski Chocolate, Estrella Galicia, Arrow, Renault) and horizontal blue-and-orange
+        striped panels on the lower torso/thighs; number 4 visible on the leg
+      color: '#2360B0'

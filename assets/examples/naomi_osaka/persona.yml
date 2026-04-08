@@ -1,0 +1,20 @@
+personal:
+  name: Naomi Osaka
+  gender: female
+  pronouns: she/her
+  age: 28
+  nationality: Japanese
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    athletic tank top:
+      style: Sleeveless V-neck athletic tank top with color-blocked panels in blue,
+        hot pink, and white
+      color: '#5B8EC9'
+    visor:
+      style: ''
+      color: '#E8E8EA'

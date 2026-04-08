@@ -1,0 +1,26 @@
+personal:
+  name: "Janelle Mon\xE1e"
+  gender: non-binary
+  pronouns: they/them
+  age: 40
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: Zip-front bomber jacket with a bold geometric color-block pattern in
+        black, red, blue, green, yellow, pink, and light blue; features striped ribbed
+        cuffs at the wrists
+      color: '#0A0A0A'
+  skin_tone: '#8B6442'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: long braided ponytail
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'

@@ -1,0 +1,19 @@
+personal:
+  name: Olga Tokarczuk
+  gender: female
+  pronouns: she/her
+  age: 64
+  nationality: Polish
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: black long-sleeve top
+      color: '#1A1A1A'
+    shrug/cardigan:
+      style: grey and white striped knit layered over left shoulder
+      color: '#A8A8A0'
