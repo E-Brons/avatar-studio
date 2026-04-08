@@ -1,0 +1,18 @@
+personal:
+  name: Oscar Piastri
+  gender: male
+  pronouns: he/him
+  age: 25
+  nationality: Australian
+  religion: unknown
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: McLaren F1 racing suit with black collar/neck gaiter, black panel accents,
+        and multiple sponsor logos (Android, OKX, Dell Technologies, Cisco, Allwyn,
+        DP World, Mastercard, Monster Energy, Hilton, McLaren)
+      color: '#F58220'

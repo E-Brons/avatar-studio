@@ -1,0 +1,28 @@
+personal:
+  name: Malik Al-Ali'e
+  gender: male
+  pronouns: he/him
+  age: 22
+  nationality: Yemeni
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956A'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  hair_style: medium length, wavy, loose
+  eye_color:
+    hex_iris: '#6B3A2A'
+    hex_pupil: '#351D15'
+  clothing:
+    jacket:
+      style: Single-breasted navy blue blazer with notch lapels
+      color: '#3D4E6B'
+    shirt:
+      style: Blue and white vertical pinstripe button-up dress shirt, worn open-collar
+        without a tie
+      color: '#C0D0E8'

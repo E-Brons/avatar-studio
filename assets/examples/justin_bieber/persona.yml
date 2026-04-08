@@ -1,0 +1,30 @@
+personal:
+  name: Justin Bieber
+  gender: male
+  pronouns: he/him
+  age: 32
+  nationality: Canadian
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: white crew-neck t-shirt
+      color: '#F0ECE6'
+    jacket:
+      style: dark navy and burgundy plaid hoodie, partially visible on both shoulders
+      color: '#1C1044'
+  face_shape: oval
+  skin_tone: '#D4A983'
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
+  eye_shape: almond
+  nose_shape: straight
+  hair_style: side-swept bangs, layered, medium length
+  hair_color:
+    hex_base: '#8B6542'
+    hex_shadow: '#453221'

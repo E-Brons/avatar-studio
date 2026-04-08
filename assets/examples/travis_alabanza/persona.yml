@@ -1,0 +1,25 @@
+personal:
+  name: Travis Alabanza
+  gender: non-binary
+  pronouns: they/them
+  age: 30
+  nationality: British
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956A'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  hair_style: curly, voluminous on top with shaved sides, swept to one side
+  eye_color:
+    hex_iris: '#5C3A1E'
+    hex_pupil: '#2E1D0F'
+  clothing:
+    top:
+      style: striped turtleneck long-sleeve top
+      color: '#1A1A1A'
+  face_shape: oval

@@ -1,0 +1,27 @@
+personal:
+  name: Neeraj Chopra
+  gender: male
+  pronouns: he/him
+  age: 28
+  nationality: Indian
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: navy blue athletic zip-up jacket with white zipper trim, Li-Ning brand
+        logo on right chest, Indian Olympic team emblem on left chest, orange/saffron
+        accent visible at collar
+      color: '#1e3460'
+  skin_tone: '#B8854C'
+  hair_color:
+    hex_base: '#1A1410'
+    hex_shadow: '#0D0A08'
+  hair_style: medium-long, layered, side-swept bangs covering forehead
+  eye_color:
+    hex_iris: '#2E1A0E'
+    hex_pupil: '#170D07'
+  face_shape: oval

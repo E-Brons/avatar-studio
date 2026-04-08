@@ -1,0 +1,25 @@
+personal:
+  name: Alphonso Davies
+  gender: male
+  pronouns: he/him
+  age: 25
+  nationality: Canadian-Liberian
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#6B3A2A'
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  hair_style: short natural coils
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
+  clothing:
+    top:
+      style: jersey/athletic shirt
+      color: '#E8503C'
+  face_shape: oval

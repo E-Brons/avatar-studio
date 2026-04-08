@@ -1,0 +1,25 @@
+personal:
+  name: Chimamanda Ngozi Adichie
+  gender: female
+  pronouns: she/her
+  age: 48
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B5E3C'
+  hair_color:
+    hex_base: '#1A0A00'
+    hex_shadow: '#0D0500'
+  hair_style: not visible
+  eye_color:
+    hex_iris: '#5C3317'
+    hex_pupil: '#2E190B'
+  clothing:
+    top:
+      style: Black scoop-neck top
+      color: '#1A1A1A'
+  face_shape: oval

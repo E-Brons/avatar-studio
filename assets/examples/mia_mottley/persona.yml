@@ -1,0 +1,28 @@
+personal:
+  name: Mia Mottley
+  gender: female
+  pronouns: she/her
+  age: 60
+  nationality: Barbadian
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6244'
+  hair_color:
+    hex_base: '#2A2A2A'
+    hex_shadow: '#151515'
+  hair_style: natural afro, tightly coiled curls, voluminous
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
+  face_shape: round
+  clothing:
+    jacket:
+      style: dark navy blue blazer, formal, tailored
+      color: '#1C2340'
+    top:
+      style: white collared dress shirt, open at the neck
+      color: '#F0EDE8'

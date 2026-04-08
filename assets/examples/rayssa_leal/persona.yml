@@ -1,0 +1,16 @@
+personal:
+  name: Rayssa Leal
+  gender: female
+  pronouns: she/her
+  age: 18
+  nationality: Brazilian
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: white long-sleeve Adidas t-shirt with CBSk logo
+      color: '#F5F0EB'

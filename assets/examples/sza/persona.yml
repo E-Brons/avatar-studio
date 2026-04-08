@@ -1,0 +1,17 @@
+personal:
+  name: SZA
+  gender: female
+  pronouns: she/her
+  age: 36
+  nationality: American
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: Green-and-navy tartan plaid flannel jacket layered over a light-blue
+        shirt with purple geometric print and a beige button-up collar underneath
+      color: '#1B3D2F'

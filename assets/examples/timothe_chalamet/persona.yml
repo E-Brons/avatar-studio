@@ -1,0 +1,27 @@
+personal:
+  name: "Timoth\xE9e Chalamet"
+  gender: male
+  pronouns: he/him
+  age: 30
+  nationality: French
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: leather jacket with snap buttons and collar
+      color: '#1A1A1A'
+  face_shape: oval
+  skin_tone: '#E8C8B0'
+  eye_color:
+    hex_iris: '#6B7E5A'
+    hex_pupil: '#353F2D'
+  eye_shape: hooded
+  nose_shape: straight
+  hair_style: curly
+  hair_color:
+    hex_base: '#3A2518'
+    hex_shadow: '#1D120C'

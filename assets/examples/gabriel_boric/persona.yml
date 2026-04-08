@@ -1,0 +1,30 @@
+personal:
+  name: Gabriel Boric
+  gender: male
+  pronouns: he/him
+  age: 40
+  nationality: Chilean
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C68642'
+  clothing:
+    top:
+      style: white dress shirt, open collar, no tie
+      color: '#F7F7F7'
+    jacket:
+      style: suit jacket
+      color: '#2F2F2F'
+    sash:
+      style: presidential/ceremonial sash
+      color: '#C8102E'
+  hair_color:
+    hex_base: '#2B1E18'
+    hex_shadow: '#150F0C'
+  hair_style: short, side-parted, neatly combed
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'

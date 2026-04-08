@@ -1,0 +1,30 @@
+personal:
+  name: Dandapani
+  gender: male
+  pronouns: he/him
+  age: 48
+  nationality: Australian-Indian
+  religion: Hindu
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B5E3C'
+  hair_style: bald
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  eye_color:
+    hex_iris: '#7B6E5A'
+    hex_pupil: '#3D372D'
+  face_shape: oval
+  clothing:
+    top:
+      style: t-shirt
+      color: '#B5ADA6'
+  accessories:
+    necklace:
+      style: rudraksha mala beads with green spacer beads
+      color: '#8B4523'
+  nose_shape: broad, straight bridge

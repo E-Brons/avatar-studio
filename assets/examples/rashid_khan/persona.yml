@@ -1,0 +1,25 @@
+personal:
+  name: Rashid Khan
+  gender: male
+  pronouns: he/him
+  age: 27
+  nationality: Afghan
+  religion: Muslim
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  hair_style: short, swept to the side
+  skin_tone: '#C49A7A'
+  eye_color:
+    hex_iris: '#5C3A1E'
+    hex_pupil: '#2E1D0F'
+  hair_color:
+    hex_base: '#1E1410'
+    hex_shadow: '#0F0A08'
+  clothing:
+    garment:
+      style: blue collared polo shirt with red and dark accents on shoulders
+      color: '#6A9FD8'

@@ -1,0 +1,20 @@
+personal:
+  name: Sanna Marin
+  gender: female
+  pronouns: she/her
+  age: 40
+  nationality: Finnish
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    blazer:
+      style: tailored black blazer with notched lapels
+      color: '#1C1C20'
+    top:
+      style: black v-neck top
+      color: '#141416'
+  face_shape: oval

@@ -1,0 +1,18 @@
+personal:
+  name: Shaheen Afridi
+  gender: male
+  pronouns: he/him
+  age: 26
+  nationality: Pakistani
+  religion: Muslim
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  clothing:
+    top:
+      style: cricket jersey with collar, featuring Pakistan star emblem and ICC T20
+        World Cup 2024 branding
+      color: '#193f28'

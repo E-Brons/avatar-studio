@@ -1,0 +1,31 @@
+personal:
+  name: Diamond Platnumz
+  gender: male
+  pronouns: he/him
+  age: 36
+  nationality: Tanzanian
+  religion: Muslim
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_style: not visible
+  hair_color:
+    hex_base: '#2B2B2B'
+    hex_shadow: '#151515'
+  clothing:
+    jacket:
+      style: White tuxedo jacket with black satin shawl lapels
+      color: '#FFFFFF'
+    shirt:
+      style: White dress shirt with a mandarin/band collar
+      color: '#FFFFFF'
+    bow_tie:
+      style: Black oversized butterfly bow tie, satin finish
+      color: '#0A0A0A'
+    vest:
+      style: Black vest with a deep V-cut, velvet or satin texture
+      color: '#0A0A0A'
+  face_shape: oval

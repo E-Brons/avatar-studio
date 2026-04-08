@@ -1,0 +1,40 @@
+personal:
+  name: Adam Levine
+  gender: male
+  pronouns: he/him
+  age: 36
+  nationality: American
+  religion: Jewish
+  zodiac: Pisces
+style:
+  bg_color: '#5A6B7C'
+  fg_color: '#FFFFFF'
+advisor:
+  role: Advisor
+  education: []
+  experience: []
+  traits: []
+appearance:
+  skin_tone: '#F2D3C4'
+  hair_color:
+    hex_base: '#4A3728'
+    hex_shadow: '#2E2018'
+  eye_color:
+    hex_iris: '#3D1C02'
+    hex_pupil: '#1A0800'
+  brows_color: '#3B2314'
+  eye_shape: almond
+  brows_style: straight thick
+  nose_shape: subtle vertical line
+  chin_shape: wide and flat
+  cheeks_shape: narrow and lean
+  hair_style: short textured spiky top with faded sides
+  clothing:
+    sweater:
+      style: dark charcoal knit sweater with a wide cowl/shawl collar
+      color: '#4A4A4E'
+  accessories:
+    stubble beard:
+      style: short dark stubble beard with medium coverage
+      color: '#4B3A2E'
+  face_shape: oval

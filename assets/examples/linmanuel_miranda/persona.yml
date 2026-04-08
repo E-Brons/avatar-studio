@@ -1,0 +1,30 @@
+personal:
+  name: Lin-Manuel Miranda
+  gender: male
+  pronouns: he/him
+  age: 46
+  nationality: American
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#B8956E'
+  hair_color:
+    hex_base: '#1A1210'
+    hex_shadow: '#0D0908'
+  hair_style: pulled back, slicked down with loose strands
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'
+  face_shape: oval
+  clothing:
+    high-collar cravat/neckcloth:
+      style: White high-collar cravat wrapped snugly around the neck, folded over
+        in a period-appropriate style
+      color: '#E8E0D4'
+    jacket/coat collar:
+      style: High standing collar of a period coat or jacket, visible just below and
+        behind the cravat, with a cream/buff colored lapel
+      color: '#D9CF9A'

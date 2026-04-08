@@ -1,0 +1,49 @@
+personal:
+  name: Sara Ramirez
+  gender: non-binary
+  pronouns: they/them
+  age: 32
+  nationality: Mexican
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#2E3A4E'
+  fg_color: '#FFFFFF'
+advisor:
+  role: Advisor
+  education: []
+  experience: []
+  traits: []
+appearance:
+  skin_tone: '#CEAC7A'
+  skin_texture: smooth, clear, even-toned
+  hair_color:
+    hex_base: '#1A0E07'
+    hex_shadow: '#0A0603'
+  eye_color:
+    hex_iris: '#3D1C02'
+    hex_pupil: '#1A0800'
+  brows_color: '#0A0A0A'
+  eye_shape: hooded
+  brows_style: angular defined
+  nose_shape: subtle vertical line
+  chin_shape: broad rounded
+  cheeks_shape: subtly angular
+  hair_style: disconnected undercut with shaved faded sides and thick wavy top swept
+    back
+  clothing:
+    leather blazer:
+      style: black leather blazer with notched lapels
+      color: '#1A1A1A'
+    top:
+      style: black scoop-neck top
+      color: '#0A0A0A'
+  accessories:
+    layered chain necklaces:
+      style: "three layered silver chains \u2014 chunky curb link chain, decorative\
+        \ pendant chain with clasp, thin delicate chain"
+      color: '#C0C0C0'
+    stud earrings:
+      style: ornate silver starburst cluster stud earrings
+      color: '#C0C0C0'
+  face_shape: round

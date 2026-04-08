@@ -1,0 +1,16 @@
+personal:
+  name: Pan Zhanle
+  gender: male
+  pronouns: he/him
+  age: 21
+  nationality: Chinese
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: white and red athletic zip-up jacket with Chinese flag patch
+      color: '#FFFFFF'

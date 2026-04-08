@@ -1,0 +1,28 @@
+personal:
+  name: Lola Young
+  gender: female
+  pronouns: she/her
+  age: 25
+  nationality: British
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F0C4B0'
+  hair_color:
+    hex_base: '#2A1E14'
+    hex_shadow: '#150F0A'
+  hair_style: long curly with bangs
+  eye_color:
+    hex_iris: '#7A9B8A'
+    hex_pupil: '#3D4D45'
+  face_shape: round
+  clothing:
+    top:
+      style: white camisole with light blue ribbon detail and lace trim
+      color: '#F0EDE5'
+    jacket:
+      style: sage green velvet jacket with puffed shoulders
+      color: '#6E7D6B'

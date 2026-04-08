@@ -1,0 +1,17 @@
+personal:
+  name: Anya Taylor-Joy
+  gender: female
+  pronouns: she/her
+  age: 29
+  nationality: Argentine
+  religion: unknown
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: sequined top with coral/salmon floral pattern and silver-grey accents,
+        with a turquoise blue detail
+      color: '#F08060'

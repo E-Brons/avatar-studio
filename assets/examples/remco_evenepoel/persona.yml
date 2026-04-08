@@ -1,0 +1,30 @@
+personal:
+  name: Remco Evenepoel
+  gender: male
+  pronouns: he/him
+  age: 26
+  nationality: Belgian
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: cycling jersey with rainbow world champion stripes and sponsor logos
+        (Quick-Step, Napoleon Sports, Ekopak, Latexco, UCI, Castelli, Janome, Safety
+        Jogger)
+      color: '#FFFFFF'
+  accessories:
+    watch:
+      style: sport watch with dark band
+      color: '#1A1A1A'
+  hair_style: short, swept to the side, voluminous on top with tapered sides
+  hair_color:
+    hex_base: '#8B6842'
+    hex_shadow: '#453421'
+  eye_color:
+    hex_iris: '#5C7A4A'
+    hex_pupil: '#2E3D25'
+  skin_tone: '#D4A982'

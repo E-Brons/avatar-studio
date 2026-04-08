@@ -1,0 +1,16 @@
+personal:
+  name: Sundar Pichai
+  gender: male
+  pronouns: he/him
+  age: 53
+  nationality: Indian-American
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: dark navy knit zip-up sweater or jacket
+      color: '#1C1C2A'

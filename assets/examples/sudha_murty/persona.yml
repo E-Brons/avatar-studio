@@ -1,0 +1,17 @@
+personal:
+  name: Sudha Murty
+  gender: female
+  pronouns: she/her
+  age: 75
+  nationality: Indian
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: Green silk saree with gold-and-pink zari border, worn over a pink/magenta
+        short-sleeve blouse
+      color: '#1E8C4E'

@@ -1,0 +1,25 @@
+personal:
+  name: "Itar\xE9"
+  gender: male
+  pronouns: he/him
+  age: 23
+  nationality: Tanzanian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: sleeveless white mesh/net tank top with lace trim at neckline and armholes
+      color: '#F0F0F0'
+  skin_tone: '#6B4A3A'
+  hair_color:
+    hex_base: '#1A1210'
+    hex_shadow: '#0D0908'
+  hair_style: short afro
+  eye_color:
+    hex_iris: '#3D2B1E'
+    hex_pupil: '#1E150F'
+  face_shape: oval

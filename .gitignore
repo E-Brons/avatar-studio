@@ -25,6 +25,9 @@ coverage.xml
 # Generated images and session artifacts
 tmp/
 
+# Reports (benchmark results, analysis, learnings)
+reports/
+
 # User-local config (never commit)
 local/
 

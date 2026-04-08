@@ -1,0 +1,19 @@
+personal:
+  name: Taika Waititi
+  gender: male
+  pronouns: he/him
+  age: 50
+  nationality: New Zealander
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: Dark navy denim jacket with red contrast stitching
+      color: '#1A1A2E'
+    top:
+      style: Dark grey shirt or undershirt visible at the collar
+      color: '#4A4A55'

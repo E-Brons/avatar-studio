@@ -1,0 +1,31 @@
+personal:
+  name: The Weeknd
+  gender: male
+  pronouns: he/him
+  age: 36
+  nationality: Canadian
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B6914'
+  hair_style: afro
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  eye_color:
+    hex_iris: '#3D2B1F'
+    hex_pupil: '#1E150F'
+  face_shape: oval
+  clothing:
+    jacket:
+      style: tailored red blazer with notch lapels and pocket square slit
+      color: '#B03030'
+    shirt:
+      style: dark charcoal button-up dress shirt
+      color: '#2D2D2D'
+    tie:
+      style: dark black tie
+      color: '#1E1E1E'

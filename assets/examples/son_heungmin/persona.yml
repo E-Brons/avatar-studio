@@ -1,0 +1,25 @@
+personal:
+  name: Son Heung-min
+  gender: male
+  pronouns: he/him
+  age: 33
+  nationality: South Korean
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A574'
+  hair_color:
+    hex_base: '#3B2A1A'
+    hex_shadow: '#1D150D'
+  hair_style: short, textured, swept up and to the side with volume on top
+  eye_color:
+    hex_iris: '#2C1A0E'
+    hex_pupil: '#160D07'
+  face_shape: oval
+  clothing:
+    top:
+      style: dark sports jersey with red horizontal stripes
+      color: '#1A1A1A'

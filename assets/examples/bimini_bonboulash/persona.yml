@@ -1,0 +1,26 @@
+personal:
+  name: Bimini Bon-Boulash
+  gender: non-binary
+  pronouns: she/her
+  age: 32
+  nationality: British
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: off-shoulder black top
+      color: '#1A1A1A'
+  skin_tone: '#D4B5A0'
+  hair_color:
+    hex_base: '#D4C8A8'
+    hex_shadow: '#6A6454'
+  hair_style: layered shag with curtain bangs, shoulder-length, tousled and swept
+    to one side
+  eye_color:
+    hex_iris: '#7B6A3D'
+    hex_pupil: '#3D351E'
+  face_shape: angular, oval with defined jawline and high cheekbones
