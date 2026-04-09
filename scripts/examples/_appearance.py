@@ -27,6 +27,7 @@ APPEARANCE_SCHEMA: dict = {
         },
         "skin_texture": {
             "type": "string",
+            "minLength": 10,
             "description": "2-5 word skin texture description, e.g. 'smooth and clear with subtle sheen'",
         },
         "presentation": {
@@ -35,6 +36,7 @@ APPEARANCE_SCHEMA: dict = {
         },
         "hair_style": {
             "type": "string",
+            "minLength": 20,
             "description": (
                 "Hair length, cut, texture, and styling in 5-15 words, e.g. "
                 "'shoulder-length loose waves with a centre part and slight volume at the crown'"
@@ -57,6 +59,7 @@ APPEARANCE_SCHEMA: dict = {
         },
         "face_shape": {
             "type": "string",
+            "minLength": 20,
             "description": (
                 "Overall face shape with defining proportions in 5-15 words, e.g. "
                 "'softly oval with high cheekbones and a gently tapered jaw'"
@@ -64,6 +67,7 @@ APPEARANCE_SCHEMA: dict = {
         },
         "eye_shape": {
             "type": "string",
+            "minLength": 20,
             "description": (
                 "Eye shape including lid type, corner angle, and distinctive features in 5-15 words, e.g. "
                 "'almond-shaped with a slight upward tilt, deep-set and framed by long lashes'"
@@ -79,6 +83,7 @@ APPEARANCE_SCHEMA: dict = {
         },
         "brows_style": {
             "type": "string",
+            "minLength": 20,
             "description": (
                 "Brow shape, arch, thickness, and grooming in 5-15 words, e.g. "
                 "'thick straight brows with a soft arch and dense natural hair'"
@@ -90,6 +95,7 @@ APPEARANCE_SCHEMA: dict = {
         },
         "nose_shape": {
             "type": "string",
+            "minLength": 20,
             "description": (
                 "Nose shape covering bridge, tip, and nostrils in 5-15 words, e.g. "
                 "'medium-width bridge, rounded tip, slightly flared nostrils'"
@@ -97,6 +103,7 @@ APPEARANCE_SCHEMA: dict = {
         },
         "chin_shape": {
             "type": "string",
+            "minLength": 20,
             "description": (
                 "Chin shape and jawline character in 5-15 words, e.g. "
                 "'softly rounded chin with a gently defined jawline'"
@@ -104,6 +111,7 @@ APPEARANCE_SCHEMA: dict = {
         },
         "cheeks_shape": {
             "type": "string",
+            "minLength": 20,
             "description": (
                 "Cheekbone prominence, fullness, and jaw width in 5-15 words, e.g. "
                 "'prominent high cheekbones with sculpted hollows and a narrow jaw'"
