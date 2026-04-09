@@ -1,3 +1,4 @@
+#! .venv/bin/python3
 """Learn: Restyle — iterative improvement loop for the restyle (IP-Adapter) pipeline.
 
 Pipeline flow: source avatar + target style → ipadapter_faceid → scored candidate.
@@ -37,7 +38,7 @@ import yaml
 # ── project root on sys.path ──────────────────────────────────────────────────
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(ROOT / "scripts" / "examples"))
 
 from _cli import add_common_args, confirm_full_set  # noqa: E402
 from _example_utils import EXAMPLES_DIR, REPORTS_DIR, load_all_personas  # noqa: E402

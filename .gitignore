@@ -32,7 +32,7 @@ reports/
 logs/
 
 # Example reference photos (copyright/privacy — used for training only)
-assets/examples/*/original.jpg
+assets/examples/*/images/
 assets/examples/*/*benchmark*.*
 
 # User-local config (never commit)

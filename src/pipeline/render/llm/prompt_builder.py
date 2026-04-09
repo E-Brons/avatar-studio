@@ -17,9 +17,10 @@ _REFERENCE_INSTRUCTIONS: dict[str, str] = {
         "Your task: Generate this specific individual's portrait in the style specified.\n"
         "Identity — preserve faithfully: face shape and proportions, skin tone, hair color and "
         "form, eye shape, distinctive facial features and markings.\n"
-        "Style — apply fully: render in the target style as directed. "
-        "Do not copy photographic artifacts if the target is illustrative "
-        "(e.g. no bokeh, no pores, no lens depth-of-field in cartoon/clay/lineart styles)."
+        "Framing — head-and-shoulders portrait, clean uncluttered background as defined by the "
+        "style. No additional background elements, props, or environmental context.\n"
+        "Style — apply fully as directed. Do not copy photographic artifacts into illustrative "
+        "styles (e.g. no bokeh, no pores, no depth-of-field in cartoon/clay/lineart)."
     ),
     "avatar_portrait": (
         "Reference portrait: The existing avatar of this person in the target style.\n"

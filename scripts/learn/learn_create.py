@@ -1,3 +1,4 @@
+#! .venv/bin/python3
 """Learn: Create from Persona — iterative improvement loop for the create pipeline.
 
 Pipeline flow: persona → neutral portrait (image_gen) → score → fix → repeat.
@@ -28,7 +29,7 @@ from pathlib import Path
 # ── project root on sys.path ──────────────────────────────────────────────────
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(ROOT / "scripts" / "examples"))
 
 from _analyze import run_analysis  # noqa: E402
 from _benchmark import REPORTS_DIR, run_benchmark  # noqa: E402
