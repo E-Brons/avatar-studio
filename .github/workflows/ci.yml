@@ -16,8 +16,8 @@ jobs:
         with:
           python-version: "3.14"
       - run: pip install ruff
-      - run: ruff check src/ tests/
-      - run: ruff format --check src/ tests/
+      - run: ruff check src/ tests/ scripts/
+      - run: ruff format --check src/ tests/ scripts/
 
   backend-avatar:
     name: Backend · Avatar Studio (unit)
