@@ -5,8 +5,25 @@ personal:
   age: 27
   nationality: American
   religion: unknown
-  zodiac: unknown
+  zodiac: Taurus
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and tanned
+  hair_style: not visible, possibly short
+  hair_note: '#333333'
+  face_shape: oval, slightly angular
+  eye_shape: almond-shaped, expressive
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight, prominent, slightly curved
+  chin_shape: rounded, firm, defined
+  cheeks_shape: full, slightly chubby
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

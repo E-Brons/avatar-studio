@@ -5,8 +5,25 @@ personal:
   age: 33
   nationality: Colombian-Canadian
   religion: unknown
-  zodiac: unknown
+  zodiac: Gemini
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#222222'
+  skin_texture: smooth and youthful
+  hair_style: long, wavy, dark, loose
+  hair_note: fringe partially covering left eye
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, dark, expressive
+  brows_style: thick, dark, well-defined
+  brows_color: '#000000'
+  nose_shape: straight, well-proportioned
+  chin_shape: rounded, defined, youthful
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#1a1a1a'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

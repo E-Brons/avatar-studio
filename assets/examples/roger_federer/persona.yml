@@ -5,8 +5,25 @@ personal:
   age: 43
   nationality: Swiss
   religion: unknown
-  zodiac: unknown
+  zodiac: Leo
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
+  hair_style: parted on the side, slightly wavy
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-groomed
+  brows_color: '#2a2a2a'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly dimpled
+  cheeks_shape: rounded and slightly sunken
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#2a2a2a'
+    hex_pupil: '#2a2a2a'

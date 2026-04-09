@@ -5,8 +5,25 @@ personal:
   age: 38
   nationality: Spanish
   religion: unknown
-  zodiac: unknown
+  zodiac: Gemini
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly tanned
+  hair_style: wavy and slightly messy
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with brown irises
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly chin-ward
+  cheeks_shape: rounded and slightly sun-kissed
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

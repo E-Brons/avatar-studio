@@ -1,5 +1,5 @@
 personal:
-  name: "Janelle Mon\xE1e"
+  name: Janelle Monáe
   gender: non-binary
   pronouns: they/them
   age: 40
@@ -16,11 +16,20 @@ appearance:
         black, red, blue, green, yellow, pink, and light blue; features striped ribbed
         cuffs at the wrists
       color: '#0A0A0A'
-  skin_tone: '#8B6442'
+  skin_tone: '#262626'
   hair_color:
-    hex_base: '#1A1A1A'
-    hex_shadow: '#0D0D0D'
-  hair_style: long braided ponytail
+    hex_base: '#F5F5F5'
+    hex_shadow: '#262626'
+  hair_style: high bun with sleek sides
   eye_color:
-    hex_iris: '#3D2B1F'
-    hex_pupil: '#1E150F'
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  skin_texture: smooth and even
+  hair_note: blonde with darker roots
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with defined crease
+  brows_style: thick and well-groomed
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: smooth and even with slight contour

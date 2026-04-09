@@ -14,12 +14,20 @@ appearance:
     top:
       style: white crew-neck t-shirt
       color: '#F0EDE8'
-  skin_tone: '#D4A088'
+  skin_tone: '#222222'
   hair_color:
-    hex_base: '#4A3728'
-    hex_shadow: '#251B14'
-  hair_style: not visible
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: not visible, possibly short
   eye_color:
-    hex_iris: '#7A9BB5'
-    hex_pupil: '#3D4D5A'
-  face_shape: oval
+    hex_iris: '#333333'
+    hex_pupil: '#333333'
+  face_shape: oval, slightly elongated
+  skin_texture: smooth and slightly shiny
+  hair_note: not visible
+  eye_shape: almond-shaped, slightly narrowed
+  brows_style: thick and slightly arched
+  brows_color: '#333333'
+  nose_shape: straight and slightly pointed
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: slightly sunken and smooth

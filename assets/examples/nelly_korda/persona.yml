@@ -5,8 +5,25 @@ personal:
   age: 26
   nationality: Czech-American
   religion: unknown
-  zodiac: unknown
+  zodiac: Leo
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFFFF0'
+  skin_texture: smooth and fair
+  hair_style: high bun, blonde, neatly styled
+  hair_note: blonde
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond, bright, expressive
+  brows_style: thick, well-groomed, natural
+  brows_color: '#000000'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, balanced, youthful
+  cheeks_shape: full, rounded, healthy
+  hair_color:
+    hex_base: '#FFFFFF'
+    hex_shadow: '#F5F5F5'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

@@ -20,11 +20,20 @@ appearance:
     watch:
       style: sport watch with dark band
       color: '#1A1A1A'
-  hair_style: short, swept to the side, voluminous on top with tapered sides
+  hair_style: short, light brown, neatly styled
   hair_color:
-    hex_base: '#8B6842'
-    hex_shadow: '#453421'
+    hex_base: '#D2B48C'
+    hex_shadow: '#F5DEB3'
   eye_color:
-    hex_iris: '#5C7A4A'
-    hex_pupil: '#2E3D25'
-  skin_tone: '#D4A982'
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  skin_tone: '#FFD700'
+  skin_texture: smooth and youthful
+  hair_note: visible
+  face_shape: oval, youthful, well-groomed
+  eye_shape: almond-shaped, bright
+  brows_style: thick, well-defined, light brown
+  brows_color: '#D2B48C'
+  nose_shape: straight, well-formed
+  chin_shape: rounded, youthful, well-defined
+  cheeks_shape: rounded, youthful, well-defined

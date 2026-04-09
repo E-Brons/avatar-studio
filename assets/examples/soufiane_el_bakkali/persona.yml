@@ -10,18 +10,25 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C8956A'
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#1A1412'
-    hex_shadow: '#0D0A09'
-  hair_style: short, fade sides, slicked back on top
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  hair_style: short and neatly styled
   eye_color:
-    hex_iris: '#4A3728'
-    hex_pupil: '#251B14'
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
   clothing:
     jacket:
       style: Red zip-up athletic track jacket with subtle tonal camo/geometric pattern,
         KELME logo on right chest, high collar with dark green/black accent trim
       color: '#D42035'
-  face_shape: oval
-  nose_shape: straight
+  face_shape: oval with defined jawline
+  nose_shape: straight and prominent
+  skin_texture: smooth and tanned
+  hair_note: dark brown
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-groomed
+  brows_color: '#000000'
+  chin_shape: strong and defined chin
+  cheeks_shape: rounded and full cheeks

@@ -21,3 +21,20 @@ appearance:
       style: Traditional red and white checkered headdress in houndstooth pattern,
         secured with a black agal (double-corded headband)
       color: '#C83B3B'
+  skin_tone: '#222222'
+  skin_texture: smooth and tanned
+  hair_style: not visible, likely short
+  hair_note: black
+  face_shape: oval, broad and symmetrical
+  eye_shape: slightly almond, dark
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: square and firm, slightly rounded
+  cheeks_shape: full and rounded, slightly tanned
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

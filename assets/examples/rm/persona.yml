@@ -14,3 +14,20 @@ appearance:
     garment:
       style: black crew neck t-shirt
       color: '#1A1A1E'
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and youthful
+  hair_style: short, sleek, and layered
+  hair_note: black
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-groomed
+  brows_color: '#000000'
+  nose_shape: straight and well-defined
+  chin_shape: rounded and chiseled
+  cheeks_shape: smooth and even-toned
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

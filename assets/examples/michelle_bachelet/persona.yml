@@ -4,9 +4,26 @@ personal:
   pronouns: she/her
   age: 74
   nationality: Chilean
-  religion: unknown
-  zodiac: unknown
+  religion: agnostic
+  zodiac: Libra
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and fair
+  hair_style: short and styled, light brown
+  hair_note: visible
+  face_shape: oval, symmetrical, mature
+  eye_shape: oval, light brown, expressive
+  brows_style: thick, well-groomed, light brown
+  brows_color: '#808080'
+  nose_shape: straight, prominent, well-defined
+  chin_shape: rounded, firm, mature
+  cheeks_shape: rounded, full, youthful
+  hair_color:
+    hex_base: '#DAA520'
+    hex_shadow: '#FFD700'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

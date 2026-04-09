@@ -5,8 +5,25 @@ personal:
   age: 28
   nationality: Indian
   religion: unknown
-  zodiac: unknown
+  zodiac: Aries
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and glowing
+  hair_style: ponytail with loose strands
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and arched eyebrows
+  brows_color: '#000000'
+  nose_shape: slender and refined nose
+  chin_shape: rounded and soft chin
+  cheeks_shape: rounded and rosy cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

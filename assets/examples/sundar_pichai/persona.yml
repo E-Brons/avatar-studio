@@ -14,3 +14,20 @@ appearance:
     garment:
       style: dark navy knit zip-up sweater or jacket
       color: '#1C1C2A'
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly matte
+  hair_style: short and dark, neatly combed
+  hair_note: black with some gray at the temples
+  face_shape: oval with a slight squareness
+  eye_shape: almond-shaped with a slight slant
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: full and rounded, slightly chubby
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

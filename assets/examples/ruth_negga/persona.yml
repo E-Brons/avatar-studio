@@ -5,8 +5,25 @@ personal:
   age: 42
   nationality: Ethiopian-Irish
   religion: unknown
-  zodiac: unknown
+  zodiac: Taurus
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: medium brown
+  skin_texture: smooth and slightly dewy
+  hair_style: curly and voluminous
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-defined
+  brows_color: '#2a1b1b'
+  nose_shape: straight and well-proportioned
+  chin_shape: rounded and balanced
+  cheeks_shape: rounded and full with subtle blush
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#2a1b1b'
+    hex_pupil: '#2a1b1b'

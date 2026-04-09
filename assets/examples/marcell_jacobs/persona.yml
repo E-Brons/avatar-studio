@@ -5,8 +5,25 @@ personal:
   age: 30
   nationality: Italian
   religion: unknown
-  zodiac: unknown
+  zodiac: Libra
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and tanned
+  hair_style: not visible, bald head
+  hair_note: '#333333'
+  face_shape: oval, broad and strong
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick and dark, well-defined
+  brows_color: '#262626'
+  nose_shape: straight, broad, and prominent
+  chin_shape: square, strong, and defined
+  cheeks_shape: full and rounded, slightly dimpled
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

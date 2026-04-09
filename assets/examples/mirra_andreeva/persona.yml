@@ -5,8 +5,25 @@ personal:
   age: 18
   nationality: Russian
   religion: unknown
-  zodiac: unknown
+  zodiac: Taurus
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and youthful
+  hair_style: 'braided ponytail, #FFA07A'
+  hair_note: visible in the image
+  face_shape: oval, youthful features
+  eye_shape: almond-shaped, expressive
+  brows_style: 'thick, well-defined, #000000'
+  brows_color: '#000000'
+  nose_shape: 'straight, prominent, #000000'
+  chin_shape: 'rounded, #000000, youthful'
+  cheeks_shape: 'rounded, #FFD700, youthful'
+  hair_color:
+    hex_base: '#FFA07A'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

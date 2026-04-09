@@ -17,12 +17,20 @@ appearance:
     top:
       style: light blue collared dress shirt
       color: '#8AB4D4'
-  hair_style: short, straight, neatly combed back
+  hair_style: short, light gray, neatly combed
   hair_color:
-    hex_base: '#B0B0B0'
-    hex_shadow: '#585858'
-  skin_tone: '#D4A983'
+    hex_base: '#C0C0C0'
+    hex_shadow: '#A9A9A9'
+  skin_tone: '#D3A18C'
   eye_color:
-    hex_iris: '#6E8BA8'
-    hex_pupil: '#374554'
-  face_shape: rectangular
+    hex_iris: '#8A8A8A'
+    hex_pupil: '#000000'
+  face_shape: oval, slightly elongated
+  skin_texture: smooth with visible freckles
+  hair_note: visible
+  eye_shape: almond-shaped, light blue
+  brows_style: thick, well-defined, light brown
+  brows_color: '#8B4513'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, slightly receding
+  cheeks_shape: rounded, slightly sunken

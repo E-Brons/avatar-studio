@@ -14,12 +14,20 @@ appearance:
     top:
       style: collared sports jersey with red and light green accent stripes
       color: '#2d9e3e'
-  skin_tone: '#8B6914'
+  skin_tone: '#262626'
   hair_color:
-    hex_base: '#1A1A1A'
-    hex_shadow: '#0D0D0D'
-  hair_style: short, thick, slightly wavy, textured crop
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: short and neatly styled
   eye_color:
-    hex_iris: '#3D2B1F'
-    hex_pupil: '#1E150F'
-  face_shape: oval
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  face_shape: oval with defined jawline
+  skin_texture: smooth and slightly shiny
+  hair_note: black
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: full and rounded with slight dimples

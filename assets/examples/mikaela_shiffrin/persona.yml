@@ -19,3 +19,20 @@ appearance:
       style: White ski race suit top visible at shoulders and upper arms, with national
         team patches (US flag, sponsor logos) on the sleeves
       color: '#F0F0F0'
+  skin_tone: '#FFD700'
+  skin_texture: smooth and youthful
+  hair_style: long, wavy, blonde, cascading
+  hair_note: blonde hair with subtle highlights
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-groomed, natural
+  brows_color: '#000000'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, youthful, firm
+  cheeks_shape: rounded, full, youthful
+  hair_color:
+    hex_base: '#F5DEB3'
+    hex_shadow: '#F5DEB3'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

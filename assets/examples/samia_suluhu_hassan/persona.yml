@@ -10,16 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#8B5E3C'
+  skin_tone: medium brown
   hair_color:
-    hex_base: '#1A1A1A'
-    hex_shadow: '#0D0D0D'
-  hair_style: not visible
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: not visible, covered by hijab
   eye_color:
-    hex_iris: '#3D2B1F'
-    hex_pupil: '#1E150F'
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
   clothing:
     jacket:
       style: dark navy pinstripe blazer
       color: '#1C1C2E'
-  face_shape: round
+  face_shape: round with defined jawline
+  skin_texture: smooth and slightly matte
+  hair_note: unknown
+  eye_shape: large, almond-shaped with dark rims
+  brows_style: thick and arched, dark
+  brows_color: '#000000'
+  nose_shape: medium, straight with slight curve
+  chin_shape: rounded and firm, slightly puffed
+  cheeks_shape: full and rounded, slightly dimpled

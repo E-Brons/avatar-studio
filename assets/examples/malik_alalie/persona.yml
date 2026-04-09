@@ -10,14 +10,14 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C4956A'
+  skin_tone: '#262626'
   hair_color:
-    hex_base: '#1A1008'
-    hex_shadow: '#0D0804'
-  hair_style: medium length, wavy, loose
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: short and neatly groomed
   eye_color:
-    hex_iris: '#6B3A2A'
-    hex_pupil: '#351D15'
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
   clothing:
     jacket:
       style: Single-breasted navy blue blazer with notch lapels
@@ -26,3 +26,12 @@ appearance:
       style: Blue and white vertical pinstripe button-up dress shirt, worn open-collar
         without a tie
       color: '#C0D0E8'
+  skin_texture: smooth and slightly shiny
+  hair_note: black
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: rounded and full, slightly dimpled

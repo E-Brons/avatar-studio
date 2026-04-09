@@ -5,8 +5,25 @@ personal:
   age: 30
   nationality: American
   religion: unknown
-  zodiac: unknown
+  zodiac: Aquarius
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#D3A18C'
+  skin_texture: smooth and shiny
+  hair_style: long, braided, black
+  hair_note: braids are thick and glossy
+  face_shape: oval with defined jawline
+  eye_shape: large, almond-shaped
+  brows_style: thick and arched, dark
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined, chin is prominent
+  cheeks_shape: full and rounded, rosy
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

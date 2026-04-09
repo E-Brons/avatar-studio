@@ -5,8 +5,25 @@ personal:
   age: 28
   nationality: Indian
   religion: unknown
-  zodiac: unknown
+  zodiac: Pisces
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and radiant
+  hair_style: long and sleek, dark brown
+  hair_note: dark brown, neatly styled
+  face_shape: oval, symmetrical, elongated
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick, well-groomed, dark brown
+  brows_color: '#333333'
+  nose_shape: slender, refined, slightly upturned
+  chin_shape: rounded, defined, smooth
+  cheeks_shape: full, rounded, smooth
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

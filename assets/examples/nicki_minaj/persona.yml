@@ -5,8 +5,25 @@ personal:
   age: 42
   nationality: Trinidadian-American
   religion: unknown
-  zodiac: unknown
+  zodiac: Sagittarius
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and dewy
+  hair_style: high ponytail with extensions
+  hair_note: blonde with pink highlights
+  face_shape: round with defined jawline
+  eye_shape: large and almond-shaped
+  brows_style: thick and arched with defined shape
+  brows_color: '#2E2E2E'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined with subtle dimple
+  cheeks_shape: rounded and full with subtle blush
+  hair_color:
+    hex_base: '#F5F5F5'
+    hex_shadow: '#FFD700'
+  eye_color:
+    hex_iris: '#2E2E2E'
+    hex_pupil: '#2E2E2E'

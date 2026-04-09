@@ -5,8 +5,25 @@ personal:
   age: 22
   nationality: Spanish
   religion: unknown
-  zodiac: unknown
+  zodiac: Sagittarius
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
+  hair_style: short and dark brown
+  hair_note: partially wet
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and dark brown
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: slightly chubby and rosy
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

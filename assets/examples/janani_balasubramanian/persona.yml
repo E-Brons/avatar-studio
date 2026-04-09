@@ -24,3 +24,20 @@ appearance:
     belt:
       style: bright blue belt
       color: '#2070D0'
+  skin_tone: '#222222'
+  skin_texture: smooth and clear
+  hair_style: short and styled, dark
+  hair_note: not visible
+  face_shape: oval, symmetrical, youthful
+  eye_shape: large, round, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#000000'
+  nose_shape: medium, straight, prominent
+  chin_shape: rounded, defined, youthful
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

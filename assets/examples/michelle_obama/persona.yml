@@ -14,3 +14,20 @@ appearance:
     top:
       style: Sleeveless crew-neck top
       color: '#0A0A0A'
+  skin_tone: '#262626'
+  skin_texture: smooth and radiant
+  hair_style: curly and voluminous
+  hair_note: dark brown with subtle highlights
+  face_shape: round and symmetrical
+  eye_shape: almond-shaped and expressive
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and refined
+  chin_shape: rounded and balanced
+  cheeks_shape: full and rounded, giving a youthful appearance
+  hair_color:
+    hex_base: '#262626'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

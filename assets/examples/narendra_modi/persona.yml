@@ -14,12 +14,20 @@ appearance:
     garment:
       style: long-sleeve kurta underneath vest
       color: '#E08830'
-  skin_tone: '#C68E6A'
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#D4D4D4'
-    hex_shadow: '#6A6A6A'
-  hair_style: short, straight, swept back
+    hex_base: '#FFFFFF'
+    hex_shadow: '#808080'
+  hair_style: short and white, neatly combed
   eye_color:
-    hex_iris: '#3B2A1A'
-    hex_pupil: '#1D150D'
-  face_shape: round
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: oval with a slight squareness
+  skin_texture: smooth and slightly shiny
+  hair_note: visible
+  eye_shape: almond-shaped with a slight slant
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: rounded and full, slightly sunken

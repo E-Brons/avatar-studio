@@ -1,5 +1,5 @@
 personal:
-  name: "Shea Coule\xE9"
+  name: Shea Couleé
   gender: non-binary
   pronouns: she/her
   age: 37
@@ -10,15 +10,14 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#6B3A2A'
+  skin_tone: '#D2A48C'
   hair_color:
-    hex_base: '#1A1A1A'
-    hex_shadow: '#0D0D0D'
-  hair_style: updo with sculptural twisted bun, sleek sides, adorned with silver rhinestones
-    and spike accessories
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  hair_style: curly and voluminous
   eye_color:
-    hex_iris: '#2C1810'
-    hex_pupil: '#160C08'
+    hex_iris: '#333333'
+    hex_pupil: '#333333'
   clothing:
     top:
       style: sheer crystal and rhinestone embellished bodice with clear crystal spike
@@ -32,4 +31,12 @@ appearance:
       style: silver rhinestone-encrusted hair ornament with metallic spike accents
         atop a sculpted black updo
       color: '#A8A0A0'
-  face_shape: oval
+  face_shape: round and symmetrical
+  skin_texture: smooth and shiny
+  hair_note: dark and rich
+  eye_shape: large and almond-shaped
+  brows_style: thick and arched, enhancing eyes
+  brows_color: '#333333'
+  nose_shape: small and delicate, balanced
+  chin_shape: rounded and defined, adding charm
+  cheeks_shape: rounded and rosy, adding warmth

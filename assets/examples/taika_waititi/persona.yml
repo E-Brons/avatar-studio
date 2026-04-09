@@ -17,3 +17,20 @@ appearance:
     top:
       style: Dark grey shirt or undershirt visible at the collar
       color: '#4A4A55'
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly aged
+  hair_style: short and slightly tousled
+  hair_note: gray with some darker strands
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and slightly arched
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: slightly sunken and defined
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

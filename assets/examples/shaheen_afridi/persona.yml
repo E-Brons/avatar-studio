@@ -10,9 +10,25 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  face_shape: oval
+  face_shape: angular and strong features
   clothing:
     top:
       style: cricket jersey with collar, featuring Pakistan star emblem and ICC T20
         World Cup 2024 branding
       color: '#193f28'
+  skin_tone: '#262626'
+  skin_texture: smooth and tanned
+  hair_style: short and neatly styled
+  hair_note: dark brown
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: square and firm jawline
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

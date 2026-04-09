@@ -17,4 +17,20 @@ appearance:
     top:
       style: black v-neck top
       color: '#141416'
-  face_shape: oval
+  face_shape: oval with defined jawline
+  skin_tone: '#E5D9C7'
+  skin_texture: smooth and even
+  hair_style: straight and parted center
+  hair_note: dark brown
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-groomed
+  brows_color: '#333333'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

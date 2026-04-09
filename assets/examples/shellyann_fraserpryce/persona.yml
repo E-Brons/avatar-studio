@@ -10,17 +10,25 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#5C3A2A'
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#C8E040'
-    hex_shadow: '#647020'
-  hair_style: pulled back with colorful streaks
+    hex_base: '#FFFFFF'
+    hex_shadow: '#00FF00'
+  hair_style: braided with green highlights
   eye_color:
-    hex_iris: '#3B2518'
-    hex_pupil: '#1D120C'
-  face_shape: oval
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: oval with defined jawline
   clothing:
     athletic tank top:
       style: Yellow Puma racerback athletic tank top with black "JAMAICA" text across
         the chest and a small Jamaican flag patch on the left chest
       color: '#E8D830'
+  skin_texture: smooth and tanned
+  hair_note: blonde
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and arched with dark color
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: full and rounded cheeks

@@ -10,16 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C8956A'
+  skin_tone: '#D2B48C'
   hair_color:
-    hex_base: '#7B3F1E'
-    hex_shadow: '#3D1F0F'
-  hair_style: short, swept back, slightly tousled
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  hair_style: short and dark brown
   eye_color:
-    hex_iris: '#7A9BA8'
-    hex_pupil: '#3D4D54'
+    hex_iris: '#87A9D0'
+    hex_pupil: '#000000'
   clothing:
     top:
       style: button-up shirt with small polka dot pattern
       color: '#1E2333'
-  face_shape: oval
+  face_shape: oval with defined jawline
+  skin_texture: smooth and even
+  hair_note: thick and slightly tousled
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly chin-ward
+  cheeks_shape: rounded and full, slightly flushed

@@ -4,22 +4,22 @@ personal:
   pronouns: he/him
   age: 83
   nationality: American
-  religion: unknown
+  religion: Catholic
   zodiac: Scorpio
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C68642'
+  skin_tone: '#FFFFF0'
   hair_color:
-    hex_base: '#C0BDB8'
-    hex_shadow: '#605E5C'
-  hair_style: short, combed back, silver-white
+    hex_base: '#FFFFFF'
+    hex_shadow: '#CCCCCC'
+  hair_style: short and graying, receding
   eye_color:
-    hex_iris: '#5B7FA6'
-    hex_pupil: '#2D3F53'
-  eye_shape: almond
-  face_shape: oval
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  eye_shape: almond-shaped with visible creases
+  face_shape: oval with prominent cheekbones
   clothing:
     suit jacket:
       style: dark navy pinstripe suit jacket with subtle light pinstripes
@@ -30,3 +30,10 @@ appearance:
     tie:
       style: blue and white diagonal striped tie
       color: '#3565A5'
+  skin_texture: smooth with visible wrinkles
+  hair_note: blonde
+  brows_style: thick and well-defined
+  brows_color: '#808080'
+  nose_shape: straight and prominent
+  chin_shape: rounded and firm with visible dimples
+  cheeks_shape: full and rounded with visible laugh lines

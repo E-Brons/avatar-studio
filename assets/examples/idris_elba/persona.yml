@@ -10,14 +10,14 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#6B3A2A'
+  skin_tone: '#262626'
   hair_color:
-    hex_base: '#1A1008'
-    hex_shadow: '#0D0804'
-  hair_style: very short buzz cut with slight fade
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  hair_style: short and neatly groomed
   eye_color:
-    hex_iris: '#2C1A0E'
-    hex_pupil: '#160D07'
+    hex_iris: '#222222'
+    hex_pupil: '#222222'
   clothing:
     jacket:
       style: dark charcoal/black suit jacket
@@ -28,4 +28,12 @@ appearance:
     tie:
       style: black necktie
       color: '#1A1A1A'
-  face_shape: square
+  face_shape: square with defined jawline
+  skin_texture: smooth and slightly shiny
+  hair_note: black
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: rounded and well-defined
+  cheeks_shape: full and rounded with slight dimples

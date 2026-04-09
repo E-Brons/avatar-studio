@@ -10,16 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C49A6C'
+  skin_tone: '#444444'
   hair_color:
-    hex_base: '#1A1008'
-    hex_shadow: '#0D0804'
-  hair_style: long, wavy, voluminous, loose
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  hair_style: curly and voluminous
   eye_color:
-    hex_iris: '#3D2B1F'
-    hex_pupil: '#1E150F'
+    hex_iris: '#444444'
+    hex_pupil: '#444444'
   clothing:
     top:
       style: off-shoulder, draped
       color: '#C9B7AC'
-  face_shape: oval
+  face_shape: oval with defined jawline
+  skin_texture: smooth and slightly matte
+  hair_note: 'dark #333333'
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and arched eyebrows
+  brows_color: '#444444'
+  nose_shape: straight and narrow with defined bridge
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: smooth and slightly rounded

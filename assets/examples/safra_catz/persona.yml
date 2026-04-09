@@ -9,4 +9,21 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFFFF0'
+  skin_texture: smooth and even
+  hair_style: shoulder-length, straight, dark brown
+  hair_note: dark brown
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-groomed, dark brown
+  brows_color: '#333333'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, balanced, firm
+  cheeks_shape: rounded, full, smooth
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#000000'

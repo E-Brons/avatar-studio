@@ -5,8 +5,25 @@ personal:
   age: 31
   nationality: Puerto Rican
   religion: unknown
-  zodiac: unknown
+  zodiac: Capricorn
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth with visible pores
+  hair_style: short and neatly trimmed
+  hair_note: '#333333'
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-groomed
+  brows_color: '#262626'
+  nose_shape: straight with small nostrils
+  chin_shape: rounded and well-defined
+  cheeks_shape: full and rounded with visible pores
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

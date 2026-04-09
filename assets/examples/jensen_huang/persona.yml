@@ -10,16 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#B8956E'
+  skin_tone: '#333333'
   hair_color:
-    hex_base: '#3D3D3D'
-    hex_shadow: '#1E1E1E'
-  hair_style: short, swept back, graying at temples
+    hex_base: '#CCCCCC'
+    hex_shadow: '#808080'
+  hair_style: short and graying, neatly combed
   eye_color:
-    hex_iris: '#3B2A1A'
-    hex_pupil: '#1D150D'
-  face_shape: round
+    hex_iris: '#0000FF'
+    hex_pupil: '#0000FF'
+  face_shape: oval, slightly elongated
   clothing:
     jacket:
       style: black leather jacket with zippered details
       color: '#1A1A1A'
+  skin_texture: smooth and aged
+  hair_note: silver-gray
+  eye_shape: slightly almond-shaped, expressive
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and firm, youthful
+  cheeks_shape: rounded and full, youthful

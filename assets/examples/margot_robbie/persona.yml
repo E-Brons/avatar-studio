@@ -10,18 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  face_shape: oval
-  skin_tone: '#E8C8B0'
+  face_shape: oval with defined jawline
+  skin_tone: '#F5F5F5'
   eye_color:
-    hex_iris: '#8FA5A3'
-    hex_pupil: '#475251'
-  eye_shape: almond
-  nose_shape: straight
-  hair_style: short bob, swept back
+    hex_iris: '#808080'
+    hex_pupil: '#000000'
+  eye_shape: almond-shaped with long eyelashes
+  nose_shape: straight and well-defined
+  hair_style: short and layered, slightly tousled
   hair_color:
-    hex_base: '#B8955E'
-    hex_shadow: '#5C4A2F'
+    hex_base: '#F5F5F5'
+    hex_shadow: '#D3D3D3'
   clothing:
     top:
       style: off-shoulder blush/cream top with feathered or fringed texture
       color: '#F0DDD0'
+  skin_texture: smooth and flawless
+  hair_note: blonde with subtle highlights
+  brows_style: thick and well-groomed
+  brows_color: '#5F5F5F'
+  chin_shape: rounded and soft, slightly cupped
+  cheeks_shape: rounded and full, slightly contoured

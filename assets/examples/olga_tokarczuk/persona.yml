@@ -17,3 +17,20 @@ appearance:
     shrug/cardigan:
       style: grey and white striped knit layered over left shoulder
       color: '#A8A8A0'
+  skin_tone: '#D3A18C'
+  skin_texture: smooth and slightly matte
+  hair_style: bun with loose strands
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and arched, dark brown
+  brows_color: '#333333'
+  nose_shape: straight and medium-sized
+  chin_shape: rounded and slightly defined
+  cheeks_shape: rounded and full, slightly flushed
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

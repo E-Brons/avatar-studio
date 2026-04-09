@@ -5,8 +5,25 @@ personal:
   age: 27
   nationality: Dutch
   religion: unknown
-  zodiac: unknown
+  zodiac: Libra
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and slightly shiny
+  hair_style: short and neatly styled
+  hair_note: brown
+  face_shape: square with defined jawline
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-groomed
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly double-chinned
+  cheeks_shape: smooth and slightly sunken
+  hair_color:
+    hex_base: '#664422'
+    hex_shadow: '#442211'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

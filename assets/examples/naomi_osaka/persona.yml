@@ -18,3 +18,20 @@ appearance:
     visor:
       style: ''
       color: '#E8E8EA'
+  skin_tone: '#FFD700'
+  skin_texture: smooth and youthful
+  hair_style: curly and voluminous
+  hair_note: blonde
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and firm chin
+  cheeks_shape: full and rounded cheeks
+  hair_color:
+    hex_base: '#F5DEB3'
+    hex_shadow: '#E6E6E6'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

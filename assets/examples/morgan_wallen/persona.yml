@@ -10,17 +10,25 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#D4A987'
+  skin_tone: '#FFD799'
   hair_color:
-    hex_base: '#5C3A1E'
-    hex_shadow: '#2E1D0F'
-  hair_style: long, wavy, shoulder-length with curled ends
+    hex_base: '#8B4513'
+    hex_shadow: '#6B4C29'
+  hair_style: medium-length, wavy, side-swept bangs
   eye_color:
-    hex_iris: '#6B8E9F'
-    hex_pupil: '#35474F'
-  face_shape: oval
+    hex_iris: '#8A2BE2'
+    hex_pupil: '#000000'
+  face_shape: oval, slightly elongated
   clothing:
     garment:
       style: black button-up shirt worn open at the collar, layered under a brown
         denim-style jacket with silver snap buttons and chest pockets
       color: '#1A1A1A'
+  skin_texture: smooth with visible pores
+  hair_note: brown
+  eye_shape: almond-shaped, light blue
+  brows_style: thick, well-defined, light brown
+  brows_color: '#8B4513'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, slightly pointed
+  cheeks_shape: rounded, slightly chubby

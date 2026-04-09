@@ -23,3 +23,20 @@ appearance:
       style: Long white fabric veil draping from beneath the klobuk, falling over
         both shoulders and down the chest
       color: '#F0EDE8'
+  skin_tone: '#444444'
+  skin_texture: smooth and aged
+  hair_style: not visible, likely bald
+  hair_note: '#333333'
+  face_shape: round and full, with a prominent chin
+  eye_shape: almond-shaped, with a slight curve
+  brows_style: thick and arched, with a slight curve
+  brows_color: '#444444'
+  nose_shape: medium-sized, with a slight curve
+  chin_shape: prominent and rounded
+  cheeks_shape: full and rounded, with a slight dimple
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#444444'
+    hex_pupil: '#444444'

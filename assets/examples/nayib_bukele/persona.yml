@@ -10,14 +10,14 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C8956A'
+  skin_tone: '#262626'
   hair_color:
-    hex_base: '#1A1008'
-    hex_shadow: '#0D0804'
-  hair_style: pulled back, slicked
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: short and neatly styled
   eye_color:
-    hex_iris: '#3D1F0A'
-    hex_pupil: '#1E0F05'
+    hex_iris: '#FFFFFF'
+    hex_pupil: '#000000'
   clothing:
     jacket:
       style: Dark navy suit jacket, single-breasted, with notch lapels, worn open
@@ -31,4 +31,12 @@ appearance:
       style: Blue and white presidential sash worn diagonally from right shoulder
         to left hip, with broad blue and white stripes
       color: '#2255CC'
-  face_shape: oval
+  face_shape: angular and strong features
+  skin_texture: smooth and well-groomed
+  hair_note: black
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: square and firm jawline
+  cheeks_shape: rounded and full cheeks

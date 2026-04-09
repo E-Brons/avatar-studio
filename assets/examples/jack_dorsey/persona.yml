@@ -5,8 +5,25 @@ personal:
   age: 48
   nationality: American
   religion: unknown
-  zodiac: unknown
+  zodiac: Scorpio
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#D3A17E'
+  skin_texture: smooth and slightly aged
+  hair_style: curly and slightly tousled
+  hair_note: dark with gray streaks
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: rounded and slightly sunken
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#555555'
+  eye_color:
+    hex_iris: '#D3A17E'
+    hex_pupil: '#000000'

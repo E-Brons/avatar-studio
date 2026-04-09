@@ -5,8 +5,25 @@ personal:
   age: 30
   nationality: Cameroonian
   religion: unknown
-  zodiac: unknown
+  zodiac: Pisces
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: dark brown
+  skin_texture: smooth and tanned
+  hair_style: curly afro, dark brown
+  hair_note: visible
+  face_shape: square, broad jawline
+  eye_shape: narrow, dark brown eyes
+  brows_style: thick, dark brown eyebrows
+  brows_color: '#222222'
+  nose_shape: straight, broad nose
+  chin_shape: square, defined jawline
+  cheeks_shape: full, round cheeks, dimpled
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

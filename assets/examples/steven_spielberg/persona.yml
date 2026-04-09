@@ -20,3 +20,20 @@ appearance:
     bow tie:
       style: black bow tie
       color: '#111111'
+  skin_tone: '#FFD799'
+  skin_texture: smooth with visible pores
+  hair_style: short, graying, neatly combed
+  hair_note: gray
+  face_shape: oval, slightly elongated
+  eye_shape: oval, slightly almond
+  brows_style: thick, well-groomed, slightly arched
+  brows_color: '#808080'
+  nose_shape: medium, slightly upturned
+  chin_shape: rounded, slightly receding
+  cheeks_shape: rounded, slightly sunken
+  hair_color:
+    hex_base: '#808080'
+    hex_shadow: '#A9A9A9'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

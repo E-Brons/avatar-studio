@@ -15,3 +15,20 @@ appearance:
       style: Green-and-navy tartan plaid flannel jacket layered over a light-blue
         shirt with purple geometric print and a beige button-up collar underneath
       color: '#1B3D2F'
+  skin_tone: '#262626'
+  skin_texture: smooth and radiant
+  hair_style: long, curly, voluminous
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with defined crease
+  brows_style: thick and well-groomed
+  brows_color: '#262626'
+  nose_shape: straight and well-defined
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

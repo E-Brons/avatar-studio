@@ -5,8 +5,25 @@ personal:
   age: 63
   nationality: American
   religion: unknown
-  zodiac: unknown
+  zodiac: Capricorn
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#C0C0C0'
+  skin_texture: smooth and fair
+  hair_style: medium-length, straight, layered
+  hair_note: chestnut brown
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, arched
+  brows_color: '#8B4513'
+  nose_shape: straight, medium-sized, prominent
+  chin_shape: rounded, firm, defined
+  cheeks_shape: rounded, full, smooth
+  hair_color:
+    hex_base: '#8B4513'
+    hex_shadow: '#663300'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

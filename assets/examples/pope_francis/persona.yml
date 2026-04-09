@@ -4,20 +4,20 @@ personal:
   pronouns: he/him
   age: 89
   nationality: Argentine
-  religion: Christian
+  religion: Catholic
   zodiac: Sagittarius
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C8967A'
+  skin_tone: '#000000'
   eye_color:
-    hex_iris: '#6B5B4E'
-    hex_pupil: '#352D27'
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
   hair_color:
-    hex_base: '#D8D4CC'
-    hex_shadow: '#6C6A66'
-  hair_style: short, sparse white hair visible under white zucchetto cap
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: not visible, balding
   clothing:
     papal cassock:
       style: White buttoned cassock with a Mandarin collar and a vertical row of fabric-covered
@@ -31,3 +31,12 @@ appearance:
       style: Small round skullcap (solideo) sitting on the crown of the head, made
         of watered-silk fabric
       color: '#F0EBD8'
+  skin_texture: smooth and aged
+  hair_note: '#333333'
+  face_shape: oval, slightly elongated
+  eye_shape: oval, slightly elongated
+  brows_style: thick and arched, gray
+  brows_color: '#000000'
+  nose_shape: straight, prominent, slightly bulbous
+  chin_shape: rounded, slightly receding
+  cheeks_shape: full, slightly sunken

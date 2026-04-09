@@ -5,8 +5,25 @@ personal:
   age: 27
   nationality: Nigerian
   religion: unknown
-  zodiac: unknown
+  zodiac: Taurus
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
+  hair_style: curly and voluminous
+  hair_note: black
+  face_shape: square with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: strong and defined with a slight double chin
+  cheeks_shape: full and rounded with a slight dimple
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

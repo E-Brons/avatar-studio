@@ -5,8 +5,25 @@ personal:
   age: 51
   nationality: American
   religion: unknown
-  zodiac: unknown
+  zodiac: Libra
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly matte
+  hair_style: short, curly, and dark
+  hair_note: gray streaks visible
+  face_shape: round and full with defined jawline
+  eye_shape: large and almond-shaped
+  brows_style: thick and arched, dark
+  brows_color: '#262626'
+  nose_shape: medium-sized, straight, and slightly upturned
+  chin_shape: rounded and full, slightly dimpled
+  cheeks_shape: full and rounded, slightly chubby
+  hair_color:
+    hex_base: '#4a4a4a'
+    hex_shadow: '#5d5d5d'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

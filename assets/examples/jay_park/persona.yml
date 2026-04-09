@@ -5,8 +5,25 @@ personal:
   age: 37
   nationality: Korean-American
   religion: unknown
-  zodiac: unknown
+  zodiac: Taurus
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and slightly shiny
+  hair_style: short and tousled, dark
+  hair_note: not visible
+  face_shape: angular and defined, youthful
+  eye_shape: slightly almond-shaped, dark
+  brows_style: thick and defined, dark
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: sharp and defined, youthful
+  cheeks_shape: slightly sunken, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

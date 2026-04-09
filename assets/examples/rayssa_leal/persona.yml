@@ -14,3 +14,20 @@ appearance:
     garment:
       style: white long-sleeve Adidas t-shirt with CBSk logo
       color: '#F5F0EB'
+  skin_tone: '#262626'
+  skin_texture: smooth and shiny
+  hair_style: curly and shoulder-length
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and arched eyebrows
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

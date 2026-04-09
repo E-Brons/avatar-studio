@@ -5,8 +5,25 @@ personal:
   age: 35
   nationality: Irish
   religion: unknown
-  zodiac: unknown
+  zodiac: Taurus
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth with visible freckles
+  hair_style: short, styled, slightly tousled
+  hair_note: brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly chin-ward
+  cheeks_shape: slightly sunken but balanced
+  hair_color:
+    hex_base: '#8B4513'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'

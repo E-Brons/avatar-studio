@@ -5,8 +5,25 @@ personal:
   age: 23
   nationality: British
   religion: unknown
-  zodiac: unknown
+  zodiac: Capricorn
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#D3A17B'
+  skin_texture: smooth and fair
+  hair_style: curly and styled upwards
+  hair_note: brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-groomed
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and smooth cheeks
+  hair_color:
+    hex_base: '#8B4513'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#D2B48C'
+    hex_pupil: '#000000'

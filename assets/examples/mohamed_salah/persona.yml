@@ -4,9 +4,26 @@ personal:
   pronouns: he/him
   age: 32
   nationality: Egyptian
-  religion: unknown
-  zodiac: unknown
+  religion: Muslim
+  zodiac: Gemini
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#E5C3A0'
+  skin_texture: smooth and slightly shiny
+  hair_style: curly and voluminous
+  hair_note: thick and dark
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: full and rounded with slight dimples
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

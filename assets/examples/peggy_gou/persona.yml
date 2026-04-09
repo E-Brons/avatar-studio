@@ -23,3 +23,20 @@ appearance:
     top_style:
       style: casual, partially unbuttoned
       color: '#1A1A1E'
+  skin_tone: '#E5C3A0'
+  skin_texture: smooth and youthful
+  hair_style: medium-length, wavy bob
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and refined
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

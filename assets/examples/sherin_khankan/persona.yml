@@ -10,16 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#D4A68C'
+  skin_tone: '#C0C0C0'
   hair_color:
-    hex_base: '#5C3A1E'
-    hex_shadow: '#2E1D0F'
-  hair_style: long, straight, flowing past shoulders with center part
+    hex_base: '#664D2C'
+    hex_shadow: '#4B3421'
+  hair_style: long and straight, parted in the middle
   eye_color:
-    hex_iris: '#7A9BAE'
-    hex_pupil: '#3D4D57'
-  face_shape: oval
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'
+  face_shape: oval with a slight elongation
   clothing:
     scarf/shawl:
       style: teal-grey draped shawl or wrap around shoulders
       color: '#6B8A8E'
+  skin_texture: smooth and fair
+  hair_note: brown
+  eye_shape: almond-shaped with a light blue hue
+  brows_style: thick and well-defined
+  brows_color: '#4B3421'
+  nose_shape: straight and well-proportioned
+  chin_shape: rounded and balanced
+  cheeks_shape: full and symmetrical

@@ -14,12 +14,20 @@ appearance:
     top:
       style: black high-neck cold-shoulder top with cutout shoulders
       color: '#0E0E0E'
-  face_shape: oval
-  skin_tone: '#D4A574'
+  face_shape: oval with defined jawline
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#1A1A1A'
-    hex_shadow: '#0D0D0D'
-  hair_style: long, wavy, parted to the side
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  hair_style: long, wavy, dark brown
   eye_color:
-    hex_iris: '#2C1A0E'
-    hex_pupil: '#160D07'
+    hex_iris: '#FFD700'
+    hex_pupil: '#000000'
+  skin_texture: smooth and radiant
+  hair_note: extends past shoulders
+  eye_shape: almond-shaped with defined lids
+  brows_style: thick and well-groomed
+  brows_color: '#FFD700'
+  nose_shape: straight and well-defined
+  chin_shape: rounded and balanced
+  cheeks_shape: rounded and full, slightly flushed

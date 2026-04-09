@@ -10,14 +10,14 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_style: medium-length, tousled, wavy, voluminous
+  hair_style: medium-length, slightly tousled
   hair_color:
-    hex_base: '#5C4033'
-    hex_shadow: '#2E2019'
-  skin_tone: '#D4A88C'
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  skin_tone: '#222222'
   eye_color:
-    hex_iris: '#7A9BB5'
-    hex_pupil: '#3D4D5A'
+    hex_iris: '#808080'
+    hex_pupil: '#000000'
   clothing:
     suit jacket:
       style: dark black formal suit jacket with notch lapels and a breast pocket
@@ -28,3 +28,12 @@ appearance:
     necktie:
       style: solid black necktie
       color: '#111111'
+  skin_texture: smooth and slightly aged
+  hair_note: dark brown
+  face_shape: round with prominent cheekbones
+  eye_shape: slightly almond-shaped
+  brows_style: thick and slightly arched
+  brows_color: '#333333'
+  nose_shape: medium-sized, slightly upturned
+  chin_shape: rounded and slightly double-chinned
+  cheeks_shape: full and slightly chubby

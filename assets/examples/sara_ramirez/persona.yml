@@ -15,22 +15,21 @@ advisor:
   experience: []
   traits: []
 appearance:
-  skin_tone: '#CEAC7A'
-  skin_texture: smooth, clear, even-toned
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
   hair_color:
-    hex_base: '#1A0E07'
-    hex_shadow: '#0A0603'
+    hex_base: '#333333'
+    hex_shadow: '#444444'
   eye_color:
-    hex_iris: '#3D1C02'
-    hex_pupil: '#1A0800'
-  brows_color: '#0A0A0A'
-  eye_shape: hooded
-  brows_style: angular defined
-  nose_shape: subtle vertical line
-  chin_shape: broad rounded
-  cheeks_shape: subtly angular
-  hair_style: disconnected undercut with shaved faded sides and thick wavy top swept
-    back
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  brows_color: '#262626'
+  eye_shape: almond-shaped, brown
+  brows_style: thick and well-defined
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly chin-ward
+  cheeks_shape: slightly sunken, smooth
+  hair_style: short and styled, dark brown
   clothing:
     leather blazer:
       style: black leather blazer with notched lapels
@@ -40,10 +39,11 @@ appearance:
       color: '#0A0A0A'
   accessories:
     layered chain necklaces:
-      style: "three layered silver chains \u2014 chunky curb link chain, decorative\
-        \ pendant chain with clasp, thin delicate chain"
+      style: three layered silver chains — chunky curb link chain, decorative pendant
+        chain with clasp, thin delicate chain
       color: '#C0C0C0'
     stud earrings:
       style: ornate silver starburst cluster stud earrings
       color: '#C0C0C0'
-  face_shape: round
+  face_shape: square with sharp angles
+  hair_note: visible

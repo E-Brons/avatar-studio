@@ -10,14 +10,14 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C4A082'
+  skin_tone: '#E5D9C7'
   hair_color:
-    hex_base: '#9E9E9E'
-    hex_shadow: '#4F4F4F'
-  hair_style: short, gray, slightly visible beneath hat
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  hair_style: long, dark, and slightly tousled
   eye_color:
-    hex_iris: '#5C4A3A'
-    hex_pupil: '#2E251D'
+    hex_iris: '#333333'
+    hex_pupil: '#333333'
   clothing:
     jacket:
       style: brown-gray herringbone tweed blazer
@@ -28,3 +28,12 @@ appearance:
     shirt:
       style: white collared dress shirt
       color: '#E8E4DC'
+  skin_texture: smooth and slightly aged
+  hair_note: parted on the side
+  face_shape: oval with a slight squareness
+  eye_shape: almond-shaped with a slight curve
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: medium-sized with a slight curve
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: rounded and slightly chubby

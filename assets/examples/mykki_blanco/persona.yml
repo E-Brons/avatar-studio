@@ -5,8 +5,25 @@ personal:
   age: 38
   nationality: American
   religion: unknown
-  zodiac: unknown
+  zodiac: Aries
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
+  hair_style: dreadlocks, light blonde
+  hair_note: visible on top of head
+  face_shape: oval, broad and angular
+  eye_shape: almond-shaped, expressive
+  brows_style: thick and arched, dark
+  brows_color: '#262626'
+  nose_shape: straight, prominent, slightly bulbous
+  chin_shape: rounded, slightly protruding
+  cheeks_shape: full, rounded, slightly dimpled
+  hair_color:
+    hex_base: '#F5F5F5'
+    hex_shadow: '#E0E0E0'
+  eye_color:
+    hex_iris: '#FFA07A'
+    hex_pupil: '#000000'

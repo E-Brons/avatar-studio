@@ -15,19 +15,27 @@ appearance:
       style: light blue embellished/beaded fabric
       color: '#7A9DB8'
     description:
-      style: "light blue embellished/beaded V-neck top or dress with floral appliqu\xE9\
-        \ detailing"
+      style: light blue embellished/beaded V-neck top or dress with floral appliqué
+        detailing
       color: '#7A9DB8'
   accessories:
     description:
       style: pearl drop earrings
       color: '#D4C5B5'
-  skin_tone: '#C4956E'
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#3B2218'
-    hex_shadow: '#1D110C'
-  hair_style: updo with loose curled tendrils framing the face
+    hex_base: '#8B4513'
+    hex_shadow: '#FFD700'
+  hair_style: wavy bob with highlights
   eye_color:
-    hex_iris: '#2E1A0E'
-    hex_pupil: '#170D07'
-  face_shape: oval
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: oval with defined jawline
+  skin_texture: smooth and youthful
+  hair_note: brown with golden highlights
+  eye_shape: almond-shaped with defined crease
+  brows_style: thick and well-groomed
+  brows_color: '#000000'
+  nose_shape: straight and well-defined
+  chin_shape: rounded and firm chin
+  cheeks_shape: rounded and full cheeks

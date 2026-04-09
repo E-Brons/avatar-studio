@@ -5,8 +5,25 @@ personal:
   age: 34
   nationality: American
   religion: unknown
-  zodiac: unknown
+  zodiac: Leo
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and matte
+  hair_style: loose and tousled, light brown
+  hair_note: partially visible, styled in a casual manner
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond-shaped, light blue
+  brows_style: thick, well-defined, light brown
+  brows_color: '#8B4513'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, well-defined
+  cheeks_shape: rounded, full, smooth
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#8B4513'
+  eye_color:
+    hex_iris: '#8A6DFF'
+    hex_pupil: '#000000'

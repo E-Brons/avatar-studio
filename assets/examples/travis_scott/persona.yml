@@ -14,3 +14,20 @@ appearance:
     garment:
       style: crew neck t-shirt
       color: '#0F0F1E'
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
+  hair_style: braided dreadlocks, black
+  hair_note: braids are neatly arranged and dark
+  face_shape: oval, symmetrical, broad
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick, well-defined, dark
+  brows_color: '#222222'
+  nose_shape: straight, broad, prominent
+  chin_shape: rounded, firm, defined
+  cheeks_shape: full, rounded, smooth
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#000000'

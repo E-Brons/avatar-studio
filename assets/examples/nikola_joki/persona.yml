@@ -5,8 +5,25 @@ personal:
   age: 29
   nationality: Serbian
   religion: unknown
-  zodiac: unknown
+  zodiac: Pisces
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#222222'
+  skin_texture: smooth and slightly tanned
+  hair_style: not visible, likely short
+  hair_note: '#333333'
+  face_shape: square with broad jawline
+  eye_shape: almond-shaped with light irises
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: square and firm chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

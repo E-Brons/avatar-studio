@@ -10,16 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#D4A574'
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#3B2A1A'
-    hex_shadow: '#1D150D'
-  hair_style: short, textured, swept up and to the side with volume on top
+    hex_base: '#8B4513'
+    hex_shadow: '#4B0000'
+  hair_style: short and neatly styled
   eye_color:
-    hex_iris: '#2C1A0E'
-    hex_pupil: '#160D07'
-  face_shape: oval
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: oval with defined jawline
   clothing:
     top:
       style: dark sports jersey with red horizontal stripes
       color: '#1A1A1A'
+  skin_texture: smooth and clear
+  hair_note: brown
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-groomed
+  brows_color: '#000000'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and well-defined
+  cheeks_shape: rounded and full, slightly flushed

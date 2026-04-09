@@ -10,17 +10,17 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  face_shape: oval
-  skin_tone: '#9B7A5C'
+  face_shape: oval, slightly elongated
+  skin_tone: '#262626'
   eye_color:
-    hex_iris: '#5C3A1E'
-    hex_pupil: '#2E1D0F'
-  eye_shape: almond
-  nose_shape: straight
-  hair_style: swept back
+    hex_iris: '#2a2a2a'
+    hex_pupil: '#2a2a2a'
+  eye_shape: almond-shaped, expressive
+  nose_shape: straight, prominent, well-defined
+  hair_style: neatly styled, slightly tousled
   hair_color:
-    hex_base: '#0F0A06'
-    hex_shadow: '#070503'
+    hex_base: '#4a4a4a'
+    hex_shadow: '#2a2a2a'
   clothing:
     jacket:
       style: suit jacket
@@ -31,3 +31,9 @@ appearance:
     tie:
       style: necktie
       color: '#151517'
+  skin_texture: smooth and slightly tanned
+  hair_note: dark brown
+  brows_style: thick, well-groomed, dark brown
+  brows_color: '#2a2a2a'
+  chin_shape: rounded, strong jawline
+  cheeks_shape: rounded, slightly sunken

@@ -17,3 +17,20 @@ appearance:
     top:
       style: black turtleneck
       color: '#1A1A1A'
+  skin_tone: '#D2B48C'
+  skin_texture: smooth and slightly shiny
+  hair_style: short and dark brown
+  hair_note: partially visible, styled neatly
+  face_shape: oval with a slight elongation
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: full and rounded, slightly dimpled
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

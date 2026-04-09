@@ -4,22 +4,30 @@ personal:
   pronouns: he/him
   age: 27
   nationality: Afghan
-  religion: Muslim
+  religion: unknown
   zodiac: Virgo
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  face_shape: oval
-  hair_style: short, swept to the side
-  skin_tone: '#C49A7A'
+  face_shape: angular and strong features
+  hair_style: short and dark brown
+  skin_tone: '#222222'
   eye_color:
-    hex_iris: '#5C3A1E'
-    hex_pupil: '#2E1D0F'
+    hex_iris: '#222222'
+    hex_pupil: '#222222'
   hair_color:
-    hex_base: '#1E1410'
-    hex_shadow: '#0F0A08'
+    hex_base: '#333333'
+    hex_shadow: '#444444'
   clothing:
     garment:
       style: blue collared polo shirt with red and dark accents on shoulders
       color: '#6A9FD8'
+  skin_texture: smooth and tanned
+  hair_note: thick and neatly styled
+  eye_shape: sharp and focused eyes
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: strong and defined chin
+  cheeks_shape: rounded and full cheeks

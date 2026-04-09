@@ -15,3 +15,20 @@ appearance:
       style: Blue Adidas cricket jersey with diagonal line pattern and orange accents
         on collar and shoulders
       color: '#2196D3'
+  skin_tone: '#262626'
+  skin_texture: smooth and clear
+  hair_style: short and neatly styled
+  hair_note: black
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-groomed
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and smooth with slight dimples
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

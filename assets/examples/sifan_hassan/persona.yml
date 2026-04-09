@@ -10,16 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#6B4A3A'
+  skin_tone: '#262626'
   hair_color:
-    hex_base: '#1A1210'
-    hex_shadow: '#0D0908'
-  hair_style: braided cornrows, shoulder-length
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: 'braided, dark brown #333333'
   eye_color:
-    hex_iris: '#2C1E14'
-    hex_pupil: '#160F0A'
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
   clothing:
     long-sleeve top:
       style: bright orange athletic long-sleeve crew neck top
       color: '#F47B20'
-  face_shape: oval
+  face_shape: oval, elongated with defined jawline
+  skin_texture: smooth and tanned
+  hair_note: braids are dark and neatly tied
+  eye_shape: slightly almond-shaped, dark
+  brows_style: thick and dark, well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and firm, slightly tanned
+  cheeks_shape: full and rounded, tanned

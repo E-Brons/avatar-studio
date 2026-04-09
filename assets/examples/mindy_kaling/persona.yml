@@ -4,9 +4,26 @@ personal:
   pronouns: she/her
   age: 45
   nationality: American-Indian
-  religion: unknown
-  zodiac: unknown
+  religion: Hindu
+  zodiac: Cancer
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and radiant
+  hair_style: long, wavy, dark brown
+  hair_note: parted on the side
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark brown irises
+  brows_style: thick and well-defined
+  brows_color: '#2a2a2a'
+  nose_shape: straight and well-proportioned
+  chin_shape: rounded and balanced
+  cheeks_shape: full and rounded with a slight blush
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#2a2a2a'
+    hex_pupil: '#000000'

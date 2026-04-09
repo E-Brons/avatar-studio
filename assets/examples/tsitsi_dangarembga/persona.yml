@@ -10,15 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#5C3A1E'
+  skin_tone: '#D3A18C'
   hair_color:
-    hex_base: '#1A0A00'
-    hex_shadow: '#0D0500'
-  hair_style: long dreadlocks
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  hair_style: dreadlocks, dark brown
   eye_color:
-    hex_iris: '#4A2C0A'
-    hex_pupil: '#251605'
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'
   clothing:
     top:
       style: sleeveless top with subtle floral or botanical print
       color: '#E8E0D0'
+  skin_texture: smooth and slightly shiny
+  hair_note: long and neatly styled
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, natural
+  brows_color: '#333333'
+  nose_shape: straight, medium-sized, balanced
+  chin_shape: rounded, soft, youthful
+  cheeks_shape: rounded, full, healthy

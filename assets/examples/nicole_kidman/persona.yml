@@ -5,8 +5,25 @@ personal:
   age: 57
   nationality: Australian
   religion: unknown
-  zodiac: unknown
+  zodiac: Gemini
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and youthful
+  hair_style: long, wavy, blonde, cascading
+  hair_note: blonde, with highlights
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond, bright, blue
+  brows_style: thick, well-defined, arched
+  brows_color: '#000000'
+  nose_shape: straight, refined, small
+  chin_shape: rounded, delicate, youthful
+  cheeks_shape: full, round, youthful
+  hair_color:
+    hex_base: '#F5F5F5'
+    hex_shadow: '#FFD700'
+  eye_color:
+    hex_iris: '#0000FF'
+    hex_pupil: '#0000FF'

@@ -17,3 +17,20 @@ appearance:
     top:
       style: white v-neck top underneath blazer
       color: '#F0EDE8'
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and clear
+  hair_style: long and straight, parted on the side
+  hair_note: black
+  face_shape: oval with a slight elongation
+  eye_shape: almond-shaped with a slight curve
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: slender and refined with a slight curve
+  chin_shape: rounded and delicate
+  cheeks_shape: smooth and even with a slight blush
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

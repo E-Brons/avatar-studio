@@ -5,8 +5,25 @@ personal:
   age: 27
   nationality: American
   religion: unknown
-  zodiac: unknown
+  zodiac: Pisces
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and tanned
+  hair_style: short and curly, dark brown
+  hair_note: visible on top of head
+  face_shape: angular and strong, with defined jawline
+  eye_shape: slightly almond-shaped, dark brown
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: strong and defined, with a slight double chin
+  cheeks_shape: rounded and full, with a slight blush
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

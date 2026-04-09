@@ -4,9 +4,26 @@ personal:
   pronouns: he/him
   age: 42
   nationality: Indian
-  religion: unknown
-  zodiac: unknown
+  religion: Hindu
+  zodiac: Libra
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly matte
+  hair_style: short and slightly tousled
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark brown irises
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and slightly pointed
+  chin_shape: rounded and slightly dimpled
+  cheeks_shape: slightly sunken and smooth
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#000000'

@@ -5,8 +5,25 @@ personal:
   age: 21
   nationality: British
   religion: unknown
-  zodiac: unknown
+  zodiac: Pisces
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and fair
+  hair_style: bob cut with soft waves
+  hair_note: light brown with subtle highlights
+  face_shape: oval with balanced proportions
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-groomed
+  brows_color: '#222222'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and defined chin
+  cheeks_shape: plump and rosy cheeks
+  hair_color:
+    hex_base: '#D2A48C'
+    hex_shadow: '#F5DABF'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'

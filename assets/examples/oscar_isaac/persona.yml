@@ -5,8 +5,25 @@ personal:
   age: 45
   nationality: Guatemalan-American
   religion: unknown
-  zodiac: unknown
+  zodiac: Pisces
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#222222'
+  skin_texture: smooth and slightly matte
+  hair_style: short, neatly styled, dark
+  hair_note: 'dark #333333'
+  face_shape: square with defined jawline
+  eye_shape: almond-shaped, brown
+  brows_style: thick and well-groomed
+  brows_color: '#444444'
+  nose_shape: straight and prominent
+  chin_shape: square and defined, slightly stubbled
+  cheeks_shape: rounded and smooth, slightly tanned
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#444444'
+    hex_pupil: '#444444'

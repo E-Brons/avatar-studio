@@ -19,3 +19,20 @@ appearance:
       style: Canadian flag draped over both shoulders like a cape, showing red vertical
         bars and a central white field with red maple leaf
       color: '#E02030'
+  skin_tone: '#FFD700'
+  skin_texture: smooth and youthful
+  hair_style: wet and tied back, light brown
+  hair_note: wet and tied back, light brown
+  face_shape: oval, youthful, and serene
+  eye_shape: almond-shaped, bright and expressive
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and refined
+  chin_shape: rounded and delicate
+  cheeks_shape: full and rosy, youthful
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#8B4513'
+  eye_color:
+    hex_iris: '#0000FF'
+    hex_pupil: '#000000'

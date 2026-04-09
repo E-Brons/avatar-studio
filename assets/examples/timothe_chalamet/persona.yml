@@ -1,5 +1,5 @@
 personal:
-  name: "Timoth\xE9e Chalamet"
+  name: Timothée Chalamet
   gender: male
   pronouns: he/him
   age: 30
@@ -14,14 +14,20 @@ appearance:
     jacket:
       style: leather jacket with snap buttons and collar
       color: '#1A1A1A'
-  face_shape: oval
-  skin_tone: '#E8C8B0'
+  face_shape: oval, symmetrical, youthful
+  skin_tone: '#FFFFF0'
   eye_color:
-    hex_iris: '#6B7E5A'
-    hex_pupil: '#353F2D'
-  eye_shape: hooded
-  nose_shape: straight
-  hair_style: curly
+    hex_iris: '#808080'
+    hex_pupil: '#000000'
+  eye_shape: almond-shaped, light green
+  nose_shape: straight, medium-sized
+  hair_style: medium-length, wavy, dark brown
   hair_color:
-    hex_base: '#3A2518'
-    hex_shadow: '#1D120C'
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  skin_texture: smooth and fair
+  hair_note: fringe slightly covering forehead
+  brows_style: thick, well-defined, dark brown
+  brows_color: '#333333'
+  chin_shape: rounded, youthful, well-defined
+  cheeks_shape: rounded, smooth, youthful

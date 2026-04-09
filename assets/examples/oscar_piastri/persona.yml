@@ -16,3 +16,20 @@ appearance:
         and multiple sponsor logos (Android, OKX, Dell Technologies, Cisco, Allwyn,
         DP World, Mastercard, Monster Energy, Hilton, McLaren)
       color: '#F58220'
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and clear
+  hair_style: 'not visible, #333333'
+  hair_note: short and neatly styled
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond, expressive, brown
+  brows_style: thick, well-defined, dark
+  brows_color: '#000000'
+  nose_shape: straight, well-proportioned, slightly pointed
+  chin_shape: rounded, firm, youthful
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

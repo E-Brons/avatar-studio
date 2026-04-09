@@ -16,3 +16,20 @@ appearance:
         chest, Adidas three-stripe logo on left chest, ICC Champions Trophy badge,
         and tricolor flag detail on left sleeve
       color: '#2B80D4'
+  skin_tone: '#D2B48C'
+  skin_texture: smooth and slightly matte
+  hair_style: short and neatly styled
+  hair_note: visible
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-groomed
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

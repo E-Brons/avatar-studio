@@ -5,8 +5,25 @@ personal:
   age: 25
   nationality: Czech
   religion: unknown
-  zodiac: unknown
+  zodiac: Cancer
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and tanned
+  hair_style: bun, light brown, tied back
+  hair_note: visible
+  face_shape: oval, elongated, athletic
+  eye_shape: almond, expressive, focused
+  brows_style: thick, arched, defined
+  brows_color: '#000000'
+  nose_shape: straight, prominent, athletic
+  chin_shape: rounded, defined, strong
+  cheeks_shape: rounded, full, athletic
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#8B4513'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

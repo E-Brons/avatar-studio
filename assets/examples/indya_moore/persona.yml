@@ -10,18 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#8B6914'
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#1A1008'
-    hex_shadow: '#0D0804'
-  hair_style: curly with bangs
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  hair_style: curly and voluminous
   eye_color:
-    hex_iris: '#3D2B1A'
-    hex_pupil: '#1E150D'
-  face_shape: oval
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: round and symmetrical
   clothing:
     top:
       style: Satin boat-neck top with long sleeves
       color: '#7A1A1A'
-  eye_shape: almond
-  nose_shape: broad, rounded tip
+  eye_shape: almond-shaped and expressive
+  nose_shape: straight and well-proportioned
+  skin_texture: smooth and glowing
+  hair_note: dark brown
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  chin_shape: rounded and balanced
+  cheeks_shape: full and rounded, enhancing smile

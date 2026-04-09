@@ -10,16 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C68B6A'
-  face_shape: oval
+  skin_tone: '#D2B48C'
+  face_shape: narrow and angular with defined jawline
   clothing:
     top:
       style: polo shirt
       color: '#2E2E2E'
   eye_color:
-    hex_iris: '#7A9272'
-    hex_pupil: '#3D4939'
+    hex_iris: '#87CEEB'
+    hex_pupil: '#000000'
   hair_color:
-    hex_base: '#3B2A1E'
-    hex_shadow: '#1D150F'
-  hair_style: medium length, wavy, tousled
+    hex_base: '#4B0000'
+    hex_shadow: '#8B4513'
+  hair_style: short, styled, and slightly tousled
+  skin_texture: smooth and slightly tanned
+  hair_note: dark brown
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: square and defined with stubble
+  cheeks_shape: slightly sunken and chiseled

@@ -5,8 +5,25 @@ personal:
   age: 23
   nationality: Italian
   religion: unknown
-  zodiac: unknown
+  zodiac: Leo
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and fair
+  hair_style: 'not visible, #333333'
+  hair_note: short and neatly styled
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond, expressive, brown
+  brows_style: thick, well-groomed, light brown
+  brows_color: '#FFA07A'
+  nose_shape: straight, well-defined, light brown
+  chin_shape: rounded, youthful, smooth
+  cheeks_shape: rounded, plump, rosy
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#FFA07A'
+    hex_pupil: '#000000'

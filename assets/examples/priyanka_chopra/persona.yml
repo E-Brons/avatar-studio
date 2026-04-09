@@ -4,7 +4,7 @@ personal:
   pronouns: she/her
   age: 43
   nationality: Indian
-  religion: unknown
+  religion: Hindu
   zodiac: Cancer
 style:
   bg_color: '#4A90D9'
@@ -28,18 +28,26 @@ appearance:
       color: '#EDE8E0'
   accessories:
     earrings:
-      style: "small gold stud on left ear, approximately 3\u20134 mm"
+      style: small gold stud on left ear, approximately 3–4 mm
       color: '#C9A84C'
     necklace:
       style: none visible
     other:
       style: none visible
-  skin_tone: '#C4875A'
+  skin_tone: '#262626'
   hair_color:
-    hex_base: '#2C1A0E'
-    hex_shadow: '#160D07'
-  hair_style: long, wavy, with caramel highlights, parted slightly off-center
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  hair_style: pulled back and sleek
   eye_color:
-    hex_iris: '#7B3F10'
-    hex_pupil: '#3D1F08'
-  face_shape: oval
+    hex_iris: '#2a2a2a'
+    hex_pupil: '#2a2a2a'
+  face_shape: oval with defined jawline
+  skin_texture: smooth and flawless
+  hair_note: dark brown
+  eye_shape: almond-shaped with long lashes
+  brows_style: thick and well-defined
+  brows_color: '#2a2a2a'
+  nose_shape: slender and refined with small nostrils
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: smooth and full with subtle blush
