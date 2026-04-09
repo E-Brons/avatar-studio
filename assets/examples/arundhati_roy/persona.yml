@@ -14,3 +14,20 @@ appearance:
     dress:
       style: loose-fitting linen tunic/dress, three-quarter sleeves, round neckline
       color: '#D8C0C4'
+  skin_tone: '#222222'
+  skin_texture: smooth and clear
+  hair_style: curly and voluminous
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark brown irises
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: rounded and well-defined
+  cheeks_shape: rounded and full with slight dimples
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

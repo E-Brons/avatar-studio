@@ -1,0 +1,29 @@
+personal:
+  name: Ava DuVernay
+  gender: female
+  pronouns: she/her
+  age: 52
+  nationality: American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and matte
+  hair_style: dreadlocks, neatly styled
+  hair_note: 'dark brown, #4B0000'
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond-shaped, slightly slanted
+  brows_style: thick, well-defined, arched
+  brows_color: '#262626'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, firm, defined
+  cheeks_shape: full, rounded, smooth
+  hair_color:
+    hex_base: '#4B0000'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

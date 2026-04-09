@@ -1,0 +1,29 @@
+personal:
+  name: Ben Shelton
+  gender: male
+  pronouns: he/him
+  age: 22
+  nationality: American
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly shiny
+  hair_style: curly and voluminous
+  hair_note: brown
+  face_shape: oval with a slight roundness
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: medium-sized and straight
+  chin_shape: rounded and slightly puffed
+  cheeks_shape: full and slightly chubby
+  hair_color:
+    hex_base: '#8B4513'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

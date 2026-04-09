@@ -1,0 +1,27 @@
+personal:
+  name: Alicia Keys
+  gender: female
+  pronouns: she/her
+  age: 44
+  nationality: American
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: golden brown
+  hair_color:
+    hex_base: '#4B0000'
+    hex_shadow: '#330000'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  brows_color: '#4B0000'
+  face_shape: oval
+  eye_shape: almond
+  brows_style: thick and arched
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: full
+  hair_style: braided

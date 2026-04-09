@@ -10,15 +10,15 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#8B5E3C'
-  hair_style: bald
+  skin_tone: '#262626'
+  hair_style: not visible, shaved head
   hair_color:
-    hex_base: '#1A1A1A'
-    hex_shadow: '#0D0D0D'
+    hex_base: '#333333'
+    hex_shadow: '#333333'
   eye_color:
-    hex_iris: '#7B6E5A'
-    hex_pupil: '#3D372D'
-  face_shape: oval
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  face_shape: oval, elongated with defined jawline
   clothing:
     top:
       style: t-shirt
@@ -27,4 +27,11 @@ appearance:
     necklace:
       style: rudraksha mala beads with green spacer beads
       color: '#8B4523'
-  nose_shape: broad, straight bridge
+  nose_shape: straight and prominent
+  skin_texture: smooth and slightly matte
+  hair_note: '#333333'
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: smooth and slightly sunken

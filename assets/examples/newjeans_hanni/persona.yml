@@ -1,0 +1,12 @@
+personal:
+  name: NewJeans Hanni
+  gender: female
+  pronouns: she/her
+  age: 21
+  nationality: Vietnamese-Australian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

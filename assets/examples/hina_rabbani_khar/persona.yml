@@ -10,15 +10,15 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#D4A574'
+  skin_tone: '#262626'
   hair_color:
-    hex_base: '#2B1E1A'
-    hex_shadow: '#150F0D'
-  hair_style: short, side-parted, swept to the side
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  hair_style: parted and pulled back
   eye_color:
-    hex_iris: '#3D2418'
-    hex_pupil: '#1E120C'
-  face_shape: oval
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  face_shape: oval with defined jawline
   clothing:
     top:
       style: light turquoise/aqua traditional kameez with mandarin/band collar
@@ -26,3 +26,11 @@ appearance:
     dupatta:
       style: sheer turquoise/aqua dupatta draped over head and shoulders
       color: '#96E3D8'
+  skin_texture: smooth and clear
+  hair_note: dark brown
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and well-defined
+  cheeks_shape: smooth and even-toned

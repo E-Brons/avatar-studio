@@ -10,17 +10,25 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  face_shape: oval
+  face_shape: oval, youthful, slightly angular
   clothing:
     garment:
       style: Fred Perry twin-tipped polo shirt with button placket and laurel wreath
         logo on chest
       color: '#7A8B68'
-  skin_tone: '#D4B09A'
+  skin_tone: '#222222'
   eye_color:
-    hex_iris: '#6B7B5A'
-    hex_pupil: '#353D2D'
-  hair_style: medium-length wavy
+    hex_iris: '#222222'
+    hex_pupil: '#222222'
+  hair_style: medium-length, wavy, slightly tousled
   hair_color:
-    hex_base: '#4A3628'
-    hex_shadow: '#251B14'
+    hex_base: '#664422'
+    hex_shadow: '#442211'
+  skin_texture: smooth and slightly tanned
+  hair_note: brown
+  eye_shape: slightly almond-shaped, expressive
+  brows_style: slightly arched, natural
+  brows_color: '#222222'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, youthful, slightly dimpled
+  cheeks_shape: rounded, slightly chubby

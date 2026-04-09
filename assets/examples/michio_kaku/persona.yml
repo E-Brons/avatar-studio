@@ -1,0 +1,12 @@
+personal:
+  name: Michio Kaku
+  gender: male
+  pronouns: he/him
+  age: 78
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

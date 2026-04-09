@@ -1,0 +1,29 @@
+personal:
+  name: Elina Svitolina
+  gender: female
+  pronouns: she/her
+  age: 30
+  nationality: Ukrainian
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and fair
+  hair_style: blonde, shoulder-length, wavy
+  hair_note: blonde, shoulder-length, wavy
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-groomed, arched
+  brows_color: '#000000'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, balanced, youthful
+  cheeks_shape: rounded, full, youthful
+  hair_color:
+    hex_base: '#F8D5A3'
+    hex_shadow: '#F5E6AA'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

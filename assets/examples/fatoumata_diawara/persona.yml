@@ -1,0 +1,29 @@
+personal:
+  name: Fatoumata Diawara
+  gender: female
+  pronouns: she/her
+  age: 42
+  nationality: Malian
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly matte
+  hair_style: not visible, short and dark
+  hair_note: 'dark #333333'
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark brown color
+  brows_style: thick and arched, dark brown
+  brows_color: '#262626'
+  nose_shape: straight and medium-sized
+  chin_shape: rounded and defined, slightly dimpled
+  cheeks_shape: smooth and slightly sunken
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

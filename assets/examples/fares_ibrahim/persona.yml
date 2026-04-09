@@ -10,16 +10,25 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_style: curly
+  hair_style: curly and voluminous
   hair_color:
-    hex_base: '#1A1008'
-    hex_shadow: '#0D0804'
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
   eye_color:
-    hex_iris: '#3D2A1A'
-    hex_pupil: '#1E150D'
-  skin_tone: '#C49A78'
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  skin_tone: '#262626'
   clothing:
     garment:
       style: zip-up windbreaker jacket with white piping trim and a small logo on
         the left chest
       color: '#7B2233'
+  skin_texture: smooth and tanned
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and dark brown
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: full and rounded cheeks

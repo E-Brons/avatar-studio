@@ -10,12 +10,20 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#E8C4A8'
+  skin_tone: '#F5F5F5'
   hair_color:
-    hex_base: '#C9A96E'
-    hex_shadow: '#645437'
-  hair_style: medium length, loose waves, parted to the side
+    hex_base: '#D2B48C'
+    hex_shadow: '#F5F5F5'
+  hair_style: blonde, shoulder-length, wavy
   eye_color:
-    hex_iris: '#8B9B7A'
-    hex_pupil: '#454D3D'
-  face_shape: oval
+    hex_iris: '#2E2E2E'
+    hex_pupil: '#2E2E2E'
+  face_shape: rounded, symmetrical
+  skin_texture: smooth and youthful
+  hair_note: blonde, shoulder-length, wavy
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-groomed, arched
+  brows_color: '#2E2E2E'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, firm, youthful
+  cheeks_shape: full, smooth, youthful

@@ -5,7 +5,7 @@ personal:
   age: 65
   nationality: Beninese
   religion: unknown
-  zodiac: unknown
+  zodiac: Cancer
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
@@ -18,12 +18,20 @@ appearance:
       style: Casual crew-neck t-shirt paired with traditional African head wrap and
         beaded necklace
       color: casual with cultural accents
-  skin_tone: '#8B5E3C'
-  hair_style: not visible
+  skin_tone: '#D3A17E'
+  hair_style: 'not visible, #333333'
   hair_color:
-    hex_base: '#8B5E3C'
-    hex_shadow: '#452F1E'
+    hex_base: '#333333'
+    hex_shadow: '#333333'
   eye_color:
-    hex_iris: '#3D2B1F'
-    hex_pupil: '#1E150F'
-  face_shape: oval
+    hex_iris: '#FF0000'
+    hex_pupil: '#000000'
+  face_shape: rounded and symmetrical
+  skin_texture: smooth and radiant
+  hair_note: short and styled
+  eye_shape: almond-shaped and expressive
+  brows_style: 'thick and arched, #FF0000'
+  brows_color: '#FF0000'
+  nose_shape: straight and prominent
+  chin_shape: 'rounded and defined, #FF0000'
+  cheeks_shape: 'rounded and full, #FF0000'

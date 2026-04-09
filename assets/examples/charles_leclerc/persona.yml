@@ -10,14 +10,14 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_style: short, tousled, wavy with fringe
+  hair_style: short and slightly tousled
   hair_color:
-    hex_base: '#5C4A3A'
-    hex_shadow: '#2E251D'
+    hex_base: '#4a4a4a'
+    hex_shadow: '#333333'
   eye_color:
-    hex_iris: '#4A3528'
-    hex_pupil: '#251A14'
-  skin_tone: '#B8896E'
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  skin_tone: '#262626'
   face_shape: oval with defined jawline
   clothing:
     racing suit top:
@@ -27,3 +27,11 @@ appearance:
     turtleneck undershirt:
       style: Red fireproof turtleneck base layer visible at the neckline
       color: '#E0271A'
+  skin_texture: smooth and slightly matte
+  hair_note: brown
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly defined
+  cheeks_shape: slightly sunken but smooth

@@ -11,16 +11,24 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   hair_color:
-    hex_base: '#8B6B3D'
-    hex_shadow: '#45351E'
-  hair_style: pulled back, slicked
+    hex_base: '#F8D5A3'
+    hex_shadow: '#F8D5A3'
+  hair_style: blonde, pulled back, sleek
   eye_color:
-    hex_iris: '#6B8FA3'
-    hex_pupil: '#354751'
-  skin_tone: '#C4956E'
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'
+  skin_tone: '#D3A18C'
   clothing:
     jersey:
       style: dark navy athletic jersey with red trim at collar and a crest/badge on
         the chest
       color: '#2A2D35'
-  face_shape: oval
+  face_shape: oval, symmetrical, balanced
+  brows_color: '#A9A9A9'
+  eye_shape: almond, light blue, expressive
+  brows_style: thick, well-defined, arched
+  nose_shape: straight, medium-sized, prominent
+  chin_shape: rounded, firm, defined
+  cheeks_shape: rounded, full, smooth
+  skin_texture: smooth and slightly matte
+  hair_note: blonde, pulled back, sleek

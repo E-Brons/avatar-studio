@@ -1,0 +1,29 @@
+personal:
+  name: David Guetta
+  gender: male
+  pronouns: he/him
+  age: 57
+  nationality: French
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D3A17E'
+  skin_texture: smooth and slightly tanned
+  hair_style: long, straight, and layered
+  hair_note: blonde
+  face_shape: oval with a slight asymmetry
+  eye_shape: almond-shaped with a hint of green
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly chin-ward
+  cheeks_shape: rounded and full, giving a youthful appearance
+  hair_color:
+    hex_base: '#F5D5A6'
+    hex_shadow: '#E0B868'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

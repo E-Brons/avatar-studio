@@ -1,0 +1,29 @@
+personal:
+  name: Angela Bassett
+  gender: female
+  pronouns: she/her
+  age: 66
+  nationality: American
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: golden brown
+  skin_texture: smooth and radiant
+  hair_style: curly and voluminous
+  hair_note: dark brown
+  face_shape: round and symmetrical
+  eye_shape: almond-shaped and expressive
+  brows_style: thick and well-defined
+  brows_color: '#4a4a4a'
+  nose_shape: straight and refined
+  chin_shape: rounded and defined chin
+  cheeks_shape: full and rounded cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#4a4a4a'
+    hex_pupil: '#4a4a4a'

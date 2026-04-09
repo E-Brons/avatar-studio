@@ -1,0 +1,29 @@
+personal:
+  name: Ellyse Perry
+  gender: female
+  pronouns: she/her
+  age: 34
+  nationality: Australian
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFF0'
+  skin_texture: smooth and youthful
+  hair_style: straight and shoulder-length
+  hair_note: blonde
+  face_shape: oval with balanced proportions
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-defined
+  brows_color: '#808080'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and youthful
+  cheeks_shape: full and rosy, indicating health
+  hair_color:
+    hex_base: '#F5F5DC'
+    hex_shadow: '#E6E6E6'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

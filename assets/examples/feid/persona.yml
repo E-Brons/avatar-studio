@@ -1,0 +1,29 @@
+personal:
+  name: Feid
+  gender: male
+  pronouns: he/him
+  age: 32
+  nationality: Colombian
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly tanned
+  hair_style: short and neatly styled
+  hair_note: black
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark brown irises
+  brows_style: thick and well-groomed
+  brows_color: '#2a2a2a'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: slightly sunken but smooth
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#2a2a2a'
+    hex_pupil: '#000000'

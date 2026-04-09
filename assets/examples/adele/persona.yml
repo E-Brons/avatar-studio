@@ -10,16 +10,22 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#E8C9A0'
+  skin_tone: fair
   hair_color:
-    hex_base: '#8B6914'
-    hex_shadow: '#45340A'
-  hair_style: medium length bob, half-up style, wavy, ombre blonde highlights
+    hex_base: '#D2B48C'
+    hex_shadow: '#A88254'
+  hair_style: long
   eye_color:
-    hex_iris: '#7A8B5A'
-    hex_pupil: '#3D452D'
+    hex_iris: '#808080'
+    hex_pupil: '#000000'
   eye_shape: almond
   clothing:
     top:
       style: black lace high-neck top
       color: '#0A0A0A'
+  brows_color: '#808080'
+  face_shape: oval
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: rounded

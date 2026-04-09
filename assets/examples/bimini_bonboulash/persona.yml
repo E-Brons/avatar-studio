@@ -14,13 +14,20 @@ appearance:
     top:
       style: off-shoulder black top
       color: '#1A1A1A'
-  skin_tone: '#D4B5A0'
+  skin_tone: '#FFFFFF'
   hair_color:
-    hex_base: '#D4C8A8'
-    hex_shadow: '#6A6454'
-  hair_style: layered shag with curtain bangs, shoulder-length, tousled and swept
-    to one side
+    hex_base: '#F8F8F8'
+    hex_shadow: '#F0F0F0'
+  hair_style: voluminous and curly
   eye_color:
-    hex_iris: '#7B6A3D'
-    hex_pupil: '#3D351E'
-  face_shape: angular, oval with defined jawline and high cheekbones
+    hex_iris: '#FF0000'
+    hex_pupil: '#000000'
+  face_shape: round and symmetrical
+  skin_texture: smooth and flawless
+  hair_note: blonde with highlights
+  eye_shape: large and almond-shaped
+  brows_style: thick and arched, dark
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined, small
+  cheeks_shape: full and rounded, rosy

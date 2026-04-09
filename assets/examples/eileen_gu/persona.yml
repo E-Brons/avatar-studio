@@ -10,16 +10,25 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#E8C4A0'
+  skin_tone: '#F5F5F5'
   hair_color:
-    hex_base: '#3D2314'
-    hex_shadow: '#1E110A'
-  hair_style: ponytail, pulled back with loose strands framing face
+    hex_base: '#D2B48C'
+    hex_shadow: '#8B4513'
+  hair_style: long and straight, light brown
   eye_color:
-    hex_iris: '#7B5C3A'
-    hex_pupil: '#3D2E1D'
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'
   clothing:
     jacket:
-      style: "Red flag or banner draped over shoulders, with yellow accent visible\
-        \ at neckline \u2014 appears to be a national flag rather than a jacket"
+      style: Red flag or banner draped over shoulders, with yellow accent visible
+        at neckline — appears to be a national flag rather than a jacket
       color: '#E02020'
+  skin_texture: smooth and youthful
+  hair_note: partially visible, falling over shoulders
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and well-proportioned
+  chin_shape: rounded and soft, youthful
+  cheeks_shape: rounded and full, youthful

@@ -1,0 +1,12 @@
+personal:
+  name: Park Chan-wook
+  gender: male
+  pronouns: he/him
+  age: 62
+  nationality: South Korean
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

@@ -14,12 +14,20 @@ appearance:
     top:
       style: white lace halter-neck top with floral embroidery and high collar
       color: '#F5EDE5'
-  skin_tone: '#E8C4B0'
+  skin_tone: '#F5F5F5'
   hair_color:
-    hex_base: '#D4C8A0'
-    hex_shadow: '#6A6450'
-  hair_style: short spiky pixie cut
+    hex_base: '#F5F5F5'
+    hex_shadow: '#E0E0E0'
+  hair_style: blonde, straight, shoulder-length
   eye_color:
-    hex_iris: '#7A8B52'
-    hex_pupil: '#3D4529'
-  face_shape: oval
+    hex_iris: '#8B8B8B'
+    hex_pupil: '#000000'
+  face_shape: oval, symmetrical, balanced
+  skin_texture: smooth and matte
+  hair_note: blonde, straight, shoulder-length
+  eye_shape: almond, expressive, brown
+  brows_style: thick, well-defined, dark
+  brows_color: '#000000'
+  nose_shape: straight, medium-sized, refined
+  chin_shape: rounded, soft, balanced
+  cheeks_shape: rounded, full, smooth

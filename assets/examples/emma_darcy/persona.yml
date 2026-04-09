@@ -22,12 +22,20 @@ appearance:
     necklace:
       style: thin choker-length chain necklace with small pendant
       color: '#C8A84B'
-  skin_tone: '#E8CDB8'
+  skin_tone: '#FFFFFF'
   hair_color:
-    hex_base: '#3B2A1E'
-    hex_shadow: '#1D150F'
-  hair_style: short wavy bob
+    hex_base: '#FFFFFF'
+    hex_shadow: '#FFFFFF'
+  hair_style: short and styled, light blonde
   eye_color:
-    hex_iris: '#7A9BAE'
-    hex_pupil: '#3D4D57'
-  face_shape: oval
+    hex_iris: '#808080'
+    hex_pupil: '#000000'
+  face_shape: oval, symmetrical, youthful
+  skin_texture: smooth and fair
+  hair_note: blonde, short, styled
+  eye_shape: almond-shaped, light blue
+  brows_style: thick, well-defined, light blonde
+  brows_color: '#FFFFFF'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, small, youthful
+  cheeks_shape: rounded, full, youthful

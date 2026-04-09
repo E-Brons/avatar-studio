@@ -17,3 +17,20 @@ appearance:
     undergarment/sash:
       style: golden-yellow fabric visible beneath the maroon robe on the left shoulder
       color: '#D4A020'
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly wrinkled
+  hair_style: not visible, shaved head
+  hair_note: no hair visible
+  face_shape: oval with prominent cheekbones
+  eye_shape: slightly almond-shaped
+  brows_style: thick and slightly arched
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: full and rounded, slightly dimpled
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

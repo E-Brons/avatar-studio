@@ -1,0 +1,12 @@
+personal:
+  name: Jack Draper
+  gender: male
+  pronouns: he/him
+  age: 23
+  nationality: British
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

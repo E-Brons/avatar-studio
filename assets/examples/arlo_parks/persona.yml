@@ -1,0 +1,29 @@
+personal:
+  name: Arlo Parks
+  gender: female
+  pronouns: she/her
+  age: 26
+  nationality: British
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: dark brown
+  skin_texture: smooth and clear
+  hair_style: short and styled with vibrant orange hue
+  hair_note: visible
+  face_shape: square with sharp angles
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and defined, dark brown
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined, dark brown
+  cheeks_shape: smooth and even, dark brown
+  hair_color:
+    hex_base: '#FF6666'
+    hex_shadow: '#FFA07A'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

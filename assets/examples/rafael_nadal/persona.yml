@@ -1,0 +1,12 @@
+personal:
+  name: Rafael Nadal
+  gender: male
+  pronouns: he/him
+  age: 38
+  nationality: Spanish
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

@@ -10,7 +10,7 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C4956A'
+  skin_tone: '#262626'
   clothing:
     top:
       style: sleeveless high-neck lace dress with floral/paisley embroidery and fabric-covered
@@ -20,3 +20,19 @@ appearance:
     earrings:
       style: ornate gold cross/snowflake pendant drop earrings
       color: '#C9A84C'
+  skin_texture: smooth and clear
+  hair_style: medium-length, wavy, dark brown
+  hair_note: curly and voluminous
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#262626'
+  nose_shape: straight, well-proportioned
+  chin_shape: rounded, balanced, youthful
+  cheeks_shape: full, smooth, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

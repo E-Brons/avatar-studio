@@ -10,16 +10,16 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#5C3A1E'
+  skin_tone: '#262626'
   eye_color:
-    hex_iris: '#3D2B1F'
-    hex_pupil: '#1E150F'
-  eye_shape: almond
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  eye_shape: almond-shaped, expressive, and bright
   hair_color:
-    hex_base: '#1A0F0A'
-    hex_shadow: '#0D0705'
-  hair_style: box braids pulled back, secured with headband
-  face_shape: oval
+    hex_base: '#000000'
+    hex_shadow: '#000000'
+  hair_style: braided, long, and dark
+  face_shape: oval, symmetrical, and balanced
   clothing:
     top:
       style: athletic tank top with geometric line pattern, New Balance logo, and
@@ -36,3 +36,10 @@ appearance:
     watch_or_band:
       style: black sport wristband / sweatband
       color: '#1A1A1A'
+  skin_texture: smooth and shiny
+  hair_note: braids are neatly arranged
+  brows_style: thick, well-groomed, and dark
+  brows_color: '#262626'
+  nose_shape: straight, well-defined, and balanced
+  chin_shape: rounded, soft, and youthful
+  cheeks_shape: full, rounded, and smooth

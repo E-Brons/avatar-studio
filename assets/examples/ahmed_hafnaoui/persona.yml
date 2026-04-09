@@ -4,22 +4,28 @@ personal:
   pronouns: he/him
   age: 23
   nationality: Tunisian
-  religion: Muslim
+  religion: unknown
   zodiac: Sagittarius
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
   face_shape: oval
-  skin_tone: '#8B6B4E'
-  hair_style: short buzz cut
+  skin_tone: light
+  hair_style: not visible
   hair_color:
-    hex_base: '#1A1A1A'
-    hex_shadow: '#0D0D0D'
+    hex_base: '#464646'
+    hex_shadow: '#333333'
   eye_color:
-    hex_iris: '#3D2B1F'
-    hex_pupil: '#1E150F'
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
   clothing:
     garment:
       style: grey Arena brand athletic t-shirt with Tunisian flag patch
       color: '#B0B0B4'
+  brows_color: '#464646'
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: rounded

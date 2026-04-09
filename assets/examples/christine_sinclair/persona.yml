@@ -1,0 +1,29 @@
+personal:
+  name: Christine Sinclair
+  gender: female
+  pronouns: she/her
+  age: 41
+  nationality: Canadian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFF0'
+  skin_texture: smooth and slightly shiny
+  hair_style: pulled back into a bun
+  hair_note: dark brown
+  face_shape: oval with a slight elongation
+  eye_shape: almond-shaped with a light blue hue
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and medium-sized
+  chin_shape: rounded and slightly dimpled
+  cheeks_shape: full and slightly rounded
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

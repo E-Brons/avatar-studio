@@ -1,0 +1,29 @@
+personal:
+  name: Doja Cat
+  gender: female
+  pronouns: she/her
+  age: 29
+  nationality: American
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D3A18C'
+  skin_texture: smooth and radiant
+  hair_style: long, straight, and layered
+  hair_note: blonde
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long lashes
+  brows_style: thick and well-groomed
+  brows_color: '#2E1B0E'
+  nose_shape: straight and well-defined
+  chin_shape: rounded and soft-jawed
+  cheeks_shape: rounded and full with subtle blush
+  hair_color:
+    hex_base: '#FFA07A'
+    hex_shadow: '#FFD700'
+  eye_color:
+    hex_iris: '#2E1B0E'
+    hex_pupil: '#2E1B0E'

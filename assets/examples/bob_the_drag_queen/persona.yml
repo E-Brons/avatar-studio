@@ -1,0 +1,29 @@
+personal:
+  name: Bob the Drag Queen
+  gender: non-binary
+  pronouns: they/them
+  age: 37
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#333333'
+  skin_texture: smooth and polished
+  hair_style: highly styled afro with bangs
+  hair_note: dark brown
+  face_shape: rounded with defined jawline
+  eye_shape: large and almond-shaped
+  brows_style: thick and arched with dark color
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined with slight dimple
+  cheeks_shape: full and rounded with slight blush
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

@@ -1,0 +1,29 @@
+personal:
+  name: Felix Auger-Aliassime
+  gender: male
+  pronouns: he/him
+  age: 24
+  nationality: Canadian
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#263238'
+  skin_texture: smooth and tanned
+  hair_style: short and dark brown
+  hair_note: visible on top of head
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and dark brown
+  brows_color: '#263238'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#263238'
+    hex_pupil: '#263238'

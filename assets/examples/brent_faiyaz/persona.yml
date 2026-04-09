@@ -1,0 +1,29 @@
+personal:
+  name: Brent Faiyaz
+  gender: male
+  pronouns: he/him
+  age: 29
+  nationality: American
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and tanned
+  hair_style: Afro, curly, voluminous
+  hair_note: dark brown
+  face_shape: square, broad, strong
+  eye_shape: oval, slightly almond
+  brows_style: thick, well-defined, dark
+  brows_color: '#000000'
+  nose_shape: straight, broad, prominent
+  chin_shape: square, firm, defined
+  cheeks_shape: rounded, full, smooth
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

@@ -10,7 +10,7 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C68642'
+  skin_tone: '#262626'
   clothing:
     top:
       style: white dress shirt, open collar, no tie
@@ -22,9 +22,18 @@ appearance:
       style: presidential/ceremonial sash
       color: '#C8102E'
   hair_color:
-    hex_base: '#2B1E18'
-    hex_shadow: '#150F0C'
-  hair_style: short, side-parted, neatly combed
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  hair_style: short and neatly combed
   eye_color:
-    hex_iris: '#3D2B1F'
-    hex_pupil: '#1E150F'
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  skin_texture: smooth and clear
+  hair_note: dark brown
+  face_shape: square with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-groomed
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: square and firm jawline
+  cheeks_shape: rounded and full cheeks

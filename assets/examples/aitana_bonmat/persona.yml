@@ -1,0 +1,27 @@
+personal:
+  name: Aitana Bonmatí
+  gender: female
+  pronouns: she/her
+  age: 27
+  nationality: Spanish
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: fair
+  hair_color:
+    hex_base: '#4B0082'
+    hex_shadow: '#330066'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  brows_color: '#4B0082'
+  face_shape: oval
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: rounded
+  hair_style: long

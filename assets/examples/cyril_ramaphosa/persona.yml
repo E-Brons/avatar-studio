@@ -20,12 +20,20 @@ appearance:
     tie:
       style: red patterned silk tie with small geometric dot motif
       color: '#B32428'
-  skin_tone: '#5C3A2A'
-  hair_style: short cropped
+  skin_tone: '#262626'
+  hair_style: not visible, balding
   hair_color:
-    hex_base: '#2A2A2A'
-    hex_shadow: '#151515'
+    hex_base: '#333333'
+    hex_shadow: '#333333'
   eye_color:
-    hex_iris: '#3D2B1F'
-    hex_pupil: '#1E150F'
-  face_shape: round
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  face_shape: oval, broad with defined jawline
+  skin_texture: smooth and slightly shiny
+  hair_note: '#333333'
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and firm, well-defined
+  cheeks_shape: full and rounded, slightly dimpled

@@ -1,0 +1,29 @@
+personal:
+  name: Ami Faku
+  gender: female
+  pronouns: she/her
+  age: 30
+  nationality: South African
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D3A16B'
+  skin_texture: smooth and radiant
+  hair_style: box braids, dark brown
+  hair_note: long and neatly styled
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#333333'
+  nose_shape: straight, well-proportioned
+  chin_shape: rounded, balanced, strong
+  cheeks_shape: full, smooth, well-defined
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

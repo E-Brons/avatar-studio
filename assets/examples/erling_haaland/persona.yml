@@ -11,16 +11,24 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   hair_color:
-    hex_base: '#C4A96A'
-    hex_shadow: '#625435'
-  hair_style: slicked back, pulled into a low bun/ponytail
+    hex_base: '#F8D030'
+    hex_shadow: '#E0C040'
+  hair_style: short and neatly combed
   eye_color:
-    hex_iris: '#7A9BB5'
-    hex_pupil: '#3D4D5A'
-  skin_tone: '#C9A882'
+    hex_iris: '#808080'
+    hex_pupil: '#000000'
+  skin_tone: '#FFFFF0'
   clothing:
     garment:
       style: Puma Manchester City zip-up warm-up jacket with navy and light blue geometric
         pattern
       color: '#2B3A5C'
-  face_shape: square/angular
+  face_shape: square with defined jawline
+  skin_texture: smooth and fair
+  hair_note: blonde
+  eye_shape: almond-shaped with light irises
+  brows_style: thick and well-defined
+  brows_color: '#808080'
+  nose_shape: straight and prominent
+  chin_shape: square and firm chin
+  cheeks_shape: rounded and full cheeks

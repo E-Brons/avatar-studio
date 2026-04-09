@@ -1,0 +1,12 @@
+personal:
+  name: Simu Liu
+  gender: male
+  pronouns: he/him
+  age: 36
+  nationality: Chinese-Canadian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

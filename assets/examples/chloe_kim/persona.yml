@@ -10,15 +10,15 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_style: long, loose, slightly wavy
+  hair_style: long, wavy, light brown
   hair_color:
-    hex_base: '#B8944E'
-    hex_shadow: '#5C4A27'
-  skin_tone: '#D4A574'
+    hex_base: '#D2B48C'
+    hex_shadow: '#A88254'
+  skin_tone: '#F5F5F5'
   eye_color:
-    hex_iris: '#3B2A1A'
-    hex_pupil: '#1D150D'
-  face_shape: oval
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: oval, balanced proportions
   clothing:
     jacket:
       style: navy blue zip-up athletic winter jacket with white logo
@@ -26,3 +26,11 @@ appearance:
     gloves:
       style: dark navy blue winter gloves
       color: '#3A3D5C'
+  skin_texture: smooth and clear
+  hair_note: wavy texture, light brown color
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick, well-groomed, dark brown
+  brows_color: '#000000'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, defined jawline
+  cheeks_shape: rounded, smooth, well-lit

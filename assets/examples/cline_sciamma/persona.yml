@@ -1,0 +1,29 @@
+personal:
+  name: Céline Sciamma
+  gender: female
+  pronouns: she/her
+  age: 45
+  nationality: French
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and clear
+  hair_style: medium-length, slightly tousled
+  hair_note: brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: rounded and balanced
+  cheeks_shape: smooth and even-toned
+  hair_color:
+    hex_base: '#A0522D'
+    hex_shadow: '#8B4513'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'

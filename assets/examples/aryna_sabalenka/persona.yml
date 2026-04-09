@@ -10,17 +10,25 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C4967A'
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#8B6B3D'
-    hex_shadow: '#45351E'
-  hair_style: bun
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  hair_style: pulled back in a bun
   eye_color:
-    hex_iris: '#4A3528'
-    hex_pupil: '#251A14'
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'
   clothing:
     top:
       style: white sleeveless athletic tank top with Nike logo and orange/red accent
         trim on the shoulder strap
       color: '#F0F0F0'
-  face_shape: oval
+  face_shape: oval with defined jawline
+  skin_texture: smooth and slightly shiny
+  hair_note: dark brown
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and arched eyebrows
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: rounded and firm chin
+  cheeks_shape: full and slightly flushed

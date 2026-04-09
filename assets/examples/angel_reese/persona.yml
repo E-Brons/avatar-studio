@@ -1,0 +1,29 @@
+personal:
+  name: Angel Reese
+  gender: female
+  pronouns: she/her
+  age: 22
+  nationality: American
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D3A884'
+  skin_texture: smooth and radiant
+  hair_style: long, wavy, dark brown
+  hair_note: extends past shoulders
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-groomed
+  brows_color: '#222222'
+  nose_shape: straight and well-defined
+  chin_shape: rounded and balanced
+  cheeks_shape: full and rounded with subtle blush
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

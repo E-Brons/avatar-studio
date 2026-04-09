@@ -14,3 +14,20 @@ appearance:
     top:
       style: agbada with blue embroidered vertical strips along the front placket
       color: '#D6E5F5'
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly aged
+  hair_style: 'not visible, #333333'
+  hair_note: no hair visible
+  face_shape: oval, slightly elongated
+  eye_shape: oval, slightly almond
+  brows_style: 'thick and arched, #262626'
+  brows_color: '#262626'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, slightly receding
+  cheeks_shape: full, slightly sunken
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

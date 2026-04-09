@@ -1,0 +1,12 @@
+personal:
+  name: Keiynan Lonsdale
+  gender: non-binary
+  pronouns: they/them
+  age: 32
+  nationality: Australian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

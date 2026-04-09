@@ -10,16 +10,24 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_style: short, swept to the side, textured and voluminous on top with shorter
-    sides
+  hair_style: short and tousled, dark brown
   hair_color:
-    hex_base: '#2B1F1A'
-    hex_shadow: '#150F0D'
-  skin_tone: '#D4A98C'
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  skin_tone: '#FFD700'
   eye_color:
-    hex_iris: '#3B2A1E'
-    hex_pupil: '#1D150F'
+    hex_iris: '#8B0000'
+    hex_pupil: '#000000'
   clothing:
     garment:
       style: light pink/blush crew neck t-shirt
       color: '#E0CFC8'
+  skin_texture: smooth and slightly shiny
+  hair_note: visible
+  face_shape: angular and defined, with sharp features
+  eye_shape: slightly almond-shaped, dark brown
+  brows_style: thick and well-defined
+  brows_color: '#8B0000'
+  nose_shape: straight and prominent
+  chin_shape: sharp and defined, with a slight double chin
+  cheeks_shape: slightly sunken, giving a chiseled look

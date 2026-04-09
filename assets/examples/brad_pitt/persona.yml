@@ -1,0 +1,29 @@
+personal:
+  name: Brad Pitt
+  gender: male
+  pronouns: he/him
+  age: 61
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D3A18C'
+  skin_texture: smooth and slightly aged
+  hair_style: parted and styled back
+  hair_note: blonde with subtle gray
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light blue
+  brows_style: thick and well-groomed
+  brows_color: '#806445'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: rounded and full with subtle dimples
+  hair_color:
+    hex_base: '#D3A18C'
+    hex_shadow: '#806445'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

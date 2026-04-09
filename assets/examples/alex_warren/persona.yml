@@ -10,15 +10,22 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_style: short, tousled
+  hair_style: short
   hair_color:
-    hex_base: '#B5623A'
-    hex_shadow: '#5A311D'
-  skin_tone: '#D4A982'
+    hex_base: '#D2B48C'
+    hex_shadow: '#A0522D'
+  skin_tone: '#D2B48C'
   clothing:
     top:
       style: red Hummel Denmark (DBU) soccer jersey with white trim
       color: '#E03030'
   eye_color:
-    hex_iris: '#5A4030'
-    hex_pupil: '#2D2018'
+    hex_iris: '#000000'
+    hex_pupil: '#FFFFFF'
+  brows_color: '#D2B48C'
+  face_shape: oval
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: rounded

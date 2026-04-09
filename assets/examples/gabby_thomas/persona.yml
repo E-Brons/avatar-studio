@@ -1,0 +1,29 @@
+personal:
+  name: Gabby Thomas
+  gender: female
+  pronouns: she/her
+  age: 28
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and flawless
+  hair_style: blonde bob cut with soft waves
+  hair_note: blonde hair with natural highlights
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-groomed
+  brows_color: '#464646'
+  nose_shape: straight and well-defined
+  chin_shape: rounded and symmetrical
+  cheeks_shape: rounded and full with subtle blush
+  hair_color:
+    hex_base: '#F5F5F5'
+    hex_shadow: '#E0E0E0'
+  eye_color:
+    hex_iris: '#464646'
+    hex_pupil: '#000000'

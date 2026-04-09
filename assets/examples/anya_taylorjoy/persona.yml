@@ -15,3 +15,20 @@ appearance:
       style: sequined top with coral/salmon floral pattern and silver-grey accents,
         with a turquoise blue detail
       color: '#F08060'
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and fair
+  hair_style: long, wavy, blonde, center-parted
+  hair_note: blonde hair with subtle highlights
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, brown, expressive
+  brows_style: thick, well-groomed, arched
+  brows_color: '#000000'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, delicate, youthful
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#F8D0AA'
+    hex_shadow: '#F2E0B4'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'

@@ -10,8 +10,8 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C4956A'
-  face_shape: oval
+  skin_tone: '#222222'
+  face_shape: long and angular with deep wrinkles
   clothing:
     top:
       style: black robe/cloak (aba/bisht style, visible at shoulders and chest)
@@ -24,9 +24,17 @@ appearance:
       style: black turban (wrapped cloth style)
       color: '#222222'
   hair_color:
-    hex_base: '#C8C4B8'
-    hex_shadow: '#64625C'
-  hair_style: not visible
+    hex_base: '#808080'
+    hex_shadow: '#404040'
+  hair_style: 'not visible, #333333'
   eye_color:
-    hex_iris: '#4A3B2E'
-    hex_pupil: '#251D17'
+    hex_iris: '#222222'
+    hex_pupil: '#222222'
+  skin_texture: smooth and aged
+  hair_note: white beard and mustache
+  eye_shape: almond-shaped with dark, expressive eyes
+  brows_style: thick and prominent, dark
+  brows_color: '#222222'
+  nose_shape: wide and prominent, slightly bulbous
+  chin_shape: rounded and prominent
+  cheeks_shape: sunken and lined with age

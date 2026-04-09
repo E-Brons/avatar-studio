@@ -1,0 +1,29 @@
+personal:
+  name: G-Dragon
+  gender: male
+  pronouns: he/him
+  age: 36
+  nationality: South Korean
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and youthful
+  hair_style: short and tousled, dark with highlights
+  hair_note: visible
+  face_shape: angular and defined, youthful
+  eye_shape: almond-shaped, expressive
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: sharp and defined, youthful
+  cheeks_shape: rounded and smooth, youthful
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#FFD700'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

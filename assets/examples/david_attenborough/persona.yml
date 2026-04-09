@@ -20,12 +20,20 @@ appearance:
     inner_layer:
       style: v-neck sweater
       color: '#7A9EA3'
-  skin_tone: '#D4A98C'
+  skin_tone: '#F5F5F5'
   hair_color:
-    hex_base: '#E0DDD8'
-    hex_shadow: '#706E6C'
-  hair_style: short, swept back, wispy
+    hex_base: '#FFFFFF'
+    hex_shadow: '#808080'
+  hair_style: short and white, neatly combed
   eye_color:
-    hex_iris: '#7A8FA0'
-    hex_pupil: '#3D4750'
-  face_shape: oval
+    hex_iris: '#0000FF'
+    hex_pupil: '#000000'
+  face_shape: oval with prominent cheekbones
+  skin_texture: smooth and slightly wrinkled
+  hair_note: visible on top of head
+  eye_shape: almond-shaped with blue irises
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: medium-sized with a slight curve
+  chin_shape: rounded and slightly receding
+  cheeks_shape: full and slightly chubby

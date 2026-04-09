@@ -14,14 +14,20 @@ appearance:
     garment:
       style: light pink knit sweater
       color: '#C9A898'
-  face_shape: oval
-  skin_tone: '#D4A98C'
+  face_shape: oval with high cheekbones
+  skin_tone: '#222222'
   eye_color:
-    hex_iris: '#7A9E8B'
-    hex_pupil: '#3D4F45'
-  eye_shape: round
-  nose_shape: button
-  hair_style: braided pigtails
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  eye_shape: almond-shaped with dark irises
+  nose_shape: straight and prominent
+  hair_style: long braid down the back
   hair_color:
-    hex_base: '#4A3728'
-    hex_shadow: '#251B14'
+    hex_base: '#664422'
+    hex_shadow: '#443322'
+  skin_texture: smooth and clear
+  hair_note: brown
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: full and rounded with slight blush

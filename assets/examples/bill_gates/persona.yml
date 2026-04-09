@@ -18,12 +18,20 @@ appearance:
     glasses:
       style: rectangular dark tortoiseshell frames
       color: '#3B2A1A'
-  face_shape: oval
-  skin_tone: '#D4A882'
+  face_shape: oval with prominent cheekbones
+  skin_tone: '#FFFFF0'
   eye_color:
-    hex_iris: '#7A9BB5'
-    hex_pupil: '#3D4D5A'
-  hair_style: short, wavy, parted to the side
+    hex_iris: '#87CEEB'
+    hex_pupil: '#000000'
+  hair_style: short and slightly tousled
   hair_color:
-    hex_base: '#A8A49C'
-    hex_shadow: '#54524E'
+    hex_base: '#808080'
+    hex_shadow: '#A9A9A9'
+  skin_texture: smooth and slightly aged
+  hair_note: gray and brown
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-defined
+  brows_color: '#808080'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: full and slightly dimpled

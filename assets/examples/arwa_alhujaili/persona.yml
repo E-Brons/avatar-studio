@@ -10,17 +10,17 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C4956A'
+  skin_tone: '#262626'
   hair_color:
-    hex_base: '#1A1008'
-    hex_shadow: '#0D0804'
-  hair_style: updo, pulled back under headscarf
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: not visible, covered by black headscarf
   eye_color:
-    hex_iris: '#6B3A2A'
-    hex_pupil: '#351D15'
-  eye_shape: almond
-  nose_shape: straight, medium
-  face_shape: oval
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  eye_shape: almond-shaped, expressive
+  nose_shape: straight, well-proportioned
+  face_shape: oval, symmetrical, balanced
   clothing:
     headscarf:
       style: black fabric headscarf loosely draped around head and neck
@@ -32,3 +32,9 @@ appearance:
     belt:
       style: gold embroidered waistband/belt
       color: '#8B7535'
+  skin_texture: smooth and clear
+  hair_note: black
+  brows_style: thick, well-defined, arched
+  brows_color: '#262626'
+  chin_shape: rounded, balanced, strong
+  cheeks_shape: full, rounded, symmetrical

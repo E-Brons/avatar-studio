@@ -10,14 +10,20 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#8B6914'
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#1A1A1A'
-    hex_shadow: '#0D0D0D'
-  hair_style: thick box braids with decorative crystal beads and cowrie shells
+    hex_base: '#FF0000'
+    hex_shadow: '#8B0000'
+  hair_style: not visible, possibly curly or braided
   eye_color:
-    hex_iris: '#2C1A0E'
-    hex_pupil: '#160D07'
-  eye_shape: almond
-  face_shape: oval
-  nose_shape: broad, rounded tip
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  eye_shape: almond-shaped with long eyelashes
+  face_shape: oval with defined jawline
+  nose_shape: straight and prominent
+  skin_texture: smooth and glowing
+  hair_note: covered by a red headscarf
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks

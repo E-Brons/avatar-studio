@@ -1,0 +1,12 @@
+personal:
+  name: Hrithik Roshan
+  gender: male
+  pronouns: he/him
+  age: 51
+  nationality: Indian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

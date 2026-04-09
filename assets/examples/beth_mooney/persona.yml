@@ -1,0 +1,29 @@
+personal:
+  name: Beth Mooney
+  gender: female
+  pronouns: she/her
+  age: 30
+  nationality: Australian
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and fair
+  hair_style: short and straight, blonde
+  hair_note: blonde
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, bright blue
+  brows_style: thick, well-groomed, light brown
+  brows_color: '#D2B48C'
+  nose_shape: straight, medium-sized, well-defined
+  chin_shape: rounded, youthful, firm
+  cheeks_shape: rounded, plump, youthful
+  hair_color:
+    hex_base: '#F5F5F5'
+    hex_shadow: '#F5F5F5'
+  eye_color:
+    hex_iris: '#0000FF'
+    hex_pupil: '#0000FF'

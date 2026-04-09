@@ -10,15 +10,15 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C8906A'
+  skin_tone: '#FFFFFF'
   hair_color:
-    hex_base: '#2C1A0E'
-    hex_shadow: '#160D07'
-  hair_style: long, wavy, voluminous, loosely tousled
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  hair_style: medium-length, wavy, side-swept
   eye_color:
-    hex_iris: '#7A5C35'
-    hex_pupil: '#3D2E1A'
-  eye_shape: almond
+    hex_iris: '#888888'
+    hex_pupil: '#000000'
+  eye_shape: almond-shaped, expressive
   clothing:
     top:
       style: off-shoulder ruffled smocked top
@@ -30,5 +30,11 @@ appearance:
     earrings:
       style: small huggie hoop earrings
       color: '#C0C0C0'
-  face_shape: oval
-  nose_shape: straight
+  face_shape: oval, balanced and symmetrical
+  nose_shape: straight, well-defined
+  skin_texture: smooth and fair
+  hair_note: dark brown
+  brows_style: thick, well-groomed, arched
+  brows_color: '#333333'
+  chin_shape: rounded, balanced with jawline
+  cheeks_shape: rounded, soft, youthful

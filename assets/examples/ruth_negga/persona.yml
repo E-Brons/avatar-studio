@@ -1,0 +1,12 @@
+personal:
+  name: Ruth Negga
+  gender: female
+  pronouns: she/her
+  age: 42
+  nationality: Ethiopian-Irish
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

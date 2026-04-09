@@ -1,0 +1,29 @@
+personal:
+  name: Ariarne Titmus
+  gender: female
+  pronouns: she/her
+  age: 24
+  nationality: Australian
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and shiny
+  hair_style: not visible, likely tied back
+  hair_note: '#333333'
+  face_shape: oval, youthful, athletic
+  eye_shape: almond, bright, expressive
+  brows_style: thick, well-defined, arched
+  brows_color: '#0000FF'
+  nose_shape: straight, prominent, athletic
+  chin_shape: rounded, firm, youthful
+  cheeks_shape: full, rounded, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#0000FF'
+    hex_pupil: '#0000FF'

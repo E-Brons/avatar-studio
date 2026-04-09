@@ -1,0 +1,29 @@
+personal:
+  name: Daniel Ek
+  gender: male
+  pronouns: he/him
+  age: 41
+  nationality: Swedish
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D3D3D3'
+  skin_texture: smooth and slightly matte
+  hair_style: 'not visible, #333333'
+  hair_note: bald
+  face_shape: square with rounded edges
+  eye_shape: 'almond-shaped, #0000FF'
+  brows_style: thick and well-defined
+  brows_color: '#0000FF'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: 'full and rounded, #D3D3D3'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#0000FF'
+    hex_pupil: '#0000FF'

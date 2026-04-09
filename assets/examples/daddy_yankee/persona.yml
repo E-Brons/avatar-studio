@@ -1,0 +1,29 @@
+personal:
+  name: Daddy Yankee
+  gender: male
+  pronouns: he/him
+  age: 47
+  nationality: Puerto Rican
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
+  hair_style: not visible, shaved head
+  hair_note: '#333333'
+  face_shape: oval, slightly elongated
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight, slightly upturned
+  chin_shape: rounded, slightly puffed
+  cheeks_shape: smooth and slightly sunken
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

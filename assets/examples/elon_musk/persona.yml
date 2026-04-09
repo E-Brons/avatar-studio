@@ -10,15 +10,15 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#D4A88C'
+  skin_tone: '#FFD700'
   hair_color:
-    hex_base: '#4A3728'
-    hex_shadow: '#251B14'
-  hair_style: short, swept back with volume on top
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  hair_style: short, neatly styled
   eye_color:
-    hex_iris: '#7E9BB5'
-    hex_pupil: '#3F4D5A'
-  face_shape: oval
+    hex_iris: '#808000'
+    hex_pupil: '#000000'
+  face_shape: oval with defined jawline
   clothing:
     jacket:
       style: dark suit jacket or blazer
@@ -26,4 +26,11 @@ appearance:
     top:
       style: light-colored collared dress shirt
       color: '#E5DDD0'
-  nose_shape: straight
+  nose_shape: straight and prominent
+  skin_texture: smooth with visible pores
+  hair_note: dark brown
+  eye_shape: almond-shaped with light green irises
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  chin_shape: rounded and slightly chin-heavy
+  cheeks_shape: rounded and slightly chubby

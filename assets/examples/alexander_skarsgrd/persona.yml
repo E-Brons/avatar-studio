@@ -1,5 +1,5 @@
 personal:
-  name: "Alexander Skarsg\xE5rd"
+  name: Alexander Skarsgård
   gender: male
   pronouns: he/him
   age: 49
@@ -14,12 +14,18 @@ appearance:
     top:
       style: Black crew-neck knit sweater
       color: '#1A1A1A'
-  skin_tone: '#C4A08A'
+  skin_tone: fair
   hair_color:
-    hex_base: '#6B5540'
-    hex_shadow: '#352A20'
-  hair_style: short, straight, side-parted, slightly tousled
+    hex_base: '#808080'
+    hex_shadow: '#666666'
+  hair_style: short
   eye_color:
-    hex_iris: '#7A9BAE'
-    hex_pupil: '#3D4D57'
-  face_shape: oval, angular jawline
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: square
+  brows_color: '#000000'
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: square
+  cheeks_shape: rounded

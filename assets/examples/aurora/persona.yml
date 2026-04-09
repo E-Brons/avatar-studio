@@ -1,0 +1,29 @@
+personal:
+  name: Aurora
+  gender: female
+  pronouns: she/her
+  age: 29
+  nationality: Norwegian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#800080'
+  skin_texture: smooth and shiny
+  hair_style: medium-length, wavy, dark purple
+  hair_note: extends to shoulders
+  face_shape: round and youthful, slightly asymmetrical
+  eye_shape: large, almond-shaped, with heart reflections
+  brows_style: thick and arched, dark brown
+  brows_color: '#4B0082'
+  nose_shape: small and upturned, pink
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: rounded and rosy, with heart reflections
+  hair_color:
+    hex_base: '#800080'
+    hex_shadow: '#4B0082'
+  eye_color:
+    hex_iris: '#800080'
+    hex_pupil: '#FFFFFF'

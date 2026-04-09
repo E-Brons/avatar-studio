@@ -1,0 +1,29 @@
+personal:
+  name: Canelo Álvarez
+  gender: male
+  pronouns: he/him
+  age: 34
+  nationality: Mexican
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth with visible pores
+  hair_style: short and neatly combed
+  hair_note: blonde
+  face_shape: square with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly puffed
+  cheeks_shape: full and rounded with visible pores
+  hair_color:
+    hex_base: '#F5DEB3'
+    hex_shadow: '#E6E6E6'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

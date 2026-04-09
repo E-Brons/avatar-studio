@@ -1,0 +1,12 @@
+personal:
+  name: Taapsee Pannu
+  gender: female
+  pronouns: she/her
+  age: 37
+  nationality: Indian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

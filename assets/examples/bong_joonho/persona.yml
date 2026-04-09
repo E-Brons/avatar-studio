@@ -10,15 +10,15 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  hair_style: wavy, voluminous, tousled, medium-length
+  hair_style: medium-length, slightly tousled
   hair_color:
-    hex_base: '#8A8E91'
-    hex_shadow: '#454748'
-  skin_tone: '#C4A882'
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  skin_tone: '#222222'
   eye_color:
-    hex_iris: '#3B2E1E'
-    hex_pupil: '#1D170F'
-  face_shape: round
+    hex_iris: '#333333'
+    hex_pupil: '#333333'
+  face_shape: oval, slightly elongated
   clothing:
     top:
       style: Black crew-neck t-shirt
@@ -26,3 +26,11 @@ appearance:
     jacket:
       style: Dark black blazer/suit jacket with notch lapels
       color: '#1C1C1E'
+  skin_texture: smooth and slightly matte
+  hair_note: black
+  eye_shape: oval, slightly almond
+  brows_style: thick and slightly arched
+  brows_color: '#333333'
+  nose_shape: medium, slightly upturned
+  chin_shape: rounded, slightly protruding
+  cheeks_shape: rounded, slightly full

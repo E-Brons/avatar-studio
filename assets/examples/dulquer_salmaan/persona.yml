@@ -1,0 +1,29 @@
+personal:
+  name: Dulquer Salmaan
+  gender: male
+  pronouns: he/him
+  age: 38
+  nationality: Indian
+  religion: Muslim
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly textured
+  hair_style: short and styled upwards
+  hair_note: black
+  face_shape: oval with a strong jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and arched eyebrows
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

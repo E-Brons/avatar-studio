@@ -1,0 +1,29 @@
+personal:
+  name: Davido
+  gender: male
+  pronouns: he/him
+  age: 31
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly shiny
+  hair_style: short and neatly styled
+  hair_note: brown
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-groomed
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: rounded and well-defined
+  cheeks_shape: rounded and full with slight dimples
+  hair_color:
+    hex_base: '#8B4513'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#808000'
+    hex_pupil: '#000000'

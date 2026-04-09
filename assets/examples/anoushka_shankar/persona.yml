@@ -17,3 +17,20 @@ appearance:
     pants:
       style: wide-leg flowing black trousers
       color: '#1C1C1E'
+  skin_tone: '#262626'
+  skin_texture: smooth and clear
+  hair_style: long, dark, wavy, side-swept
+  hair_note: 'dark #333333'
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#262626'
+  nose_shape: straight, refined, symmetrical
+  chin_shape: rounded, soft, balanced
+  cheeks_shape: full, smooth, symmetrical
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

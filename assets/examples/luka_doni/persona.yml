@@ -1,0 +1,12 @@
+personal:
+  name: Luka Dončić
+  gender: male
+  pronouns: he/him
+  age: 25
+  nationality: Slovenian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

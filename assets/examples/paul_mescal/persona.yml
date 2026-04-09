@@ -1,0 +1,12 @@
+personal:
+  name: Paul Mescal
+  gender: male
+  pronouns: he/him
+  age: 29
+  nationality: Irish
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

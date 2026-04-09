@@ -1,0 +1,12 @@
+personal:
+  name: Amandla Stenberg
+  gender: non-binary
+  pronouns: they/them
+  age: 26
+  nationality: American
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

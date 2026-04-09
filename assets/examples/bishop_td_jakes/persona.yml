@@ -10,15 +10,15 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#8B5E3C'
-  hair_style: bald
+  skin_tone: '#333333'
+  hair_style: not visible, bald head
   hair_color:
-    hex_base: '#4A4A4A'
-    hex_shadow: '#252525'
-  face_shape: round
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  face_shape: square with broad jawline
   eye_color:
-    hex_iris: '#3B2A1A'
-    hex_pupil: '#1D150D'
+    hex_iris: '#333333'
+    hex_pupil: '#333333'
   clothing:
     jacket:
       style: Pinstriped single-breasted suit jacket, notch lapel, open front
@@ -29,3 +29,11 @@ appearance:
     pocket_square:
       style: ''
       color: '#E8A035'
+  skin_texture: smooth and slightly matte
+  hair_note: '#333333'
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and dark, slightly arched
+  brows_color: '#333333'
+  nose_shape: wide and prominent, slightly bulbous
+  chin_shape: rounded and full, with a slight double chin
+  cheeks_shape: full and rounded, with a slight dimple

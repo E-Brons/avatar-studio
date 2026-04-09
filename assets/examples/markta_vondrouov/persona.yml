@@ -1,0 +1,12 @@
+personal:
+  name: Markéta Vondroušová
+  gender: female
+  pronouns: she/her
+  age: 25
+  nationality: Czech
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

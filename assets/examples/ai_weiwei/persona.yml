@@ -10,15 +10,15 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#C4A882'
+  skin_tone: golden
   hair_color:
-    hex_base: '#2E2A27'
-    hex_shadow: '#171513'
-  hair_style: short, tousled, unkempt with volume on top
+    hex_base: '#202020'
+    hex_shadow: '#333333'
+  hair_style: not visible
   eye_color:
-    hex_iris: '#3B2F28'
-    hex_pupil: '#1D1714'
-  face_shape: round
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: square
   clothing:
     jacket:
       style: dark navy blue utility jacket with snap buttons and chest pocket
@@ -26,3 +26,9 @@ appearance:
     top:
       style: black crew neck undershirt visible at collar
       color: '#1A1A1A'
+  brows_color: '#000000'
+  eye_shape: oval
+  brows_style: thick
+  nose_shape: wide
+  chin_shape: rounded
+  cheeks_shape: rounded

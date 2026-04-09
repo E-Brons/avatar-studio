@@ -1,0 +1,29 @@
+personal:
+  name: Ayushmann Khurrana
+  gender: male
+  pronouns: he/him
+  age: 40
+  nationality: Indian
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and tanned
+  hair_style: neatly styled, slightly tousled
+  hair_note: dark brown
+  face_shape: oval, well-defined features
+  eye_shape: slightly almond-shaped, dark
+  brows_style: thick, well-groomed, dark
+  brows_color: '#000000'
+  nose_shape: straight, prominent, well-defined
+  chin_shape: strong, defined, slightly squared
+  cheeks_shape: smooth, slightly tanned
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

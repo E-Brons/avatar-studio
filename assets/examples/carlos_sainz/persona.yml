@@ -1,0 +1,29 @@
+personal:
+  name: Carlos Sainz
+  gender: male
+  pronouns: he/him
+  age: 30
+  nationality: Spanish
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFA07A'
+  skin_texture: smooth with visible pores
+  hair_style: partially visible, dark brown
+  hair_note: partially covering ears
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped, brown
+  brows_style: thick and arched, dark brown
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined, slightly stubbled
+  cheeks_shape: rounded and smooth, slightly flushed
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'
