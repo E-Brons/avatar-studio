@@ -24,10 +24,10 @@ Asks a vision LLM to identify which facial expressions are visible in the image.
 **Score formula**:
 
 - **Direct match**: `top_expression` matches expected label (case-insensitive) AND `top_score ≥ 0.50`
-  → `Expression Score` = 1.0
+  → `Expression Score` = 1.0  # amplify success
 - **Semantic fallback** (`semantic_effective_score()`): sums probabilities of all output labels that a text-LLM judges semantically equivalent to the expected label (separate yes/no call per label; allows synonyms — e.g. `"joyful"` counts toward `"happiness"`):
   - If `sum_score ≥ 0.50` → `Expression Score` = `sum_score`
-  - Else → `Expression Score` = `sum_score`²
+  - Else → `Expression Score` = `sum_score`²   # amplify failure
 
 Threshold 0.50 filters diffused scores (0.15–0.20) caused by ambiguous renderings while accepting clearly rendered expressions.
 
@@ -51,7 +51,7 @@ Asks a vision LLM to identify which style from `styles.yml` the image best repre
 | `raw_response` | `str` | Raw LLM YAML for debugging |
 
 **Score formula**:
-- `top_style_id == expected_style_id` → `Style Score` = `√style_score`
+- `top_style_id == expected_style_id` → `Style Score` = `√style_score` # amplify success
 - Otherwise → `Style Score` = `style_score`
 
 [^style-filter]: `random` has no visual definition and cannot be classified. Styles without `key_technical_traits` are excluded because the classifier has no discriminating criteria to apply.
@@ -124,7 +124,19 @@ Verifies visually whether the generated image depicts the same person as a refer
    - **B.** The generated render achieved the `{goal}` well
    - **C.** The generated render is high quality
 
-3. Compound: **50% A + 30% B + 20% C**
+For all the above:
+```python
+if (LLM_Score > .60):
+  score = sqrt(LLM_Score) # amplify success
+else:
+  score = LLM_Score/2     # amplify failure
+```
+
+3. **Compound score**:
+
+```python
+compound_score = sqrt(.50 * score_same_person + .30 * score_goal_achieved + .20 * score_quality)   # amplify success
+```
 
 **Output — `ComparisonResult`**:
 
@@ -133,6 +145,6 @@ Verifies visually whether the generated image depicts the same person as a refer
 | `identity_score` | `float` (0–1) | Score A: same-person consistency |
 | `goal_score` | `float` (0–1) | Score B: goal achievement |
 | `quality_score` | `float` (0–1) | Score C: render quality |
-| `compound_score` | `float` (0–1) | 50% A + 30% B + 20% C |
+| `compound_score` | `float` (0–1) | sqrt(50% A + 30% B + 20% C) |
 | `reasoning` | `str` | One-sentence visual evidence |
 | `raw_response` | `str` | Raw LLM JSON for debugging |

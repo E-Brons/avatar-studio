@@ -6,7 +6,7 @@ LLM to score:
   B. Goal achievement
   C. Render quality
 
-Compound score = 50% A + 30% B + 20% C.
+Compound score = sqrt(50% A + 30% B + 20% C), each component amplified via sqrt if > 0.60.
 
 Used by callers that want to compare reference vs. generated portraits (e.g. style transfer,
 expression variant, identity preservation checks).
@@ -17,6 +17,7 @@ from __future__ import annotations
 import io
 import json
 import logging
+import math
 import re
 from dataclasses import dataclass
 
@@ -66,7 +67,7 @@ class ComparisonResult:
     identity_score: float  # 0–1
     goal_score: float  # 0–1
     quality_score: float  # 0–1
-    compound_score: float  # 50% A + 30% B + 20% C
+    compound_score: float  # sqrt(50% A + 30% B + 20% C), each component amplified
     reasoning: str = ""
     raw_response: str = ""
 
@@ -212,10 +213,13 @@ def _parse_comparison_response(raw: str) -> ComparisonResult:
         except TypeError, ValueError:
             return 0.0
 
-    identity = _to_float("identity_score")
-    goal = _to_float("goal_score")
-    quality = _to_float("quality_score")
-    compound = 0.5 * identity + 0.3 * goal + 0.2 * quality
+    def _amplify(score: float) -> float:
+        return math.sqrt(score) if score > 0.60 else score / 2.0
+
+    identity = _amplify(_to_float("identity_score"))
+    goal = _amplify(_to_float("goal_score"))
+    quality = _amplify(_to_float("quality_score"))
+    compound = math.sqrt(0.5 * identity + 0.3 * goal + 0.2 * quality)
     reasoning = str(parsed.get("reasoning", "")).strip()
 
     return ComparisonResult(
