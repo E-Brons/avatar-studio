@@ -5,8 +5,6 @@ from __future__ import annotations
 import base64
 import io
 import logging
-import random
-import re
 import shutil
 from pathlib import Path
 
@@ -16,17 +14,13 @@ from PIL import Image, PngImagePlugin
 from config.config import SETTINGS as _SETTINGS
 from config.gateway import GatewayClient
 from pipeline.render.expression_resolver import EXPRESSIONS_YML
+from pipeline.render.llm.persona_sanitizer import sanitize_persona
+from pipeline.render.llm.prompt_builder import ReferenceMode, build_prompt
 from pipeline.render.style_resolver import STYLES_YML
 
 _DEFAULT_IMAGE_SIZE: int = _SETTINGS["default_image_size"]
 
 logger = logging.getLogger(__name__)
-
-
-def _resolve_unilateral(facs: str) -> str:
-    """Replace AUNNx placeholders with a randomly chosen side (R or L)."""
-    side = random.choice(["R", "L"])
-    return re.sub(r"AU(\d+)x", lambda m: f"AU{m.group(1)}{side}", facs)
 
 
 def generate_avatar_image(
@@ -35,6 +29,8 @@ def generate_avatar_image(
     style: dict,
     expression: dict,
     reference_image: Path | None = None,
+    reference_mode: ReferenceMode = "avatar_portrait",
+    source_style_name: str | None = None,
     gateway_url: str = "http://127.0.0.1:4096",
     width: int = _DEFAULT_IMAGE_SIZE,
     height: int = _DEFAULT_IMAGE_SIZE,
@@ -59,6 +55,13 @@ def generate_avatar_image(
     reference_image:
         None for the neutral portrait.
         Path to the neutral portrait PNG for expression variants.
+    reference_mode:
+        How the reference image should be interpreted by the model.
+        See ``build_prompt`` for full documentation of each mode.
+        Defaults to ``"avatar_portrait"`` (expression variant use-case).
+        Ignored when ``reference_image`` is None.
+    source_style_name:
+        Human-readable source style name for ``"style_transfer"`` mode.
     gateway_url:
         Base URL of the LLM Gateway server.
     out_path:
@@ -104,44 +107,29 @@ def generate_avatar_image(
     # --- Build prompt ---
     # Strip the 'style' key — it holds post-processing metadata (bg_color, fg_color)
     # and is not visual identity data for the image model.
-    persona_for_prompt = {k: v for k, v in persona.items() if k != "style"}
-    persona_yaml = yaml.dump(
-        persona_for_prompt, default_flow_style=False, sort_keys=False, allow_unicode=True
+    persona_sanitized = sanitize_persona(persona)
+    effective_reference_mode: ReferenceMode = (
+        reference_mode if reference_image is not None else "none"
     )
-    # Extract only image-relevant fields from the expression entry.
-    facs = _resolve_unilateral(expr_entry.get("facs_action_units", ""))
-    expr_for_prompt = {
-        "Expression": expr_entry.get("expression", expr_name),
-        "FACS": facs,
-        "Description": expr_entry.get("description", ""),
-    }
-    expr_yaml = yaml.dump(
-        expr_for_prompt, default_flow_style=False, sort_keys=False, allow_unicode=True
+    full_prompt = build_prompt(
+        persona_sanitized,
+        expr_entry,
+        style_directive,
+        reference_mode=effective_reference_mode,
+        source_style_name=source_style_name,
     )
-
-    user_prompt = f"persona profile:\n{persona_yaml}\nexpression:\n{expr_yaml}"
-    if reference_image is not None:
-        user_prompt += "\nreference image: see the attached neutral expression avatar PNG file"
-
-    # Image models have no system concept — prepend the style directive to the prompt.
-    full_prompt = f"{style_directive}\n\n{user_prompt}".strip() if style_directive else user_prompt
-
-    # --- Log inputs + prompt ---
     _SEP = "─" * 60
     logger.info(
-        "\n%s\n  gateway_url=%s | style=%s | expression=%s | reference=%s\n\n"
+        "\n%s\n  gateway_url=%s | style=%s | expression=%s | reference=%s | mode=%s\n\n"
         "STYLE DIRECTIVE:\n%s\n\n"
-        "PERSONA:\n%s\n"
-        "EXPRESSION:\n%s\n"
         'PROMPT:\n"""\n%s\n"""\n%s',
         _SEP,
         gateway_url,
         style_name,
         expr_name,
         str(reference_image) if reference_image else "none",
+        effective_reference_mode,
         style_directive or "(none)",
-        persona_yaml,
-        expr_yaml,
         full_prompt,
         _SEP,
     )
@@ -185,14 +173,16 @@ def generate_avatar_image(
     meta.add_text("Copyright", "\u00a9 2026 MyBoard & Elkana Bronstein")
     meta.add_text("GatewayUrl", gateway_url)
     meta.add_text("StyleDirective", style_directive)
-    meta.add_text("UserPrompt", user_prompt)
+    meta.add_text("ReferenceMode", effective_reference_mode)
     meta.add_text("Prompt", full_prompt)
-    meta.add_text("PersonaYaml", persona_yaml)
     meta.add_text(
         "StyleYaml",
         yaml.dump(style_entry, default_flow_style=False, sort_keys=False, allow_unicode=True),
     )
-    meta.add_text("ExpressionYaml", expr_yaml)
+    meta.add_text(
+        "ExpressionYaml",
+        yaml.dump(expr_entry, default_flow_style=False, sort_keys=False, allow_unicode=True),
+    )
     img.save(str(out_path), pnginfo=meta)
 
     if session_dir is not None:
@@ -211,6 +201,8 @@ def render_llm(
     style: dict,
     expression_name: str,
     reference_image: Path | None = None,
+    reference_mode: ReferenceMode = "avatar_portrait",
+    source_style_name: str | None = None,
     gateway_url: str = "http://127.0.0.1:4096",
     width: int = 256,
     height: int = 256,
@@ -234,6 +226,8 @@ def render_llm(
         },
         expression={"name": expression_name, "expressions_yml": EXPRESSIONS_YML},
         reference_image=reference_image,
+        reference_mode=reference_mode,
+        source_style_name=source_style_name,
         gateway_url=gateway_url,
         width=width,
         height=height,

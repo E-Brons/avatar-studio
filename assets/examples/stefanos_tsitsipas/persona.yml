@@ -1,0 +1,29 @@
+personal:
+  name: Stefanos Tsitsipas
+  gender: male
+  pronouns: he/him
+  age: 26
+  nationality: Greek
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
+  hair_style: long and wet, tied back
+  hair_note: wet and dark
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and arched, dark
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined, slightly chubby
+  cheeks_shape: full and rounded, slightly chubby
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

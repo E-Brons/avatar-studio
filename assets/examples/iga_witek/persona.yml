@@ -1,0 +1,33 @@
+personal:
+  name: Iga Świątek
+  gender: female
+  pronouns: she/her
+  age: 24
+  nationality: Polish
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Black sleeveless fitted dress with a round neckline
+      color: '#0A0A0A'
+  skin_tone: '#FFFFF0'
+  skin_texture: smooth and youthful
+  hair_style: long and wavy, tied back
+  hair_note: visible in the image
+  face_shape: oval with balanced proportions
+  eye_shape: almond-shaped, expressive
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and soft, youthful
+  cheeks_shape: full and rounded, youthful
+  hair_color:
+    hex_base: '#8B4513'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

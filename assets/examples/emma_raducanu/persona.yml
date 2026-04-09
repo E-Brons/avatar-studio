@@ -1,0 +1,29 @@
+personal:
+  name: Emma Raducanu
+  gender: female
+  pronouns: she/her
+  age: 22
+  nationality: British
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and youthful
+  hair_style: long and braided with side part
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark brown irises
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and refined
+  chin_shape: rounded and delicate
+  cheeks_shape: full and rosy, slightly flushed
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

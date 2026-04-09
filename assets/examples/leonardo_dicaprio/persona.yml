@@ -1,0 +1,12 @@
+personal:
+  name: Leonardo DiCaprio
+  gender: male
+  pronouns: he/him
+  age: 50
+  nationality: American
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

@@ -1,0 +1,12 @@
+personal:
+  name: Léon Marchand
+  gender: male
+  pronouns: he/him
+  age: 22
+  nationality: French
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

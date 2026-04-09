@@ -1,0 +1,29 @@
+personal:
+  name: Harry Styles
+  gender: male
+  pronouns: he/him
+  age: 31
+  nationality: British
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and youthful
+  hair_style: long, wavy, light brown
+  hair_note: fringe partially covering left eye
+  face_shape: oval, youthful, symmetrical
+  eye_shape: almond-shaped, light green
+  brows_style: thick, well-groomed, light brown
+  brows_color: '#8B4513'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, youthful, smooth
+  cheeks_shape: rounded, full, youthful
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#8B4513'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'

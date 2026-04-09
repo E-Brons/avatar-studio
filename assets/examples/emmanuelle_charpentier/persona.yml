@@ -1,0 +1,29 @@
+personal:
+  name: Emmanuelle Charpentier
+  gender: female
+  pronouns: she/her
+  age: 56
+  nationality: French
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and youthful
+  hair_style: curly and shoulder-length
+  hair_note: light brown with subtle highlights
+  face_shape: round and symmetrical
+  eye_shape: almond-shaped and expressive
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and well-proportioned
+  chin_shape: rounded and balanced
+  cheeks_shape: full and rosy-toned, indicating health
+  hair_color:
+    hex_base: '#D2691E'
+    hex_shadow: '#8B4513'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

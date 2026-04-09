@@ -1,0 +1,29 @@
+personal:
+  name: Antoine Dupont
+  gender: male
+  pronouns: he/him
+  age: 28
+  nationality: French
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#222222'
+  skin_texture: smooth and clear
+  hair_style: short and neatly styled
+  hair_note: brown
+  face_shape: square with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: square and firm jawline
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#4a4a4a'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

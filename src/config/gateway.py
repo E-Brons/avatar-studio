@@ -27,11 +27,58 @@ class GatewayClient:
         *,
         max_retries: int = 3,
         timeout: int = 120,
+        output_config: dict | None = None,
     ) -> str:
         """Call POST /text_gen and return the response content string."""
+        payload: dict = {"messages": messages, "max_retries": max_retries}
+        if output_config is not None:
+            schema = output_config.get("format", {}).get("schema")
+            if schema:
+                payload["response_schema"] = schema
         resp = requests.post(
             f"{self.base_url}/text_gen",
-            json={"messages": messages, "max_retries": max_retries},
+            json=payload,
+            timeout=timeout,
+        )
+        resp.raise_for_status()
+        return resp.json()["content"]
+
+    def reasoning(
+        self,
+        messages: list[dict],
+        *,
+        thinking_budget: int | None = None,
+        timeout: int = 300,
+    ) -> str:
+        """Call POST /reasoning (claude-opus with extended thinking) and return free-form text."""
+        payload: dict = {"messages": messages}
+        if thinking_budget is not None:
+            payload["thinking_budget"] = thinking_budget
+        resp = requests.post(
+            f"{self.base_url}/reasoning",
+            json=payload,
+            timeout=timeout,
+        )
+        resp.raise_for_status()
+        return resp.json()["content"]
+
+    def general(
+        self,
+        messages: list[dict],
+        *,
+        max_retries: int = 3,
+        timeout: int = 120,
+        output_config: dict | None = None,
+    ) -> str:
+        """Call POST /general (claude-sonnet) and return the response content string."""
+        payload: dict = {"messages": messages, "max_retries": max_retries}
+        if output_config is not None:
+            schema = output_config.get("format", {}).get("schema")
+            if schema:
+                payload["response_schema"] = schema
+        resp = requests.post(
+            f"{self.base_url}/general",
+            json=payload,
             timeout=timeout,
         )
         resp.raise_for_status()
@@ -46,6 +93,7 @@ class GatewayClient:
         seed: int | None = None,
         optimize: str = "normal",
         reference_images_b64: list[str] | None = None,
+        strength: float | None = None,
         max_retries: int = 3,
         timeout: int = 300,
     ) -> bytes:
@@ -63,6 +111,8 @@ class GatewayClient:
             payload["seed"] = seed
         if reference_images_b64:
             payload["reference_images_b64"] = reference_images_b64
+        if strength is not None:
+            payload["strength"] = strength
 
         resp = requests.post(
             f"{self.base_url}/image_gen",
@@ -80,22 +130,63 @@ class GatewayClient:
         *,
         max_retries: int = 3,
         timeout: int = 120,
+        output_config: dict | None = None,
     ) -> str:
         """Call POST /image_inspector and return the response content string."""
         import base64
 
+        payload: dict = {
+            "image_b64": base64.b64encode(image_bytes).decode(),
+            "system": system,
+            "prompt": prompt,
+            "max_retries": max_retries,
+        }
+        if output_config is not None:
+            schema = output_config.get("format", {}).get("schema")
+            if schema:
+                payload["response_schema"] = schema
         resp = requests.post(
             f"{self.base_url}/image_inspector",
-            json={
-                "image_b64": base64.b64encode(image_bytes).decode(),
-                "system": system,
-                "prompt": prompt,
-                "max_retries": max_retries,
-            },
+            json=payload,
             timeout=timeout,
         )
         resp.raise_for_status()
         return resp.json()["content"]
+
+    def ipadapter_faceid(
+        self,
+        prompt: str,
+        face_images_b64: list[str],
+        *,
+        weight: float = 0.7,
+        width: int = 256,
+        height: int = 256,
+        seed: int | None = None,
+        optimize: str = "normal",
+        max_retries: int = 3,
+        timeout: int = 300,
+    ) -> bytes:
+        """Call POST /ipadapter_faceid and return raw image bytes."""
+        import base64
+
+        payload: dict = {
+            "prompt": prompt,
+            "face_images_b64": face_images_b64,
+            "weight": weight,
+            "width": width,
+            "height": height,
+            "optimize": optimize,
+            "max_retries": max_retries,
+        }
+        if seed is not None:
+            payload["seed"] = seed
+        resp = requests.post(
+            f"{self.base_url}/ipadapter_faceid",
+            json=payload,
+            timeout=timeout,
+        )
+        resp.raise_for_status()
+        return base64.b64decode(resp.json()["image_b64"])
 
     def available_models(self) -> list[str]:
         """Return model names from GET /api/tags (Ollama-compatible)."""

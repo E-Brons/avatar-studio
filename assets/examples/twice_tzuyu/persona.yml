@@ -1,0 +1,29 @@
+personal:
+  name: TWICE Tzuyu
+  gender: female
+  pronouns: she/her
+  age: 25
+  nationality: Taiwanese
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and youthful
+  hair_style: long and straight, light brown
+  hair_note: feathered bangs
+  face_shape: oval with soft contours
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and delicate
+  cheeks_shape: rounded and full, slightly flushed
+  hair_color:
+    hex_base: '#D2694A'
+    hex_shadow: '#8B4513'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

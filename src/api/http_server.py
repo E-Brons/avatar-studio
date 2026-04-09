@@ -31,10 +31,12 @@ from api.config_loader import ConfigLoader
 from config.config import SETTINGS, _darken_hex
 from pipeline.persona.aggregator_llm import select_features
 from pipeline.persona.generator import build_avatar_charachter, pick_demographics
+from pipeline.reexpress import reexpress_avatar
 from pipeline.render.expression_resolver import EXPRESSIONS_YML
 from pipeline.render.llm.orchestrator import generate_avatar_image
 from pipeline.render.programmatic.svg_generator import create_programmatic_avatar, svg_to_png
 from pipeline.render.style_resolver import STYLES_YML
+from pipeline.restyle import restyle_avatar
 
 PROGRAMMATIC_STYLES: frozenset[str] = frozenset(
     {"toon-head", "avataaars", "bottts", "micah", "opeeps"}
@@ -170,6 +172,30 @@ class GenerateResult(BaseModel):
     image_b64: str
     avatar_persona: dict
     expressions: dict[str, str]
+    session_id: str
+
+
+class RestyleRequest(BaseModel):
+    images_b64: list[str]
+    style_id: str
+    expression_id: str = "neutral"
+    candidates: int = 4
+    width: int = 512
+    height: int = 512
+    seed: int | None = None
+
+
+class ReexpressRequest(BaseModel):
+    images_b64: list[str]
+    expression_id: str
+    candidates: int = 4
+    width: int = 512
+    height: int = 512
+    seed: int | None = None
+
+
+class ImageResult(BaseModel):
+    image_b64: str
     session_id: str
 
 
@@ -426,6 +452,57 @@ async def generate_avatar(body: GenerateRequest) -> GenerateResult:
     loop = asyncio.get_event_loop()
     result = await loop.run_in_executor(_executor, _run_pipeline_sync, body)
     return result
+
+
+@app.post("/api/avatar/restyle")
+async def restyle_avatar_endpoint(body: RestyleRequest) -> ImageResult:
+    """Re-render an existing avatar in a new style using IP-Adapter FaceID."""
+    import asyncio
+
+    loop = asyncio.get_event_loop()
+
+    def _run() -> ImageResult:
+        image_bytes = restyle_avatar(
+            body.images_b64,
+            body.style_id,
+            body.expression_id,
+            candidates=body.candidates,
+            width=body.width,
+            height=body.height,
+            gateway_url=_GATEWAY_URL,
+            seed=body.seed,
+        )
+        return ImageResult(
+            image_b64=base64.b64encode(image_bytes).decode(),
+            session_id=str(uuid.uuid4()),
+        )
+
+    return await loop.run_in_executor(_executor, _run)
+
+
+@app.post("/api/avatar/reexpress")
+async def reexpress_avatar_endpoint(body: ReexpressRequest) -> ImageResult:
+    """Apply a new expression to an existing avatar using IP-Adapter FaceID."""
+    import asyncio
+
+    loop = asyncio.get_event_loop()
+
+    def _run() -> ImageResult:
+        image_bytes = reexpress_avatar(
+            body.images_b64,
+            body.expression_id,
+            candidates=body.candidates,
+            width=body.width,
+            height=body.height,
+            gateway_url=_GATEWAY_URL,
+            seed=body.seed,
+        )
+        return ImageResult(
+            image_b64=base64.b64encode(image_bytes).decode(),
+            session_id=str(uuid.uuid4()),
+        )
+
+    return await loop.run_in_executor(_executor, _run)
 
 
 # ─── Flutter web frontend (must be mounted LAST — catch-all) ─────────────────

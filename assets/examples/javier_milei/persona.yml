@@ -1,0 +1,39 @@
+personal:
+  name: Javier Milei
+  gender: male
+  pronouns: he/him
+  age: 55
+  nationality: Argentine
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  hair_style: medium-length, slightly tousled
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  skin_tone: '#222222'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'
+  clothing:
+    suit jacket:
+      style: dark black formal suit jacket with notch lapels and a breast pocket
+      color: '#1C1C1C'
+    dress shirt:
+      style: light blue collared dress shirt visible at the collar and chest
+      color: '#CDD5E4'
+    necktie:
+      style: solid black necktie
+      color: '#111111'
+  skin_texture: smooth and slightly aged
+  hair_note: dark brown
+  face_shape: round with prominent cheekbones
+  eye_shape: slightly almond-shaped
+  brows_style: thick and slightly arched
+  brows_color: '#333333'
+  nose_shape: medium-sized, slightly upturned
+  chin_shape: rounded and slightly double-chinned
+  cheeks_shape: full and slightly chubby

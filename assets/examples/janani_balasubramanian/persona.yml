@@ -1,0 +1,43 @@
+personal:
+  name: Janani Balasubramanian
+  gender: non-binary
+  pronouns: they/them
+  age: 35
+  nationality: Indian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    shirt:
+      style: button-up collared shirt with bold black abstract graphic print on white
+      color: '#FFFFFF'
+    jacket/blazer:
+      style: striped woven blazer with horizontal stripes in burgundy, dark green,
+        navy, and brown with geometric pattern accents
+      color: '#5C2030'
+    necktie:
+      style: loosely knotted thin striped tie in grey and white
+      color: '#7A7A85'
+    belt:
+      style: bright blue belt
+      color: '#2070D0'
+  skin_tone: '#222222'
+  skin_texture: smooth and clear
+  hair_style: short and styled, dark
+  hair_note: not visible
+  face_shape: oval, symmetrical, youthful
+  eye_shape: large, round, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#000000'
+  nose_shape: medium, straight, prominent
+  chin_shape: rounded, defined, youthful
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

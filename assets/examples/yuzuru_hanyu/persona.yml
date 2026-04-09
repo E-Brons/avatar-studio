@@ -1,0 +1,28 @@
+personal:
+  name: Yuzuru Hanyu
+  gender: male
+  pronouns: he/him
+  age: 31
+  nationality: Japanese
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval
+  skin_tone: '#D4A574'
+  eye_color:
+    hex_iris: '#1A0F0A'
+    hex_pupil: '#0D0705'
+  eye_shape: almond
+  nose_shape: straight
+  hair_style: short layered with side-swept bangs
+  hair_color:
+    hex_base: '#0F0A08'
+    hex_shadow: '#070504'
+  clothing:
+    top:
+      style: Black V-neck short-sleeve t-shirt with subtle tonal floral/leaf print
+        pattern
+      color: '#1E1E20'

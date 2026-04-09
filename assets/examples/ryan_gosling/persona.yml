@@ -1,0 +1,29 @@
+personal:
+  name: Ryan Gosling
+  gender: male
+  pronouns: he/him
+  age: 44
+  nationality: Canadian
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and slightly matte
+  hair_style: short, neatly styled, side-swept
+  hair_note: blonde, light brown highlights
+  face_shape: oval, slightly elongated
+  eye_shape: almond-shaped, light blue
+  brows_style: thick, well-groomed, light brown
+  brows_color: '#D2B48C'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, slightly defined
+  cheeks_shape: smooth, slightly sunken
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#F5F5F5'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

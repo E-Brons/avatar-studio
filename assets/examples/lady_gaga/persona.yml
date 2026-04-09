@@ -1,0 +1,12 @@
+personal:
+  name: Lady Gaga
+  gender: female
+  pronouns: she/her
+  age: 38
+  nationality: American
+  religion: unknown
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

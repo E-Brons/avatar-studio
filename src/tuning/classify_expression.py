@@ -16,15 +16,51 @@ Used by:
 
 from __future__ import annotations
 
+import json
 import logging
 import re
 from dataclasses import dataclass, field
 
-import yaml
-
 from config.gateway import GatewayClient
 
 logger = logging.getLogger(__name__)
+
+VALIDATION_EXPRESSION_THRESHOLD: float = 0.50
+
+# JSON schema for the vision model response.
+_EXPRESSION_SCHEMA: dict = {
+    "type": "object",
+    "properties": {
+        "top_expression": {"type": "string"},
+        "expressions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "score": {"type": "number"},
+                },
+                "required": ["name", "score"],
+                "additionalProperties": False,
+            },
+        },
+        "reasoning": {"type": "string"},
+    },
+    "required": ["top_expression", "expressions", "reasoning"],
+    "additionalProperties": False,
+}
+
+_EXPRESSION_OUTPUT_CONFIG: dict = {"format": {"type": "json_schema", "schema": _EXPRESSION_SCHEMA}}
+
+# JSON schema for the semantic yes/no text model response.
+_SEMANTIC_SCHEMA: dict = {
+    "type": "object",
+    "properties": {"matches": {"type": "boolean"}},
+    "required": ["matches"],
+    "additionalProperties": False,
+}
+
+_SEMANTIC_OUTPUT_CONFIG: dict = {"format": {"type": "json_schema", "schema": _SEMANTIC_SCHEMA}}
 
 _CLASSIFIER_SYSTEM = """\
 You are an expert in facial expression analysis for portrait images.
@@ -35,16 +71,8 @@ head angle, and similar visible cues.
 
 Do NOT infer from context, clothing, or any metadata.  Read only the face.
 
-Output ONLY YAML in this exact format (no markdown fences):
-
-top_expression: <name>
-expressions:
-  <name>: <float 0.0-1.0>
-  ...
-reasoning: <one sentence citing key visible facial cues>
-
 Rules:
-- List between 5 and 10 expression names total.
+- List between 5 and 10 expression names in the expressions array.
 - All scores must sum to approximately 1.0.
 - Use simple, common everyday words that anyone would immediately understand.
   Avoid rare or literary vocabulary.
@@ -100,7 +128,11 @@ def _call_vision_model(
 ) -> str:
     """Call a vision-capable LLM via the gateway and return the raw text response."""
     return GatewayClient(gateway_url).image_inspector(
-        image_bytes_decoded, system, prompt, timeout=timeout
+        image_bytes_decoded,
+        system,
+        prompt,
+        timeout=timeout,
+        output_config=_EXPRESSION_OUTPUT_CONFIG,
     )
 
 
@@ -139,7 +171,6 @@ def classify_image_expression(
     """
     if expression_labels:
         label_list = "\n".join(f"  - {label}" for label in expression_labels)
-        yaml_template = "\n".join(f"  {label}: 0.0" for label in expression_labels)
         user_text = (
             "Examine this avatar portrait carefully.\n\n"
             "Score the following expression labels based on what you directly observe "
@@ -147,12 +178,7 @@ def classify_image_expression(
             f"{label_list}\n\n"
             "You may also add up to 5 additional expression names if you observe "
             "expressions not covered by the list above.\n"
-            "Total entries in the 'expressions' block must be between 5 and 10.\n\n"
-            "Reply ONLY as YAML (no markdown fences):\n"
-            f"top_expression: <the name with the highest score>\n"
-            f"expressions:\n{yaml_template}\n"
-            "  <additional if observed>: 0.0\n"
-            "reasoning: <one sentence citing key visible facial cues>"
+            "Total entries in the expressions array must be between 5 and 10."
         )
     else:
         user_text = (
@@ -161,13 +187,7 @@ def classify_image_expression(
             "directly observe in the face.  Use whatever plain English words best "
             "describe what you see — there is no fixed vocabulary.\n\n"
             "List between 5 and 10 expression names. All scores must sum to "
-            "approximately 1.0.\n\n"
-            "Reply ONLY as YAML (no markdown fences):\n"
-            "top_expression: <the name with the highest score>\n"
-            "expressions:\n"
-            "  <name>: <float 0.0-1.0>\n"
-            "  ...\n"
-            "reasoning: <one sentence citing key visible facial cues>"
+            "approximately 1.0."
         )
 
     try:
@@ -194,7 +214,9 @@ def _call_text_model(
 ) -> str:
     """Call a text-only LLM via the gateway and return the raw response."""
     return GatewayClient(gateway_url).text_gen(
-        [{"role": "user", "content": prompt}], timeout=timeout
+        [{"role": "user", "content": prompt}],
+        timeout=timeout,
+        output_config=_SEMANTIC_OUTPUT_CONFIG,
     )
 
 
@@ -237,17 +259,23 @@ def semantic_effective_score(
             continue
         prompt = (
             f"Look at a portrait photo where someone's face shows a '{name}' expression. "
-            f"Does that face look the same as a face showing '{expected}'?\n"
-            f"Answer with a single word: yes or no."
+            f"Does that face look the same as a face showing '{expected}'? "
+            f"Set matches to true if yes, false if no."
         )
         try:
             raw = _call_text_model(gateway_url=gateway_url, prompt=prompt, timeout=timeout)
+            text = raw.strip()
+            fence_match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+            if fence_match:
+                text = fence_match.group(1).strip()
+            parsed = json.loads(text)
+            matched = bool(parsed.get("matches", False))
         except Exception as exc:
             logger.warning(
                 "semantic_effective_score: call failed for %r vs %r (%s)", name, expected, exc
             )
             continue
-        if raw.strip().lower().startswith("yes"):
+        if matched:
             total += score
             logger.debug(
                 "semantic_effective_score: '%s' matches '%s' (score=%.2f, running=%.2f)",
@@ -261,31 +289,62 @@ def semantic_effective_score(
     return total
 
 
+def calculate_expression_score(
+    result: ExpressionClassificationResult,
+    expected: str,
+    *,
+    gateway_url: str = "http://127.0.0.1:4096",
+    timeout: int = 30,
+) -> float:
+    """Compute the Expression Score for *result* against *expected* label.
+
+    Returns 1.0 on direct match, semantic effective score on semantic match,
+    or semantic score squared to amplify failure.
+    """
+    if (
+        result.top_expression.lower() == expected.lower()
+        and result.top_score() >= VALIDATION_EXPRESSION_THRESHOLD
+    ):
+        return 1.0
+
+    sum_score = semantic_effective_score(
+        result.scores, expected, gateway_url=gateway_url, timeout=timeout
+    )
+    if sum_score >= VALIDATION_EXPRESSION_THRESHOLD:
+        return sum_score
+    return sum_score**2
+
+
 def _parse_expression_response(
     raw: str,
     hint_labels: list[str],
 ) -> ExpressionClassificationResult:
-    """Parse the LLM YAML response into an ExpressionClassificationResult."""
-    cleaned = re.sub(r"^```(?:ya?ml)?\s*\n?", "", raw.strip(), flags=re.MULTILINE)
-    cleaned = re.sub(r"\n?```\s*$", "", cleaned.strip())
+    """Parse the LLM JSON response into an ExpressionClassificationResult."""
+    text = raw.strip()
+    fence_match = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+    if fence_match:
+        text = fence_match.group(1).strip()
 
+    parsed: dict = {}
     try:
-        parsed = yaml.safe_load(cleaned) or {}
-    except yaml.YAMLError as exc:
-        logger.warning("classify_expression: YAML parse failed: %s — raw=%r", exc, raw[:200])
-        parsed = {}
+        candidate = json.loads(text)
+        if isinstance(candidate, dict):
+            parsed = candidate
+    except json.JSONDecodeError as exc:
+        logger.warning("classify_expression: JSON parse failed: %s — raw=%r", exc, raw[:200])
 
-    if not isinstance(parsed, dict):
-        parsed = {}
-
-    raw_scores = parsed.get("expressions", {})
+    raw_expressions = parsed.get("expressions", [])
     scores: dict[str, float] = {}
-    if isinstance(raw_scores, dict):
-        for name, val in raw_scores.items():
-            try:
-                scores[str(name)] = float(val)
-            except TypeError, ValueError:
-                scores[str(name)] = 0.0
+    if isinstance(raw_expressions, list):
+        for entry in raw_expressions:
+            if isinstance(entry, dict):
+                name = str(entry.get("name", "")).strip()
+                try:
+                    score = float(entry.get("score", 0.0))
+                except TypeError, ValueError:
+                    score = 0.0
+                if name:
+                    scores[name] = score
 
     # Ensure all hint labels have an entry (default 0.0 if the classifier skipped them).
     for label in hint_labels:

@@ -1,0 +1,27 @@
+personal:
+  name: Adam Peaty
+  gender: male
+  pronouns: he/him
+  age: 30
+  nationality: British
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E5D9C4'
+  hair_color:
+    hex_base: '#F5A623'
+    hex_shadow: '#D2991E'
+  eye_color:
+    hex_iris: '#666666'
+    hex_pupil: '#000000'
+  brows_color: '#666666'
+  face_shape: oval
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: rounded
+  hair_style: short

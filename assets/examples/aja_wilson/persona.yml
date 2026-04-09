@@ -1,0 +1,27 @@
+personal:
+  name: A'ja Wilson
+  gender: female
+  pronouns: she/her
+  age: 28
+  nationality: American
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: medium brown
+  hair_color:
+    hex_base: '#4B4B4B'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#FFFFFF'
+  brows_color: '#4B4B4B'
+  face_shape: oval
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: full
+  hair_style: pulled back

@@ -1,0 +1,26 @@
+personal:
+  name: Kaylee McKeown
+  gender: female
+  pronouns: she/her
+  age: 24
+  nationality: Australian
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956E'
+  hair_color:
+    hex_base: '#1E1610'
+    hex_shadow: '#0F0B08'
+  hair_style: pulled back
+  eye_color:
+    hex_iris: '#3B2A1A'
+    hex_pupil: '#1D150D'
+  face_shape: oval
+  clothing:
+    swimsuit:
+      style: Speedo one-piece racing swimsuit with solid aqua/mint straps and a mottled
+        grey-green camouflage-patterned body panel; yellow Speedo logo on the chest
+      color: '#9CBFB2'

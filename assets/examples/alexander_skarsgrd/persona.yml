@@ -1,0 +1,31 @@
+personal:
+  name: Alexander Skarsgård
+  gender: male
+  pronouns: he/him
+  age: 49
+  nationality: Swedish
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Black crew-neck knit sweater
+      color: '#1A1A1A'
+  skin_tone: fair
+  hair_color:
+    hex_base: '#808080'
+    hex_shadow: '#666666'
+  hair_style: short
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: square
+  brows_color: '#000000'
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: square
+  cheeks_shape: rounded

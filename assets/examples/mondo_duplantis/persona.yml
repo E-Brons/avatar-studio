@@ -1,0 +1,29 @@
+personal:
+  name: Mondo Duplantis
+  gender: male
+  pronouns: he/him
+  age: 25
+  nationality: Swedish-American
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and tanned
+  hair_style: short and wavy brown
+  hair_note: visible
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and smooth with slight blush
+  hair_color:
+    hex_base: '#8B4513'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#D2B48C'
+    hex_pupil: '#000000'

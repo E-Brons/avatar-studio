@@ -1,0 +1,42 @@
+personal:
+  name: Neil deGrasse Tyson
+  gender: male
+  pronouns: he/him
+  age: 67
+  nationality: American
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  hair_style: short and tightly curled
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'
+  face_shape: round with a slight protrusion
+  clothing:
+    jacket:
+      style: black formal tuxedo jacket with peaked lapels
+      color: '#1C1C1C'
+    shirt:
+      style: white formal dress shirt with spread collar
+      color: '#F0F0F0'
+    bow_tie:
+      style: black satin bow tie
+      color: '#0A0A0A'
+    vest:
+      style: black vest with celestial pattern featuring gold stars, suns, and moons
+      color: '#1E1E1E'
+  skin_texture: smooth and slightly shiny
+  hair_note: black
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: medium-sized and slightly curved
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: full and rounded with a slight dimple

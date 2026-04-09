@@ -1,0 +1,29 @@
+personal:
+  name: Noah Lyles
+  gender: male
+  pronouns: he/him
+  age: 27
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D3A866'
+  skin_texture: smooth and slightly shiny
+  hair_style: short, curly, and voluminous
+  hair_note: black
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: rounded and full with slight dimples
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

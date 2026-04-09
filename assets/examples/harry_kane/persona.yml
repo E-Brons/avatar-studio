@@ -1,0 +1,29 @@
+personal:
+  name: Harry Kane
+  gender: male
+  pronouns: he/him
+  age: 31
+  nationality: British
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly shiny
+  hair_style: slicked-back and neatly groomed
+  hair_note: blonde
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: rounded and slightly sunken
+  hair_color:
+    hex_base: '#F5F5DC'
+    hex_shadow: '#E6E6E6'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

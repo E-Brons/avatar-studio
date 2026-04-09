@@ -1,0 +1,29 @@
+personal:
+  name: Anohni
+  gender: non-binary
+  pronouns: they/them
+  age: 54
+  nationality: British
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D8A6A6'
+  skin_texture: smooth with visible pores
+  hair_style: blonde with highlights
+  hair_note: blonde with highlights, slightly tousled
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark eyeliner
+  brows_style: thick and arched with dark color
+  brows_color: '#000000'
+  nose_shape: straight with small nostrils
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: rounded with slight blush
+  hair_color:
+    hex_base: '#F5E6D3'
+    hex_shadow: '#D3A0A0'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

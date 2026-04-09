@@ -1,0 +1,12 @@
+personal:
+  name: Katalin Karikó
+  gender: female
+  pronouns: she/her
+  age: 69
+  nationality: Hungarian
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

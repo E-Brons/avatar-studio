@@ -1,0 +1,40 @@
+personal:
+  name: Billie Eilish
+  gender: female
+  pronouns: she/her
+  age: 24
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: turtleneck or mock-neck top
+      color: '#8B1A1A'
+  accessories:
+    necklace_1:
+      style: chunky gold curb-chain necklace
+      color: '#C9A535'
+    necklace_2:
+      style: delicate gold chain necklace
+      color: '#C8A840'
+  face_shape: oval with defined jawline
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and youthful
+  hair_style: long, straight, and layered
+  hair_note: silver-gray with darker roots
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: full and rounded with slight dimples
+  hair_color:
+    hex_base: '#C0C0C0'
+    hex_shadow: '#808080'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

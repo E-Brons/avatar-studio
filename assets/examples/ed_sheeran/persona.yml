@@ -1,0 +1,33 @@
+personal:
+  name: Ed Sheeran
+  gender: male
+  pronouns: he/him
+  age: 35
+  nationality: British
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: round with a slight chin
+  skin_tone: '#FFFFFF'
+  eye_color:
+    hex_iris: '#87CEEB'
+    hex_pupil: '#000000'
+  eye_shape: almond-shaped with light blue irises
+  nose_shape: straight and slightly upturned
+  hair_style: short, wavy, light brown
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#8B4513'
+  clothing:
+    garment:
+      style: dark navy crew neck t-shirt
+      color: '#2B3340'
+  skin_texture: smooth and slightly matte
+  hair_note: partially covering forehead
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: rounded and slightly chubby

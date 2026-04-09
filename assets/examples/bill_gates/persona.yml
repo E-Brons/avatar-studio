@@ -1,0 +1,37 @@
+personal:
+  name: Bill Gates
+  gender: male
+  pronouns: he/him
+  age: 70
+  nationality: American
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: v-neck sweater over collared shirt
+      color: '#5A5D4E'
+  accessories:
+    glasses:
+      style: rectangular dark tortoiseshell frames
+      color: '#3B2A1A'
+  face_shape: oval with prominent cheekbones
+  skin_tone: '#FFFFF0'
+  eye_color:
+    hex_iris: '#87CEEB'
+    hex_pupil: '#000000'
+  hair_style: short and slightly tousled
+  hair_color:
+    hex_base: '#808080'
+    hex_shadow: '#A9A9A9'
+  skin_texture: smooth and slightly aged
+  hair_note: gray and brown
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-defined
+  brows_color: '#808080'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: full and slightly dimpled

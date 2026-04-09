@@ -1,0 +1,36 @@
+personal:
+  name: Nathalie Becquart
+  gender: female
+  pronouns: she/her
+  age: 57
+  nationality: French
+  religion: Catholic
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D3A17E'
+  clothing:
+    jacket:
+      style: black blazer
+      color: '#1A1A1A'
+    top:
+      style: white crew neck t-shirt
+      color: '#F0EEEA'
+  skin_texture: smooth and slightly aged
+  hair_style: curly and shoulder-length
+  hair_note: gray
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-defined
+  brows_color: '#808080'
+  nose_shape: straight and medium-sized
+  chin_shape: rounded and slightly chin-ward
+  cheeks_shape: rounded and full with subtle dimples
+  hair_color:
+    hex_base: '#C0C0C0'
+    hex_shadow: '#A9A9A9'
+  eye_color:
+    hex_iris: '#D2B48C'
+    hex_pupil: '#000000'

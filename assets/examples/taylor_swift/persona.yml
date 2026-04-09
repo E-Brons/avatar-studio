@@ -1,0 +1,35 @@
+personal:
+  name: Taylor Swift
+  gender: female
+  pronouns: she/her
+  age: 36
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Sparkly sequined halter-neck top with a high collar, keyhole cutout at
+        the chest, and a multicolor rainbow gradient pattern (teal, green, blue, purple,
+        red)
+      color: '#1A6B5C'
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and flawless
+  hair_style: blonde, layered, shoulder-length
+  hair_note: blonde, layered, shoulder-length
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, blue, expressive
+  brows_style: thick, well-groomed, arched
+  brows_color: '#000000'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, delicate, youthful
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#A9A9A9'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

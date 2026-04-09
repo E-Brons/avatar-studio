@@ -1,0 +1,29 @@
+personal:
+  name: Perfume Genius
+  gender: non-binary
+  pronouns: they/them
+  age: 43
+  nationality: American
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and matte
+  hair_style: short and tousled, vibrant red
+  hair_note: prominent and voluminous
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond, large, red with white highlights
+  brows_style: thick, arched, well-defined
+  brows_color: '#FF0000'
+  nose_shape: straight, medium-sized, slightly upturned
+  chin_shape: rounded, small, delicate
+  cheeks_shape: rounded, smooth, slightly flushed
+  hair_color:
+    hex_base: '#FF0000'
+    hex_shadow: '#FF6666'
+  eye_color:
+    hex_iris: '#FF0000'
+    hex_pupil: '#FFFFFF'

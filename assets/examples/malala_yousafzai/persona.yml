@@ -1,0 +1,26 @@
+personal:
+  name: Malala Yousafzai
+  gender: female
+  pronouns: she/her
+  age: 28
+  nationality: Pakistani
+  religion: Muslim
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956E'
+  hair_color:
+    hex_base: '#1A1A1A'
+    hex_shadow: '#0D0D0D'
+  hair_style: straight, center-parted, mostly covered by headscarf
+  eye_color:
+    hex_iris: '#3D2B1A'
+    hex_pupil: '#1E150D'
+  face_shape: oval
+  clothing:
+    headscarf/dupatta:
+      style: Red dupatta with multicolor floral and paisley print, draped over the
+        head and around the shoulders
+      color: '#CC2A2A'

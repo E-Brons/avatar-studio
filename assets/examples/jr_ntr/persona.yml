@@ -1,0 +1,29 @@
+personal:
+  name: Jr. NTR
+  gender: male
+  pronouns: he/him
+  age: 42
+  nationality: Indian
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly matte
+  hair_style: not visible, likely short and dark
+  hair_note: dark and neatly groomed
+  face_shape: square with defined jawline
+  eye_shape: aviator sunglasses obscuring eyes
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: square and defined with stubble
+  cheeks_shape: rounded and full with stubble
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#333333'
+    hex_pupil: '#333333'

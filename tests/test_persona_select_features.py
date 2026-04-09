@@ -444,7 +444,7 @@ class TestVisualOnlyPersona:
         assert "name" not in visual.get("personal", {})
         assert "personality" not in visual
 
-    def test_excludes_eye_shape(self):
+    def test_includes_eye_shape(self):
         from pipeline.persona.marshal import visual_only_persona
 
         persona = {
@@ -452,7 +452,7 @@ class TestVisualOnlyPersona:
             "appearance": {"hair_style": "bob", "eye_shape": "almond"},
         }
         visual = visual_only_persona(persona)
-        assert "eye_shape" not in visual.get("appearance", {})
+        assert "eye_shape" in visual.get("appearance", {})
         assert "hair_style" in visual.get("appearance", {})
 
     def test_color_dict_sanitized(self):

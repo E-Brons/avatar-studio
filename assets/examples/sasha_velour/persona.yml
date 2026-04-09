@@ -1,0 +1,29 @@
+personal:
+  name: Sasha Velour
+  gender: non-binary
+  pronouns: she/her
+  age: 38
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and flawless
+  hair_style: 'not visible, #333333'
+  hair_note: bald
+  face_shape: oval, symmetrical, youthful
+  eye_shape: large, almond-shaped, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#000000'
+  nose_shape: straight, well-proportioned
+  chin_shape: rounded, defined, youthful
+  cheeks_shape: smooth, round, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

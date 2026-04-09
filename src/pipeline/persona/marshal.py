@@ -103,7 +103,7 @@ def visual_only_persona(persona: dict) -> dict:
         if v is not None:
             visual_personal[k] = sanitize_str(str(v)) if isinstance(v, str) else v
 
-    _APPEARANCE_EXCLUDE = {"eye_shape"}
+    _APPEARANCE_EXCLUDE: set[str] = set()
     visual_appearance: dict = {}
     for k, v in appearance.items():
         if k in _APPEARANCE_EXCLUDE:

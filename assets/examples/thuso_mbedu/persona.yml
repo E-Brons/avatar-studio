@@ -1,0 +1,35 @@
+personal:
+  name: Thuso Mbedu
+  gender: female
+  pronouns: she/her
+  age: 34
+  nationality: South African
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: light brown
+  hair_color:
+    hex_base: '#8B4513'
+    hex_shadow: '#DAA520'
+  hair_style: short, curly, and styled
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: round and symmetrical
+  clothing:
+    top:
+      style: Long-sleeved crew neck dress or top with elaborate 3D floral appliqué
+        embellishments in light blue, pink, and green with leaf details and sequin
+        accents
+      color: '#7A9A5B'
+  skin_texture: smooth and radiant
+  hair_note: visible in the image
+  eye_shape: almond-shaped and expressive
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and well-proportioned
+  chin_shape: rounded and balanced
+  cheeks_shape: full and rounded, enhancing smile

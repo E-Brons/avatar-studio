@@ -1,0 +1,29 @@
+personal:
+  name: Hyun Bin
+  gender: male
+  pronouns: he/him
+  age: 42
+  nationality: South Korean
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and clear
+  hair_style: neatly styled, dark, and slightly tousled
+  hair_note: dark brown
+  face_shape: oval, symmetrical, and well-proportioned
+  eye_shape: almond-shaped, expressive, and dark
+  brows_style: thick, well-groomed, and dark
+  brows_color: '#222222'
+  nose_shape: straight, well-defined, and symmetrical
+  chin_shape: rounded and defined, with a slight dimple
+  cheeks_shape: smooth and even, with a slight blush
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#000000'

@@ -1,0 +1,36 @@
+personal:
+  name: Dwayne Johnson
+  gender: male
+  pronouns: he/him
+  age: 53
+  nationality: American-Samoan
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: Light grey glen plaid/Prince of Wales check blazer with notch lapel
+      color: '#B8B4AE'
+    top:
+      style: White V-neck t-shirt
+      color: '#F5F5F5'
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly wrinkled
+  hair_style: not visible, bald head
+  hair_note: '#333333'
+  face_shape: square with prominent cheekbones
+  eye_shape: almond-shaped with visible creases
+  brows_style: thick and arched eyebrows
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: full and rounded with visible pores
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

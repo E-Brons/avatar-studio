@@ -100,13 +100,13 @@ class TestVisualOnlyPersona:
         assert "name" not in visual.get("personal", {})
         assert "personality" not in visual
 
-    def test_excludes_eye_shape(self):
+    def test_includes_eye_shape(self):
         persona = {
             "personal": {"gender": "female", "age": 30},
             "appearance": {"hair_style": "bob", "eye_shape": "almond"},
         }
         visual = visual_only_persona(persona)
-        assert "eye_shape" not in visual.get("appearance", {})
+        assert "eye_shape" in visual.get("appearance", {})
 
     def test_keeps_hair_style(self):
         persona = {

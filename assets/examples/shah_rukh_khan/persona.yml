@@ -1,0 +1,39 @@
+personal:
+  name: Shah Rukh Khan
+  gender: male
+  pronouns: he/him
+  age: 60
+  nationality: Indian
+  religion: Muslim
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: oval, slightly elongated
+  skin_tone: '#262626'
+  eye_color:
+    hex_iris: '#2a2a2a'
+    hex_pupil: '#2a2a2a'
+  eye_shape: almond-shaped, expressive
+  nose_shape: straight, prominent, well-defined
+  hair_style: neatly styled, slightly tousled
+  hair_color:
+    hex_base: '#4a4a4a'
+    hex_shadow: '#2a2a2a'
+  clothing:
+    jacket:
+      style: suit jacket
+      color: '#1A1A1E'
+    shirt:
+      style: dress shirt with tonal stripe pattern
+      color: '#1C1C20'
+    tie:
+      style: necktie
+      color: '#151517'
+  skin_texture: smooth and slightly tanned
+  hair_note: dark brown
+  brows_style: thick, well-groomed, dark brown
+  brows_color: '#2a2a2a'
+  chin_shape: rounded, strong jawline
+  cheeks_shape: rounded, slightly sunken

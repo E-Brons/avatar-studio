@@ -1,0 +1,29 @@
+personal:
+  name: Gigi Goode
+  gender: non-binary
+  pronouns: they/them
+  age: 27
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and fair
+  hair_style: bob cut with bangs, reddish-brown
+  hair_note: short, wavy, and layered
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-defined
+  brows_color: '#D24725'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: smooth and even-toned
+  hair_color:
+    hex_base: '#D24725'
+    hex_shadow: '#8B0000'
+  eye_color:
+    hex_iris: '#FFFFFF'
+    hex_pupil: '#000000'

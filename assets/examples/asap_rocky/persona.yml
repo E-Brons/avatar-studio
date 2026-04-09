@@ -1,0 +1,29 @@
+personal:
+  name: ASAP Rocky
+  gender: male
+  pronouns: he/him
+  age: 36
+  nationality: American
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: medium brown
+  skin_texture: smooth and slightly shiny
+  hair_style: dreadlocks, tightly coiled
+  hair_note: 'dark brown, #333333'
+  face_shape: oval, slightly elongated
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, dark brown
+  brows_color: '#333333'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, slightly protruding
+  cheeks_shape: full, slightly rounded
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

@@ -1,0 +1,29 @@
+personal:
+  name: Felix
+  gender: male
+  pronouns: he/him
+  age: 24
+  nationality: Australian-Korean
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and youthful
+  hair_style: short, layered, blonde
+  hair_note: blonde hair styled in a modern, layered cut
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-groomed, dark
+  brows_color: '#000000'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, youthful, well-defined
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#F8D0AA'
+    hex_shadow: '#F2E0B4'
+  eye_color:
+    hex_iris: '#4A4A4A'
+    hex_pupil: '#000000'

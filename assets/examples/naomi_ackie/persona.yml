@@ -1,0 +1,29 @@
+personal:
+  name: Naomi Ackie
+  gender: female
+  pronouns: she/her
+  age: 32
+  nationality: British
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and matte
+  hair_style: ponytail with twists
+  hair_note: dark and glossy
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with defined crease
+  brows_style: thick and well-groomed
+  brows_color: '#222222'
+  nose_shape: straight and refined
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

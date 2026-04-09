@@ -1,0 +1,27 @@
+personal:
+  name: Alfonso Cuarón
+  gender: male
+  pronouns: he/him
+  age: 62
+  nationality: Mexican
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  hair_color:
+    hex_base: '#A9A9A9'
+    hex_shadow: '#808080'
+  eye_color:
+    hex_iris: '#806B6B'
+    hex_pupil: '#000000'
+  brows_color: '#806B6B'
+  face_shape: oval
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: rounded
+  hair_style: short
