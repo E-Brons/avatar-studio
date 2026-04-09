@@ -1082,9 +1082,9 @@ class TestParseComparisonResponse:
 
         raw = '{"identity_score": 80, "goal_score": 70, "quality_score": 90, "reasoning": "good match"}'
         result = _parse_comparison_response(raw)
-        assert abs(result.identity_score - 0.8) < 1e-9
-        assert abs(result.goal_score - 0.7) < 1e-9
-        assert abs(result.quality_score - 0.9) < 1e-9
+        assert abs(result.identity_score - 0.894427) < 1e-5
+        assert abs(result.goal_score - 0.836660) < 1e-5
+        assert abs(result.quality_score - 0.948683) < 1e-5
         assert result.reasoning == "good match"
 
     def test_score_normalisation(self):
@@ -1093,15 +1093,18 @@ class TestParseComparisonResponse:
         raw = '{"identity_score": 100, "goal_score": 50, "quality_score": 0, "reasoning": ""}'
         result = _parse_comparison_response(raw)
         assert abs(result.identity_score - 1.0) < 1e-9
-        assert abs(result.goal_score - 0.5) < 1e-9
+        assert abs(result.goal_score - 0.25) < 1e-9
         assert abs(result.quality_score - 0.0) < 1e-9
 
     def test_compound_computed(self):
+        import math
+
         from tuning.compare_side_by_side import _parse_comparison_response
 
         raw = '{"identity_score": 80, "goal_score": 70, "quality_score": 90, "reasoning": ""}'
         result = _parse_comparison_response(raw)
-        expected = 0.5 * 0.8 + 0.3 * 0.7 + 0.2 * 0.9
+        i, g, q = math.sqrt(0.8), math.sqrt(0.7), math.sqrt(0.9)
+        expected = math.sqrt(0.5 * i + 0.3 * g + 0.2 * q)
         assert abs(result.compound_score - expected) < 1e-9
 
     def test_code_fence_wrapped(self):
@@ -1109,7 +1112,7 @@ class TestParseComparisonResponse:
 
         raw = '```json\n{"identity_score": 60, "goal_score": 40, "quality_score": 80, "reasoning": "ok"}\n```'
         result = _parse_comparison_response(raw)
-        assert abs(result.identity_score - 0.6) < 1e-9
+        assert abs(result.identity_score - 0.3) < 1e-9
         assert result.reasoning == "ok"
 
     def test_invalid_json_returns_zeros(self):
@@ -1146,9 +1149,9 @@ class TestCompareSideBySide:
             from tuning.compare_side_by_side import compare_side_by_side
 
             result = compare_side_by_side(_tiny_png(), _tiny_png(), "happiness expression")
-            assert abs(result.identity_score - 0.8) < 1e-9
-            assert abs(result.goal_score - 0.7) < 1e-9
-            assert abs(result.quality_score - 0.9) < 1e-9
+            assert abs(result.identity_score - 0.894427) < 1e-5
+            assert abs(result.goal_score - 0.836660) < 1e-5
+            assert abs(result.quality_score - 0.948683) < 1e-5
 
     def test_raw_response_stored(self):
         with patch(

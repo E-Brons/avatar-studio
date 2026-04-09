@@ -222,8 +222,12 @@ def _describe_properties(persona: dict) -> dict[str, str]:
 
     # ── demographic / visible ────────────────────────────────────────────
     gender = personal.get("gender", "")
-    if gender and gender.lower().replace(" ", "-").replace("_", "-") != "non-binary":
-        props["gender"] = gender
+    if gender:
+        normalised = gender.lower().replace(" ", "-").replace("_", "-")
+        if normalised == "non-binary":
+            props["gender"] = "androgynous"
+        else:
+            props["gender"] = gender
 
     # ── skin tone ────────────────────────────────────────────────────────
     skin_hex = appearance.get("skin_tone", "")

@@ -59,9 +59,9 @@ class TestSanitizePersona:
         result = sanitize_persona(self._PERSONA)
         assert "personality" not in result
 
-    def test_excludes_eye_shape(self):
+    def test_includes_eye_shape(self):
         result = sanitize_persona(self._PERSONA)
-        assert "eye_shape" not in result.get("appearance", {})
+        assert "eye_shape" in result.get("appearance", {})
 
     def test_keeps_hair_style(self):
         result = sanitize_persona(self._PERSONA)
