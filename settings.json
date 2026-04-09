@@ -3,7 +3,7 @@
   "wcag_min_contrast": 3.5,
   "default_text_gen_model": "ollama/phi3:latest",
   "default_image_gen_model": "ollama/x/flux2-klein:4b",
-  "default_visual_desc_model": "cli/claude-sonnet-4-6",
+  "default_visual_desc_model": "cli/claude-haiku-4-5-20251001",
   "max_retries": 10,
   "timeout": 30,
   "default_style": "photorealistic",
