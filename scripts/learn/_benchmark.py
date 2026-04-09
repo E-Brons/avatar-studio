@@ -35,6 +35,7 @@ from _example_utils import (  # noqa: E402
     REPORTS_DIR,
     append_learning,
     finalize_run_metadata,
+    find_best_image,
     load_all_personas,
     make_run_metadata,
     normalize_persona,
@@ -170,8 +171,10 @@ def generate_one(
     )
     prompt = build_prompt(visual, NEUTRAL_EXPR, style_directive, reference_mode="person_photo")
 
-    # Load reference image (original.jpg)
-    image_path = example_dir / "original.jpg"
+    # Load reference image
+    image_path = find_best_image(example_dir)
+    if image_path is None:
+        raise FileNotFoundError(f"No reference image found in {example_dir}")
     with open(image_path, "rb") as f:
         ref_bytes = f.read()
     ref_b64 = base64.b64encode(ref_bytes).decode()
@@ -274,7 +277,9 @@ def _process_item(
 
     # Side-by-side comparison (§4.5)
     try:
-        ref_path = example_dir / "original.jpg"
+        ref_path = find_best_image(example_dir)
+        if ref_path is None:
+            raise FileNotFoundError(f"No reference image found in {example_dir}")
         with open(ref_path, "rb") as f:
             ref_bytes_sbs = f.read()
         sbs = compare_side_by_side(
@@ -573,16 +578,16 @@ def run_benchmark(
 
     style_ids = [s["id"] for s in styles]
 
-    # Load examples — require original.jpg + non-empty appearance
+    # Load examples — require a reference image + non-empty appearance
     raw_examples = load_all_personas(examples_dir)
     examples = [
         (name, persona)
         for name, persona in raw_examples
-        if (examples_dir / name / "original.jpg").exists()
+        if find_best_image(examples_dir / name) is not None
     ]
 
     if not examples:
-        logger.error("No examples found with original.jpg and non-empty appearance")
+        logger.error("No examples found with a reference image and non-empty appearance")
         sys.exit(1)
 
     logger.info("Total available examples: %d (sorted alphabetically)", len(examples))

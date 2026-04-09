@@ -37,7 +37,7 @@ from _cli import add_common_args, confirm_full_set  # noqa: E402
 from _example_utils import EXAMPLES_DIR, load_all_personas  # noqa: E402
 from _fixes import apply_llm_fixes  # noqa: E402
 from _logger import make_logger  # noqa: E402
-from _sampler import initial_sample, next_sample  # noqa: E402
+from _sampler import initial_sample, iteration_schedule, next_sample  # noqa: E402
 
 from config.gateway import GatewayClient  # noqa: E402
 
@@ -104,6 +104,7 @@ def run_learn_create(
 
     current_sample = initial_sample(all_examples, n=samples, range_=range_)
     target_n = len(current_sample)
+    schedule = iteration_schedule(target_n, max_n=512, max_iterations=max_iterations)
 
     ts = datetime.now().strftime("%y-%m-%d-%H-%M")
     loop_dir = REPORTS_DIR / f"learn_create_{ts}"
@@ -143,9 +144,12 @@ def run_learn_create(
     for iteration in range(1, max_iterations + 1):
         prefix = f"iter_{iteration:02d}"
         sample_names = {name for name, _ in current_sample}
+        iter_target = schedule[iteration - 1]
 
         bench_path = loop_dir / f"{prefix}_benchmark.json"
-        logger.info("[iter %d/%d] Benchmarking %d examples…", iteration, max_iterations, target_n)
+        logger.info(
+            "[iter %d/%d] Benchmarking %d examples…", iteration, max_iterations, iter_target
+        )
 
         summary = run_benchmark(
             examples_dir=examples_dir,
@@ -241,10 +245,13 @@ def run_learn_create(
         except Exception:
             entry_scores = {}
 
-        prev_scored = [(ex, entry_scores.get(name, 0.0)) for name, ex in current_sample]
+        prev_scored = [(item, entry_scores.get(item[0], 0.0)) for item in current_sample]
 
         if iteration < max_iterations:
-            current_sample = next_sample(all_examples, prev_scored=prev_scored, target_n=target_n)
+            next_target = schedule[iteration]
+            current_sample = next_sample(
+                all_examples, prev_scored=prev_scored, target_n=next_target
+            )
             logger.info("[iter %d] Next sample: %d examples", iteration, len(current_sample))
 
     else:

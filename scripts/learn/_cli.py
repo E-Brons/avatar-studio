@@ -4,11 +4,11 @@ All learning scripts accept the same core flags:
 
     --range A B              inclusive index range into the sorted example list
     --samples X              random sample count; mutually exclusive with --range
-                             (default: entire set — prompts user to confirm if > 100)
-    --workers N              parallel render workers (default: 3)
+                             (default: 32 — prompts user to confirm if > 100)
+    --workers N              parallel render workers (default: 4)
     --stop-on-plateau /
     --no-stop-on-plateau     plateau guard — stop when score delta < 1% for 2 consecutive iters
-    --max-iterations N       safety cap (default: 2)
+    --max-iterations N       safety cap (default: 6)
     --optimize OPT           quality | normal | fast   (default: normal)
     --component-threshold N  min acceptable score for each individual score component (default: 75)
     --compound-threshold N   min acceptable score for compound/aggregate scores (default: 90)
@@ -41,15 +41,16 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     sample_group.add_argument(
         "--samples",
         type=int,
+        default=32,
         metavar="X",
-        help="Random sample count (mutually exclusive with --range)",
+        help="Random sample count (mutually exclusive with --range; default: 32)",
     )
 
     parser.add_argument(
         "--workers",
         type=int,
-        default=3,
-        help="Parallel render workers (default: 3)",
+        default=4,
+        help="Parallel render workers (default: 4)",
     )
 
     plateau = parser.add_mutually_exclusive_group()
@@ -70,8 +71,8 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--max-iterations",
         type=int,
-        default=2,
-        help="Maximum number of learn iterations (default: 2)",
+        default=6,
+        help="Maximum number of learn iterations (default: 6)",
     )
 
     parser.add_argument(

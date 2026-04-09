@@ -43,7 +43,7 @@ sys.path.insert(0, str(ROOT / "scripts" / "examples"))
 from _cli import add_common_args, confirm_full_set  # noqa: E402
 from _example_utils import EXAMPLES_DIR, REPORTS_DIR, load_all_personas  # noqa: E402
 from _logger import make_logger  # noqa: E402
-from _sampler import initial_sample, next_sample  # noqa: E402
+from _sampler import initial_sample, iteration_schedule, next_sample  # noqa: E402
 
 from config.gateway import GatewayClient  # noqa: E402
 from pipeline.render.llm.prompt_builder import build_prompt  # noqa: E402
@@ -371,6 +371,7 @@ def run_learn_restyle(
 
     current_sample = initial_sample(all_examples, n=samples, range_=range_)
     target_n = len(current_sample)
+    schedule = iteration_schedule(target_n, max_n=512, max_iterations=max_iterations)
 
     ts = datetime.now().strftime("%y-%m-%d-%H-%M")
     loop_dir = REPORTS_DIR / f"learn_restyle_{ts}"
@@ -530,7 +531,10 @@ def run_learn_restyle(
         if iteration < max_iterations:
             example_scores = {e["example"]: e.get("identity_score", 0.0) for e in successful}
             prev_scored = [(ex, example_scores.get(name, 0.0)) for name, ex in current_sample]
-            current_sample = next_sample(all_examples, prev_scored=prev_scored, target_n=target_n)
+            next_target = schedule[iteration]
+            current_sample = next_sample(
+                all_examples, prev_scored=prev_scored, target_n=next_target
+            )
 
     else:
         logger.info("Reached max iterations (%d).", max_iterations)

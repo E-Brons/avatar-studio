@@ -1,12 +1,11 @@
 """Iterative sampling strategy for learning scripts.
 
 Step 0  — pick X samples (random or by range) from the full example list.
-Step N  — keep ALL examples from step N-1 (regression) + add up to X/2 fresh examples
-          not seen in the previous iteration.
+Step N  — keep ALL examples from step N-1 (regression) + add fresh examples to reach
+          target_n (doubling schedule: 32 → 64 → 128 → 256 → 512 → 512).
 
-Retaining the full previous set ensures regressions are caught; injecting up to X/2
-novelty each round keeps improving coverage. The sample size grows by up to X/2 per
-step, so later iterations are progressively more robust.
+Retaining the full previous set ensures regressions are caught; doubling the sample
+each round provides exponentially more coverage until the pool cap is reached.
 """
 
 from __future__ import annotations
@@ -15,6 +14,19 @@ import random
 from typing import TypeVar
 
 T = TypeVar("T")
+
+
+def iteration_schedule(initial_n: int, max_n: int, max_iterations: int) -> list[int]:
+    """Return per-iteration sample sizes using a doubling schedule capped at *max_n*.
+
+    Example: initial_n=32, max_n=512, max_iterations=6 → [32, 64, 128, 256, 512, 512]
+    """
+    sizes: list[int] = []
+    n = initial_n
+    for _ in range(max_iterations):
+        sizes.append(min(n, max_n))
+        n *= 2
+    return sizes
 
 
 def initial_sample(
@@ -52,22 +64,22 @@ def next_sample(
 ) -> list[T]:
     """Build the sample for iteration N (N >= 1).
 
-    Keeps ALL examples from *prev_scored* for regression testing, then adds up to
-    ``target_n // 2`` fresh examples not already present in the previous iteration.
+    Keeps ALL examples from *prev_scored* for regression testing, then adds fresh
+    examples until the total reaches *target_n*.
 
     Args:
         examples:    Full sorted example list (used as the fresh random pool).
         prev_scored: List of (example, score) from the previous iteration.
-        target_n:    Initial sample size X — determines how many new examples to add (X/2).
+        target_n:    Desired total sample size for this iteration.
         seed:        Optional RNG seed.
 
-    Returns a shuffled list of all previous examples plus up to target_n // 2 fresh ones.
+    Returns a shuffled list of all previous examples plus enough fresh ones to reach target_n.
     """
     prev_items: list[T] = [ex for ex, _ in prev_scored]
     prev_set: set[int] = {id(ex) for ex in prev_items}
 
     fresh_pool: list[T] = [ex for ex in examples if id(ex) not in prev_set]
-    add_n = max(1, target_n // 2)
+    add_n = max(0, target_n - len(prev_items))
 
     rng = random.Random(seed)
     fresh = rng.sample(fresh_pool, min(add_n, len(fresh_pool)))

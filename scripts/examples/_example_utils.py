@@ -64,10 +64,16 @@ def load_image_metadata(folder: Path) -> dict | None:
 
 def load_all_personas(
     examples_dir: Path | None = None,
+    *,
+    max_examples: int | None = 512,
 ) -> list[tuple[str, dict]]:
     """Return sorted list of (folder_name, persona_dict) for dirs with persona.yml.
 
     Skips dirs where appearance is empty or missing.
+
+    When *max_examples* is set (default: 512), retains only the top-N examples
+    ranked by best image quality score from images/metadata.json.  Examples
+    without metadata are sorted to the bottom.
     """
     examples_dir = examples_dir or EXAMPLES_DIR
     results: list[tuple[str, dict]] = []
@@ -83,6 +89,19 @@ def load_all_personas(
         if not appearance or (isinstance(appearance, dict) and not appearance):
             continue
         results.append((d.name, persona))
+
+    if max_examples is not None and len(results) > max_examples:
+        # Rank by best quality_score across all images in metadata.json
+        def _best_quality(item: tuple[str, dict]) -> float:
+            meta = load_image_metadata(examples_dir / item[0])
+            if not meta:
+                return -1.0
+            scores = [img.get("quality_score", 0.0) for img in meta.get("images", [])]
+            return max(scores) if scores else -1.0
+
+        results.sort(key=_best_quality, reverse=True)
+        results = results[:max_examples]
+
     return results
 
 
