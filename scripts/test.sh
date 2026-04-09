@@ -10,8 +10,8 @@ if [ ! -d "$VENV" ]; then
 fi
 
 echo "── lint ────────────────────────────────────"
-"$VENV/bin/ruff" check src/ tests/
-"$VENV/bin/ruff" format --check src/ tests/
+"$VENV/bin/ruff" check src/ tests/ scripts/
+"$VENV/bin/ruff" format --check src/ tests/ scripts/
 
 echo "── backend tests ───────────────────────────"
 "$VENV/bin/python" -m pytest "$ROOT/tests/" -m "not integration" "$@"
