@@ -28,6 +28,13 @@ tmp/
 # Reports (benchmark results, analysis, learnings)
 reports/
 
+# Learning experiment logs (never delete)
+logs/
+
+# Example reference photos (copyright/privacy — used for training only)
+assets/examples/*/original.jpg
+assets/examples/*/*benchmark*.*
+
 # User-local config (never commit)
 local/
 
