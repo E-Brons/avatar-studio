@@ -565,13 +565,27 @@ def _save_multi_images(folder: Path, selected_images: list[dict]) -> Path:
     for i, img in enumerate(selected_images, 1):
         fname = f"{i:03d}.jpg"
         (images_dir / fname).write_bytes(img["bytes"])
+        q = img["quality"]
         metadata_entries.append(
             {
                 "file": f"images/{fname}",
                 "url": img["url"],
                 "width": img["width"],
                 "height": img["height"],
-                "quality_score": img["quality"]["composite_score"],
+                "quality_score": q["composite_score"],
+                "quality": {
+                    "composite_score": q["composite_score"],
+                    "has_face": q["has_face"],
+                    "face_count": q["face_count"],
+                    "blur_score": q["blur_score"],
+                    "blur_raw": q["blur_raw"],
+                    "resolution_score": q["resolution_score"],
+                    "frontality_score": q["frontality_score"],
+                    "color_ok": q["color_ok"],
+                    "color_reason": q["color_reason"],
+                },
+                "llm_passes": img.get("llm_passes"),
+                "llm_reason": img.get("llm_reason", ""),
                 "phash": img.get("phash", ""),
             }
         )
