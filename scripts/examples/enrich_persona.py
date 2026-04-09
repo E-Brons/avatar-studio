@@ -39,6 +39,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from config.gateway import GatewayClient  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _appearance import extract_appearance, flat_to_persona_appearance  # noqa: E402
 from _example_utils import find_best_image  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
@@ -237,147 +238,6 @@ def _parse_json(text: str) -> dict:
         return {}
 
 
-# ── Image-based appearance extraction ────────────────────────────────────────
-
-_APPEARANCE_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "skin_tone": {
-            "type": "string",
-            "description": "Dominant skin color as hex, e.g. '#C9A96E'",
-        },
-        "hair_color": {
-            "type": "object",
-            "properties": {
-                "hex_base": {"type": "string"},
-                "hex_shadow": {"type": "string"},
-            },
-            "required": ["hex_base", "hex_shadow"],
-        },
-        "eye_color": {
-            "type": "object",
-            "properties": {
-                "hex_iris": {"type": "string"},
-                "hex_pupil": {"type": "string"},
-            },
-            "required": ["hex_iris", "hex_pupil"],
-        },
-        "brows_color": {"type": "string", "description": "Eyebrow color as hex"},
-        "face_shape": {
-            "type": "string",
-            "description": (
-                "Overall face shape with defining proportions, e.g. "
-                "'softly oval with high cheekbones and a gently tapered jaw'"
-            ),
-        },
-        "eye_shape": {
-            "type": "string",
-            "description": (
-                "Eye shape including lid type, corner angle, and any distinctive features, e.g. "
-                "'almond-shaped with a slight upward tilt, deep-set and framed by long lashes'"
-            ),
-        },
-        "brows_style": {
-            "type": "string",
-            "description": (
-                "Brow shape, arch, thickness, and any grooming notes, e.g. "
-                "'thick, straight brows with a soft arch and dense natural hair'"
-            ),
-        },
-        "nose_shape": {
-            "type": "string",
-            "description": (
-                "Nose shape covering bridge, tip, nostrils, and overall proportions, e.g. "
-                "'medium-width bridge, rounded tip, slightly flared nostrils'"
-            ),
-        },
-        "chin_shape": {
-            "type": "string",
-            "description": (
-                "Chin shape and jaw line character, e.g. "
-                "'softly rounded chin with a gently defined jawline'"
-            ),
-        },
-        "cheeks_shape": {
-            "type": "string",
-            "description": (
-                "Cheekbone prominence, fullness, and jaw width, e.g. "
-                "'prominent high cheekbones with sculpted hollows and a narrow jaw'"
-            ),
-        },
-        "hair_style": {
-            "type": "string",
-            "description": (
-                "Hair length, cut, texture, and styling, e.g. "
-                "'shoulder-length loose waves with a centre part and slight volume at the crown'"
-            ),
-        },
-        "clothing": {
-            "type": "object",
-            "description": "Visible clothing items mapped to dominant hex color",
-            "additionalProperties": {"type": "string"},
-        },
-        "accessories": {
-            "type": "object",
-            "description": "Visible accessories mapped to description string",
-            "additionalProperties": {"type": "string"},
-        },
-    },
-    "required": [
-        "skin_tone",
-        "hair_color",
-        "eye_color",
-        "brows_color",
-        "face_shape",
-        "eye_shape",
-        "brows_style",
-        "nose_shape",
-        "chin_shape",
-        "cheeks_shape",
-        "hair_style",
-    ],
-}
-
-_APPEARANCE_SYSTEM = (
-    "You are an expert portrait analyst producing detailed visual descriptions for AI avatar generation. "
-    "Examine every feature carefully and write rich, specific multi-word descriptions — never single words. "
-    "All hex color values must be in the format '#RRGGBB'. "
-    "Respond ONLY with valid JSON matching the requested schema."
-)
-
-_APPEARANCE_PROMPT = (
-    "Analyze this portrait photograph and extract all visual appearance attributes. "
-    "For every shape/style field write a descriptive phrase of 5–15 words that captures "
-    "the feature's specific character — shape, proportions, texture, and any distinctive qualities. "
-    "Never answer with a single word like 'oval' or 'almond'; always elaborate. "
-    "Be precise with hex color values by sampling the actual colors visible in the image. "
-    "For clothing, only include items clearly visible in the frame (e.g. 'top', 'jacket'). "
-    "For accessories, only include items clearly visible (e.g. 'earrings', 'glasses', 'necklace'). "
-    "If hair is not visible, set hair_style to 'not visible' and use a neutral hex for hair_color. "
-    "Respond with JSON only."
-)
-
-
-def _extract_appearance_from_image(
-    gateway: GatewayClient, image_bytes: bytes, name: str, needs: set[str]
-) -> dict:
-    """Use image_inspector to extract appearance attributes from a portrait."""
-    output_config = {"format": {"schema": _APPEARANCE_SCHEMA}}
-    try:
-        raw = gateway.image_inspector(
-            image_bytes,
-            system=_APPEARANCE_SYSTEM,
-            prompt=_APPEARANCE_PROMPT,
-            output_config=output_config,
-        )
-        data = _parse_json(raw)
-        # Keep only fields that were actually requested (unless overwrite is on)
-        return {k: v for k, v in data.items() if k in needs}
-    except Exception as exc:
-        logger.warning("Image appearance extraction failed for %r: %s", name, exc)
-        return {}
-
-
 # ── Missing-field detection ───────────────────────────────────────────────────
 
 _PERSONAL_ENRICHABLE = {"religion", "zodiac"}
@@ -440,13 +300,17 @@ def _enrich_personal(
 def _enrich_appearance(
     gateway: GatewayClient, persona_path: Path, name: str, need_appearance: set[str]
 ) -> dict:
-    """Load portrait image + call image_inspector to fill appearance fields. Returns updates."""
+    """Load portrait image + call shared extract_appearance, return persona.yml-ready dict."""
     img_path = find_best_image(persona_path.parent)
     if img_path is None:
         logger.warning("  No image found in %s", persona_path.parent)
         return {}
-    image_bytes = img_path.read_bytes()
-    return _extract_appearance_from_image(gateway, image_bytes, name, need_appearance)
+    flat = extract_appearance(gateway, img_path.read_bytes(), name)
+    if not flat:
+        return {}
+    nested = flat_to_persona_appearance(flat)
+    # Keep only fields that were actually requested
+    return {k: v for k, v in nested.items() if k in need_appearance}
 
 
 def _load_persona(persona_path: Path) -> tuple[dict, dict, dict, str]:

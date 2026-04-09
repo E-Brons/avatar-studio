@@ -35,6 +35,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from _appearance import extract_appearance, flat_to_persona_appearance  # noqa: E402
 from _cv_scoring import compute_phash, compute_quality_score, is_duplicate  # noqa: E402
 
 try:
@@ -618,37 +619,7 @@ def _persona_yml(
     zodiac = app.pop("zodiac", "unknown")
     religion = app.pop("religion", "unknown")
 
-    # Strip any clothing/accessories that may have come through
-    app.pop("clothing", None)
-    app.pop("accessories", None)
-
-    # Build structured appearance section from flat LLM/aggregated dict.
-    app_section: dict = {}
-    for key in ("skin_tone", "skin_texture", "presentation", "hair_style", "hair_note"):
-        if app.get(key):
-            app_section[key] = app[key]
-
-    if app.get("hair_color_base"):
-        app_section["hair_color"] = {
-            "hex_base": app["hair_color_base"],
-            "hex_shadow": app.get("hair_color_shadow", app["hair_color_base"]),
-        }
-    if app.get("eye_color_iris"):
-        app_section["eye_color"] = {
-            "hex_iris": app["eye_color_iris"],
-            "hex_pupil": app.get("eye_color_pupil", "#0A0A0A"),
-        }
-    for key in (
-        "brows_color",
-        "face_shape",
-        "eye_shape",
-        "brows_style",
-        "nose_shape",
-        "chin_shape",
-        "cheeks_shape",
-    ):
-        if app.get(key):
-            app_section[key] = app[key]
+    app_section = flat_to_persona_appearance(app)
 
     pronouns = celeb.get("pronouns") or _default_pronouns(celeb["gender"])
 
@@ -680,168 +651,6 @@ def _persona_yml(
         }
 
     return yaml.dump(data, default_flow_style=False, sort_keys=False, allow_unicode=True)
-
-
-# ── LLM appearance extraction ─────────────────────────────────────────────────
-
-_APPEARANCE_SCHEMA: dict = {
-    "type": "object",
-    "properties": {
-        "skin_tone": {"type": "string", "description": "Dominant skin tone #RRGGBB hex"},
-        "skin_texture": {
-            "type": "string",
-            "description": "e.g. smooth clear, oily, textured, matte",
-        },
-        "presentation": {
-            "type": "string",
-            "description": "Visual gender presentation: masculine-presenting, feminine-presenting, androgynous, gender-neutral",
-        },
-        "hair_style": {"type": "string", "description": "Detailed hair style description"},
-        "hair_note": {
-            "type": "string",
-            "description": "CRITICAL note about distinctive hair features (length, shave pattern, texture). Empty string if unremarkable.",
-        },
-        "hair_color_base": {"type": "string", "description": "Base hair color #RRGGBB"},
-        "hair_color_shadow": {"type": "string", "description": "Shadow/darker tone #RRGGBB"},
-        "eye_shape": {
-            "type": "string",
-            "description": "e.g. hooded, almond, round, upturned, monolid, deep-set",
-        },
-        "face_shape": {
-            "type": "string",
-            "description": "Overall face shape: oval, round, square, heart, oblong, or diamond",
-        },
-        "eye_color_iris": {"type": "string", "description": "Iris color #RRGGBB"},
-        "eye_color_pupil": {
-            "type": "string",
-            "description": "Pupil color #RRGGBB — typically very dark",
-        },
-        "brows_style": {
-            "type": "string",
-            "description": "e.g. angular defined, arched thin, straight thick, bushy natural",
-        },
-        "brows_color": {"type": "string", "description": "Brow color #RRGGBB"},
-        "nose_shape": {
-            "type": "string",
-            "description": "Brief descriptor e.g. broad rounded, narrow straight, button",
-        },
-        "chin_shape": {
-            "type": "string",
-            "description": "Brief descriptor e.g. broad rounded, pointed, square",
-        },
-        "cheeks_shape": {
-            "type": "string",
-            "description": "Brief descriptor e.g. high prominent, subtly angular, full round",
-        },
-        "clothing": {
-            "type": "object",
-            "additionalProperties": {"type": "string"},
-            "description": "Visible garment name → dominant color #RRGGBB",
-        },
-        "accessories": {
-            "type": "object",
-            "additionalProperties": {"type": "string"},
-            "description": "Accessory name → visual description",
-        },
-        "suggested_bg_color": {
-            "type": "string",
-            "description": "Background color #RRGGBB that would complement this subject",
-        },
-        "zodiac": {
-            "type": "string",
-            "description": "Zodiac sign if you know this celebrity's birthdate; otherwise 'unknown'",
-        },
-        "religion": {
-            "type": "string",
-            "description": "Religion if publicly known for this person; otherwise 'unknown'",
-        },
-    },
-    "required": [
-        "skin_tone",
-        "skin_texture",
-        "presentation",
-        "hair_style",
-        "hair_note",
-        "hair_color_base",
-        "hair_color_shadow",
-        "eye_shape",
-        "face_shape",
-        "eye_color_iris",
-        "eye_color_pupil",
-        "brows_style",
-        "brows_color",
-        "nose_shape",
-        "chin_shape",
-        "cheeks_shape",
-        "clothing",
-        "accessories",
-        "suggested_bg_color",
-        "zodiac",
-        "religion",
-    ],
-    "additionalProperties": False,
-}
-
-_APPEARANCE_OUTPUT_CONFIG: dict = {"format": {"type": "json_schema", "schema": _APPEARANCE_SCHEMA}}
-
-_APPEARANCE_SYSTEM = (
-    "You are a meticulous visual appearance analyst for AI avatar generation. "
-    "You will be shown a portrait photo of a public figure. "
-    "Extract precise visual details from the image — use hex codes for all colors. "
-    "For zodiac and religion, draw on your knowledge of this person; if genuinely unknown, use 'unknown'. "
-    "Be specific and accurate. Do not guess colors — report what you actually observe."
-)
-
-
-def _extract_appearance(
-    image_bytes: bytes,
-    celeb: dict,
-    gateway_url: str,
-    timeout: int = 90,
-) -> dict | None:
-    """Call the vision LLM to extract appearance fields from a portrait image.
-
-    Returns a flat dict matching _APPEARANCE_SCHEMA, or None on failure.
-    """
-    if not _GATEWAY_AVAILABLE:
-        logger.warning("  GatewayClient not available — skipping LLM appearance extraction")
-        return None
-
-    name, age, nat, gender = celeb["name"], celeb["age"], celeb["nationality"], celeb["gender"]
-    prompt = (
-        f"This is a portrait photo of {name} — {nat}, {gender}, age {age}.\n\n"
-        "Carefully examine the image and fill in every field of the appearance schema.\n"
-        "Use accurate #RRGGBB hex codes for all color fields based on what you observe.\n"
-        "For clothing and accessories, describe only what is clearly visible."
-    )
-
-    try:
-        raw = GatewayClient(gateway_url).image_inspector(
-            image_bytes,
-            _APPEARANCE_SYSTEM,
-            prompt,
-            timeout=timeout,
-            output_config=_APPEARANCE_OUTPUT_CONFIG,
-        )
-    except Exception as exc:
-        logger.warning("  LLM appearance extraction failed for %r: %s", name, exc)
-        return None
-
-    # Strip code fences if present.
-    text = raw.strip()
-    fence = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
-    if fence:
-        text = fence.group(1).strip()
-
-    try:
-        result = json.loads(text)
-        if isinstance(result, dict):
-            logger.info("  extracted appearance via LLM")
-            return result
-    except json.JSONDecodeError as exc:
-        logger.warning("  LLM response JSON parse failed: %s — raw=%r", exc, raw[:200])
-
-    return None
 
 
 # ── main ──────────────────────────────────────────────────────────────────────
@@ -906,7 +715,9 @@ def _process_celeb(
         if not skip_llm:
             for img_path in image_paths[:top_k]:
                 try:
-                    app = _extract_appearance(img_path.read_bytes(), celeb, gateway_url)
+                    app = extract_appearance(
+                        GatewayClient(gateway_url), img_path.read_bytes(), celeb["name"]
+                    )
                     if app:
                         appearances.append(app)
                 except Exception as exc:
@@ -973,7 +784,9 @@ def _process_celeb(
         image_paths = sorted(new_images_dir.glob("[0-9]*.jpg"))
         for img_path in image_paths[:top_k]:
             try:
-                app = _extract_appearance(img_path.read_bytes(), celeb, gateway_url)
+                app = extract_appearance(
+                    GatewayClient(gateway_url), img_path.read_bytes(), celeb["name"]
+                )
                 if app:
                     appearances.append(app)
             except Exception as exc:
