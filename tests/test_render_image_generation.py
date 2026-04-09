@@ -65,24 +65,24 @@ def _write_persona_yml(path: Path) -> None:
 
 class TestResolveUnilateral:
     def test_no_placeholder(self):
-        from pipeline.render.llm.orchestrator import _resolve_unilateral
+        from pipeline.render.llm.facs_resolver import resolve_unilateral
 
-        result = _resolve_unilateral("AU1 AU2 AU4")
+        result = resolve_unilateral("AU1 AU2 AU4")
         assert result == "AU1 AU2 AU4"
 
     def test_placeholder_replaced(self):
-        from pipeline.render.llm.orchestrator import _resolve_unilateral
+        from pipeline.render.llm.facs_resolver import resolve_unilateral
 
-        result = _resolve_unilateral("AU1x AU2x")
+        result = resolve_unilateral("AU1x AU2x")
         # Each AUNNx replaced with AUNNR or AUNNL
         assert "AU1x" not in result
         assert "AU2x" not in result
         assert "AU1R" in result or "AU1L" in result
 
     def test_empty_string(self):
-        from pipeline.render.llm.orchestrator import _resolve_unilateral
+        from pipeline.render.llm.facs_resolver import resolve_unilateral
 
-        assert _resolve_unilateral("") == ""
+        assert resolve_unilateral("") == ""
 
 
 # ---------------------------------------------------------------------------

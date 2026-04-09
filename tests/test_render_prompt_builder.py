@@ -31,12 +31,14 @@ class TestBuildPrompt:
         assert "STYLE" not in prompt.split("\n")[0]
 
     def test_reference_image_note_added(self):
-        prompt = build_prompt(self._PERSONA, self._EXPR_ENTRY, "", reference_image=True)
-        assert "reference image" in prompt.lower()
+        prompt = build_prompt(self._PERSONA, self._EXPR_ENTRY, "", reference_mode="avatar_portrait")
+        assert "reference image" in prompt.lower() or "reference portrait" in prompt.lower()
 
     def test_no_reference_image_note_when_false(self):
-        prompt = build_prompt(self._PERSONA, self._EXPR_ENTRY, "", reference_image=False)
-        assert "reference image" not in prompt.lower()
+        prompt = build_prompt(self._PERSONA, self._EXPR_ENTRY, "", reference_mode="none")
+        assert (
+            "reference image" not in prompt.lower() and "reference portrait" not in prompt.lower()
+        )
 
     def test_style_key_stripped_from_persona(self):
         persona_with_style = dict(self._PERSONA)

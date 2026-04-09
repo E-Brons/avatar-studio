@@ -74,8 +74,8 @@ class TestConfigLoaderLoad:
         self.config = self.loader.load()
         self.attrs = {a["id"]: a for a in self.config["attributes"]}
 
-    def test_returns_19_attributes(self):
-        assert len(self.config["attributes"]) == 19
+    def test_returns_20_attributes(self):
+        assert len(self.config["attributes"]) == 20
 
     def test_all_attrs_have_required_keys(self):
         required = {"id", "label", "category", "type", "selection_modes", "default_mode", "options"}
