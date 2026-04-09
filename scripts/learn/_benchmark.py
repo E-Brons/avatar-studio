@@ -4,15 +4,11 @@ Generates images using the LLM pipeline, then scores via style classifier +
 persona categorizer. Every result (including errors) is recorded in structured
 JSON for later analysis.
 
-Usage:
-    python scripts/example_benchmark.py --sample 20 --style photorealistic
-    python scripts/example_benchmark.py --style all --resume
-    python scripts/example_benchmark.py --sample 5 --style clay --output reports/bench_clay.json
+Used by scripts/learn/learn_create.py.
 """
 
 from __future__ import annotations
 
-import argparse
 import base64
 import io
 import json
@@ -31,12 +27,11 @@ from PIL import Image, PngImagePlugin
 from tqdm import tqdm
 
 # ── project root on sys.path ──────────────────────────────────────────────────
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from _example_utils import (  # noqa: E402
-    EXAMPLES_DIR,
     REPORTS_DIR,
     append_learning,
     finalize_run_metadata,
@@ -164,6 +159,8 @@ def generate_one(
     example_dir: Path,
     persona: dict,
     style_entry: dict,
+    *,
+    optimize: str = "normal",
 ) -> tuple[bytes, float, str, str]:
     """Generate a single image. Returns (image_bytes, gen_time_s, prompt, error_or_empty)."""
     normalized = normalize_persona(persona)
@@ -184,7 +181,7 @@ def generate_one(
         prompt=prompt,
         width=512,
         height=512,
-        optimize="quality",
+        optimize=optimize,
         reference_images_b64=[ref_b64],
     )
     gen_time = time.time() - t0
@@ -221,6 +218,8 @@ def _process_item(
     run_idx: int,
     examples_dir: Path,
     all_styles: list[dict],
+    *,
+    optimize: str = "normal",
 ) -> dict:
     """Generate + score one work item. Returns a BenchmarkEntry as a dict."""
     style_id = style_entry["id"]
@@ -231,7 +230,9 @@ def _process_item(
 
     # Generate
     try:
-        image_bytes, gen_time, prompt, _ = generate_one(client, example_dir, persona, style_entry)
+        image_bytes, gen_time, prompt, _ = generate_one(
+            client, example_dir, persona, style_entry, optimize=optimize
+        )
         entry.generation_time_s = round(gen_time, 1)
         entry.prompt_excerpt = prompt[:300].replace("\n", " ")
     except Exception as exc:
@@ -547,8 +548,16 @@ def run_benchmark(
     workers: int = 1,
     component_threshold: float = COMPONENT_THRESHOLD,
     total_threshold: float = TOTAL_THRESHOLD,
+    optimize: str = "normal",
+    example_names: set[str] | None = None,
 ) -> dict:
-    """Run the full benchmark. Returns the summary dict."""
+    """Run the full benchmark. Returns the summary dict.
+
+    Args:
+        optimize:      Image generation quality preset — quality | normal | fast.
+        example_names: Optional allowlist of example folder names; applied *after*
+                       example_range slicing. Pass None to include all.
+    """
     client = GatewayClient(gateway_url)
     all_styles = load_styles()
     style_map = {s["id"]: s for s in all_styles}
@@ -584,6 +593,11 @@ def run_benchmark(
         end = min(end + 1, len(examples))  # inclusive end
         examples = examples[start:end]
         logger.info("Range [%d, %d]: selected %d examples", start, end - 1, len(examples))
+
+    # Filter by name allowlist (used by iterative sampler)
+    if example_names is not None:
+        examples = [(n, p) for n, p in examples if n in example_names]
+        logger.info("Name filter: %d examples selected", len(examples))
 
     logger.info(
         "Benchmark: %d examples x %d styles x %d runs = %d images",
@@ -622,7 +636,7 @@ def run_benchmark(
             "resume": resume,
             "gateway_url": gateway_url,
             "image_size": "512x512",
-            "optimize": "quality",
+            "optimize": optimize,
             "examples_count": len(examples),
         },
     )
@@ -643,7 +657,14 @@ def run_benchmark(
         for name, persona, style_entry, run_idx in pbar:
             pbar.set_postfix_str(f"{name} x {style_entry['id']}")
             entry_dict = _process_item(
-                client, name, persona, style_entry, run_idx, examples_dir, all_styles
+                client,
+                name,
+                persona,
+                style_entry,
+                run_idx,
+                examples_dir,
+                all_styles,
+                optimize=optimize,
             )
             _on_done(entry_dict)
     else:
@@ -659,6 +680,7 @@ def run_benchmark(
                     run_idx,
                     examples_dir,
                     all_styles,
+                    optimize=optimize,
                 ): (name, style_entry["id"])
                 for name, persona, style_entry, run_idx in work
             }
@@ -737,52 +759,4 @@ def run_benchmark(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Example benchmark — generate + score")
-    parser.add_argument("--gateway", default=GATEWAY_URL, help="LLM gateway URL")
-    parser.add_argument("--style", default="photorealistic", help="Style ID or 'all'")
-    parser.add_argument(
-        "--range",
-        type=int,
-        nargs=2,
-        metavar=("START", "END"),
-        default=None,
-        help="Inclusive index range of examples to run (e.g. --range 0 49)",
-    )
-    parser.add_argument("--runs", type=int, default=1, help="Repeats per (example, style)")
-    parser.add_argument("--resume", action="store_true", help="Skip already-completed entries")
-    parser.add_argument("--workers", type=int, default=1, help="Parallel workers (default 1)")
-    parser.add_argument(
-        "--component-threshold",
-        type=float,
-        default=COMPONENT_THRESHOLD,
-        help="Min per-property and SBS quality score to pass component check (default 0.80)",
-    )
-    parser.add_argument(
-        "--total-threshold",
-        type=float,
-        default=TOTAL_THRESHOLD,
-        help="Min persona score and SBS compound score to pass total check (default 0.90)",
-    )
-    parser.add_argument("--examples-dir", type=Path, default=EXAMPLES_DIR)
-    parser.add_argument("--output", type=Path, default=None, help="Override output path")
-    args = parser.parse_args()
-
-    # Build default output filename with timestamp + run params
-    if args.output is None:
-        ts = datetime.now().strftime("%y-%m-%d-%H-%M")
-        style_tag = args.style
-        range_tag = f"_r{args.range[0]}-{args.range[1]}" if args.range else "_all"
-        args.output = REPORTS_DIR / f"benchmark_{ts}_{style_tag}{range_tag}.json"
-
-    run_benchmark(
-        examples_dir=args.examples_dir,
-        gateway_url=args.gateway,
-        style_filter=args.style,
-        example_range=tuple(args.range) if args.range else None,
-        runs=args.runs,
-        resume=args.resume,
-        output_path=args.output,
-        workers=args.workers,
-        component_threshold=args.component_threshold,
-        total_threshold=args.total_threshold,
-    )
+    raise SystemExit("_benchmark.py is a library — use learn_create.py instead.")

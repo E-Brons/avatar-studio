@@ -1,32 +1,25 @@
 """Analyze benchmark results — multi-dimensional analysis + recommendations.
 
-Reads benchmark JSON from example_benchmark.py, optionally combines with
-coverage audit data, and produces structured analysis with actionable
-recommendations.
+Reads benchmark JSON from _benchmark.py, optionally combines with coverage
+audit data, and produces structured analysis with actionable recommendations.
 
-Usage:
-    python scripts/analyze_benchmark.py --input reports/benchmark_20260406.json
-    python scripts/analyze_benchmark.py --input reports/benchmark_20260406.json --coverage reports/coverage_audit.json
-    python scripts/analyze_benchmark.py --input reports/benchmark_20260406.json --bottom 15
+Used by scripts/learn/learn_create.py.
 """
 
 from __future__ import annotations
 
-import argparse
 import json
 import logging
 import re
 import sys
 from collections import Counter
-from datetime import datetime
 from pathlib import Path
 
 # ── project root on sys.path ──────────────────────────────────────────────────
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from _example_utils import (  # noqa: E402
-    REPORTS_DIR,
     append_learning,
     finalize_run_metadata,
     hex_to_rgb,
@@ -729,20 +722,4 @@ def _print_summary(analysis: dict, bench_meta: dict) -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Analyze benchmark results")
-    parser.add_argument("--input", type=Path, required=True, help="Benchmark JSON file")
-    parser.add_argument("--coverage", type=Path, default=None, help="Coverage audit JSON")
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=REPORTS_DIR / f"analysis_{datetime.now().strftime('%Y%m%d')}.json",
-    )
-    parser.add_argument("--bottom", type=int, default=10, help="Number of worst performers")
-    args = parser.parse_args()
-
-    run_analysis(
-        input_path=args.input,
-        coverage_path=args.coverage,
-        output_path=args.output,
-        bottom_n=args.bottom,
-    )
+    raise SystemExit("_analyze.py is a library — use learn_create.py instead.")
