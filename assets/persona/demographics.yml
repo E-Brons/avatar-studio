@@ -792,6 +792,15 @@ religion:
   - id: christian
     label: "✝️ Christian"
     group: false
+  - id: catholic
+    label: "✝️ Catholic"
+    group: false
+  - id: orthodox_christian
+    label: "☦️ Orthodox Christian"
+    group: false
+  - id: protestant
+    label: "✝️ Protestant"
+    group: false
   - id: confucian
     label: "📜 Confucian"
     group: false
@@ -809,6 +818,12 @@ religion:
     group: false
   - id: pagan
     label: "🌿 Pagan"
+    group: false
+  - id: rastafarian
+    label: "🟨🟩🟥 Rastafarian"
+    group: false
+  - id: scientology
+    label: "🔶 Scientology"
     group: false
   - id: shinto
     label: "⛩️ Shinto"
@@ -869,4 +884,24 @@ zodiac:
     group: false
   - id: pisces
     label: "♓ Pisces"
+    group: false
+
+pronouns:
+  - id: he_him
+    label: "♂ He/Him"
+    group: false
+  - id: she_her
+    label: "♀ She/Her"
+    group: false
+  - id: they_them
+    label: "⚧ They/Them"
+    group: false
+  - id: she_they
+    label: "⚧ She/They"
+    group: false
+  - id: he_they
+    label: "⚧ He/They"
+    group: false
+  - id: any
+    label: "✨ Any Pronouns"
     group: false
