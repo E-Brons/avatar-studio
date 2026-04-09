@@ -1,0 +1,29 @@
+personal:
+  name: Roberta Metsola
+  gender: female
+  pronouns: she/her
+  age: 46
+  nationality: Maltese
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and fair
+  hair_style: straight and shoulder-length
+  hair_note: blonde
+  face_shape: oval with balanced proportions
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-groomed
+  brows_color: '#8B4513'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#F5F5F5'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'

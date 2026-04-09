@@ -1,0 +1,41 @@
+personal:
+  name: Greta Gerwig
+  gender: female
+  pronouns: she/her
+  age: 42
+  nationality: American
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: dark forest green single-breasted blazer with notched lapels
+      color: '#1B5B47'
+    top:
+      style: white button-up collared shirt with pointed collar and small gold button
+        detail
+      color: '#F2EFE8'
+  accessories:
+    necklace:
+      style: not visible
+      color: '#000000'
+  face_shape: oval, balanced and symmetrical
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and fair
+  hair_style: blonde, styled with soft waves
+  hair_note: blonde, styled with soft waves
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-groomed, arched
+  brows_color: '#8B8B8B'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, balanced with face
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#F5F5F5'
+  eye_color:
+    hex_iris: '#8B8B8B'
+    hex_pupil: '#000000'

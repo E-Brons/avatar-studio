@@ -1,0 +1,29 @@
+personal:
+  name: Daniil Medvedev
+  gender: male
+  pronouns: he/him
+  age: 28
+  nationality: Russian
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly tanned
+  hair_style: not visible, likely short
+  hair_note: '#333333'
+  face_shape: oval, slightly elongated
+  eye_shape: almond-shaped, expressive
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full, slightly flushed
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

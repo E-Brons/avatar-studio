@@ -1,0 +1,12 @@
+personal:
+  name: Yulimar Rojas
+  gender: female
+  pronouns: she/her
+  age: 29
+  nationality: Venezuelan
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

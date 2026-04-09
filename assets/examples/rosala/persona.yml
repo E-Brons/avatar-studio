@@ -1,0 +1,36 @@
+personal:
+  name: Rosalía
+  gender: female
+  pronouns: she/her
+  age: 33
+  nationality: Spanish
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#000000'
+  hair_style: long and straight, dark
+  eye_color:
+    hex_iris: '#FFA07A'
+    hex_pupil: '#000000'
+  clothing:
+    jacket:
+      style: red leather jacket with pointed collar and braided belt at waist
+      color: '#B92020'
+    pants:
+      style: dark red leather pants with ruched/gathered texture
+      color: '#7A1A1A'
+  skin_texture: smooth and slightly dewy
+  hair_note: 'dark #333333'
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: full and rounded with subtle blush

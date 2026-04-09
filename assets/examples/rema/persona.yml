@@ -1,0 +1,29 @@
+personal:
+  name: Rema
+  gender: male
+  pronouns: he/him
+  age: 24
+  nationality: Nigerian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and tanned
+  hair_style: dreadlocks with white beads
+  hair_note: dreadlocks are dark brown
+  face_shape: square with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and dark brown
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: square and defined with dimples
+  cheeks_shape: full and rounded with dimples
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

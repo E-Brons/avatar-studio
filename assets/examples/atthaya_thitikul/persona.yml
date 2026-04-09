@@ -1,0 +1,29 @@
+personal:
+  name: Atthaya Thitikul
+  gender: female
+  pronouns: she/her
+  age: 21
+  nationality: Thai
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and clear
+  hair_style: pulled back with a ponytail
+  hair_note: dark brown
+  face_shape: oval with a slight roundness
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#FFD700'
+  nose_shape: straight and medium-sized
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: full and rounded with a slight blush
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#FFD700'
+    hex_pupil: '#000000'

@@ -1,0 +1,29 @@
+personal:
+  name: Robyn
+  gender: female
+  pronouns: she/her
+  age: 46
+  nationality: Swedish
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and glowing
+  hair_style: 'not visible, #333333'
+  hair_note: hair appears as a swirling, colorful pattern
+  face_shape: oval, elongated, symmetrical
+  eye_shape: almond, wide, expressive
+  brows_style: thick, arched, defined
+  brows_color: '#00FF00'
+  nose_shape: straight, pointed, prominent
+  chin_shape: rounded, defined, smooth
+  cheeks_shape: rounded, full, glowing
+  hair_color:
+    hex_base: '#00FFFF'
+    hex_shadow: '#FF00FF'
+  eye_color:
+    hex_iris: '#00FF00'
+    hex_pupil: '#FF0000'

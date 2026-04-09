@@ -1,0 +1,39 @@
+personal:
+  name: Jacob Collier
+  gender: male
+  pronouns: he/him
+  age: 31
+  nationality: British
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: shirt
+      color: '#1A1A2E'
+    jacket:
+      style: sequin blazer with multicolor panels (pink, teal, blue, gold)
+      color: '#1565C0'
+  accessories:
+    notable_details:
+      style: none visible
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and youthful
+  hair_style: spiky, short, dark brown
+  hair_note: dark brown, spiky, short
+  face_shape: oval, youthful, balanced
+  eye_shape: almond, expressive, brown
+  brows_style: thick, well-defined, dark brown
+  brows_color: '#333333'
+  nose_shape: straight, medium-sized, well-proportioned
+  chin_shape: rounded, youthful, well-defined
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#FFFFFF'

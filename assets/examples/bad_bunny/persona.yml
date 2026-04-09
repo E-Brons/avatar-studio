@@ -1,0 +1,33 @@
+personal:
+  name: Bad Bunny
+  gender: male
+  pronouns: he/him
+  age: 32
+  nationality: Puerto Rican
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  hair_style: curly and short, dark brown
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  clothing:
+    top:
+      style: cream henley shirt with button placket
+      color: '#EAE0CA'
+  face_shape: oval with defined jawline
+  skin_texture: smooth and slightly matte
+  hair_note: thick and tightly coiled
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: full and rounded, slightly dimpled

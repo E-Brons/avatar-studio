@@ -1,0 +1,29 @@
+personal:
+  name: Beabadoobee
+  gender: female
+  pronouns: she/her
+  age: 25
+  nationality: Filipino-British
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and clear
+  hair_style: bob cut with vibrant teal color
+  hair_note: teal
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and soft-jawed
+  cheeks_shape: rounded and full with freckles
+  hair_color:
+    hex_base: '#008080'
+    hex_shadow: '#00FF00'
+  eye_color:
+    hex_iris: '#8B0000'
+    hex_pupil: '#000000'

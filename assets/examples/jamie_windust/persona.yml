@@ -1,0 +1,23 @@
+personal:
+  name: Jamie Windust
+  gender: non-binary
+  pronouns: they/them
+  age: 29
+  nationality: British
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E8CEB8'
+  eye_color:
+    hex_iris: '#5A8BB0'
+    hex_pupil: '#2D4558'
+  clothing:
+    turtleneck:
+      style: fitted black knit turtleneck
+      color: '#1A1A1A'
+    blazer:
+      style: structured chartreuse leather or satin blazer with peaked lapels
+      color: '#C8C820'

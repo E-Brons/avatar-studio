@@ -1,0 +1,29 @@
+personal:
+  name: Miley Cyrus
+  gender: female
+  pronouns: she/her
+  age: 32
+  nationality: American
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and slightly shiny
+  hair_style: short and sleek, possibly pixie cut
+  hair_note: blonde with subtle blue highlights
+  face_shape: narrow and elongated
+  eye_shape: large and almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: slender and pointed, slightly upturned
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: slightly sunken, giving a chiseled look
+  hair_color:
+    hex_base: '#FFFFFF'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#0000FF'
+    hex_pupil: '#0000FF'

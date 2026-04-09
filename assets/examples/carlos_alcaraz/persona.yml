@@ -1,0 +1,34 @@
+personal:
+  name: Carlos Alcaraz
+  gender: male
+  pronouns: he/him
+  age: 22
+  nationality: Spanish
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: short and dark brown
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  clothing:
+    garment:
+      style: white zip-up athletic jacket with stand collar and small logo patch on
+        chest
+      color: '#F0EDE8'
+  skin_texture: smooth and tanned
+  hair_note: dark brown
+  face_shape: angular and defined features
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: strong and angular chin
+  cheeks_shape: rounded and full cheeks

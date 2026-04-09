@@ -1,0 +1,29 @@
+personal:
+  name: Beth Mead
+  gender: female
+  pronouns: she/her
+  age: 30
+  nationality: British
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and fair
+  hair_style: pulled back in a ponytail
+  hair_note: blonde
+  face_shape: oval with a slight roundness
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  nose_shape: straight and prominent
+  chin_shape: rounded and soft-jawed
+  cheeks_shape: full and rosy-toned, indicating health
+  hair_color:
+    hex_base: '#F5F5DC'
+    hex_shadow: '#E6E6E6'
+  eye_color:
+    hex_iris: '#ADD8E6'
+    hex_pupil: '#000000'

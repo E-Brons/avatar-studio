@@ -1,0 +1,39 @@
+personal:
+  name: David Attenborough
+  gender: male
+  pronouns: he/him
+  age: 99
+  nationality: British
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: dress shirt, open collar, no tie
+      color: '#F0EDE8'
+    jacket:
+      style: blazer
+      color: '#2E3D54'
+    inner_layer:
+      style: v-neck sweater
+      color: '#7A9EA3'
+  skin_tone: '#F5F5F5'
+  hair_color:
+    hex_base: '#FFFFFF'
+    hex_shadow: '#808080'
+  hair_style: short and white, neatly combed
+  eye_color:
+    hex_iris: '#0000FF'
+    hex_pupil: '#000000'
+  face_shape: oval with prominent cheekbones
+  skin_texture: smooth and slightly wrinkled
+  hair_note: visible on top of head
+  eye_shape: almond-shaped with blue irises
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: medium-sized with a slight curve
+  chin_shape: rounded and slightly receding
+  cheeks_shape: full and slightly chubby

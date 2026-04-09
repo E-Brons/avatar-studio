@@ -1,0 +1,29 @@
+personal:
+  name: Ayra Starr
+  gender: female
+  pronouns: she/her
+  age: 23
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  hair_color:
+    hex_base: '#FF0000'
+    hex_shadow: '#8B0000'
+  hair_style: not visible, possibly curly or braided
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  eye_shape: almond-shaped with long eyelashes
+  face_shape: oval with defined jawline
+  nose_shape: straight and prominent
+  skin_texture: smooth and glowing
+  hair_note: covered by a red headscarf
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks

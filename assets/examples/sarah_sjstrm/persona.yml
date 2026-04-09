@@ -1,0 +1,29 @@
+personal:
+  name: Sarah Sjöström
+  gender: female
+  pronouns: she/her
+  age: 31
+  nationality: Swedish
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly shiny
+  hair_style: blonde, tied back, wet
+  hair_note: wet, suggesting recent swimming
+  face_shape: oval, youthful, athletic
+  eye_shape: almond-shaped, bright
+  brows_style: thick, well-defined, natural
+  brows_color: '#000000'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, firm, youthful
+  cheeks_shape: rounded, plump, healthy
+  hair_color:
+    hex_base: '#FFFFFF'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

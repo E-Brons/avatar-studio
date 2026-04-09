@@ -1,0 +1,34 @@
+personal:
+  name: Bella Ramsey
+  gender: non-binary
+  pronouns: they/them
+  age: 22
+  nationality: British
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  face_shape: round and youthful with a slight oval
+  skin_tone: '#FFFFF0'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  hair_style: parted in the middle
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'
+  nose_shape: small and straight with a slight curve
+  clothing:
+    jacket:
+      style: dark navy/black V-neck blazer with rhinestone/crystal embellishments
+        on the shoulders and lapels
+      color: '#1A1A2E'
+  skin_texture: smooth and fair
+  hair_note: dark brown
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  chin_shape: rounded and soft with a slight dimple
+  cheeks_shape: full and rosy with a slight blush

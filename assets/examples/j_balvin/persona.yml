@@ -1,0 +1,29 @@
+personal:
+  name: J Balvin
+  gender: male
+  pronouns: he/him
+  age: 39
+  nationality: Colombian
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly shiny
+  hair_style: short, dyed green with black streaks
+  hair_note: visible
+  face_shape: oval, slightly elongated
+  eye_shape: oval, almond-shaped, partially obscured by sunglasses
+  brows_style: thick, well-defined, slightly arched
+  brows_color: '#000000'
+  nose_shape: medium, slightly upturned
+  chin_shape: rounded, slightly protruding
+  cheeks_shape: rounded, slightly sunken
+  hair_color:
+    hex_base: '#00FF00'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#FFA500'
+    hex_pupil: '#000000'

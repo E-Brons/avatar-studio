@@ -1,0 +1,29 @@
+personal:
+  name: Ngozi Okonjo-Iweala
+  gender: female
+  pronouns: she/her
+  age: 71
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: medium brown
+  skin_texture: smooth and slightly matte
+  hair_style: not visible, covered by headwrap
+  hair_note: dark, curly, and tightly packed under headwrap
+  face_shape: round with full cheeks
+  eye_shape: oval with slightly elongated lower lid
+  brows_style: thick and arched, dark brown
+  brows_color: '#222222'
+  nose_shape: medium-sized, straight, and slightly upturned
+  chin_shape: rounded and full, slightly dimpled
+  cheeks_shape: full and rounded, slightly dimpled
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

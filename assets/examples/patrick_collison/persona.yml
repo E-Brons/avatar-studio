@@ -1,0 +1,29 @@
+personal:
+  name: Patrick Collison
+  gender: male
+  pronouns: he/him
+  age: 36
+  nationality: Irish
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and fair
+  hair_style: curly and short, reddish-brown
+  hair_note: visible
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, bright blue
+  brows_style: thick and well-defined
+  brows_color: '#FFA07A'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, youthful, well-defined
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#FFA07A'
+    hex_shadow: '#FFD700'
+  eye_color:
+    hex_iris: '#0000FF'
+    hex_pupil: '#000000'

@@ -1,0 +1,27 @@
+personal:
+  name: Aleksander Vučić
+  gender: male
+  pronouns: he/him
+  age: 54
+  nationality: Serbian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#8B4513'
+  hair_color:
+    hex_base: '#8B4513'
+    hex_shadow: '#663300'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  brows_color: '#8B4513'
+  face_shape: square
+  eye_shape: oval
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: rounded
+  hair_style: short

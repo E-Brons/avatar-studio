@@ -1,0 +1,29 @@
+personal:
+  name: Oleksandr Usyk
+  gender: male
+  pronouns: he/him
+  age: 38
+  nationality: Ukrainian
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
+  hair_style: short and neatly styled
+  hair_note: '#333333'
+  face_shape: robust and angular with defined jawline
+  eye_shape: slightly almond-shaped with visible veins
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: robust and prominent
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: full and rounded with visible pores
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

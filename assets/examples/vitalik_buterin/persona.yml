@@ -1,0 +1,25 @@
+personal:
+  name: Vitalik Buterin
+  gender: male
+  pronouns: he/him
+  age: 32
+  nationality: Russian-Canadian
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956A'
+  hair_color:
+    hex_base: '#8B7355'
+    hex_shadow: '#45392A'
+  hair_style: short, straight, light brown
+  eye_color:
+    hex_iris: '#6B9BC3'
+    hex_pupil: '#354D61'
+  clothing:
+    top:
+      style: t-shirt or crew neck
+      color: '#1A1A1A'
+  face_shape: oval

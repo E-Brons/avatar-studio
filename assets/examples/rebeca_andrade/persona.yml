@@ -1,0 +1,29 @@
+personal:
+  name: Rebeca Andrade
+  gender: female
+  pronouns: she/her
+  age: 25
+  nationality: Brazilian
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and shiny
+  hair_style: braided with highlights
+  hair_note: dark with light streaks
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with defined crease
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: full and rounded cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#808080'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'

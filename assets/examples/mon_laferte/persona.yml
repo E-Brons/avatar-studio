@@ -1,0 +1,33 @@
+personal:
+  name: Mon Laferte
+  gender: female
+  pronouns: she/her
+  age: 42
+  nationality: Latin-American
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: dusty rose/blush satin blouse with ruffled neckline and draped fabric
+      color: '#c9a598'
+  hair_style: long, wavy, dark brown
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  eye_color:
+    hex_iris: '#4a4a4a'
+    hex_pupil: '#000000'
+  skin_tone: '#262626'
+  face_shape: oval with defined jawline
+  skin_texture: smooth and slightly matte
+  hair_note: frames face
+  eye_shape: almond-shaped with dark brown irises
+  brows_style: thick and dark brown
+  brows_color: '#4a4a4a'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: full and rounded cheeks

@@ -1,0 +1,33 @@
+personal:
+  name: Timothée Chalamet
+  gender: male
+  pronouns: he/him
+  age: 30
+  nationality: French
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: leather jacket with snap buttons and collar
+      color: '#1A1A1A'
+  face_shape: oval, symmetrical, youthful
+  skin_tone: '#FFFFF0'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'
+  eye_shape: almond-shaped, light green
+  nose_shape: straight, medium-sized
+  hair_style: medium-length, wavy, dark brown
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  skin_texture: smooth and fair
+  hair_note: fringe slightly covering forehead
+  brows_style: thick, well-defined, dark brown
+  brows_color: '#333333'
+  chin_shape: rounded, youthful, well-defined
+  cheeks_shape: rounded, smooth, youthful

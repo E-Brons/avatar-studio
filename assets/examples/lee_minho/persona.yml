@@ -1,0 +1,12 @@
+personal:
+  name: Lee Min-ho
+  gender: male
+  pronouns: he/him
+  age: 37
+  nationality: South Korean
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}

@@ -1,0 +1,27 @@
+personal:
+  name: Alexander Zverev
+  gender: male
+  pronouns: he/him
+  age: 27
+  nationality: German
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  hair_color:
+    hex_base: '#D3D3D3'
+    hex_shadow: '#A9A9A9'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  brows_color: '#000000'
+  face_shape: angular
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: rounded
+  hair_style: partially tied back

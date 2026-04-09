@@ -1,0 +1,33 @@
+personal:
+  name: Mark Zuckerberg
+  gender: male
+  pronouns: he/him
+  age: 41
+  nationality: American
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Dark navy blue crew-neck short-sleeve t-shirt
+      color: '#2E3644'
+  face_shape: oval, youthful, slightly angled
+  skin_tone: '#FFD700'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  hair_style: curly and short, light brown
+  hair_color:
+    hex_base: '#D2691E'
+    hex_shadow: '#8B4513'
+  skin_texture: smooth and fair
+  hair_note: visible
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, light brown
+  brows_color: '#D2691E'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, youthful, slightly pointed
+  cheeks_shape: rounded, smooth, youthful

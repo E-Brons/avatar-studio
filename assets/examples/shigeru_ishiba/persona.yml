@@ -1,0 +1,29 @@
+personal:
+  name: Shigeru Ishiba
+  gender: male
+  pronouns: he/him
+  age: 67
+  nationality: Japanese
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#000000'
+  skin_texture: smooth and clear
+  hair_style: short and neatly combed
+  hair_note: gray
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-groomed
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and firm chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

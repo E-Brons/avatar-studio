@@ -1,0 +1,53 @@
+personal:
+  name: Priyanka Chopra
+  gender: female
+  pronouns: she/her
+  age: 43
+  nationality: Indian
+  religion: Hindu
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: white fur or faux-fur cowl-neck top/sweater, high turtleneck-collar style
+      color: '#F0EEEA'
+    color:
+      style: warm off-white / ivory
+      color: '#EDE8E0'
+    texture:
+      style: plush, fluffy fur pile
+      color: '#EDE8E0'
+    neckline:
+      style: high cowl-neck / fold-over turtleneck
+      color: '#EDE8E0'
+    visible_portion:
+      style: collar and upper chest only
+      color: '#EDE8E0'
+  accessories:
+    earrings:
+      style: small gold stud on left ear, approximately 3–4 mm
+      color: '#C9A84C'
+    necklace:
+      style: none visible
+    other:
+      style: none visible
+  skin_tone: '#262626'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4a4a4a'
+  hair_style: pulled back and sleek
+  eye_color:
+    hex_iris: '#2a2a2a'
+    hex_pupil: '#2a2a2a'
+  face_shape: oval with defined jawline
+  skin_texture: smooth and flawless
+  hair_note: dark brown
+  eye_shape: almond-shaped with long lashes
+  brows_style: thick and well-defined
+  brows_color: '#2a2a2a'
+  nose_shape: slender and refined with small nostrils
+  chin_shape: rounded and slightly pointed
+  cheeks_shape: smooth and full with subtle blush

@@ -1,0 +1,29 @@
+personal:
+  name: Cate Blanchett
+  gender: female
+  pronouns: she/her
+  age: 55
+  nationality: Australian
+  religion: unknown
+  zodiac: Taurus
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and even
+  hair_style: blonde, wavy, shoulder-length
+  hair_note: blonde, wavy, shoulder-length
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond, light blue, expressive
+  brows_style: thick, well-groomed, arched
+  brows_color: '#808080'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, balanced, youthful
+  cheeks_shape: rounded, full, youthful
+  hair_color:
+    hex_base: '#F5F5F5'
+    hex_shadow: '#E0E0E0'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

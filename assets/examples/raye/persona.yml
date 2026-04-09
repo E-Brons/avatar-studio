@@ -1,0 +1,29 @@
+personal:
+  name: Raye
+  gender: female
+  pronouns: she/her
+  age: 27
+  nationality: British
+  religion: unknown
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and radiant
+  hair_style: bob cut with bangs, black
+  hair_note: short, sleek, and glossy
+  face_shape: oval, symmetrical, balanced
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#000000'
+  nose_shape: straight, well-proportioned
+  chin_shape: rounded, soft, youthful
+  cheeks_shape: rounded, full, healthy
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

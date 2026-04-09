@@ -1,0 +1,37 @@
+personal:
+  name: Tiwa Savage
+  gender: female
+  pronouns: she/her
+  age: 46
+  nationality: Nigerian
+  religion: unknown
+  zodiac: Aquarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  hair_color:
+    hex_base: '#4a2b14'
+    hex_shadow: '#333333'
+  hair_style: long, wavy, dark brown
+  eye_color:
+    hex_iris: '#2a2a2a'
+    hex_pupil: '#2a2a2a'
+  clothing:
+    bodycon gown:
+      style: Metallic gunmetal-bronze form-fitting gown with a sleeveless silhouette
+      color: '#4A4540'
+    ruffled cape/wrap:
+      style: Dramatic oversized gold pleated ruffled structural piece cascading from
+        shoulders to floor
+      color: '#C4A96A'
+  skin_texture: smooth and radiant
+  hair_note: extends past shoulders
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with defined crease
+  brows_style: thick and well-groomed
+  brows_color: '#2a2a2a'
+  nose_shape: straight and well-defined
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks

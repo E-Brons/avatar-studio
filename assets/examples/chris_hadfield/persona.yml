@@ -1,0 +1,29 @@
+personal:
+  name: Chris Hadfield
+  gender: male
+  pronouns: he/him
+  age: 65
+  nationality: Canadian
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C0C0C0'
+  skin_texture: smooth and slightly aged
+  hair_style: short and neatly combed
+  hair_note: 'grayish #808080'
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-defined
+  brows_color: '#808080'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: full and rounded with slight dimples
+  hair_color:
+    hex_base: '#808080'
+    hex_shadow: '#808080'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

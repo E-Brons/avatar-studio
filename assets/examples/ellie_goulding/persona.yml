@@ -1,0 +1,29 @@
+personal:
+  name: Ellie Goulding
+  gender: female
+  pronouns: she/her
+  age: 38
+  nationality: British
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and fair
+  hair_style: blonde, wavy, shoulder-length
+  hair_note: blonde, wavy, shoulder-length
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#000000'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, youthful, well-defined
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#F5F5F5'
+    hex_shadow: '#FFD700'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

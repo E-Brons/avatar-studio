@@ -1,0 +1,29 @@
+personal:
+  name: Jodie Comer
+  gender: female
+  pronouns: she/her
+  age: 32
+  nationality: British
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#F5F5F5'
+  skin_texture: smooth and even
+  hair_style: partially pulled back
+  hair_note: blonde with subtle highlights
+  face_shape: narrow and elongated
+  eye_shape: almond-shaped with long lashes
+  brows_style: thick and well-defined
+  brows_color: '#808080'
+  nose_shape: straight and refined
+  chin_shape: rounded and soft-jawed
+  cheeks_shape: rounded and full with subtle blush
+  hair_color:
+    hex_base: '#F5F5F5'
+    hex_shadow: '#D3D3D3'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

@@ -1,0 +1,29 @@
+personal:
+  name: Jonas Vingegaard
+  gender: male
+  pronouns: he/him
+  age: 27
+  nationality: Danish
+  religion: unknown
+  zodiac: Sagittarius
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and fair
+  hair_style: not visible, likely short
+  hair_note: '#333333'
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond, bright, expressive
+  brows_style: thick, well-defined, natural
+  brows_color: '#0000FF'
+  nose_shape: straight, well-proportioned
+  chin_shape: rounded, youthful, firm
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#0000FF'
+    hex_pupil: '#0000FF'

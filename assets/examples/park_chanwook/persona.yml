@@ -1,0 +1,29 @@
+personal:
+  name: Park Chan-wook
+  gender: male
+  pronouns: he/him
+  age: 62
+  nationality: South Korean
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#333333'
+  skin_texture: smooth and even
+  hair_style: partially visible, gray and neatly styled
+  hair_note: partially visible, gray and neatly styled
+  face_shape: oval, symmetrical, mature
+  eye_shape: oval, slightly elongated
+  brows_style: thick, well-groomed, dark
+  brows_color: '#333333'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, well-defined
+  cheeks_shape: rounded, full, youthful
+  hair_color:
+    hex_base: '#808080'
+    hex_shadow: '#666666'
+  eye_color:
+    hex_iris: '#333333'
+    hex_pupil: '#333333'

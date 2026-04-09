@@ -1,0 +1,27 @@
+personal:
+  name: Achraf Hakimi
+  gender: male
+  pronouns: he/him
+  age: 26
+  nationality: Moroccan
+  religion: Muslim
+  zodiac: Scorpio
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: light
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  brows_color: '#000000'
+  face_shape: oval
+  eye_shape: almond
+  brows_style: thick
+  nose_shape: straight
+  chin_shape: rounded
+  cheeks_shape: rounded
+  hair_style: short

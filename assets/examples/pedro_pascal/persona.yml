@@ -1,0 +1,33 @@
+personal:
+  name: Pedro Pascal
+  gender: male
+  pronouns: he/him
+  age: 51
+  nationality: Chilean
+  religion: unknown
+  zodiac: Aries
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Black crewneck t-shirt
+      color: '#1A1A1A'
+  skin_tone: '#222222'
+  skin_texture: smooth and slightly tanned
+  hair_style: short and tousled, dark brown
+  hair_note: thick and slightly messy
+  face_shape: oval, slightly elongated
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick and slightly arched
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly chin-ward
+  cheeks_shape: rounded and slightly sunken
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

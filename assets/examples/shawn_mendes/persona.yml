@@ -1,0 +1,29 @@
+personal:
+  name: Shawn Mendes
+  gender: male
+  pronouns: he/him
+  age: 26
+  nationality: Canadian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly shiny
+  hair_style: short, tousled, dark brown
+  hair_note: fringe slightly covering forehead
+  face_shape: oval, youthful, slightly elongated
+  eye_shape: almond-shaped, brown, expressive
+  brows_style: thick, well-defined, dark brown
+  brows_color: '#333333'
+  nose_shape: straight, medium-sized, slightly pointed
+  chin_shape: rounded, youthful, slightly dimpled
+  cheeks_shape: rounded, slightly flushed
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'

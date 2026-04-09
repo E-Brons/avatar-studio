@@ -1,0 +1,29 @@
+personal:
+  name: Arca
+  gender: non-binary
+  pronouns: they/them
+  age: 34
+  nationality: Venezuelan
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#000000'
+  skin_texture: smooth and shiny
+  hair_style: long and straight, brown
+  hair_note: visible
+  face_shape: rounded and symmetrical
+  eye_shape: large and almond-shaped
+  brows_style: thick and arched, brown
+  brows_color: '#D2691E'
+  nose_shape: small and rounded, orange
+  chin_shape: rounded and small, black
+  cheeks_shape: rounded and smooth, black
+  hair_color:
+    hex_base: '#D2691E'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#FF1493'
+    hex_pupil: '#FF1493'

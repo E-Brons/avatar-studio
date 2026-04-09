@@ -1,0 +1,33 @@
+personal:
+  name: Deepika Padukone
+  gender: female
+  pronouns: she/her
+  age: 40
+  nationality: Indian
+  religion: unknown
+  zodiac: Capricorn
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    garment:
+      style: white thin-strap top
+      color: '#E8E0D8'
+  skin_tone: '#FFD700'
+  skin_texture: smooth and radiant
+  hair_style: updo with soft waves
+  hair_note: dark brown
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and arched, well-groomed
+  brows_color: '#8B0000'
+  nose_shape: straight and refined
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#8B0000'
+    hex_pupil: '#000000'

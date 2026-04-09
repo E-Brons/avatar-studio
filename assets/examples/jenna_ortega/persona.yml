@@ -1,0 +1,33 @@
+personal:
+  name: Jenna Ortega
+  gender: female
+  pronouns: she/her
+  age: 23
+  nationality: American
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    top:
+      style: Off-shoulder black semi-sheer knit top with a wide V-neckline
+      color: '#1C1C1C'
+  skin_tone: '#E5D9C7'
+  skin_texture: smooth and youthful
+  hair_style: long and wavy, dark brown
+  hair_note: dark brown, long, wavy
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#222222'
+  nose_shape: straight, well-proportioned
+  chin_shape: rounded, delicate, youthful
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

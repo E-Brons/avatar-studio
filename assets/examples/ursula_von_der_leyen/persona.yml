@@ -1,0 +1,19 @@
+personal:
+  name: Ursula von der Leyen
+  gender: female
+  pronouns: she/her
+  age: 67
+  nationality: German
+  religion: unknown
+  zodiac: Libra
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: dark navy fitted blazer
+      color: '#2B2D42'
+    top:
+      style: light blue collared button-up shirt
+      color: '#C4D4E0'

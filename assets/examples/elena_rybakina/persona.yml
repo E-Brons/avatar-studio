@@ -1,0 +1,29 @@
+personal:
+  name: Elena Rybakina
+  gender: female
+  pronouns: she/her
+  age: 25
+  nationality: Kazakhstani
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and fair
+  hair_style: 'not visible, #333333'
+  hair_note: dark and pulled back
+  face_shape: oval, elongated, symmetrical
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#000000'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, small, firm
+  cheeks_shape: rounded, smooth, full
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

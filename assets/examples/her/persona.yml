@@ -1,0 +1,29 @@
+personal:
+  name: H.E.R.
+  gender: female
+  pronouns: she/her
+  age: 27
+  nationality: American
+  religion: unknown
+  zodiac: Cancer
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D3A17B'
+  skin_texture: smooth and glowing
+  hair_style: straight and long, parted down the middle
+  hair_note: black
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-groomed
+  brows_color: '#281900'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and defined chin
+  cheeks_shape: rounded and full cheeks
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#281900'
+    hex_pupil: '#000000'

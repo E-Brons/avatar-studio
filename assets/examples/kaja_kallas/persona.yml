@@ -1,0 +1,18 @@
+personal:
+  name: Kaja Kallas
+  gender: female
+  pronouns: she/her
+  age: 48
+  nationality: Estonian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E8C4A8'
+  clothing:
+    top:
+      style: Round-neck houndstooth check blouse or dress with long sleeves
+      color: '#7A7A7A'
+  face_shape: oval

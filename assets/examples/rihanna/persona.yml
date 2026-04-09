@@ -1,0 +1,42 @@
+personal:
+  name: Rihanna
+  gender: female
+  pronouns: she/her
+  age: 20
+  nationality: Barbadian
+  religion: unknown
+  zodiac: Pisces
+style:
+  bg_color: '#C4B5A0'
+  fg_color: '#2A1A0A'
+advisor:
+  role: Advisor
+  education: []
+  experience: []
+  traits: []
+appearance:
+  skin_tone: '#D2B48C'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#80A080'
+    hex_pupil: '#000000'
+  brows_color: '#333333'
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-groomed
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: full and rounded cheeks
+  hair_style: straight and sleek, pulled back
+  clothing:
+    top:
+      style: beige knit top with metal grommet/eyelet details along the neckline
+      color: '#C4B896'
+  accessories:
+    hoop earrings:
+      style: small thin delicate gold huggie hoop earrings
+      color: '#D4A830'
+  skin_texture: smooth and matte
+  hair_note: dark brown

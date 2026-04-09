@@ -1,0 +1,29 @@
+personal:
+  name: Sydney McLaughlin-Levrone
+  gender: female
+  pronouns: she/her
+  age: 25
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  skin_texture: smooth and clear
+  hair_style: curly and tied back in a bun
+  hair_note: visible
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with long eyelashes
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and defined chin
+  cheeks_shape: full and rounded cheeks
+  hair_color:
+    hex_base: '#D2691E'
+    hex_shadow: '#8B4513'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

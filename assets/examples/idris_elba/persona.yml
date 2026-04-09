@@ -1,0 +1,39 @@
+personal:
+  name: Idris Elba
+  gender: male
+  pronouns: he/him
+  age: 53
+  nationality: British
+  religion: unknown
+  zodiac: Virgo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  hair_style: short and neatly groomed
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'
+  clothing:
+    jacket:
+      style: dark charcoal/black suit jacket
+      color: '#2B2B2B'
+    top:
+      style: white dress shirt with spread collar
+      color: '#F0F0F0'
+    tie:
+      style: black necktie
+      color: '#1A1A1A'
+  face_shape: square with defined jawline
+  skin_texture: smooth and slightly shiny
+  hair_note: black
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: rounded and well-defined
+  cheeks_shape: full and rounded with slight dimples

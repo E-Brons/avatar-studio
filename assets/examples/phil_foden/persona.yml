@@ -1,0 +1,29 @@
+personal:
+  name: Phil Foden
+  gender: male
+  pronouns: he/him
+  age: 24
+  nationality: British
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFF0'
+  skin_texture: smooth and clear
+  hair_style: short and neatly styled
+  hair_note: '#333333'
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with light blue irises
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and firm chin
+  cheeks_shape: slightly sunken but balanced
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'

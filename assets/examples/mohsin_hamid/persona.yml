@@ -1,0 +1,29 @@
+personal:
+  name: Mohsin Hamid
+  gender: male
+  pronouns: he/him
+  age: 52
+  nationality: Pakistani
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E6E6E6'
+  skin_texture: smooth with fine speckles
+  hair_style: not visible, possibly bald
+  hair_note: purple background with black speckles
+  face_shape: oval with slightly rounded cheeks
+  eye_shape: almond-shaped with light brown irises
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight with small nostrils
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: slightly chubby and rosy
+  hair_color:
+    hex_base: '#800080'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'

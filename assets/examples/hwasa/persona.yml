@@ -1,0 +1,29 @@
+personal:
+  name: Hwasa
+  gender: female
+  pronouns: she/her
+  age: 29
+  nationality: South Korean
+  religion: unknown
+  zodiac: Leo
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#FFFFFF'
+  skin_texture: smooth and youthful
+  hair_style: parted center, wavy ends
+  hair_note: black
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick, well-defined, dark brown
+  brows_color: '#222222'
+  nose_shape: straight, well-proportioned
+  chin_shape: rounded, delicate, youthful
+  cheeks_shape: rounded, smooth, youthful
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#000000'

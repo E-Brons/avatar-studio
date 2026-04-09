@@ -1,0 +1,36 @@
+personal:
+  name: Cillian Murphy
+  gender: male
+  pronouns: he/him
+  age: 49
+  nationality: Irish
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  clothing:
+    jacket:
+      style: dark pinstripe suit jacket
+      color: '#1C1A1E'
+    shirt:
+      style: dress shirt, open collar
+      color: '#F0EDE8'
+  skin_tone: '#D2B48C'
+  skin_texture: smooth and slightly matte
+  hair_style: short and neatly combed
+  hair_note: dark brown
+  face_shape: narrow and elongated
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: slightly rounded and defined
+  cheeks_shape: slightly sunken and smooth
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B4B4B'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

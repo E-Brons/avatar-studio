@@ -1,0 +1,29 @@
+personal:
+  name: Chris Evans
+  gender: male
+  pronouns: he/him
+  age: 43
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#222222'
+  skin_texture: smooth and slightly matte
+  hair_style: short, neatly styled, dark brown
+  hair_note: thick and well-groomed
+  face_shape: square with defined jawline
+  eye_shape: almond-shaped, light blue
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly squared
+  cheeks_shape: full and rounded, slightly dimpled
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

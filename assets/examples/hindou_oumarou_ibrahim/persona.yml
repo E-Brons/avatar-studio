@@ -1,0 +1,41 @@
+personal:
+  name: Hindou Oumarou Ibrahim
+  gender: female
+  pronouns: she/her
+  age: 42
+  nationality: Chadian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#262626'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  hair_style: braided and tied up with a headwrap
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  face_shape: oval with a slight curve
+  clothing:
+    headwrap:
+      style: Large elaborately tied headwrap in red fabric with gold brocade border
+        trim, adorned with a white frangipani flower on the left side
+      color: '#CD2B2B'
+    top:
+      style: Traditional red and gold brocade-patterned tunic with a vertical center
+        panel of multicolored beadwork and a large gold metal chest plate
+      color: '#CD2B2B'
+    jacket:
+      style: Open-front black blazer worn over the traditional top
+      color: '#1A1A1A'
+  skin_texture: smooth and radiant
+  hair_note: not visible
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  nose_shape: straight and well-proportioned
+  chin_shape: rounded and balanced
+  cheeks_shape: full and rounded with a slight blush

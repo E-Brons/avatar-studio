@@ -1,0 +1,12 @@
+personal:
+  name: Viktor Orbán
+  gender: male
+  pronouns: he/him
+  age: 61
+  nationality: Hungarian
+  religion: unknown
+  zodiac: Gemini
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance: {}
