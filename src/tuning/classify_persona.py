@@ -404,7 +404,7 @@ def categorize_avatar_image(
     persona: dict,
     *,
     gateway_url: str = "http://127.0.0.1:4096",
-    timeout: int = 60,
+    timeout: int = 120,
 ) -> CategoryReport:
     """Ask a vision LLM to verify which avatar persona properties are visible."""
     props = _describe_properties(persona)

@@ -43,74 +43,79 @@ _SKIN_TONE_LABELS: dict[str, str] = {
 }
 
 # ---------------------------------------------------------------------------
+# Hair color labels (base hex → human-readable color name)
+# Parallel to _SKIN_TONE_LABELS: gives the image model a color word to anchor
+# on, since near-identical dark hexes are otherwise indistinguishable.
+# ---------------------------------------------------------------------------
+
+_HAIR_COLOR_LABELS: dict[str, str] = {
+    "#1A0E07": "jet black",
+    "#2D1B0E": "very dark brown",
+    "#3B2314": "dark brown",
+    "#8B5E3C": "warm medium brown",
+    "#C8712A": "deep auburn",
+    "#D4A055": "warm honey brown",
+    "#C0B0A0": "ash gray-brown",
+    "#0D0703": "near-black",
+    "#4A3728": "dark walnut brown",
+    "#6B4C35": "medium brown",
+    "#1C1C1C": "charcoal gray",
+    "#B87333": "copper",
+    "#E8C96A": "golden blonde",
+    "#F2E0A0": "platinum blonde",
+    "#7A6A5A": "ash brown",
+    "#D4C4B0": "silver-gray",
+    "#8B0000": "deep burgundy red",
+    "#A0522D": "sienna brown",
+    "#E8E8E8": "white/silver",
+    "#B0A090": "warm gray",
+}
+
+# Hair styles that fully cover or eliminate visible hair — suppress hair_color
+# for these so the evaluator does not score an inherently invisible property.
+_COVERING_HAIR_STYLES: frozenset[str] = frozenset(
+    {
+        "bald",
+        "turban wrapped",
+        "traditional head wrap",
+        "gele head wrap",
+        "hijab draped",
+    }
+)
+
+# Accessories that fully occlude the iris — suppress eye_color for these
+# so the evaluator does not score an inherently invisible property.
+# NOTE: in SBS/reference-photo mode, eye_color (and all facial anatomy) is
+# suppressed globally via _SBS_SUPPRESSED_FIELDS regardless of accessory.
+_COVERING_EYE_ACCESSORIES: frozenset[str] = frozenset(
+    {
+        "sunglasses",
+        "tinted glasses",
+        "tinted rimless glasses",
+    }
+)
+
+# ---------------------------------------------------------------------------
 # Eye shape expansions
 # ---------------------------------------------------------------------------
 
 _EYE_SHAPE: dict[str, str] = {
-    "almond": (
-        "almond-shaped eyes: slightly pointed at both inner and outer corners, "
-        "a visible upper lid crease, elegant and mildly upward-tilted"
-    ),
-    "round": (
-        "large round eyes: wide open with a circular visible iris, "
-        "prominent and expressive with a full rounded lid shape"
-    ),
-    "hooded": (
-        "hooded eyes: heavy overhanging brow bone drooping over the upper eyelid, "
-        "eyelid crease hidden, short brow-to-lash distance"
-    ),
-    "monolid": (
-        "monolid eyes: single eyelid with no visible upper lid crease, "
-        "flat lid surface, common in East Asian features"
-    ),
-    "deep-set": (
-        "deep-set eyes: recessed deep into the eye socket beneath a prominent "
-        "overhanging brow ridge, creating strong shadows above the eye"
-    ),
-    "upturned": (
-        "upturned eyes: outer corners lifted noticeably higher than inner corners, "
-        "cat-eye or fox-eye appearance, giving an alert and feline look"
-    ),
-    "downturned": (
-        "downturned eyes: outer corners angled gently downward below the inner "
-        "corners, giving a soft melancholic or gentle expression"
-    ),
-    "wide-set": (
-        "wide-set eyes: eyes positioned farther apart than average, with substantial "
-        "space between them relative to nose width"
-    ),
-    "manga": (
-        "large stylized eyes in anime/manga aesthetic: exaggerated round irises, "
-        "wide expressive pupils, dramatic highlights, oversized and luminous"
-    ),
-    "protruding": (
-        "protruding eyes: eyeballs appear to bulge forward from the face, "
-        "prominent and wide, with visible white above the iris"
-    ),
-    "close-set": (
-        "close-set eyes: positioned very close together near the nose bridge, "
-        "narrow space between the inner corners"
-    ),
-    "heavy-lidded": (
-        "heavy-lidded eyes: thick drooping upper eyelids that partially cover the "
-        "iris, giving a sleepy, sultry or intense expression"
-    ),
-    "cat-eye": (
-        "cat-eye shaped eyes: elongated horizontally with dramatically upswept and "
-        "pointed outer corners, sharp and feline"
-    ),
-    "small and sharp": (
-        "small sharp eyes: narrow compact lids, intense focused gaze, "
-        "precise and piercing despite the small size"
-    ),
-    "large and soft": (
-        "large soft eyes: generous lid height, wide iris, warm and open expression, "
-        "inviting and expressive"
-    ),
-    "asymmetric": (
-        "subtly asymmetric eyes: one eye is slightly larger, higher, or differently "
-        "shaped than the other, giving a natural distinctive character"
-    ),
+    "almond": "almond-shaped eyes with slightly pointed corners and a visible lid crease",
+    "round": "large round eyes with a wide circular iris, open and expressive",
+    "hooded": "hooded eyes with a heavy brow bone concealing the upper lid crease",
+    "monolid": "monolid eyes with a single eyelid and no visible upper lid crease",
+    "deep-set": "deep-set eyes recessed beneath a prominent overhanging brow ridge",
+    "upturned": "upturned eyes with outer corners lifted above the inner corners, cat-eye silhouette",
+    "downturned": "downturned eyes with outer corners angled gently below the inner corners",
+    "wide-set": "wide-set eyes spaced farther apart than average relative to nose width",
+    "manga": "large stylized eyes in anime/manga aesthetic with exaggerated round irises and dramatic highlights",
+    "protruding": "protruding eyes that bulge forward from the face, prominent and wide",
+    "close-set": "close-set eyes positioned very close together near the nose bridge",
+    "heavy-lidded": "heavy-lidded eyes with thick drooping upper lids partially covering the iris",
+    "cat-eye": "cat-eye shaped eyes elongated horizontally with dramatically upswept outer corners",
+    "small and sharp": "small sharp eyes with narrow compact lids and an intense focused gaze",
+    "large and soft": "large soft eyes with generous lid height and a wide warm iris",
+    "asymmetric": "subtly asymmetric eyes where one eye is slightly larger or differently shaped than the other",
 }
 
 # ---------------------------------------------------------------------------
@@ -118,69 +123,22 @@ _EYE_SHAPE: dict[str, str] = {
 # ---------------------------------------------------------------------------
 
 _NOSE_SHAPE: dict[str, str] = {
-    "small rounded shadow": (
-        "small soft nose with a rounded tip, minimal bridge definition, "
-        "gentle shadow suggesting a delicate compact nose"
-    ),
-    "subtle vertical line": (
-        "narrow slim nose indicated by a subtle vertical shadow line, "
-        "minimal width, elegant and refined"
-    ),
-    "soft L-curve": (
-        "nose with a soft L-shaped profile: a slight bump at the bridge "
-        "then a gentle downward curve to a soft tip"
-    ),
-    "gentle button": (
-        "classic button nose: small rounded tip curving gently upward, "
-        "short bridge, narrow delicate nostrils"
-    ),
-    "narrow bridge shadow": (
-        "nose with a narrow elongated bridge, a slim shadow line running "
-        "down the center, refined and straight"
-    ),
-    "wide bridge shadow": (
-        "nose with a wide flat bridge casting a broad shadow across the "
-        "middle of the face, prominent width"
-    ),
-    "broad flat": (
-        "broad flat nose: wide nostrils spreading across the lower face, "
-        "flat low bridge with minimal projection"
-    ),
-    "long straight": (
-        "long straight nose with an uninterrupted smooth bridge line from "
-        "brow bone to tip, classic proportions"
-    ),
-    "concave ski slope": (
-        "concave ski-slope nose: the bridge dips inward creating a concave "
-        "curve before the tip tilts slightly upward"
-    ),
-    "bulbous tip": (
-        "nose with a large rounded bulbous tip that dominates the lower nose, "
-        "wide and fleshy at the end"
-    ),
-    "hawk curved": (
-        "hawk nose: a dramatic downward-curving bridge with a sharp refined tip "
-        "that hooks slightly toward the upper lip"
-    ),
-    "wide nostrils": (
-        "nose with noticeably wide flared nostrils, a full broad nasal base spreading outward"
-    ),
-    "narrow nostrils": (
-        "nose with narrow pinched nostrils, a slim compact nasal base "
-        "close together beneath the tip"
-    ),
-    "snubbed upturned": (
-        "short snubbed upturned nose: a lifted tip that reveals the nostrils "
-        "when viewed from the front, perky and small"
-    ),
-    "strong aquiline": (
-        "strong aquiline Roman nose: high prominent bridge with a bold downward "
-        "curve, angular and refined, narrow at the tip"
-    ),
-    "soft undefined": (
-        "soft undefined nose with subtle indistinct features, smooth and blending "
-        "gently into the face without sharp definition"
-    ),
+    "small rounded shadow": "small soft nose with a rounded tip and minimal bridge definition",
+    "subtle vertical line": "narrow slim nose with a subtle vertical shadow line and minimal width",
+    "soft L-curve": "nose with a soft L-shaped profile: slight bridge bump then a gentle curve to the tip",
+    "gentle button": "small button nose with a rounded upturned tip and narrow delicate nostrils",
+    "narrow bridge shadow": "narrow elongated nose bridge with a slim centered shadow line",
+    "wide bridge shadow": "wide flat nose bridge casting a broad shadow across the mid-face",
+    "broad flat": "broad flat nose with wide spreading nostrils and a flat low bridge",
+    "long straight": "long straight nose with a smooth uninterrupted bridge from brow bone to tip",
+    "concave ski slope": "concave ski-slope nose with a dipping bridge and a slightly upturned tip",
+    "bulbous tip": "nose with a large rounded bulbous tip dominating the lower nose",
+    "hawk curved": "hawk nose with a dramatic downward-curving bridge and a sharp hooked tip",
+    "wide nostrils": "nose with notably wide flared nostrils and a broad nasal base",
+    "narrow nostrils": "nose with narrow pinched nostrils and a slim compact nasal base",
+    "snubbed upturned": "short snubbed upturned nose with a lifted tip that reveals the nostrils from the front",
+    "strong aquiline": "strong aquiline Roman nose with a high prominent bridge and a bold downward curve",
+    "soft undefined": "soft undefined nose with subtle indistinct features blending gently into the face",
 }
 
 # ---------------------------------------------------------------------------
@@ -332,14 +290,14 @@ _ACCESSORY: dict[str, str] = {
     "braided leather bracelet on wrist": "a braided leather bracelet wrapped around the wrist, clearly visible",
     "visible ear cuff on upper ear": "a decorative ear cuff clipped to the upper ear cartilage, clearly visible",
     "chunky sport watch on wrist": "chunky bold sport watch on the wrist",
-    "pair of earrings": "a matching pair of earrings in both ears",
-    "stud earrings": "small stud earrings in both earlobes",
+    "pair of earrings": "a clearly visible matching pair of earrings in both ears, visible at the earlobes",
+    "stud earrings": "small stud earrings clearly visible in both earlobes",
     "hoop earrings": "circular hoop earrings in both ears",
     "drop earrings": "hanging drop earrings dangling below the earlobes",
     "statement earrings": "large bold statement earrings",
     "ear cuff": "decorative ear cuff on the upper ear cartilage",
-    "necklace": "necklace worn around the neck",
-    "pendant necklace": "a pendant necklace with a charm hanging at the chest",
+    "necklace": "a clearly visible necklace draped around the neck, resting at chest level over the clothing",
+    "pendant necklace": "a clearly visible pendant necklace with a decorative charm hanging at the chest, draped over the clothing",
     "choker": "close-fitting choker necklace around the neck",
     "eyeglasses": "eyeglasses with frames sitting on the nose",
     "thick-framed glasses": "thick bold-framed eyeglasses",
@@ -366,7 +324,7 @@ _ACCESSORY: dict[str, str] = {
     "traditional head wrap accessory": "a large decorative brooch pinned prominently to a fabric head wrap",
     "woven bracelet": "a colorful handwoven fabric bracelet wrapped around the wrist",
     "cuff bracelet": "a wide rigid metal cuff bracelet clasped around the wrist",
-    "watch": "a wristwatch on the wrist",
+    "watch": "a clearly visible wristwatch strapped on the wrist",
     "geometric earrings": "bold geometric-shaped earrings with angular abstract forms hanging from the ears",
     "bold geometric earrings": "large bold geometric-shaped earrings with strong angular or abstract forms, clearly visible hanging from the earlobes",
     "choker necklace": "a tight close-fitting choker necklace sitting high on the neck",
@@ -397,6 +355,30 @@ _PROPERTY_MAPS: dict[str, dict[str, str]] = {
     **_STYLE_PROPERTY_MAPS,
 }
 
+# ---------------------------------------------------------------------------
+# SBS / reference-photo mode — fields to suppress entirely
+# ---------------------------------------------------------------------------
+# In reference-photo (SBS) mode the reference image is the authoritative source
+# for all facial anatomy, skin tone, and hair.  Emitting text descriptions for
+# these properties creates a direct conflict that causes the image model to drift
+# away from the reference person's identity.  Strip every field listed here from
+# the generation prompt whenever reference_mode is active.
+_SBS_SUPPRESSED_FIELDS: frozenset[str] = (
+    frozenset(
+        _FACE_PROPERTY_MAPS.keys()
+    )  # eye_shape, nose_shape, brows_style, chin_shape, cheeks_shape
+    | frozenset(
+        {
+            "skin_tone",  # visible in photo; any mismatch overrides identity
+            "hair_color",  # visible in photo; confirmed vector in Mohamed Salah failure
+            "hair_style",  # visible in photo; confirmed vector in Pitt + Salah failures
+            "eye_color",  # visible in photo; hex mismatch confirmed identity override vector
+            "age_group",  # photo establishes apparent age; text label creates mismatch override (confirmed vector: andrew_ng, ai_weiwei)
+            "gender",  # demographic text anchors model to population prior instead of reference face
+        }
+    )
+)
+
 
 def _enrich_skin_tone(hex_val: str) -> str:
     """Return 'label (HEX)' — adds human-readable label to skin tone hex."""
@@ -420,6 +402,10 @@ def _enrich_appearance(appearance: dict) -> dict:
     """Apply visual expansions to structural properties in appearance dict."""
     enriched = dict(appearance)
 
+    # Capture raw hair_style before the expansion loop overwrites it —
+    # needed below to decide whether hair_color should be suppressed.
+    _raw_hair_style = (enriched.get("hair_style") or "").lower()
+
     # Structural property label → rich description
     for prop, lookup in _PROPERTY_MAPS.items():
         val = enriched.get(prop)
@@ -430,6 +416,19 @@ def _enrich_appearance(appearance: dict) -> dict:
     skin = enriched.get("skin_tone")
     if isinstance(skin, str) and skin.startswith("#"):
         enriched["skin_tone"] = _enrich_skin_tone(skin)
+
+    # Hair color: suppress entirely for styles where hair is not visible;
+    # otherwise enrich the hex dict with a human-readable color label so
+    # the image model has a word anchor beyond the raw hex codes.
+    if _raw_hair_style in _COVERING_HAIR_STYLES:
+        enriched.pop("hair_color", None)
+    else:
+        hair_color = enriched.get("hair_color")
+        if isinstance(hair_color, dict):
+            base_hex = (hair_color.get("hex_base") or "").upper()
+            label = _HAIR_COLOR_LABELS.get(base_hex)
+            if label:
+                enriched["hair_color"] = {**hair_color, "label": label}
 
     # Accessories: terse name → visual description
     accessories = enriched.get("accessories")

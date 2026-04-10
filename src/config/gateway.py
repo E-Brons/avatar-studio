@@ -7,6 +7,7 @@ Default gateway URL: http://127.0.0.1:4096
 from __future__ import annotations
 
 import logging
+import time
 
 import requests
 
@@ -145,13 +146,27 @@ class GatewayClient:
             schema = output_config.get("format", {}).get("schema")
             if schema:
                 payload["response_schema"] = schema
-        resp = requests.post(
-            f"{self.base_url}/image_inspector",
-            json=payload,
-            timeout=timeout,
-        )
-        resp.raise_for_status()
-        return resp.json()["content"]
+        last_exc: Exception | None = None
+        for attempt in range(3):
+            try:
+                resp = requests.post(
+                    f"{self.base_url}/image_inspector",
+                    json=payload,
+                    timeout=timeout,
+                )
+                resp.raise_for_status()
+                return resp.json()["content"]
+            except requests.exceptions.ReadTimeout as exc:
+                last_exc = exc
+                if attempt < 2:
+                    wait = 2**attempt
+                    logger.warning(
+                        "image_inspector: read timeout (attempt %d/3), retrying in %ds",
+                        attempt + 1,
+                        wait,
+                    )
+                    time.sleep(wait)
+        raise last_exc  # type: ignore[misc]
 
     def ipadapter_faceid(
         self,
