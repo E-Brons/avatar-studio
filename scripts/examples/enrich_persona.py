@@ -343,6 +343,7 @@ def run_enrich(
     gateway_url: str = "http://127.0.0.1:4096",
     dry_run: bool = False,
     overwrite: bool = False,
+    skip_personal: bool = False,
     workers: int = 3,
     examples_dir: Path | None = None,
 ) -> dict:
@@ -374,7 +375,7 @@ def run_enrich(
                 results["errors"] += 1
                 continue
 
-            need_personal = _missing_personal(personal, overwrite)
+            need_personal = set() if skip_personal else _missing_personal(personal, overwrite)
             need_appearance = _missing_appearance(appearance, overwrite)
 
             if not need_personal and not need_appearance:
@@ -496,11 +497,17 @@ def main() -> None:
         default=3,
         help="Concurrent network workers (default: %(default)s)",
     )
+    parser.add_argument(
+        "--skip-personal",
+        action="store_true",
+        help="Skip zodiac/religion enrichment (appearance only)",
+    )
     args = parser.parse_args()
     run_enrich(
         gateway_url=args.gateway_url,
         dry_run=args.dry_run,
         overwrite=args.overwrite,
+        skip_personal=args.skip_personal,
         workers=args.workers,
     )
 

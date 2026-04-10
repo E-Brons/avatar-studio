@@ -354,6 +354,7 @@ def run_learn_restyle(
     log_dir: Path,
     samples: int | None,
     range_: tuple[int, int] | None,
+    style_filter: list[str] | None = None,
     component_threshold: float = 0.75,
     compound_threshold: float = 0.90,
 ) -> None:
@@ -378,6 +379,14 @@ def run_learn_restyle(
     loop_dir.mkdir(parents=True, exist_ok=True)
 
     all_styles = _load_styles()
+
+    if style_filter:
+        known_ids = {s["id"] for s in all_styles}
+        unknown = [sid for sid in style_filter if sid not in known_ids]
+        if unknown:
+            logger.error("Unknown style(s): %s  (available: %s)", unknown, sorted(known_ids))
+            sys.exit(1)
+        all_styles = [s for s in all_styles if s["id"] in style_filter]
 
     log.config(
         script="learn_restyle",
@@ -564,7 +573,16 @@ if __name__ == "__main__":
     )
     add_common_args(parser)
     parser.add_argument("--examples-dir", type=Path, default=EXAMPLES_DIR)
+    parser.add_argument(
+        "--style",
+        nargs="+",
+        default=["all"],
+        metavar="STYLE",
+        help="Style ID(s) to run, or 'all' (default: all)",
+    )
     args = parser.parse_args()
+
+    style_filter = None if args.style == ["all"] else args.style
 
     run_learn_restyle(
         max_iterations=args.max_iterations,
@@ -576,6 +594,7 @@ if __name__ == "__main__":
         log_dir=args.log_dir,
         samples=args.samples,
         range_=tuple(args.range) if args.range else None,
+        style_filter=style_filter,
         component_threshold=args.component_threshold / 100,
         compound_threshold=args.compound_threshold / 100,
     )

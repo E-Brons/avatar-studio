@@ -213,7 +213,7 @@ def extract_appearance(
     image_bytes: bytes,
     name: str,
     *,
-    timeout: int = 90,
+    timeout: int = 120,
 ) -> dict:
     """Call the vision LLM to extract appearance attributes from a portrait.
 
