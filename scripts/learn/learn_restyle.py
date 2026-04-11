@@ -208,12 +208,14 @@ def _apply_style_patches(fixes: dict) -> tuple[list[str], list[str]]:
 
 _RESTYLE_CONFIG = ROOT / "assets" / "prompt_gen" / "restyle.yml"
 
-# CLIP hard limit is 77 tokens. prompt_template is checked against a lower budget because
-# {style_description} adds tokens at runtime. negative_prompt has no variables so it gets
-# the full budget. Approximation: word_count * 1.3 (conservative CLIP BPE estimate).
+# CLIP hard limit is 77 tokens. Target for both prompt_template and negative_prompt is 70
+# tokens; 75 is the absolute ceiling (the tokeniser used at runtime may differ slightly from
+# the word-count approximation here). For prompt_template we check the template text only —
+# {style_description} adds tokens at runtime, so the template itself must stay well below 70.
+# Approximation: word_count * 1.3 (conservative CLIP BPE estimate).
 _CLIP_HARD_LIMIT = 77
-_CLIP_TEMPLATE_BUDGET = 60  # leaves ~15 tokens for {style_description}
-_CLIP_NEG_BUDGET = 75
+_CLIP_TARGET = 70
+_CLIP_MAX = 75  # reject patches that exceed this
 
 
 def _clip_tokens_approx(text: str) -> int:
@@ -231,26 +233,16 @@ def _apply_prompt_gen_patches(patches: dict) -> list[str]:
         if value is None:
             continue
         # Validate CLIP token budget for text fields before writing
-        if key == "prompt_template" and isinstance(value, str):
+        if key in ("prompt_template", "negative_prompt") and isinstance(value, str):
             approx = _clip_tokens_approx(value)
-            if approx > _CLIP_TEMPLATE_BUDGET:
+            if approx > _CLIP_MAX:
                 logger.warning(
-                    "Skipping prompt_template patch — estimated %d tokens (budget %d). "
-                    "CLIP hard limit is %d. Shorten before re-trying.",
+                    "Skipping %s patch — estimated %d tokens exceeds hard limit %d "
+                    "(target is %d). Shorten and retry.",
+                    key,
                     approx,
-                    _CLIP_TEMPLATE_BUDGET,
-                    _CLIP_HARD_LIMIT,
-                )
-                continue
-        if key == "negative_prompt" and isinstance(value, str):
-            approx = _clip_tokens_approx(value)
-            if approx > _CLIP_NEG_BUDGET:
-                logger.warning(
-                    "Skipping negative_prompt patch — estimated %d tokens (budget %d). "
-                    "CLIP hard limit is %d. Use comma-separated keywords, not sentences.",
-                    approx,
-                    _CLIP_NEG_BUDGET,
-                    _CLIP_HARD_LIMIT,
+                    _CLIP_MAX,
+                    _CLIP_TARGET,
                 )
                 continue
         old = cfg.get(key)
@@ -416,10 +408,11 @@ def _apply_restyle_fixes(
         - negative_prompt: what to suppress — directly reduces artifact rate
         - prompt_template: the CLIP conditioning text (≤77 tokens); {{style_description}} is filled per style
 
-        CLIP 77-token hard limit (CRITICAL): prompt_template (template text only, before variable
-        substitution) must fit in ~45 words / 60 tokens. negative_prompt must fit in ~55 words /
-        75 tokens. Exceeding the limit crashes generation with an indexing error. Use
-        comma-separated keywords for negative_prompt; keep prompt_template concise.
+        CLIP 77-token hard limit (CRITICAL): each prompt (positive and negative) must be
+        ≤ 70 tokens — 75 is the absolute ceiling but the runtime tokeniser may differ.
+        For prompt_template, this is the RENDERED length (template + filled {{style_description}});
+        keep the template text to ~50 tokens so there is room for the variable.
+        Use comma-separated keywords for negative_prompt; avoid full sentences.
 
         Analyze the failures for the target style only:
         1. What pattern explains the style classification failures?
@@ -445,12 +438,12 @@ def _apply_restyle_fixes(
         - prompt_gen_patches: fields to update in restyle.yml; set a field to null to leave it unchanged
         - style_prompt_patches: find/replace patches to system_prompt strings in styles.yml
         - Leave prompt_gen_patches fields null and style_prompt_patches empty if no changes needed.
-        - CLIP 77-token hard limit — exceeding it causes an indexing crash:
-            * prompt_template (template text only, BEFORE {{style_description}} is filled) must
-              be ≤ 60 tokens (~45 words). The filled variable adds ~10–15 tokens at runtime.
-            * negative_prompt must be ≤ 75 tokens (~55 words).
-            * Use comma-separated keywords for negative_prompt, NOT full sentences.
-            * Count every word: a 10-word phrase ≈ 13 tokens. If in doubt, cut.
+        - CLIP token limit: each prompt (positive and negative) must be ≤ 70 tokens.
+            75 is the absolute hard crash limit; the runtime tokeniser may differ slightly.
+            For prompt_template: count the rendered text (template + filled {{style_description}});
+            keep template text ≤ ~50 tokens so the variable has room.
+            For negative_prompt: ≤ 70 tokens. Use comma-separated keywords, not sentences.
+            A 10-word phrase ≈ 13 tokens. If in doubt, cut.
         - IMPORTANT: propose changes to AT MOST {max_reason_changes} properties in total across
           both prompt_gen_patches and style_prompt_patches combined. Choose the single most
           impactful change first; leave all other fields null or empty. Changing many parameters
