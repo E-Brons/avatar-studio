@@ -318,6 +318,7 @@ def _apply_restyle_fixes(
     fixes_path: Path,
     component_threshold: float = 0.75,
     style_filter: list[str] | None = None,
+    max_reason_changes: int = 3,
 ) -> dict:
     """REASON step: uses client.reasoning() to explore new style prompt fixes."""
     failures = [
@@ -404,6 +405,10 @@ def _apply_restyle_fixes(
         - prompt_gen_patches: fields to update in restyle.yml; set a field to null to leave it unchanged
         - style_prompt_patches: find/replace patches to system_prompt strings in styles.yml
         - Leave prompt_gen_patches fields null and style_prompt_patches empty if no changes needed.
+        - IMPORTANT: propose changes to AT MOST {max_reason_changes} properties in total across
+          both prompt_gen_patches and style_prompt_patches combined. Choose the single most
+          impactful change first; leave all other fields null or empty. Changing many parameters
+          at once makes it impossible to know which change caused any improvement or regression.
     """).strip()
 
     applied: list[str] = []
@@ -441,6 +446,30 @@ def _apply_restyle_fixes(
         return fixes
 
     fixes["_reasoning"] = reasoning_output[:2000]
+
+    # Enforce max_reason_changes: count total proposed changes and warn if over limit.
+    pg_patches = fixes.get("prompt_gen_patches") or {}
+    style_patches = fixes.get("style_prompt_patches") or []
+    non_null_pg = [(k, v) for k, v in pg_patches.items() if v is not None]
+    total_proposed = len(non_null_pg) + len(style_patches)
+    if total_proposed > max_reason_changes:
+        logger.warning(
+            "REASON proposed %d changes (limit=%d) — truncating to %d most important",
+            total_proposed,
+            max_reason_changes,
+            max_reason_changes,
+        )
+        # Fill remaining budget with pg patches first, then style patches
+        budget = max_reason_changes
+        allowed_pg = dict(non_null_pg[:budget])
+        budget -= len(allowed_pg)
+        allowed_style = style_patches[:budget]
+        # Null out pg keys that were trimmed
+        for k in pg_patches:
+            if k not in allowed_pg:
+                pg_patches[k] = None
+        fixes["prompt_gen_patches"] = pg_patches
+        fixes["style_prompt_patches"] = allowed_style
 
     pg_applied = _apply_prompt_gen_patches(fixes.get("prompt_gen_patches") or {})
     style_applied, skipped = _apply_style_patches(fixes)
@@ -559,6 +588,7 @@ def run_learn_restyle(
     style_filter: list[str] | None = None,
     component_threshold: float = 0.75,
     compound_threshold: float = 0.90,
+    max_reason_changes: int = 3,
 ) -> None:
     log = make_logger("learn_restyle", log_dir)
 
@@ -600,6 +630,7 @@ def run_learn_restyle(
         samples=current_n,
         styles=[s["id"] for s in all_styles],
         loop_dir=str(loop_dir),
+        max_reason_changes=max_reason_changes,
     )
 
     logger.info(
@@ -832,6 +863,7 @@ def run_learn_restyle(
             fixes_path,
             component_threshold=component_threshold,
             style_filter=style_filter,
+            max_reason_changes=max_reason_changes,
         )
         for fix_desc in fixes.get("_applied", []):
             log.fix(iteration=iteration, description=fix_desc)
@@ -932,4 +964,5 @@ if __name__ == "__main__":
         style_filter=style_filter,
         component_threshold=args.component_threshold,
         compound_threshold=args.compound_threshold,
+        max_reason_changes=args.max_reason_changes,
     )

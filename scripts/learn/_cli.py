@@ -135,6 +135,15 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
         "Examples missing this file are silently dropped from the candidate pool.",
     )
 
+    parser.add_argument(
+        "--max-reason-changes",
+        type=int,
+        default=3,
+        metavar="N",
+        help="Maximum number of property changes the REASON LLM may propose per iteration"
+        " (default: 3). Fewer changes = more controlled experiments.",
+    )
+
 
 def confirm_full_set(n: int) -> None:
     """Prompt user for confirmation when running the entire example set (> threshold)."""

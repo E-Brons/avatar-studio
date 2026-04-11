@@ -348,6 +348,7 @@ def _apply_reexpress_fixes(
     entries: list[dict],
     fixes_path: Path,
     component_threshold: float = 0.75,
+    max_reason_changes: int = 3,
 ) -> dict:
     """REASON step: uses client.reasoning() to explore new FACS/synonym fixes."""
     failures = [
@@ -418,6 +419,11 @@ def _apply_reexpress_fixes(
         - expression_synonym_additions: {{expression_name: [new_synonyms]}} — exact name from expressions.yml
         - facs_patches: find/replace patches to facs_action_units strings in expressions.yml
         - Leave prompt_gen_patches fields null and arrays empty if no changes needed.
+        - IMPORTANT: propose changes to AT MOST {max_reason_changes} properties in total across
+          prompt_gen_patches, expression_synonym_additions, and facs_patches combined. Choose the
+          single most impactful change first; leave all other fields null or empty. Changing many
+          parameters at once makes it impossible to know which change caused any improvement or
+          regression.
     """).strip()
 
     applied: list[str] = []
@@ -460,6 +466,38 @@ def _apply_reexpress_fixes(
         return fixes
 
     fixes["_reasoning"] = reasoning_output[:2000]
+
+    # Enforce max_reason_changes: count total proposed changes and warn if over limit.
+    pg_patches = fixes.get("prompt_gen_patches") or {}
+    synonym_adds = fixes.get("expression_synonym_additions") or {}
+    facs_patches = fixes.get("facs_patches") or []
+    non_null_pg = [(k, v) for k, v in pg_patches.items() if v is not None]
+    n_synonym_exprs = sum(1 for synonyms in synonym_adds.values() if synonyms)
+    total_proposed = len(non_null_pg) + n_synonym_exprs + len(facs_patches)
+    if total_proposed > max_reason_changes:
+        logger.warning(
+            "REASON proposed %d changes (limit=%d) — truncating to %d most important",
+            total_proposed,
+            max_reason_changes,
+            max_reason_changes,
+        )
+        budget = max_reason_changes
+        allowed_pg = dict(non_null_pg[:budget])
+        budget -= len(allowed_pg)
+        for k in pg_patches:
+            if k not in allowed_pg:
+                pg_patches[k] = None
+        fixes["prompt_gen_patches"] = pg_patches
+        # Trim synonym additions
+        allowed_synonyms: dict[str, list[str]] = {}
+        for expr_name, syns in synonym_adds.items():
+            if budget <= 0:
+                break
+            if syns:
+                allowed_synonyms[expr_name] = syns
+                budget -= 1
+        fixes["expression_synonym_additions"] = allowed_synonyms
+        fixes["facs_patches"] = facs_patches[:budget]
 
     pg_applied = _apply_prompt_gen_patches(fixes.get("prompt_gen_patches") or {})
     expr_applied, skipped = _apply_expression_patches(fixes)
@@ -582,6 +620,7 @@ def run_learn_reexpress(
     from_source: str = DEFAULT_FROM_SOURCE,
     component_threshold: float = 0.75,
     compound_threshold: float = 0.90,
+    max_reason_changes: int = 3,
 ) -> None:
     log = make_logger("learn_reexpress", log_dir)
 
@@ -616,6 +655,7 @@ def run_learn_reexpress(
         samples=current_n,
         expressions=all_expressions,
         loop_dir=str(loop_dir),
+        max_reason_changes=max_reason_changes,
     )
 
     logger.info(
@@ -853,7 +893,11 @@ def run_learn_reexpress(
         # ── REASON ───────────────────────────────────────────────────────
         fixes_path = loop_dir / f"{prefix}_fixes.json"
         fixes = _apply_reexpress_fixes(
-            client, entries, fixes_path, component_threshold=component_threshold
+            client,
+            entries,
+            fixes_path,
+            component_threshold=component_threshold,
+            max_reason_changes=max_reason_changes,
         )
         for fix_desc in fixes.get("_applied", []):
             log.fix(iteration=iteration, description=fix_desc)
@@ -944,4 +988,5 @@ if __name__ == "__main__":
         from_source=args.from_source or DEFAULT_FROM_SOURCE,
         component_threshold=args.component_threshold,
         compound_threshold=args.compound_threshold,
+        max_reason_changes=args.max_reason_changes,
     )
