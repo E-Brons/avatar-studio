@@ -14,6 +14,8 @@ import requests
 logger = logging.getLogger(__name__)
 
 _DEFAULT_GATEWAY_URL = "http://127.0.0.1:4096"
+_RETRYABLE_STATUS = {429, 500, 502, 503, 504}
+_MAX_ATTEMPTS = 3
 
 
 class GatewayClient:
@@ -21,6 +23,48 @@ class GatewayClient:
 
     def __init__(self, base_url: str = _DEFAULT_GATEWAY_URL):
         self.base_url = base_url.rstrip("/")
+
+    def _post(self, endpoint: str, payload: dict, *, timeout: int) -> dict:
+        """POST to an endpoint with retry on ReadTimeout and retryable HTTP errors.
+
+        Retries up to _MAX_ATTEMPTS total on:
+          - ReadTimeout
+          - HTTP 429, 500, 502, 503, 504
+        All other exceptions propagate immediately.
+        """
+        url = f"{self.base_url}/{endpoint}"
+        last_exc: Exception | None = None
+        for attempt in range(_MAX_ATTEMPTS):
+            try:
+                resp = requests.post(url, json=payload, timeout=timeout)
+                if resp.status_code in _RETRYABLE_STATUS and attempt < _MAX_ATTEMPTS - 1:
+                    wait = 2**attempt
+                    logger.warning(
+                        "%s: HTTP %d (attempt %d/%d), retrying in %ds",
+                        endpoint,
+                        resp.status_code,
+                        attempt + 1,
+                        _MAX_ATTEMPTS,
+                        wait,
+                    )
+                    last_exc = requests.exceptions.HTTPError(response=resp)
+                    time.sleep(wait)
+                    continue
+                resp.raise_for_status()
+                return resp.json()
+            except requests.exceptions.ReadTimeout as exc:
+                last_exc = exc
+                if attempt < _MAX_ATTEMPTS - 1:
+                    wait = 2**attempt
+                    logger.warning(
+                        "%s: read timeout (attempt %d/%d), retrying in %ds",
+                        endpoint,
+                        attempt + 1,
+                        _MAX_ATTEMPTS,
+                        wait,
+                    )
+                    time.sleep(wait)
+        raise last_exc  # type: ignore[misc]
 
     def text_gen(
         self,
@@ -36,13 +80,7 @@ class GatewayClient:
             schema = output_config.get("format", {}).get("schema")
             if schema:
                 payload["response_schema"] = schema
-        resp = requests.post(
-            f"{self.base_url}/text_gen",
-            json=payload,
-            timeout=timeout,
-        )
-        resp.raise_for_status()
-        return resp.json()["content"]
+        return self._post("text_gen", payload, timeout=timeout)["content"]
 
     def reasoning(
         self,
@@ -55,13 +93,7 @@ class GatewayClient:
         payload: dict = {"messages": messages}
         if thinking_budget is not None:
             payload["thinking_budget"] = thinking_budget
-        resp = requests.post(
-            f"{self.base_url}/reasoning",
-            json=payload,
-            timeout=timeout,
-        )
-        resp.raise_for_status()
-        return resp.json()["content"]
+        return self._post("reasoning", payload, timeout=timeout)["content"]
 
     def general(
         self,
@@ -77,13 +109,7 @@ class GatewayClient:
             schema = output_config.get("format", {}).get("schema")
             if schema:
                 payload["response_schema"] = schema
-        resp = requests.post(
-            f"{self.base_url}/general",
-            json=payload,
-            timeout=timeout,
-        )
-        resp.raise_for_status()
-        return resp.json()["content"]
+        return self._post("general", payload, timeout=timeout)["content"]
 
     def image_gen(
         self,
@@ -114,14 +140,7 @@ class GatewayClient:
             payload["reference_images_b64"] = reference_images_b64
         if strength is not None:
             payload["strength"] = strength
-
-        resp = requests.post(
-            f"{self.base_url}/image_gen",
-            json=payload,
-            timeout=timeout,
-        )
-        resp.raise_for_status()
-        return base64.b64decode(resp.json()["image_b64"])
+        return base64.b64decode(self._post("image_gen", payload, timeout=timeout)["image_b64"])
 
     def image_inspector(
         self,
@@ -146,27 +165,7 @@ class GatewayClient:
             schema = output_config.get("format", {}).get("schema")
             if schema:
                 payload["response_schema"] = schema
-        last_exc: Exception | None = None
-        for attempt in range(3):
-            try:
-                resp = requests.post(
-                    f"{self.base_url}/image_inspector",
-                    json=payload,
-                    timeout=timeout,
-                )
-                resp.raise_for_status()
-                return resp.json()["content"]
-            except requests.exceptions.ReadTimeout as exc:
-                last_exc = exc
-                if attempt < 2:
-                    wait = 2**attempt
-                    logger.warning(
-                        "image_inspector: read timeout (attempt %d/3), retrying in %ds",
-                        attempt + 1,
-                        wait,
-                    )
-                    time.sleep(wait)
-        raise last_exc  # type: ignore[misc]
+        return self._post("image_inspector", payload, timeout=timeout)["content"]
 
     def ipadapter_faceid(
         self,
@@ -195,13 +194,9 @@ class GatewayClient:
         }
         if seed is not None:
             payload["seed"] = seed
-        resp = requests.post(
-            f"{self.base_url}/ipadapter_faceid",
-            json=payload,
-            timeout=timeout,
+        return base64.b64decode(
+            self._post("ipadapter_faceid", payload, timeout=timeout)["image_b64"]
         )
-        resp.raise_for_status()
-        return base64.b64decode(resp.json()["image_b64"])
 
     def available_models(self) -> list[str]:
         """Return model names from GET /api/tags (Ollama-compatible)."""
