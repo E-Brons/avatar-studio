@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from typing import Literal
 
 import yaml
@@ -100,3 +101,33 @@ def build_prompt(
         user_prompt += f"\n\n{ref_instruction}"
 
     return f"{style_directive}\n\n{user_prompt}".strip() if style_directive else user_prompt
+
+
+def build_clip_prompt_restyle(style_entry: dict, expr_entry: dict) -> str:
+    """Return a short CLIP-compatible prompt for IPAdapter restyle calls.
+
+    Stays well under the 77-token CLIP limit.
+    Format: ``"{style_description}. Confident neutral expression, flat medium-contrast background."``.
+    The expression entry is accepted for API consistency but not used — restyle targets the style,
+    not a specific expression (IPAdapter provides identity; expression is handled post-generation).
+    """
+    description = (style_entry.get("description") or "portrait").rstrip(".")
+    return (
+        f"{description}. "
+        "Same person, preserve face and appearance. "
+        "Professional portrait, chest-up, soft lighting. "
+        "Confident neutral expression, flat medium-contrast background."
+    )
+
+
+def build_clip_prompt_reexpress(expr_entry: dict) -> str:
+    """Return a short CLIP-compatible prompt for IPAdapter reexpress calls.
+
+    Stays well under the 77-token CLIP limit.
+    Format: ``"{expression_name}, {facs_au_codes}"`` with intensity labels stripped.
+    """
+    expr_name = expr_entry.get("expression", expr_entry.get("id", "neutral"))
+    facs_raw = resolve_unilateral(expr_entry.get("facs_action_units", ""))
+    facs_clean = re.sub(r"\s*\([^)]+\)", "", facs_raw).strip(", ")
+    expr_part = f"{expr_name}, {facs_clean}" if facs_clean else expr_name
+    return f"Same person, preserve face and appearance. {expr_part}."
