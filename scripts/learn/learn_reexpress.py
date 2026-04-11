@@ -991,12 +991,39 @@ def run_learn_reexpress(
     print(f"State: {loop_dir / 'state.json'}")
     print(f"Log:   {log._path}")
 
-    diff = subprocess.run(
-        ["git", "diff", "--stat", "assets/"], capture_output=True, text=True, cwd=ROOT
-    )
+    print(f"\n{'=' * 60}")
+    print(f"learn_reexpress complete — {len(state['iterations'])} iterations")
+    print(f"State: {loop_dir / 'state.json'}")
+    print(f"Log:   {log._path}")
+
+    # Per-iteration applied-changes summary — shows exactly what the LLM changed and why
+    if iteration_history:
+        print(f"\n{'─' * 60}")
+        print("Applied changes per iteration:")
+        for h in iteration_history:
+            impr = h.get("improvement")
+            impr_str = f"+{impr:.1%}" if impr is not None else "(first)"
+            print(f"  Iter {h['iteration']:2d}: combined={h['score']:.0%}  delta={impr_str}")
+            for change in h.get("applied", []):
+                print(f"    + {change}")
+            if not h.get("applied"):
+                print("    (no changes applied)")
+            rationale = (h.get("reasoning") or "")[:200].strip()
+            if rationale:
+                print(f"    rationale: {rationale}")
+
+    # Full diff of asset files so the user can decide what to keep
+    diff = subprocess.run(["git", "diff", "assets/"], capture_output=True, text=True, cwd=ROOT)
     if diff.stdout.strip():
-        print("\n--- git diff --stat (assets/) ---")
+        print(f"\n{'─' * 60}")
+        print("Asset changes to review (git diff assets/):")
         print(diff.stdout.strip())
+        print(f"\n{'─' * 60}")
+        print("Commit all:      git add assets/ && git commit")
+        print("Cherry-pick:     git add -p assets/")
+        print("Discard all:     git checkout assets/")
+    else:
+        print("\n(no asset changes — nothing to commit)")
 
 
 # ---------------------------------------------------------------------------
