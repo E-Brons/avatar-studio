@@ -6,6 +6,7 @@ Default gateway URL: http://127.0.0.1:4096
 
 from __future__ import annotations
 
+import base64
 import logging
 import time
 
@@ -170,28 +171,42 @@ class GatewayClient:
     def ipadapter_faceid(
         self,
         prompt: str,
-        face_images_b64: list[str],
+        face_image_b64: str,
         *,
-        weight: float = 0.7,
+        negative_prompt: str | None = None,
         width: int = 256,
         height: int = 256,
+        num_inference_steps: int | None = None,
+        cfg_scale: float | None = None,
+        ip_adapter_scale: float | None = None,
+        lora: str | None = None,
+        lora_weight: float | None = None,
         seed: int | None = None,
         optimize: str = "normal",
         max_retries: int = 3,
         timeout: int = 300,
     ) -> bytes:
         """Call POST /ipadapter_faceid and return raw image bytes."""
-        import base64
-
         payload: dict = {
             "prompt": prompt,
-            "face_images_b64": face_images_b64,
-            "weight": weight,
+            "face_image_b64": face_image_b64,
             "width": width,
             "height": height,
             "optimize": optimize,
             "max_retries": max_retries,
         }
+        if negative_prompt is not None:
+            payload["negative_prompt"] = negative_prompt
+        if num_inference_steps is not None:
+            payload["num_inference_steps"] = num_inference_steps
+        if cfg_scale is not None:
+            payload["cfg_scale"] = cfg_scale
+        if ip_adapter_scale is not None:
+            payload["ip_adapter_scale"] = ip_adapter_scale
+        if lora is not None:
+            payload["lora"] = lora
+            if lora_weight is not None:
+                payload["lora_weight"] = lora_weight
         if seed is not None:
             payload["seed"] = seed
         return base64.b64decode(

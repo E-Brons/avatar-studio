@@ -47,6 +47,7 @@ markers = [
     "integration: requires external services (LLM Gateway / Ollama models)",
     "avatar: Avatar Studio feature tests",
     "regression: regression suite (slower, run explicitly)",
+    "gateway: GatewayClient integration tests",
 ]
 testpaths = ["tests"]
 

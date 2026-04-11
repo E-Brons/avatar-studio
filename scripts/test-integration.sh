@@ -21,4 +21,4 @@ fi
 echo "── integration tests ───────────────────────"
 echo "  Gateway: $OLLAMA_URL"
 OLLAMA_URL="$OLLAMA_URL" \
-  "$VENV/bin/python" -m pytest "$ROOT/tests/" -m "avatar and integration" "$@"
+  "$VENV/bin/python" -m pytest "$ROOT/tests/" -m "integration" "$@"
