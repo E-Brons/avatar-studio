@@ -316,6 +316,17 @@ def _parse_fixes_json(raw: str) -> dict:
 
 _REEXPRESS_CONFIG = ROOT / "assets" / "prompt_gen" / "reexpress.yml"
 
+# CLIP hard limit is 77 tokens. prompt_template is checked against a lower budget because
+# {expression_name} and {facs_au_codes} add tokens at runtime. Approximation: word_count * 1.3.
+_CLIP_HARD_LIMIT = 77
+_CLIP_TEMPLATE_BUDGET = 55  # leaves ~20 tokens for {expression_name} + {facs_au_codes}
+_CLIP_NEG_BUDGET = 75
+
+
+def _clip_tokens_approx(text: str) -> int:
+    """Approximate CLIP token count: word_count * 1.3, rounded up."""
+    return int(len(text.split()) * 1.3) + 1
+
 
 def _apply_prompt_gen_patches(patches: dict) -> list[str]:
     """Apply prompt_gen_patches to assets/prompt_gen/reexpress.yml. Returns list of applied changes."""
@@ -326,6 +337,29 @@ def _apply_prompt_gen_patches(patches: dict) -> list[str]:
     for key, value in patches.items():
         if value is None:
             continue
+        # Validate CLIP token budget for text fields before writing
+        if key == "prompt_template" and isinstance(value, str):
+            approx = _clip_tokens_approx(value)
+            if approx > _CLIP_TEMPLATE_BUDGET:
+                logger.warning(
+                    "Skipping prompt_template patch — estimated %d tokens (budget %d). "
+                    "CLIP hard limit is %d. Shorten before re-trying.",
+                    approx,
+                    _CLIP_TEMPLATE_BUDGET,
+                    _CLIP_HARD_LIMIT,
+                )
+                continue
+        if key == "negative_prompt" and isinstance(value, str):
+            approx = _clip_tokens_approx(value)
+            if approx > _CLIP_NEG_BUDGET:
+                logger.warning(
+                    "Skipping negative_prompt patch — estimated %d tokens (budget %d). "
+                    "CLIP hard limit is %d. Use comma-separated keywords, not sentences.",
+                    approx,
+                    _CLIP_NEG_BUDGET,
+                    _CLIP_HARD_LIMIT,
+                )
+                continue
         old = cfg.get(key)
         cfg[key] = value
         applied.append(f"reexpress.yml: {key} {old!r} → {value!r}")
@@ -395,6 +429,12 @@ def _apply_reexpress_fixes(
         - negative_prompt: what to suppress — directly reduces artifact rate
         - prompt_template: CLIP text; {{expression_name}} and {{facs_au_codes}} filled per expression
 
+        CLIP 77-token hard limit (CRITICAL): prompt_template (template text only, before variable
+        substitution) must fit in ~40 words / 55 tokens. {{expression_name}} + {{facs_au_codes}}
+        add ~15–20 tokens at runtime. negative_prompt must fit in ~55 words / 75 tokens.
+        Exceeding the limit crashes generation with an indexing error. Use comma-separated
+        keywords for negative_prompt; keep prompt_template concise.
+
         Analyze:
         1. Which expressions consistently fail? What top label does the classifier return instead?
         2. Are there synonyms missing that would help the classifier recognize the expression?
@@ -419,6 +459,12 @@ def _apply_reexpress_fixes(
         - expression_synonym_additions: {{expression_name: [new_synonyms]}} — exact name from expressions.yml
         - facs_patches: find/replace patches to facs_action_units strings in expressions.yml
         - Leave prompt_gen_patches fields null and arrays empty if no changes needed.
+        - CLIP 77-token hard limit — exceeding it causes an indexing crash:
+            * prompt_template (template text only, BEFORE variables are filled) must be ≤ 55 tokens
+              (~40 words). {{expression_name}} + {{facs_au_codes}} add ~15–20 tokens at runtime.
+            * negative_prompt must be ≤ 75 tokens (~55 words).
+            * Use comma-separated keywords for negative_prompt, NOT full sentences.
+            * Count every word: a 10-word phrase ≈ 13 tokens. If in doubt, cut.
         - IMPORTANT: propose changes to AT MOST {max_reason_changes} properties in total across
           prompt_gen_patches, expression_synonym_additions, and facs_patches combined. Choose the
           single most impactful change first; leave all other fields null or empty. Changing many

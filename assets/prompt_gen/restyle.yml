@@ -1,14 +1,11 @@
-prompt_template: Portrait photograph of the exact same person shown in the reference.
-  Preserve face structure, skin tone, age, gender, hair, and all identifying features
-  precisely. {style_description}.
-negative_prompt: cartoon, anime, painting, illustration, drawing, sketch, watercolor,
-  oil paint, wrong face, different person, distorted face, face artifacts, face warp,
-  wrong gender, different gender, bald head, shaved head, wrong skin tone, different
-  ethnicity, different age, androgynous, feminized, masculinized
+prompt_template: Same person, preserve face. {style_description}.
+negative_prompt: wrong face, different person, distorted face, face swap, wrong skin tone,
+  wrong gender, wrong age, bald head, cartoon, anime, painting, illustration, sketch,
+  watercolor, oil paint, low quality, blurry, artifacts
 width: 512
 height: 512
-num_inference_steps: 35
-cfg_scale: 5.5
+num_inference_steps: 45
+cfg_scale: 7.5
 ip_adapter_scale: 1.0
 lora: null
 lora_weight: 1.0
