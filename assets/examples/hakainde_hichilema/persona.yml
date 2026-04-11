@@ -13,7 +13,6 @@ appearance:
   skin_tone: medium brown
   skin_texture: smooth and clear
   hair_style: short and neatly trimmed
-  hair_note: black
   face_shape: square with broad forehead
   eye_shape: slightly almond-shaped
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Extremely close-cropped to scalp, minimal length, tight natural curl
+    texture uniformly distributed

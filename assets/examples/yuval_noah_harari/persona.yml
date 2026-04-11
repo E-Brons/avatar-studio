@@ -15,3 +15,27 @@ appearance:
       style: dark navy-blue button-up dress shirt worn under a dark charcoal crew-neck
         sweater, collar and top button visible
       color: '#3B5068'
+  skin_tone: '#C2A882'
+  skin_texture: smooth with subtle warmth and slight sheen
+  hair_style: extremely short buzz-cut with pronounced thinning and near-full baldness
+    at the crown
+  hair_note: Severely receding with only sparse, very short stubble remaining across
+    most of the scalp; essentially shaved to skin level
+  face_shape: narrow elongated oval with angular cheekbones and a gently tapered pointed
+    chin
+  eye_shape: moderately sized almond-shaped eyes, slightly deep-set with a calm, direct
+    horizontal gaze
+  brows_style: thin, naturally sparse straight brows with minimal arch and fine sparse
+    hairs
+  brows_color: '#2E1C10'
+  nose_shape: narrow, straight bridge with a slightly prominent aquiline tip and refined
+    nostrils
+  chin_shape: gently pointed chin with a slim, lightly defined angular jawline
+  cheeks_shape: subtly hollowed cheeks with moderate bone structure and a narrow,
+    lean jaw width
+  hair_color:
+    hex_base: '#2B1C14'
+    hex_shadow: '#1A0F0A'
+  eye_color:
+    hex_iris: '#5C3A1E'
+    hex_pupil: '#1A0D08'

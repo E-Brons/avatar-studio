@@ -9,4 +9,22 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#263238'
+  skin_texture: smooth and clear
+  hair_style: curly and short, light brown
+  face_shape: oval, symmetrical, youthful
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-defined, dark
+  brows_color: '#263238'
+  nose_shape: straight, well-proportioned
+  chin_shape: rounded, balanced, youthful
+  cheeks_shape: full, smooth, youthful
+  hair_color:
+    hex_base: '#D26924'
+    hex_shadow: '#000000'
+  eye_color:
+    hex_iris: '#263238'
+    hex_pupil: '#263238'
+  hair_note: Dark natural roots at sides and nape with vivid copper-orange dyed tight
+    coils covering the crown

@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and slightly shiny
   hair_style: curly and voluminous
-  hair_note: black
   face_shape: square with defined jawline
   eye_shape: slightly almond-shaped
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#222222'
+  hair_note: Tightly coiled short locs forming a rounded crown cluster; two loose
+    loc extensions hanging at either side of the face near the ears

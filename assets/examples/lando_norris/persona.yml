@@ -18,10 +18,18 @@ appearance:
   eye_color:
     hex_iris: '#5A7A5C'
     hex_pupil: '#2D3D2E'
-  face_shape: oval
   clothing:
     racing suit:
       style: Long-sleeve McLaren F1 racing suit with sponsor logos (Splunk, Dell Technologies,
         Huski Chocolate, Estrella Galicia, Arrow, Renault) and horizontal blue-and-orange
         striped panels on the lower torso/thighs; number 4 visible on the leg
       color: '#2360B0'
+  skin_texture: smooth and youthful
+  hair_note: short and neatly styled
+  eye_shape: almond-shaped, expressive
+  brows_style: thick, well-groomed, dark
+  brows_color: '#000000'
+  nose_shape: straight, well-defined
+  chin_shape: rounded, youthful, firm
+  cheeks_shape: rounded, smooth, youthful
+  face_shape: softly rounded youthful oval with full cheeks and a gently defined jawline

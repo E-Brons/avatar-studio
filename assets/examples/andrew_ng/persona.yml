@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and slightly freckled
   hair_style: short and dark, slightly tousled
-  hair_note: black
   face_shape: oval with a slight squareness
   eye_shape: slightly almond-shaped
   brows_style: thick and well-defined
@@ -27,3 +26,4 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: short cut, clean sides, slightly tousled at top

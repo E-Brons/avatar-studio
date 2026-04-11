@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#000000'
   skin_texture: smooth and clear
   hair_style: short and neatly combed
-  hair_note: gray
   face_shape: oval with defined jawline
   eye_shape: slightly almond-shaped
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Significantly thinning at the crown; predominantly gray with residual
+    dark strands; very short overall length

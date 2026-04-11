@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and fair
   hair_style: short and styled, white
-  hair_note: blonde
   face_shape: oval with defined jawline
   eye_shape: almond-shaped, expressive
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#808080'
     hex_pupil: '#000000'
+  hair_note: Distinctively full silver-white short bob with side-swept fringe and
+    clean nape line

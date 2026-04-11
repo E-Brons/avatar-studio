@@ -18,8 +18,22 @@ appearance:
   eye_color:
     hex_iris: '#5C3A1E'
     hex_pupil: '#2E1D0F'
-  face_shape: oval
   clothing:
     top:
       style: white collared shirt
       color: '#F0EBE3'
+  skin_texture: smooth warm tan with slight forehead sheen
+  hair_note: Low fade cut with very close-cropped temples and sides; top hair combed
+    back neatly; strong fade line visible at temple
+  face_shape: strong oval with defined angular jaw softened by full beard coverage
+  eye_shape: deep-set almond shape with slight downward inner corner, framed by prominent
+    brow ridge
+  brows_style: thick, dark, strongly arched brows with dense natural hair and sharp
+    inner corners
+  brows_color: '#1A0E06'
+  nose_shape: medium-width straight bridge, slightly broad rounded tip, moderately
+    flared nostrils
+  chin_shape: strong squared chin hidden under full dense beard with defined underlying
+    structure
+  cheeks_shape: moderately high cheekbones with medium fullness and a firmly structured
+    jaw width

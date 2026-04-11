@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#222222'
   skin_texture: smooth and clean
   hair_style: curly and voluminous
-  hair_note: pink
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and arched with dark color
@@ -27,3 +26,4 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#222222'
+  hair_note: Vivid hot pink dyed short curly hair with slight side sweep

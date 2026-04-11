@@ -9,4 +9,25 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#D4A07A'
+  skin_texture: smooth youthful skin with light stubble and warm undertone
+  hair_style: short sides with slightly longer top swept forward and to the side in
+    a casual brush
+  hair_note: Short cropped cut, no shave pattern, fine-textured sandy hair with natural
+    volume at crown
+  face_shape: round and full with wide cheeks, soft jaw, and youthful fleshy proportions
+  eye_shape: moderately wide almond shape with a flat lid, neutral corner angle, and
+    forward-set placement
+  brows_style: medium-thickness natural brows with a gentle arch and slightly sparse
+    fill
+  brows_color: '#7A6030'
+  nose_shape: medium-width bridge with a rounded bulbous tip and moderately wide nostrils
+  chin_shape: softly rounded chin with light stubble and a minimally defined jawline
+  cheeks_shape: full round cheeks with youthful plumpness and moderate cheekbone definition
+  hair_color:
+    hex_base: '#8B7040'
+    hex_shadow: '#6B5230'
+  eye_color:
+    hex_iris: '#7A8FA0'
+    hex_pupil: '#1A1208'

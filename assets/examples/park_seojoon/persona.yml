@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFFFFF'
   skin_texture: smooth and youthful
   hair_style: short and neatly styled
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: slightly almond-shaped
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#222222'
+  hair_note: Short clean cut with side part, hair swept across forehead, closely tapered
+    at sides and back

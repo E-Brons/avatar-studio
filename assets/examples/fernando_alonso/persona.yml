@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFFFF0'
   skin_texture: smooth and slightly shiny
   hair_style: short and slightly tousled
-  hair_note: brown
   face_shape: oval with a slight squareness
   eye_shape: almond-shaped with a hint of slant
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#8B8B8B'
     hex_pupil: '#000000'
+  hair_note: moderately long sides with natural curl and slight volume at crown, unstyled
+    tousled look

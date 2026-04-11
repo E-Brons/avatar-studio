@@ -18,10 +18,18 @@ appearance:
     hex_iris: '#000000'
     hex_pupil: '#FFFFFF'
   brows_color: '#4B4B4B'
-  face_shape: oval
-  eye_shape: almond
-  brows_style: thick
-  nose_shape: straight
-  chin_shape: rounded
-  cheeks_shape: full
   hair_style: pulled back
+  skin_texture: smooth and tanned
+  hair_note: Hair is scraped tightly back from the forehead and secured in a compact
+    bun at the nape; no loose strands visible.
+  face_shape: elongated oval with high defined cheekbones and a gently tapered refined
+    jawline
+  eye_shape: medium almond-shaped eyes with a direct forward gaze and a subtle upward
+    tilt at the outer corners
+  brows_style: medium-thickness slightly arched brows with a clean defined line and
+    natural density
+  nose_shape: medium bridge, moderately broad base, rounded tip with slightly wide
+    nostrils
+  chin_shape: gently rounded chin with a smooth and moderately defined strong jawline
+  cheeks_shape: high prominent cheekbones with subtle sculpted hollows and a moderately
+    wide jaw

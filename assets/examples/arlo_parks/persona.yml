@@ -13,7 +13,6 @@ appearance:
   skin_tone: dark brown
   skin_texture: smooth and clear
   hair_style: short and styled with vibrant orange hue
-  hair_note: visible
   face_shape: square with sharp angles
   eye_shape: almond-shaped with dark irises
   brows_style: thick and defined, dark brown
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Extremely short crop, tightly coiled texture, vivid orange-peach dye
+    over natural black roots visible at sides

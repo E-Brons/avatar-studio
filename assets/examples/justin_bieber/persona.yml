@@ -17,14 +17,23 @@ appearance:
     jacket:
       style: dark navy and burgundy plaid hoodie, partially visible on both shoulders
       color: '#1C1044'
-  face_shape: oval
   skin_tone: '#D4A983'
   eye_color:
     hex_iris: '#3B2A1A'
     hex_pupil: '#1D150D'
-  eye_shape: almond
-  nose_shape: straight
   hair_style: side-swept bangs, layered, medium length
   hair_color:
     hex_base: '#8B6542'
     hex_shadow: '#453221'
+  skin_texture: smooth and youthful
+  hair_note: brown with subtle highlights
+  brows_style: thick and well-defined
+  brows_color: '#8B4513'
+  chin_shape: rounded and youthful
+  cheeks_shape: rounded and rosy, youthful
+  face_shape: youthful rounded oval with full soft cheeks and an underdeveloped soft
+    jawline
+  eye_shape: medium-sized slightly almond eyes, mildly deep-set with a subtle upward
+    outer corner tilt
+  nose_shape: small compact nose with narrow bridge, slightly upturned rounded tip
+    and tight nostrils

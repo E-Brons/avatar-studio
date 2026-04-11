@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFFFFF'
   skin_texture: smooth and clear
   hair_style: short and neatly styled
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Side-swept bangs draping partially over forehead; glossy, slightly wavy
+    texture with rounded silhouette at crown

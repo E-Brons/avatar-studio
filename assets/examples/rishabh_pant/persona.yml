@@ -19,7 +19,6 @@ appearance:
   skin_tone: '#D2B48C'
   skin_texture: smooth and slightly matte
   hair_style: short and neatly styled
-  hair_note: visible
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-groomed
@@ -33,3 +32,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: hair is noticeably voluminous and swept upward at the crown with slight
+    wave texture

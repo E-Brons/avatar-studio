@@ -14,3 +14,20 @@ appearance:
     garment:
       style: olive green military-style button-up shirt with chest pockets
       color: '#4E553E'
+  skin_tone: '#222222'
+  skin_texture: smooth and slightly matte
+  hair_style: short and dark brown
+  hair_note: not visible
+  face_shape: oval with defined jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly chin-ward
+  cheeks_shape: rounded and full, slightly sunken
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'

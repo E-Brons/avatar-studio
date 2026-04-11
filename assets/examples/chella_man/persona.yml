@@ -23,7 +23,6 @@ appearance:
       style: light pink/blush crew neck t-shirt
       color: '#E0CFC8'
   skin_texture: smooth and slightly shiny
-  hair_note: visible
   face_shape: angular and defined, with sharp features
   eye_shape: slightly almond-shaped, dark brown
   brows_style: thick and well-defined
@@ -31,3 +30,5 @@ appearance:
   nose_shape: straight and prominent
   chin_shape: sharp and defined, with a slight double chin
   cheeks_shape: slightly sunken, giving a chiseled look
+  hair_note: Sides closely faded to skin; top retains natural tight curl and significant
+    volume above crown

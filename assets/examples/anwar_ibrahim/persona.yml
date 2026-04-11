@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#222222'
   skin_texture: smooth and aged
   hair_style: not visible, likely short
-  hair_note: gray
   face_shape: oval, slightly elongated
   eye_shape: slightly almond, dark-rimmed
   brows_style: thick and arched, dark
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#333333'
     hex_pupil: '#333333'
+  hair_note: Hair fully concealed under black songkok hat; gray hair visible at temples
+    and sides

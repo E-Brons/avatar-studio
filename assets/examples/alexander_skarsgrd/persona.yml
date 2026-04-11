@@ -14,18 +14,26 @@ appearance:
     top:
       style: Black crew-neck knit sweater
       color: '#1A1A1A'
-  skin_tone: fair
   hair_color:
     hex_base: '#808080'
     hex_shadow: '#666666'
-  hair_style: short
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
-  face_shape: square
   brows_color: '#000000'
-  eye_shape: almond
-  brows_style: thick
-  nose_shape: straight
-  chin_shape: square
-  cheeks_shape: rounded
+  skin_texture: smooth and slightly aged
+  skin_tone: '#C2A882'
+  hair_style: short cropped sides with slightly longer textured top swept loosely
+    forward
+  hair_note: Very short on sides and back, slightly longer on top with a natural unstyled
+    texture; salt-and-pepper tones visible at temples
+  face_shape: long and angular with strong prominent jaw and wide forehead tapering
+    slightly at chin
+  eye_shape: deep-set and slightly narrowed with heavy orbital brow ridge and a direct
+    intense gaze
+  brows_style: medium-thick straight brows with subtle arch and natural sparse texture
+  nose_shape: straight prominent bridge with a broad slightly bulbous tip and wide
+    nostrils
+  chin_shape: strong square chin with a well-defined angular jawline and slight cleft
+  cheeks_shape: wide angular cheekbones with subtle hollowing beneath and a broad
+    strong jaw

@@ -32,6 +32,7 @@ from datetime import date
 from pathlib import Path
 
 import yaml
+from tqdm import tqdm
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
@@ -332,7 +333,7 @@ def _write_persona(persona_path: Path, persona: dict, *, dry_run: bool) -> None:
     else:
         with open(persona_path, "w") as f:
             yaml.dump(persona, f, allow_unicode=True, default_flow_style=False, sort_keys=False)
-        logger.info("  Saved %s", persona_path)
+        logger.debug("  Saved %s", persona_path)
 
 
 # ── Public API ────────────────────────────────────────────────────────────────
@@ -379,11 +380,11 @@ def run_enrich(
             need_appearance = _missing_appearance(appearance, overwrite)
 
             if not need_personal and not need_appearance:
-                logger.info("%-40s  already complete — skipping", name)
+                logger.debug("%-40s  already complete — skipping", name)
                 results["skipped"] += 1
                 continue
 
-            logger.info(
+            logger.debug(
                 "%-40s  needs personal=%s  appearance=%s",
                 name,
                 sorted(need_personal),
@@ -414,41 +415,43 @@ def run_enrich(
             )
 
         # ── Collect results and write ─────────────────────────────────────────
-        for item in work:
-            name = item["name"]
-            changed = False
-            try:
-                if "personal" in item["futs"]:
-                    fut, need = item["futs"]["personal"]
-                    for field, val in fut.result().items():
-                        if field in need:
-                            item["personal"][field] = val
-                            changed = True
-                            logger.info("  personal.%-12s = %r", field, val)
+        with tqdm(work, unit="persona", desc="Enriching") as pbar:
+            for item in pbar:
+                name = item["name"]
+                pbar.set_postfix_str(name[:30])
+                changed = False
+                try:
+                    if "personal" in item["futs"]:
+                        fut, need = item["futs"]["personal"]
+                        for field, val in fut.result().items():
+                            if field in need:
+                                item["personal"][field] = val
+                                changed = True
+                                logger.debug("  personal.%-12s = %r", field, val)
 
-                if "appearance" in item["futs"]:
-                    fut, need = item["futs"]["appearance"]
-                    for field, val in fut.result().items():
-                        if val and field in need:
-                            item["appearance"][field] = val
-                            changed = True
-                            logger.info("  appearance.%-16s = %r", field, val)
-            except Exception as exc:
-                logger.error("Error collecting results for %s: %s", name, exc, exc_info=True)
-                results["errors"] += 1
-                continue
+                    if "appearance" in item["futs"]:
+                        fut, need = item["futs"]["appearance"]
+                        for field, val in fut.result().items():
+                            if val and field in need:
+                                item["appearance"][field] = val
+                                changed = True
+                                logger.debug("  appearance.%-16s = %r", field, val)
+                except Exception as exc:
+                    logger.error("Error collecting results for %s: %s", name, exc, exc_info=True)
+                    results["errors"] += 1
+                    continue
 
-            if not changed:
-                logger.info("  No new data extracted for %s", name)
-                results["skipped"] += 1
-                continue
+                if not changed:
+                    logger.debug("  No new data extracted for %s", name)
+                    results["skipped"] += 1
+                    continue
 
-            try:
-                _write_persona(item["path"], item["persona"], dry_run=dry_run)
-                results["enriched"] += 1
-            except Exception as exc:
-                logger.error("Failed to write %s: %s", item["path"], exc)
-                results["errors"] += 1
+                try:
+                    _write_persona(item["path"], item["persona"], dry_run=dry_run)
+                    results["enriched"] += 1
+                except Exception as exc:
+                    logger.error("Failed to write %s: %s", item["path"], exc)
+                    results["errors"] += 1
 
     # ── Remove empty folders ──────────────────────────────────────────────────
     empty_removed = 0

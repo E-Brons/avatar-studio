@@ -15,4 +15,19 @@ appearance:
     top:
       style: Round-neck houndstooth check blouse or dress with long sleeves
       color: '#7A7A7A'
-  face_shape: oval
+  skin_texture: smooth and slightly dewy
+  hair_style: long, straight, and layered
+  hair_note: blonde with subtle highlights
+  eye_shape: almond-shaped with defined crease
+  brows_style: thick and well-groomed
+  brows_color: '#333333'
+  nose_shape: straight and well-defined
+  chin_shape: rounded and slightly defined
+  cheeks_shape: rounded and full with subtle blush
+  hair_color:
+    hex_base: '#D2B48C'
+    hex_shadow: '#F5F5F5'
+  eye_color:
+    hex_iris: '#A9A9A9'
+    hex_pupil: '#000000'
+  face_shape: softly oval with gently wide mid-face and a slightly tapered lower jaw

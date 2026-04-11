@@ -10,12 +10,10 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  face_shape: oval
   skin_tone: '#B8896A'
   eye_color:
     hex_iris: '#4A3728'
     hex_pupil: '#251B14'
-  nose_shape: straight
   hair_style: short, slightly messy, swept to the side
   hair_color:
     hex_base: '#3D2E22'
@@ -25,3 +23,13 @@ appearance:
       style: striped jersey with blue and deep red/maroon vertical stripes, yellow
         collar trim
       color: '#1A5BA0'
+  skin_texture: smooth with visible pores
+  hair_note: dark brown
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#4B4B4B'
+  chin_shape: rounded and slightly chin-ward
+  cheeks_shape: slightly sunken with visible pores
+  face_shape: compact and slightly square with a moderately wide jaw and full lower
+    face
+  nose_shape: medium-width bridge with a broad rounded tip and moderately flared nostrils

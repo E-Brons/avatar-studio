@@ -4,7 +4,7 @@ personal:
   pronouns: he/him
   age: 32
   nationality: Senegalese
-  religion: unknown
+  religion: Muslim
   zodiac: Aries
 style:
   bg_color: '#4A90D9'
@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and slightly shiny
   hair_style: short and neatly styled
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Almost fully shaved, very tight close-cut natural coils across entire
+    head, near-uniform length

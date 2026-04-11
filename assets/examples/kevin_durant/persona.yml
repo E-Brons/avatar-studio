@@ -9,4 +9,22 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#5C3320'
+  skin_texture: deep rich tone with subtle sheen
+  hair_style: very short cropped natural hair with tight coils close to scalp
+  hair_note: Very short tight coil pattern, closely cropped all around
+  face_shape: elongated oval with prominent forehead and gently tapered angular jaw
+  eye_shape: medium-sized deep-set eyes with heavy upper lids and direct forward gaze
+  brows_style: medium thickness flat brows with minimal arch and natural sparse hair
+  brows_color: '#1A0C07'
+  nose_shape: broad flat bridge with wide rounded tip and flared nostrils
+  chin_shape: squared slightly rounded chin with defined jawline and short beard coverage
+  cheeks_shape: flat cheekbones with lean angular face structure and prominent wide
+    jaw
+  hair_color:
+    hex_base: '#1A0F0A'
+    hex_shadow: '#0D0704'
+  eye_color:
+    hex_iris: '#3B1F0E'
+    hex_pupil: '#0A0504'

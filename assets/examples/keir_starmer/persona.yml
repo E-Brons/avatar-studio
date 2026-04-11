@@ -10,7 +10,6 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  face_shape: oval
   skin_tone: '#D4A98C'
   eye_color:
     hex_iris: '#7A9BB5'
@@ -23,3 +22,16 @@ appearance:
     garment:
       style: dress shirt with spread collar, worn under a dark suit jacket
       color: '#F2EDE6'
+  skin_texture: mature with fine lines and subtle redness
+  hair_note: Prominent silver-grey streaks through predominantly dark hair, especially
+    at crown and temples
+  eye_shape: medium-set, slightly deep-set with visible upper lid crease and a steady,
+    direct gaze
+  brows_style: medium-thickness brows with a gentle arch and slightly unkempt natural
+    growth
+  brows_color: '#2A2020'
+  nose_shape: broad, straight bridge with a rounded tip and moderately flared nostrils
+  chin_shape: moderately squared chin with a firmly defined and angular jawline
+  cheeks_shape: prominent cheekbones with subtle hollowing beneath and a wide mid-face
+  face_shape: broad square face with wide forehead, strong angular jaw, and balanced
+    proportions

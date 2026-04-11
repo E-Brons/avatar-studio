@@ -4,7 +4,7 @@ personal:
   pronouns: he/him
   age: 79
   nationality: American
-  religion: unknown
+  religion: Jewish
   zodiac: Sagittarius
 style:
   bg_color: '#4A90D9'
@@ -23,7 +23,6 @@ appearance:
   skin_tone: '#FFD799'
   skin_texture: smooth with visible pores
   hair_style: short, graying, neatly combed
-  hair_note: gray
   face_shape: oval, slightly elongated
   eye_shape: oval, slightly almond
   brows_style: thick, well-groomed, slightly arched
@@ -37,3 +36,5 @@ appearance:
   eye_color:
     hex_iris: '#808080'
     hex_pupil: '#000000'
+  hair_note: Noticeably thinning at the crown with full sides; entirely silver-gray
+    with no remaining dark pigment

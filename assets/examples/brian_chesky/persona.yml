@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFFFF0'
   skin_texture: smooth and fair
   hair_style: short, dark, slightly tousled
-  hair_note: visible
   face_shape: oval, symmetrical, youthful
   eye_shape: almond, expressive, brown
   brows_style: thick, well-groomed, dark
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#333333'
     hex_pupil: '#333333'
+  hair_note: Short sides with slightly more volume and wave on top; dense texture
+    throughout.

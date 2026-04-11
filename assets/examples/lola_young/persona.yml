@@ -18,7 +18,6 @@ appearance:
   eye_color:
     hex_iris: '#7A9B8A'
     hex_pupil: '#3D4D45'
-  face_shape: round
   clothing:
     top:
       style: white camisole with light blue ribbon detail and lace trim
@@ -26,3 +25,12 @@ appearance:
     jacket:
       style: sage green velvet jacket with puffed shoulders
       color: '#6E7D6B'
+  skin_texture: smooth with freckles
+  hair_note: dark brown, curly, short
+  eye_shape: large and almond-shaped
+  brows_style: thick and arched, dark brown
+  brows_color: '#333333'
+  nose_shape: medium-sized, slightly upturned
+  chin_shape: rounded and prominent
+  cheeks_shape: full and rounded, slightly flushed
+  face_shape: softly rounded with full cheeks and a gently tapered wide jaw

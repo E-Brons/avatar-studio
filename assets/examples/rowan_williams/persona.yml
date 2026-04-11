@@ -20,7 +20,6 @@ appearance:
   skin_tone: '#222222'
   skin_texture: smooth and aged
   hair_style: short and graying, slightly tousled
-  hair_note: white
   face_shape: oval, slightly elongated
   eye_shape: oval, slightly elongated
   brows_style: thick and arched, slightly gray
@@ -34,3 +33,5 @@ appearance:
   eye_color:
     hex_iris: '#333333'
     hex_pupil: '#333333'
+  hair_note: Full white hair with natural volume; large bushy white beard and mustache
+    covering lower face

@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#F5F5F5'
   skin_texture: smooth and matte
   hair_style: bob cut with bangs, blonde
-  hair_note: blonde
   face_shape: oval with sharp angles
   eye_shape: almond-shaped with long lashes
   brows_style: thick and defined, dark
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#A9A9A9'
     hex_pupil: '#000000'
+  hair_note: Appears to be a wig; extremely straight and uniform with a perfectly
+    blunt-cut fringe and ends, no natural variation in texture

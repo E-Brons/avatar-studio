@@ -10,7 +10,6 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  face_shape: round
   skin_tone: '#8B6914'
   hair_style: short, slightly tousled
   hair_color:
@@ -19,3 +18,16 @@ appearance:
   eye_color:
     hex_iris: '#3D2B1F'
     hex_pupil: '#1E150F'
+  skin_texture: matte with slight unevenness
+  hair_note: Very short crop with slight wave at the front hairline
+  face_shape: elongated oval with a moderately broad forehead tapering to a narrower
+    chin
+  eye_shape: medium-sized eyes with single eyelids, slightly deep-set with a horizontal
+    orientation
+  brows_style: moderately thick straight brows with minimal arch and short natural
+    hair
+  brows_color: '#1E1008'
+  nose_shape: broad flat bridge with a rounded bulbous tip and wide flared nostrils
+  chin_shape: gently rounded chin with a soft and slightly receding jawline
+  cheeks_shape: moderately full cheeks with subtle bone structure and a medium-width
+    jaw

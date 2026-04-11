@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and clear
   hair_style: bob cut with vibrant teal color
-  hair_note: teal
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with long eyelashes
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#8B0000'
     hex_pupil: '#000000'
+  hair_note: Vibrantly dyed teal blue-green with dark natural roots visible at crown
+    along center part

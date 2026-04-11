@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#F5F5F5'
   skin_texture: smooth and flawless
   hair_style: 'not visible, #333333'
-  hair_note: bald
   face_shape: oval, symmetrical, youthful
   eye_shape: large, almond-shaped, expressive
   brows_style: thick, well-defined, dark
@@ -27,3 +26,4 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Completely bald head, no hair whatsoever visible; entirely smooth scalp.

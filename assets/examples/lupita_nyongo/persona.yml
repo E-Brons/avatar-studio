@@ -18,8 +18,21 @@ appearance:
   eye_color:
     hex_iris: '#2B1A10'
     hex_pupil: '#150D08'
-  face_shape: oval
   clothing:
     top:
       style: white and sheer striped V-neck blouse
       color: '#D6D6CC'
+  skin_texture: smooth luminous with visible sheen
+  hair_note: Very short natural TWA (teeny weeny afro) with tight coil pattern, minimal
+    length all around
+  face_shape: elongated oval with high prominent cheekbones and a gracefully tapered
+    narrow jaw
+  eye_shape: medium almond-shaped eyes with subtle upward tilt and defined upper lash
+    line
+  brows_style: softly arched thin-to-medium brows with a clean natural line and gentle
+    peak
+  brows_color: '#1A1008'
+  nose_shape: broad flat bridge with a wide rounded tip and gently flared full nostrils
+  chin_shape: softly pointed delicate chin with a slender elegantly tapered jawline
+  cheeks_shape: high sculpted prominent cheekbones with subtle hollows and a narrow
+    refined jaw width

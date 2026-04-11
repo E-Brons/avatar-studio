@@ -21,3 +21,16 @@ appearance:
     blazer:
       style: structured chartreuse leather or satin blazer with peaked lapels
       color: '#C8C820'
+  skin_texture: smooth and fair
+  hair_style: 'not visible, #FFFFFF'
+  hair_note: blonde, styled in a modern, slicked-back manner
+  face_shape: oval, elongated with a slight curve
+  eye_shape: large, round, with a subtle curve
+  brows_style: thick, well-defined, and arched
+  brows_color: '#A9A9A9'
+  nose_shape: medium, straight, and slightly upturned
+  chin_shape: rounded, with a slight dimple
+  cheeks_shape: full, with a slight blush
+  hair_color:
+    hex_base: '#FFFFFF'
+    hex_shadow: '#333333'

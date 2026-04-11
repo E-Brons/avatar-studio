@@ -9,4 +9,22 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#D8D8D8'
+  skin_texture: smooth and slightly matte
+  hair_style: short and neatly combed
+  face_shape: square with rounded jawline
+  eye_shape: slightly almond-shaped
+  brows_style: thick and well-defined
+  brows_color: '#222222'
+  nose_shape: straight and medium-sized
+  chin_shape: rounded and slightly double-chinned
+  cheeks_shape: rounded and full, slightly chubby
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#222222'
+    hex_pupil: '#222222'
+  hair_note: salt-and-pepper graying visible at temples and crown, otherwise dark
+    brown

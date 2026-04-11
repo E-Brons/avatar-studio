@@ -20,7 +20,6 @@ appearance:
       color: '#F0EEEA'
   skin_texture: smooth and slightly aged
   hair_style: curly and shoulder-length
-  hair_note: gray
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with light brown irises
   brows_style: thick and well-defined
@@ -34,3 +33,5 @@ appearance:
   eye_color:
     hex_iris: '#D2B48C'
     hex_pupil: '#000000'
+  hair_note: Fully silver-gray naturally wavy medium-length bob with significant volume
+    and flyaways

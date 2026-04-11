@@ -18,8 +18,21 @@ appearance:
   eye_color:
     hex_iris: '#3B2A1E'
     hex_pupil: '#1D150F'
-  face_shape: oval
   clothing:
     garment:
       style: white crew-neck t-shirt with 'KHABY' logo on left chest
       color: '#E8E8E8'
+  skin_texture: smooth with subtle natural sheen
+  hair_note: Very short cropped coily afro-textured hair, closely cut with natural
+    texture visible
+  eye_shape: medium-sized with heavy hooded lids, slightly downturned outer corners
+    and deep-set placement
+  brows_style: thin sparse brows with minimal arch lying relatively flat and close
+    to eyes
+  brows_color: '#1A0E08'
+  nose_shape: broad flat bridge with wide rounded tip and noticeably flared full nostrils
+  chin_shape: softly rounded full chin with wide broad jawline and minimal definition
+  cheeks_shape: full rounded cheeks with wide prominent bone structure and plump soft
+    volume
+  face_shape: broad and wide with a prominent forehead, high wide cheekbones, and
+    a gently rounded jaw

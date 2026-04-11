@@ -20,3 +20,21 @@ appearance:
     tie:
       style: golden yellow patterned tie with small diamond-shaped geometric motifs
       color: '#D9AB2D'
+  skin_tone: '#262626'
+  skin_texture: smooth and slightly shiny
+  hair_style: 'not visible, #333333'
+  face_shape: square with broad forehead
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick and dark brown
+  brows_color: '#262626'
+  nose_shape: straight and prominent
+  chin_shape: 'square and firm, #262626'
+  cheeks_shape: 'smooth and firm, #262626'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#262626'
+    hex_pupil: '#262626'
+  hair_note: Head nearly fully shaved with only minimal fine stubble visible uniformly
+    across entire scalp

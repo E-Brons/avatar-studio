@@ -9,4 +9,26 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#C4916A'
+  skin_texture: smooth with subtle natural pores and soft luminosity
+  hair_style: extremely close-cropped buzz cut across entire head with fine wispy
+    baby hairs along hairline
+  hair_note: head nearly fully shaved, uniform buzz-cut length approximately 2–3mm,
+    visible scalp throughout
+  face_shape: softly rounded with full cheeks and a gently tapered, compact jaw
+  eye_shape: almond-shaped with a slight downward outer tilt, framed by dramatically
+    long curled false lashes
+  brows_style: thick, boldly arched brows with dense natural fill and a defined angular
+    peak
+  brows_color: '#3D2112'
+  nose_shape: medium-width bridge with a softly rounded tip and gently flared nostrils
+  chin_shape: softly rounded chin with a compact, gently defined jawline and slight
+    fullness
+  cheeks_shape: full, rounded cheeks with subtle natural padding and modest bone structure
+  hair_color:
+    hex_base: '#3A200E'
+    hex_shadow: '#1E0C05'
+  eye_color:
+    hex_iris: '#6B3A22'
+    hex_pupil: '#1A0905'

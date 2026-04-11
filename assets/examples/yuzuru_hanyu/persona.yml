@@ -10,13 +10,10 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  face_shape: oval
   skin_tone: '#D4A574'
   eye_color:
     hex_iris: '#1A0F0A'
     hex_pupil: '#0D0705'
-  eye_shape: almond
-  nose_shape: straight
   hair_style: short layered with side-swept bangs
   hair_color:
     hex_base: '#0F0A08'
@@ -26,3 +23,12 @@ appearance:
       style: Black V-neck short-sleeve t-shirt with subtle tonal floral/leaf print
         pattern
       color: '#1E1E20'
+  skin_texture: smooth and even with youthful glow
+  hair_note: Short boyish cut with textured fringe falling across forehead
+  face_shape: softly rounded face with smooth contours and gentle tapered chin
+  eye_shape: monolid almond-shaped eyes with subtle upward tilt at outer corners
+  brows_style: thin straight brows with minimal arch sitting close to eyes
+  brows_color: '#1C1C1C'
+  nose_shape: small refined nose with narrow bridge and softly rounded tip
+  chin_shape: softly rounded small chin with smooth gentle jawline
+  cheeks_shape: full rounded cheeks with prominent apple cheeks when smiling widely

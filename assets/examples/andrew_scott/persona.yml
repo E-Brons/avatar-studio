@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFFFF0'
   skin_texture: smooth with some fine lines
   hair_style: short, slightly tousled
-  hair_note: black
   face_shape: oval with a slight squareness
   eye_shape: almond-shaped with light brown irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#8B4513'
     hex_pupil: '#000000'
+  hair_note: Very dark near-black hair with slight natural wave; short sides and fuller
+    on top

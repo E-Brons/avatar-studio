@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#333333'
   skin_texture: smooth and slightly matte
   hair_style: not visible, likely short
-  hair_note: dark
   face_shape: square with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Extremely short buzz cut, almost shaved, tight coil texture visible across
+    entire scalp

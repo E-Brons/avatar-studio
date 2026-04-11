@@ -18,7 +18,6 @@ appearance:
   eye_color:
     hex_iris: '#3D2B1A'
     hex_pupil: '#1E150D'
-  face_shape: oval
   clothing:
     high-collar cravat/neckcloth:
       style: White high-collar cravat wrapped snugly around the neck, folded over
@@ -28,3 +27,14 @@ appearance:
       style: High standing collar of a period coat or jacket, visible just below and
         behind the cravat, with a cream/buff colored lapel
       color: '#D9CF9A'
+  skin_texture: smooth and slightly matte
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-groomed
+  brows_color: '#222222'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly defined
+  cheeks_shape: slightly sunken but balanced
+  hair_note: Short on sides with notable length and backward sweep on top; slightly
+    receding hairline at temples
+  face_shape: softly oval with a broad forehead, defined cheekbones, and gently tapered
+    rounded jaw

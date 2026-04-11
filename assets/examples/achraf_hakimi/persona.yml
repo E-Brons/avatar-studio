@@ -10,7 +10,6 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: light
   hair_color:
     hex_base: '#000000'
     hex_shadow: '#333333'
@@ -18,10 +17,19 @@ appearance:
     hex_iris: '#000000'
     hex_pupil: '#000000'
   brows_color: '#000000'
-  face_shape: oval
-  eye_shape: almond
-  brows_style: thick
-  nose_shape: straight
-  chin_shape: rounded
-  cheeks_shape: rounded
-  hair_style: short
+  skin_texture: smooth and even with warm golden undertone
+  hair_note: Extremely close-cropped buzz cut, nearly shaved to skin across entire
+    head
+  skin_tone: '#C4925F'
+  hair_style: very short uniform buzz cut with minimal texture and no styling
+  face_shape: slightly elongated oval with a strong defined jaw and prominent cheekbones
+  eye_shape: almond-shaped with a slight upward tilt, dark-set with well-defined upper
+    lids and visible fold
+  brows_style: medium-thick straight brows with a subtle natural arch and dense dark
+    hair
+  nose_shape: medium-width straight bridge, slightly broad rounded tip, moderately
+    flared nostrils
+  chin_shape: well-defined rounded chin with a squared angular jawline and strong
+    structure
+  cheeks_shape: lean sculpted cheeks with visible cheekbone prominence and minimal
+    facial fat

@@ -20,3 +20,23 @@ appearance:
     tie:
       style: red patterned tie with small geometric print
       color: '#8B1A2B'
+  skin_tone: '#C8956A'
+  skin_texture: warm with subtle sun flush
+  hair_style: medium-length dark wavy hair swept back with slight curl at sides
+  hair_note: Naturally wavy texture with volume at crown, slight curl behind ears
+  face_shape: softly oval with full cheeks and a gently rounded jaw
+  eye_shape: moderately wide-set with light irises, slight downward outer corners,
+    relaxed lid
+  brows_style: medium-thickness arched brows with natural grooming and defined inner
+    corners
+  brows_color: '#2C1F1A'
+  nose_shape: medium-width bridge, rounded tip, slightly broad nostrils with soft
+    definition
+  chin_shape: softly rounded chin with a moderately defined jawline and slight fullness
+  cheeks_shape: full rounded cheeks with soft contour and moderate width at midface
+  hair_color:
+    hex_base: '#2C1F1A'
+    hex_shadow: '#1A1210'
+  eye_color:
+    hex_iris: '#6B8E9A'
+    hex_pupil: '#1A1210'

@@ -9,4 +9,27 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#C9916A'
+  skin_texture: warm olive with scattered freckles across nose and cheeks
+  hair_style: not visible — hair entirely concealed beneath a wrapped fabric turban
+    headpiece
+  hair_note: Hair fully hidden under turban; no hair visible at hairline or sides
+  face_shape: oval with gently defined cheekbones and a softly tapered, slightly pointed
+    chin
+  eye_shape: medium almond-shaped eyes with a soft upper lid fold, wide-set, framed
+    by dark lashes
+  brows_style: thin to medium arched brows with natural growth, softly defined upper
+    edge, and sparse fill
+  brows_color: '#2B1208'
+  nose_shape: medium straight bridge narrowing to a softly rounded tip with moderately
+    wide nostrils
+  chin_shape: gently pointed chin with a softly angular and moderately defined jawline
+  cheeks_shape: moderate cheekbone prominence with freckle-scattered skin and a medium-width
+    jaw
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#1A1A1A'
+  eye_color:
+    hex_iris: '#5C3018'
+    hex_pupil: '#160706'

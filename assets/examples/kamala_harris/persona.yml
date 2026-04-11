@@ -17,3 +17,24 @@ appearance:
     top:
       style: black round-neck top underneath blazer
       color: '#0F0F0F'
+  skin_tone: '#C97040'
+  skin_texture: smooth warm luminous surface with dramatic highlights
+  hair_style: shoulder-length straight to gently wavy hair parted near center with
+    soft volume
+  hair_note: medium length falling past shoulders, warm auburn artistic toning throughout
+  face_shape: softly oval with defined cheekbones and a gently tapered rounded jaw
+  eye_shape: almond-shaped with slight upward outer tilt, deep-set with visible upper
+    lid crease and long lashes
+  brows_style: well-defined arched brows with moderate thickness and a clean sculpted
+    shape
+  brows_color: '#1E0A05'
+  nose_shape: medium-width bridge with a rounded tip and moderately defined nostrils
+  chin_shape: softly rounded chin with a smooth gently defined jawline beneath
+  cheeks_shape: high prominent cheekbones with subtle hollowing and a moderately narrow
+    lower jaw
+  hair_color:
+    hex_base: '#8B4018'
+    hex_shadow: '#3E1A08'
+  eye_color:
+    hex_iris: '#2E0F08'
+    hex_pupil: '#120605'

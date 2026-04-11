@@ -10,22 +10,30 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: fair
   hair_color:
     hex_base: '#D2B48C'
     hex_shadow: '#A88254'
-  hair_style: long
   eye_color:
     hex_iris: '#808080'
     hex_pupil: '#000000'
-  eye_shape: almond
   clothing:
     top:
       style: black lace high-neck top
       color: '#0A0A0A'
   brows_color: '#808080'
-  face_shape: oval
-  brows_style: thick
-  nose_shape: straight
-  chin_shape: rounded
-  cheeks_shape: rounded
+  skin_texture: smooth and flawless
+  hair_note: blonde with subtle highlights
+  skin_tone: '#DBA882'
+  hair_style: long straight-to-wavy blonde hair swept to one side with soft volume
+    and gentle curl at ends
+  face_shape: softly rounded face with a broad forehead and full, gently tapered lower
+    face
+  eye_shape: wide almond-shaped eyes with heavy winged liner extending at outer corners,
+    intensely framed
+  brows_style: medium-thickness arched brows with a defined peak and neatly groomed
+    natural fill
+  nose_shape: medium straight bridge, subtly rounded tip, with moderately proportioned
+    nostrils
+  chin_shape: softly rounded chin with a full, gently defined and smooth jawline
+  cheeks_shape: full and rounded cheeks with soft contour flush and modest cheekbone
+    definition

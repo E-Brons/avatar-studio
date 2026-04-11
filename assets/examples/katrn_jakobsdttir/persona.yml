@@ -25,4 +25,18 @@ appearance:
     sweater:
       style: dark rust/burnt sienna ribbed crew neck sweater
       color: '#7B2D1A'
-  face_shape: oval
+  skin_texture: fair with fine lines and natural mature texture
+  hair_note: Prominent silver-gray streaks blended through crown and front sections
+    against a medium-brown base
+  eye_shape: medium almond-shaped eyes with a slight horizontal set, framed behind
+    round glasses with visible blue-green irises
+  brows_style: medium-thin natural brows with a gentle soft arch and lightly sparse
+    hair
+  brows_color: '#7A5535'
+  nose_shape: medium-width bridge tapering to a slightly rounded tip with natural
+    nostrils
+  chin_shape: gently rounded chin with a softly defined and slightly narrow jawline
+  cheeks_shape: moderately prominent cheekbones with natural fullness and gentle mature
+    hollowing below
+  face_shape: softly oval with full rounded cheeks, gentle taper toward a soft jaw
+    and chin

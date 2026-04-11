@@ -9,4 +9,25 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#C4A07A'
+  skin_texture: smooth with fine lines and slight warmth
+  hair_style: short cropped salt-and-pepper hair, neatly combed with slight side part
+  hair_note: Short overall crop with visible gray at temples and top blending into
+    darker base
+  face_shape: elongated oval with strong defined jaw and prominent cheekbones
+  eye_shape: medium almond-shaped eyes, slightly deep-set with neutral corner angle
+    and light crinkle lines
+  brows_style: medium-thickness straight brows with subtle arch and neatly groomed
+    natural hair
+  brows_color: '#3A2418'
+  nose_shape: medium-width straight bridge, rounded tip, slightly broad nostrils
+  chin_shape: moderately squared chin with well-defined angular jawline
+  cheeks_shape: moderately high cheekbones with lean sculpted cheeks and defined jaw
+    width
+  hair_color:
+    hex_base: '#524845'
+    hex_shadow: '#2E2520'
+  eye_color:
+    hex_iris: '#6B4528'
+    hex_pupil: '#1A0F08'

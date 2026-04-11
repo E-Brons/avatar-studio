@@ -17,3 +17,19 @@ appearance:
         a red sun, blue sky arc, striped dome, and green trees across the chest and
         torso
       color: '#F5ECD7'
+  skin_texture: smooth and youthful
+  hair_style: long and straight, dark brown
+  hair_note: extends past shoulders
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped, dark brown
+  brows_style: thick and well-defined
+  brows_color: '#2E2E2E'
+  nose_shape: straight and well-proportioned
+  chin_shape: rounded and youthful
+  cheeks_shape: rounded and rosy, suggesting health
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#4B0000'
+  eye_color:
+    hex_iris: '#2E2E2E'
+    hex_pupil: '#000000'

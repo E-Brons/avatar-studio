@@ -20,3 +20,20 @@ appearance:
     tie:
       style: dark patterned tie with small geometric gold motifs
       color: '#3D3D32'
+  skin_tone: '#E5E5E5'
+  skin_texture: smooth and slightly matte
+  hair_style: short and graying, neatly combed
+  hair_note: partially visible, light gray
+  face_shape: narrow and elongated
+  eye_shape: almond-shaped, light blue
+  brows_style: thick and well-defined
+  brows_color: '#333333'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: slightly sunken, smooth
+  hair_color:
+    hex_base: '#C0C0C0'
+    hex_shadow: '#A9A9A9'
+  eye_color:
+    hex_iris: '#808080'
+    hex_pupil: '#000000'

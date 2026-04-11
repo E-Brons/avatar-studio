@@ -9,4 +9,26 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#DDB99A'
+  skin_texture: smooth porcelain with matte foundation finish
+  hair_style: platinum straight sleek bob pulled back flat against skull beneath headband
+  hair_note: Hair is slicked back severely under a wide teal satin headband; platinum
+    blonde nearly white in tone with no visible parting.
+  face_shape: heart-shaped with a broad forehead, defined cheekbones, and narrow tapered
+    chin
+  eye_shape: wide-set almond eyes with flat upper lid, dramatized by graphic liner
+    extending outward
+  brows_style: medium-thick straight natural brows with slight soft arch and defined
+    tail
+  brows_color: '#3A2618'
+  nose_shape: medium-width bridge with a softly rounded tip and gently curved nostrils
+  chin_shape: softly pointed chin with a cleanly defined and moderately angular jawline
+  cheeks_shape: high sculpted cheekbones with subtle hollows and a moderately narrow
+    jaw
+  hair_color:
+    hex_base: '#F0EAD8'
+    hex_shadow: '#CEC8B4'
+  eye_color:
+    hex_iris: '#7D6A3C'
+    hex_pupil: '#1A100A'

@@ -10,7 +10,6 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: fair
   hair_color:
     hex_base: '#000000'
     hex_shadow: '#000000'
@@ -18,10 +17,17 @@ appearance:
     hex_iris: '#808080'
     hex_pupil: '#000000'
   brows_color: '#000000'
-  face_shape: oval
-  eye_shape: almond
-  brows_style: thick
-  nose_shape: straight
-  chin_shape: rounded
-  cheeks_shape: rounded
-  hair_style: long
+  skin_texture: smooth and flawless
+  hair_note: dark brown, wavy, shoulder-length
+  skin_tone: '#EDE3D5'
+  hair_style: very long straight with subtle waves, center-parted, flowing past the
+    waist
+  face_shape: small delicate oval with softly tapered pointed chin and refined proportions
+  eye_shape: elongated almond with subtle upward tilt, double-lid, enhanced with smoky
+    liner and long lashes
+  brows_style: softly arched medium-thickness brows with cleanly tapered ends and
+    natural density
+  nose_shape: narrow refined bridge, small rounded tip, delicate subtly curved nostrils
+  chin_shape: softly pointed narrow chin with a gently tapered delicate jawline
+  cheeks_shape: moderately high cheekbones with soft sculpted hollows and a narrow
+    refined jaw

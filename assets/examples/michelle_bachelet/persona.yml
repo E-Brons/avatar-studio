@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and fair
   hair_style: short and styled, light brown
-  hair_note: visible
   face_shape: oval, symmetrical, mature
   eye_shape: oval, light brown, expressive
   brows_style: thick, well-groomed, light brown
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#808080'
     hex_pupil: '#000000'
+  hair_note: Short bob-length cut, straight and full, covering ears, no visible shave
+    patterns

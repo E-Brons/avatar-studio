@@ -17,3 +17,21 @@ appearance:
     shirt:
       style: white dress shirt with spread collar
       color: '#FFFFFF'
+  skin_tone: '#263238'
+  skin_texture: smooth and slightly shiny
+  hair_style: short and neatly trimmed
+  face_shape: oval with defined jawline
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#263238'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly dimpled
+  cheeks_shape: rounded and full with slight dimples
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#444444'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  hair_note: Very short coily hair, nearly shaved sides with slightly more length
+    on top

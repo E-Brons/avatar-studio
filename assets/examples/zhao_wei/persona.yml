@@ -9,4 +9,22 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#DEB99A'
+  skin_texture: smooth and luminous with warm even tone
+  hair_style: long straight hair with soft highlights center-parted falling past shoulders
+  hair_note: long straight with warm caramel highlights throughout dark base
+  face_shape: softly round with full cheeks and a gently tapered soft jawline
+  eye_shape: slightly monolid with subtle epicanthal fold, medium-set and gently rounded
+  brows_style: thin to medium arched brows with a soft natural taper at the tail
+  brows_color: '#2B1407'
+  nose_shape: medium bridge with a slightly broad rounded tip and softly flared nostrils
+  chin_shape: softly rounded chin with a gentle undefined jawline blending to full
+    cheeks
+  cheeks_shape: full and rounded cheeks with soft volume and minimal angularity
+  hair_color:
+    hex_base: '#2E1A09'
+    hex_shadow: '#1A0D05'
+  eye_color:
+    hex_iris: '#3D2208'
+    hex_pupil: '#150804'

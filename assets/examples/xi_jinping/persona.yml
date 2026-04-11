@@ -20,3 +20,21 @@ appearance:
     tie:
       style: purple/maroon patterned tie
       color: '#6B3A5E'
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly aged
+  hair_style: neatly combed back, dark
+  face_shape: square with defined jawline
+  eye_shape: slightly almond-shaped, dark
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and prominent
+  chin_shape: rounded and slightly receding
+  cheeks_shape: slightly sunken, smooth
+  hair_color:
+    hex_base: '#000000'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  hair_note: hair is short, combed back and to the side with a clean parting on the
+    left; dark with very minimal gray

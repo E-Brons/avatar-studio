@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#222222'
   skin_texture: smooth and clean
   hair_style: 'not visible, #333333'
-  hair_note: bald
   face_shape: square with rounded edges
   eye_shape: oval with slightly elongated top
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#333333'
     hex_pupil: '#333333'
+  hair_note: Head nearly fully shaved with very short stubble; salt-and-pepper coloration
+    visible across scalp

@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and fair
   hair_style: pulled back in a ponytail
-  hair_note: blonde
   face_shape: oval with a slight roundness
   eye_shape: almond-shaped with light blue irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#ADD8E6'
     hex_pupil: '#000000'
+  hair_note: Hair is fully pulled back off face with a white fabric headband; loose
+    tendrils visible at temples and forehead

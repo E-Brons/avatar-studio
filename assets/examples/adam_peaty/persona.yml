@@ -18,10 +18,18 @@ appearance:
     hex_iris: '#666666'
     hex_pupil: '#000000'
   brows_color: '#666666'
-  face_shape: oval
-  eye_shape: almond
-  brows_style: thick
-  nose_shape: straight
-  chin_shape: rounded
-  cheeks_shape: rounded
-  hair_style: short
+  skin_texture: smooth and slightly shiny
+  hair_style: very short crop, close-tapered sides, slightly longer textured top swept
+    forward
+  hair_note: Very short all over with tightly tapered sides and back; reddish-golden
+    strawberry blonde color.
+  face_shape: broad rounded face with wide forehead and full, square-ish jaw
+  eye_shape: moderately wide-set, slightly hooded with rounded outer corners and flat
+    upper lids
+  brows_style: short, sparse, lightly arched brows with fine reddish-golden hairs
+    and minimal grooming
+  nose_shape: medium-width bridge with a broad, softly rounded tip and moderately
+    flared nostrils
+  chin_shape: rounded, full chin with a wide and moderately defined jawline
+  cheeks_shape: full, round cheeks with rosy flush and wide prominent cheekbones sitting
+    high

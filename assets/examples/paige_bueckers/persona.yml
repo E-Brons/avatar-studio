@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and fair
   hair_style: pulled back in a neat bun
-  hair_note: blonde
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with light blue irises
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#87CEEB'
     hex_pupil: '#000000'
+  hair_note: All hair is swept back tightly off the face with no loose strands; bun
+    sits low at the nape

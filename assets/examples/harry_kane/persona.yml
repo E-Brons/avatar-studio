@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and slightly shiny
   hair_style: slicked-back and neatly groomed
-  hair_note: blonde
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with light blue irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#A9A9A9'
     hex_pupil: '#000000'
+  hair_note: Hair slicked back tightly from forehead, sides close-cropped, blonde
+    with darker roots visible

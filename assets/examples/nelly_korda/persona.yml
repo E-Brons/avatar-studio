@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFFFF0'
   skin_texture: smooth and fair
   hair_style: high bun, blonde, neatly styled
-  hair_note: blonde
   face_shape: oval, symmetrical, youthful
   eye_shape: almond, bright, expressive
   brows_style: thick, well-groomed, natural
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Hair fully pulled into a high messy bun; loose flyaway strands visible
+    around temples and nape

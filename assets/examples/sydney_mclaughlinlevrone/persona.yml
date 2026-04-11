@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and clear
   hair_style: curly and tied back in a bun
-  hair_note: visible
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with long eyelashes
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Tight coily curls with visible sun-lightened tips; dark roots contrast
+    with golden-highlighted ends throughout

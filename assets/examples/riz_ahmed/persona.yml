@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and slightly matte
   hair_style: short and neatly styled
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#2a2a2a'
     hex_pupil: '#2a2a2a'
+  hair_note: Very short crop with natural wave; sides closely tapered; no shave pattern
+    but minimal length overall

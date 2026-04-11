@@ -18,9 +18,24 @@ appearance:
   eye_color:
     hex_iris: '#3B2A1A'
     hex_pupil: '#1D150D'
-  face_shape: oval
   clothing:
     swimsuit:
       style: Speedo one-piece racing swimsuit with solid aqua/mint straps and a mottled
         grey-green camouflage-patterned body panel; yellow Speedo logo on the chest
       color: '#9CBFB2'
+  skin_texture: smooth, clear, lightly luminous with post-swim glow
+  hair_note: Hair is fully wet and plastered back, appearing much darker than dry
+    natural color; strands clinging to neck and shoulders.
+  eye_shape: moderately sized almond-shaped eyes with natural lid crease, partially
+    framed by round glasses
+  brows_style: naturally shaped medium-thickness brows with a gentle soft arch and
+    lightly groomed edges
+  brows_color: '#3B2214'
+  nose_shape: medium-width straight bridge, softly rounded tip, naturally proportioned
+    nostrils
+  chin_shape: gently rounded chin with a softly defined feminine jawline and smooth
+    contour
+  cheeks_shape: full rounded cheeks with lifted apple cheeks visible in broad smile,
+    moderate jaw width
+  face_shape: softly oval with gently rounded cheeks and a lightly tapered feminine
+    jaw

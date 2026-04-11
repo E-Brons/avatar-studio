@@ -9,4 +9,22 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: smooth with visible pores
+  hair_style: 'not visible, #333333'
+  face_shape: square with prominent jawline
+  eye_shape: oval with light brown irises
+  brows_style: 'thick and arched, #8B4513'
+  brows_color: '#8B4513'
+  nose_shape: 'wide and prominent, #8B4513'
+  chin_shape: rounded and slightly protruding
+  cheeks_shape: 'full and rounded, #8B4513'
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'
+  hair_note: Completely bald, fully shaved scalp with faint shadow at temples and
+    sides

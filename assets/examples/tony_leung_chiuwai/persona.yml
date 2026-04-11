@@ -23,7 +23,6 @@ appearance:
   eye_shape: slightly almond-shaped
   skin_tone: '#262626'
   skin_texture: smooth and slightly shiny
-  hair_note: black
   brows_style: thick and well-groomed
   brows_color: '#222222'
   chin_shape: rounded and slightly chin-ward
@@ -34,3 +33,5 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#222222'
+  hair_note: Classic side-swept style with volume at the front, hair swept back cleanly
+    on sides

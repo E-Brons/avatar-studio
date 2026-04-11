@@ -9,4 +9,21 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#FFD700'
+  skin_texture: dots and speckles
+  hair_style: not visible, implied by dotted pattern
+  hair_note: '#333333'
+  face_shape: oval, dotted texture
+  eye_shape: oval, dotted texture
+  brows_style: dotted, curved, thick
+  brows_color: '#000000'
+  nose_shape: abstract, dotted texture
+  chin_shape: rounded, dotted texture
+  cheeks_shape: rounded, dotted texture
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#00FF00'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'

@@ -9,4 +9,29 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#D4AA84'
+  skin_texture: smooth with warm peachy undertones and slight flush
+  hair_style: short tousled curly auburn hair damp and loosely textured on top with
+    cropped sides
+  hair_note: Short curly reddish-auburn hair, damp and tousled; noticeably lighter
+    golden tips contrasting darker roots
+  face_shape: oval with a broad forehead tapering to a gently rounded and moderately
+    defined jaw
+  eye_shape: medium-sized round-almond eyes with slight heaviness to upper lid and
+    forward-set deep brown irises
+  brows_style: thin sparse light-colored brows with a gentle natural arch and minimal
+    definition
+  brows_color: '#A07830'
+  nose_shape: medium-width bridge, softly rounded tip, and moderately flared nostrils
+    giving a compact shape
+  chin_shape: slightly squared chin with a subtly defined jawline and smooth transition
+    from cheeks
+  cheeks_shape: full rounded cheeks prominently lifted by a wide smile, with modest
+    cheekbone definition
+  hair_color:
+    hex_base: '#B87438'
+    hex_shadow: '#7A4820'
+  eye_color:
+    hex_iris: '#3E2810'
+    hex_pupil: '#150A04'

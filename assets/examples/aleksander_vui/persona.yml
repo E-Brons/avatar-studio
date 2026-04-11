@@ -18,10 +18,19 @@ appearance:
     hex_iris: '#000000'
     hex_pupil: '#000000'
   brows_color: '#8B4513'
-  face_shape: square
-  eye_shape: oval
-  brows_style: thick
-  nose_shape: straight
-  chin_shape: rounded
-  cheeks_shape: rounded
-  hair_style: short
+  skin_texture: smooth and slightly matte
+  hair_style: short sides with medium-length top swept to the side, salt-and-pepper
+    texture lightly styled
+  hair_note: Distinctly salt-and-pepper coloring with significant gray intermixed
+    throughout dark brown base; short professional cut
+  face_shape: broad rounded face with full cheeks and a wide, moderately squared jaw
+  eye_shape: medium-sized almond eyes, slightly deep-set beneath prominent brow ridge,
+    horizontal outer corners
+  brows_style: medium-thickness brows with a gentle arch, naturally dense and slightly
+    unkempt
+  nose_shape: medium-wide bridge, slightly bulbous rounded tip, moderately flared
+    nostrils
+  chin_shape: softly rounded chin with a full, gently defined jawline and slight jowl
+    fullness
+  cheeks_shape: full rounded cheeks with moderate width, low-set cheekbones and broad
+    jaw

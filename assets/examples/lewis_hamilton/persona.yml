@@ -18,10 +18,19 @@ appearance:
   eye_color:
     hex_iris: '#2C1A0E'
     hex_pupil: '#160D07'
-  face_shape: oval
-  nose_shape: broad
   clothing:
     top:
       style: dark crew neck shirt with Tommy Hilfiger branded collar trim in navy,
         white, and red
       color: '#2A2A2E'
+  skin_texture: smooth and slightly shiny
+  hair_note: '#333333'
+  eye_shape: almond-shaped with dark irises
+  brows_style: thick and well-defined
+  brows_color: '#262626'
+  chin_shape: rounded and defined chin
+  cheeks_shape: smooth and slightly sunken
+  face_shape: strong oval with defined angular jawline, high cheekbones, and lean
+    proportions
+  nose_shape: medium-width bridge with a rounded slightly broad tip and softly flared
+    nostrils

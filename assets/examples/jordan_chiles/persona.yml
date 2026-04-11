@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and shiny
   hair_style: ponytail with bangs swept to the side
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with long lashes
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Distinctive white/silver highlight streak visible at the top front of
+    the ponytail

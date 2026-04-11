@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFFFFF'
   skin_texture: smooth and youthful
   hair_style: not visible, likely short
-  hair_note: black
   face_shape: oval, youthful features
   eye_shape: almond-shaped, expressive
   brows_style: thick, well-defined, youthful
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Hair almost entirely concealed under cap; only minimal short dark hair
+    visible at temples and nape.

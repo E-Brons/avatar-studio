@@ -9,4 +9,28 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#C2906A'
+  skin_texture: smooth and luminous with warm golden undertone
+  hair_style: very long loose flowing waves with ombre balayage, swept casually to
+    one side with airy volume
+  hair_note: dramatic ombre balayage transitioning from warm medium-brown roots to
+    pale platinum-blonde ends; extremely long, past chest level
+  face_shape: softly oval with full rounded cheeks, gentle taper toward a delicate
+    rounded chin
+  eye_shape: almond-shaped with a subtle downward tilt at outer corners, framed by
+    dramatic winged black liner and gold inner-corner shimmer accent
+  brows_style: medium-thickness arched brows with a defined peak, cleanly shaped and
+    moderately filled
+  brows_color: '#3E2A10'
+  nose_shape: medium-width straight bridge with a softly rounded tip and proportionate
+    gently flared nostrils
+  chin_shape: softly rounded chin with a smooth feminine jawline and subtle definition
+  cheeks_shape: full and rounded cheeks with gentle cheekbone prominence and warm
+    contour shading
+  hair_color:
+    hex_base: '#C8B890'
+    hex_shadow: '#6B4A28'
+  eye_color:
+    hex_iris: '#4A3018'
+    hex_pupil: '#180E06'

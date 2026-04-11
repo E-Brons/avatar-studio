@@ -18,7 +18,6 @@ appearance:
   eye_color:
     hex_iris: '#3D2B1A'
     hex_pupil: '#1E150D'
-  face_shape: round
   clothing:
     suit jacket:
       style: dark navy formal suit jacket with a gold lapel pin
@@ -29,3 +28,13 @@ appearance:
     tie:
       style: dark navy and silver-grey diagonal striped tie
       color: '#2A3345'
+  skin_texture: warm medium tone with visible lines and age texture
+  hair_note: predominantly gray with dark mixed throughout, short curly texture
+  face_shape: broad and rounded with full cheeks and a wide, weighty jawline
+  eye_shape: deep-set and slightly hooded with a gentle downward outer corner tilt
+  brows_style: thick, moderately bushy brows with a low arch and mixed gray-dark hair
+  brows_color: '#524030'
+  nose_shape: broad rounded bridge, wide bulbous tip, and noticeably flared nostrils
+  chin_shape: rounded full chin largely covered by dense full beard
+  cheeks_shape: full and rounded cheeks with moderate prominence giving a broad round
+    face

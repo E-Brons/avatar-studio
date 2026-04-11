@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFFFFF'
   skin_texture: smooth and youthful
   hair_style: parted center, wavy ends
-  hair_note: black
   face_shape: oval, symmetrical, youthful
   eye_shape: almond-shaped, dark brown
   brows_style: thick, well-defined, dark brown
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#000000'
+  hair_note: Hair is pulled into a loose low updo with several escaping strands framing
+    the face; center-parted at crown

@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and slightly shiny
   hair_style: short and neatly trimmed
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with dark brown irises
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#2a1b1b'
     hex_pupil: '#1a0f0f'
+  hair_note: Extremely short nearly shaved buzz cut; tight natural coil texture uniformly
+    close to scalp all around.

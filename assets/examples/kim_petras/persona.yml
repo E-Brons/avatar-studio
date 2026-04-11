@@ -9,4 +9,29 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#F0D0C0'
+  skin_texture: smooth, heavily matte, porcelain-like with airbrushed finish
+  hair_style: very long sleek straight hair parted slightly off-center, falling past
+    chest with glossy smooth finish
+  hair_note: Extremely long, pin-straight, high-gloss hair with a clean off-center
+    part and no visible texture or wave
+  face_shape: softly round with full cheeks, gentle tapering to a rounded chin and
+    minimal jaw definition
+  eye_shape: slightly rounded almond shape with heavy false lashes, dramatically extended
+    with graphic silver liner art fanning outward
+  brows_style: thin, lightly defined brows with a soft gentle arch and sparse natural
+    appearance
+  brows_color: '#B07840'
+  nose_shape: small, softly rounded nose with a low medium-width bridge, subtle rounded
+    tip, and soft nostrils
+  chin_shape: softly rounded chin blending into full cheeks with minimal angular jaw
+    definition
+  cheeks_shape: very full rounded cheeks with soft volume and minimal cheekbone definition
+    or hollow contouring
+  hair_color:
+    hex_base: '#C4813A'
+    hex_shadow: '#8A5520'
+  eye_color:
+    hex_iris: '#7A8FA0'
+    hex_pupil: '#1A1A1A'

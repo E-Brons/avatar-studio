@@ -15,3 +15,20 @@ appearance:
     top:
       style: button-up shirt
       color: '#2b3a50'
+  skin_texture: smooth and slightly aged
+  hair_style: 'not visible, #333333'
+  face_shape: oval, slightly elongated
+  eye_shape: almond-shaped, brown
+  brows_style: thick, well-defined, light brown
+  brows_color: '#8B4513'
+  nose_shape: straight, medium-sized
+  chin_shape: rounded, slightly receding
+  cheeks_shape: smooth, slightly sunken
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#333333'
+  eye_color:
+    hex_iris: '#8B4513'
+    hex_pupil: '#000000'
+  hair_note: 'CRITICAL: essentially bald, with only sparse ultra-short gray-white
+    stubble visible at the sides and back of the head'

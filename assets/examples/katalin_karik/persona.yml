@@ -9,4 +9,27 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#C49080'
+  skin_texture: aged with visible fine lines, soft redness, and gentle creasing
+  hair_style: short layered cut swept forward with textured reddish-brown top and
+    wispy fringe
+  hair_note: Short crop with layered texture; reddish-auburn highlights prominently
+    visible at the crown and fringe
+  face_shape: rounded and full with soft jaw, prominent jowls, and wide mid-face
+  eye_shape: small and somewhat hooded behind glasses, with a slight downward outer
+    tilt and visible blue-gray irises
+  brows_style: sparse, thin, and lightly arched with minimal definition and soft natural
+    taper
+  brows_color: '#6B5038'
+  nose_shape: medium-width bridge with a rounded, slightly broad tip and moderately
+    flared nostrils
+  chin_shape: softly rounded chin with gentle jowling and an undefined, receding jawline
+  cheeks_shape: full and rounded cheeks with low cheekbone prominence and fleshy,
+    soft volume
+  hair_color:
+    hex_base: '#7B4828'
+    hex_shadow: '#3D2210'
+  eye_color:
+    hex_iris: '#7A9AAE'
+    hex_pupil: '#1A100A'

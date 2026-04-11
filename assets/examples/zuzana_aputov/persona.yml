@@ -23,4 +23,19 @@ appearance:
     hex_iris: '#7A8B6E'
     hex_pupil: '#3D4537'
   skin_tone: '#E8C4A8'
-  face_shape: oval
+  skin_texture: smooth and even with subtle warmth
+  hair_note: warm golden blonde with bright highlights toward ends and darker blonde
+    roots visible
+  face_shape: softly rounded oval with full cheeks and a gently tapered, moderately
+    defined jaw
+  eye_shape: medium-sized, slightly wide-set with a subtle almond form and calm direct
+    gaze
+  brows_style: medium-thickness natural brows with a soft arch and neat grooming
+  brows_color: '#5A3E18'
+  nose_shape: medium-width straight bridge with a softly rounded tip and balanced
+    nostrils
+  chin_shape: softly rounded chin with a gently curved and moderately defined jawline
+  cheeks_shape: full rounded cheeks with moderate prominence and subtle natural contouring
+  hair_color:
+    hex_base: '#C8A040'
+    hex_shadow: '#8A6028'

@@ -23,4 +23,16 @@ appearance:
   eye_color:
     hex_iris: '#2B1A0E'
     hex_pupil: '#150D07'
-  face_shape: oval
+  skin_texture: deep rich tone with visible perspiration sheen and moisture droplets
+  hair_note: Short tight natural coils, minimal length overall, crown slightly fuller
+    than sides
+  face_shape: rounded oval with full cheeks, strong wide jaw, and broad forehead
+  eye_shape: medium-sized almond eyes appearing narrowed and slightly hooded due to
+    broad smile expression
+  brows_style: medium-thickness natural brows with a gentle arch and closely trimmed
+    dense hair
+  brows_color: '#150A03'
+  nose_shape: broad low bridge, wide rounded tip with generously flared full nostrils
+  chin_shape: rounded full chin with a wide strong jawline and prominent jaw angle
+  cheeks_shape: very full and round cheeks that lift prominently with a wide joyful
+    smile

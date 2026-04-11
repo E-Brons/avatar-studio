@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#D3A18C'
   skin_texture: smooth and slightly shiny
   hair_style: short and neatly styled
-  hair_note: brown
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with brown irises
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#4B2E1B'
     hex_pupil: '#4B2E1B'
+  hair_note: Short masculine cut, close-cropped sides, volumized and brushed back
+    on top

@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#D3A17B'
   skin_texture: smooth and glowing
   hair_style: straight and long, parted down the middle
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with long eyelashes
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#281900'
     hex_pupil: '#000000'
+  hair_note: Very long, pin-straight hair with a clean centre part, likely relaxed
+    or flat-ironed

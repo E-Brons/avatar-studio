@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and fair
   hair_style: curly and short, reddish-brown
-  hair_note: visible
   face_shape: oval, symmetrical, youthful
   eye_shape: almond-shaped, bright blue
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#0000FF'
     hex_pupil: '#000000'
+  hair_note: distinctively vivid reddish-orange curly texture, short sides with fuller
+    crown and forward-swept fringe

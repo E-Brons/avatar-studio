@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and slightly shiny
   hair_style: short and curly, styled upwards
-  hair_note: black
   face_shape: oval, slightly elongated
   eye_shape: oval, partially obscured by sunglasses
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#FFA500'
     hex_pupil: '#FFA500'
+  hair_note: Short natural coils with significant volume at the top and closely tapered
+    sides and nape

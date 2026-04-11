@@ -18,7 +18,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and clear
   hair_style: short and neatly styled
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: round with thick black rim
   brows_style: thick and well-defined
@@ -32,3 +31,5 @@ appearance:
   eye_color:
     hex_iris: '#262626'
     hex_pupil: '#262626'
+  hair_note: Hair mostly covered by embroidered cap; short cropped sides and front
+    visible, very dark and slightly tousled at forehead

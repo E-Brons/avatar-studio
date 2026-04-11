@@ -18,10 +18,17 @@ appearance:
     hex_iris: '#000000'
     hex_pupil: '#000000'
   brows_color: '#000000'
-  face_shape: angular
-  eye_shape: almond
-  brows_style: thick
-  nose_shape: straight
-  chin_shape: rounded
-  cheeks_shape: rounded
   hair_style: partially tied back
+  skin_texture: smooth and slightly shiny
+  hair_note: wet and slightly disheveled
+  face_shape: broad angular face with strong jaw and wide forehead tapering slightly
+    at chin
+  eye_shape: moderately deep-set, slightly hooded with a calm horizontal orientation
+    and light-colored iris
+  brows_style: medium thickness, slightly arched, naturally groomed with sparse fine
+    hairs
+  nose_shape: straight medium bridge, slightly broad rounded tip with naturally wide
+    nostrils
+  chin_shape: square and prominent chin with a strong defined angular jawline
+  cheeks_shape: moderately full cheeks with subtle bone structure and a wide facial
+    base

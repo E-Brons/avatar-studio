@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#000000'
   skin_texture: smooth and shiny
   hair_style: long and straight, brown
-  hair_note: visible
   face_shape: rounded and symmetrical
   eye_shape: large and almond-shaped
   brows_style: thick and arched, brown
@@ -27,3 +26,4 @@ appearance:
   eye_color:
     hex_iris: '#FF1493'
     hex_pupil: '#FF1493'
+  hair_note: Two small hair clips visible near part — one green, one cyan/blue

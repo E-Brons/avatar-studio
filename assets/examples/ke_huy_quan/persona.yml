@@ -14,3 +14,23 @@ appearance:
     garment:
       style: white button-down dress shirt with collar, worn open at the neck
       color: '#F0F0F0'
+  skin_tone: '#C49272'
+  skin_texture: warm with visible fine lines and subtle texture
+  hair_style: short textured layers with forward-swept fringe and slight natural wave
+  hair_note: Short cut with wispy bangs falling across forehead; natural volume on
+    top with no fade or shave.
+  face_shape: rounded and moderately wide with full mid-face and gently tapering jaw
+  eye_shape: narrow monolid eyes with horizontal set and subtle epicanthal fold visible
+    at inner corners
+  brows_style: medium-thickness brows with soft natural arch and slightly sparse density
+  brows_color: '#2C1A08'
+  nose_shape: medium-width bridge with rounded bulbous tip and moderately wide nostrils
+  chin_shape: softly rounded chin with a gently defined and moderately wide jawline
+  cheeks_shape: full rounded cheeks with moderate cheekbone prominence and soft facial
+    padding
+  hair_color:
+    hex_base: '#2E1C0A'
+    hex_shadow: '#1A0E06'
+  eye_color:
+    hex_iris: '#3A2208'
+    hex_pupil: '#1A0C04'

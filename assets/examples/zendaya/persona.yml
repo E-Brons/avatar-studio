@@ -18,8 +18,21 @@ appearance:
   eye_color:
     hex_iris: '#5C3A1E'
     hex_pupil: '#2E1D0F'
-  face_shape: oval
   clothing:
     off-shoulder top:
       style: Dark emerald-green velvet off-the-shoulder top with a structured neckline
       color: '#1A4D45'
+  skin_texture: smooth luminous with a warm golden sheen
+  hair_note: Very tight defined ringlet curls from mid-length down, sleeker at the
+    crown with a clean center part
+  face_shape: softly oval with high set cheekbones and a gently tapered refined jaw
+  eye_shape: almond-shaped with a slight upward outer tilt, medium-set with heavy-lashed
+    framing
+  brows_style: medium-thick naturally arched brows with a defined peak and tapered
+    tail ends
+  brows_color: '#3D2510'
+  nose_shape: medium-width bridge with a softly rounded tip and moderately flared
+    nostrils
+  chin_shape: softly rounded chin with a smooth and gently defined feminine jawline
+  cheeks_shape: high prominent cheekbones with subtle sculpted hollows and a slightly
+    narrow jaw

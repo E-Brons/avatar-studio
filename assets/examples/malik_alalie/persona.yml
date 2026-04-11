@@ -27,7 +27,6 @@ appearance:
         without a tie
       color: '#C0D0E8'
   skin_texture: smooth and slightly shiny
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: slightly almond-shaped
   brows_style: thick and well-defined
@@ -35,3 +34,5 @@ appearance:
   nose_shape: straight and prominent
   chin_shape: rounded and slightly protruding
   cheeks_shape: rounded and full, slightly dimpled
+  hair_note: Extremely short cropped hair, barely extending above scalp; tight coil
+    texture

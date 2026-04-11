@@ -18,8 +18,17 @@ appearance:
   eye_color:
     hex_iris: '#3D2B1A'
     hex_pupil: '#1E150D'
-  face_shape: oval
   clothing:
     top:
       style: off-shoulder distressed denim
       color: '#8BA7B8'
+  skin_texture: smooth and slightly shiny
+  hair_note: dark brown with blonde highlights
+  eye_shape: almond-shaped with dark brown irises
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and well-proportioned
+  chin_shape: rounded and defined chin
+  cheeks_shape: full and rounded cheeks
+  face_shape: oval with softly defined high cheekbones and a gently tapered pointed
+    chin

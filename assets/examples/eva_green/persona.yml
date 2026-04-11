@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#F5F5F5'
   skin_texture: smooth with visible pores
   hair_style: updo with decorative bow
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with light blue irises
   brows_style: thick and arched eyebrows
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#808080'
     hex_pupil: '#000000'
+  hair_note: Hair fully pinned into an elaborate updo with black bow ornament; no
+    hair visible below ears

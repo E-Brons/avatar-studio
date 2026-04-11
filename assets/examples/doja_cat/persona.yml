@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#D3A18C'
   skin_texture: smooth and radiant
   hair_style: long, straight, and layered
-  hair_note: blonde
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with long lashes
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#2E1B0E'
     hex_pupil: '#2E1B0E'
+  hair_note: Vivid orange-copper color, extremely straight and glossy, center-parted,
+    likely a wig or styled extension

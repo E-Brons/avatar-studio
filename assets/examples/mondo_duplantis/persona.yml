@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and tanned
   hair_style: short and wavy brown
-  hair_note: visible
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with light brown irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#D2B48C'
     hex_pupil: '#000000'
+  hair_note: Medium-length tousled hair with several strands falling loosely across
+    the forehead.

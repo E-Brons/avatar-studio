@@ -18,9 +18,17 @@ appearance:
   eye_color:
     hex_iris: '#3D2B1A'
     hex_pupil: '#1E150D'
-  face_shape: oval
   clothing:
     headscarf/dupatta:
       style: Red dupatta with multicolor floral and paisley print, draped over the
         head and around the shoulders
       color: '#CC2A2A'
+  skin_texture: smooth and clear
+  hair_note: dark and neatly arranged
+  eye_shape: almond-shaped with dark pupils
+  brows_style: thick and well-defined
+  brows_color: '#000000'
+  nose_shape: straight and symmetrical
+  chin_shape: rounded and balanced
+  cheeks_shape: full and rounded, slightly flushed
+  face_shape: softly rounded face with full cheeks and a gently tapered, compact jawline

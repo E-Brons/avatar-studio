@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and slightly shiny
   hair_style: short and dark, closely cropped
-  hair_note: visible
   face_shape: square with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#262626'
     hex_pupil: '#262626'
+  hair_note: Close-cropped fade with very tight sides and low taper; minimal length
+    overall.

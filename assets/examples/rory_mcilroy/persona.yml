@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth with visible freckles
   hair_style: short, styled, slightly tousled
-  hair_note: brown
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with light brown irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#8B4513'
     hex_pupil: '#000000'
+  hair_note: Prominent salt-and-pepper colouring with heavy grey at temples and sides
+    contrasting darker crown

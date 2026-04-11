@@ -9,4 +9,28 @@ personal:
 style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
-appearance: {}
+appearance:
+  skin_tone: '#D9B896'
+  skin_texture: smooth, luminous, and even with subtle warmth
+  hair_style: short black hair swept sideways with soft volume at crown and wispy
+    side-swept fringe
+  hair_note: short cropped sides with longer top styled in a casual side-swept sweep;
+    wispy strands fall across forehead
+  face_shape: softly rounded oval with a smooth broad forehead and gently tapered
+    jawline
+  eye_shape: monolid single-crease eyes with a subtle downward outer tilt, moderately
+    spaced and calm in expression
+  brows_style: thick, dark, slightly arched brows with a defined upper edge and natural
+    dense fill
+  brows_color: '#1A1008'
+  nose_shape: medium-width bridge, softly rounded tip, with subtly proportionate nostrils
+  chin_shape: gently rounded chin with a smooth, lightly defined jawline and subtle
+    angularity
+  cheeks_shape: subtly full cheeks with soft cheekbone structure and a smooth, even
+    contour
+  hair_color:
+    hex_base: '#181614'
+    hex_shadow: '#0C0A09'
+  eye_color:
+    hex_iris: '#3B2518'
+    hex_pupil: '#0E0806'

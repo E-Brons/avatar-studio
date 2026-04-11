@@ -20,7 +20,6 @@ appearance:
   skin_tone: '#FFFFFF'
   skin_texture: smooth and clear
   hair_style: long and straight, parted on the side
-  hair_note: black
   face_shape: oval with a slight elongation
   eye_shape: almond-shaped with a slight curve
   brows_style: thick and well-defined
@@ -34,3 +33,5 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#222222'
+  hair_note: Hair is pulled up into an updo with a long loose strand falling down
+    the right side; side-swept bangs frame the face

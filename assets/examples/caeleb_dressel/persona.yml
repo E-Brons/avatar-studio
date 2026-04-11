@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFFFFF'
   skin_texture: smooth and slightly shiny
   hair_style: short and neatly trimmed
-  hair_note: blonde
   face_shape: square with defined jawline
   eye_shape: almond-shaped with light blue irises
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#A9A9A9'
     hex_pupil: '#000000'
+  hair_note: Extremely short all over with buzzed sides and minimal length on top;
+    nearly crew cut

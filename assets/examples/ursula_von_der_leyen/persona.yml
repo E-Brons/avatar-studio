@@ -17,3 +17,21 @@ appearance:
     top:
       style: light blue collared button-up shirt
       color: '#C4D4E0'
+  skin_tone: '#FFD700'
+  skin_texture: smooth and slightly aged
+  hair_style: short and neatly styled
+  face_shape: rounded and symmetrical
+  eye_shape: almond-shaped and expressive
+  brows_style: thick and well-defined
+  brows_color: '#808080'
+  nose_shape: straight and prominent
+  chin_shape: rounded and balanced
+  cheeks_shape: full and rounded, slightly sunken
+  hair_color:
+    hex_base: '#F5DEB3'
+    hex_shadow: '#E6E6E6'
+  eye_color:
+    hex_iris: '#000000'
+    hex_pupil: '#000000'
+  hair_note: Short layered cut swept back off the face, neatly styled with slight
+    wave; silver-blonde blend.

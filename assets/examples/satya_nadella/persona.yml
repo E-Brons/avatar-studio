@@ -20,10 +20,11 @@ appearance:
     hex_iris: '#000000'
     hex_pupil: '#000000'
   skin_texture: smooth and slightly aged
-  hair_note: bald
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-defined
   brows_color: '#000000'
   nose_shape: straight and prominent
   chin_shape: rounded and slightly chin-ward
   cheeks_shape: 'rounded and full, #FFD700'
+  hair_note: Nearly bald with minimal very short cropped stubble remaining around
+    sides and top

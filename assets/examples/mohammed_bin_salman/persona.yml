@@ -24,7 +24,6 @@ appearance:
   skin_tone: '#222222'
   skin_texture: smooth and tanned
   hair_style: not visible, likely short
-  hair_note: black
   face_shape: oval, broad and symmetrical
   eye_shape: slightly almond, dark
   brows_style: thick and well-defined
@@ -38,3 +37,5 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#222222'
+  hair_note: Hair almost entirely covered by keffiyeh; only minimal dark hair visible
+    at temples and sides.

@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#000000'
   skin_texture: smooth with visible pores
   hair_style: short and dark, slightly receding
-  hair_note: black
   face_shape: oval with slightly elongated features
   eye_shape: almond-shaped with dark irises
   brows_style: thick and slightly arched
@@ -27,3 +26,4 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Black hair with some grey at the temples, slightly receding hairline

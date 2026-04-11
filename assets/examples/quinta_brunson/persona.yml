@@ -13,7 +13,6 @@ appearance:
   skin_tone: medium brown
   skin_texture: smooth and glowing
   hair_style: highly styled with a side braid
-  hair_note: black
   face_shape: round with a slight chin
   eye_shape: almond-shaped with long lashes
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#222222'
+  hair_note: Hair is fully slicked back from face with a precise center part; ends
+    in an extremely long, thick, tightly woven braid reaching the chest.

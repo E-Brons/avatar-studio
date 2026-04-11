@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and slightly aged
   hair_style: short and neatly trimmed
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: oval with slightly elongated upper lid
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#262626'
     hex_pupil: '#262626'
+  hair_note: Extremely short natural coil pattern, uniformly cropped, no fade or shave
+    pattern visible

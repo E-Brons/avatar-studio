@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and slightly shiny
   hair_style: short and closely cropped
-  hair_note: visible
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#262626'
     hex_pupil: '#262626'
+  hair_note: Extremely short buzz cut with slightly longer coiled texture on crown;
+    sides shaved very close; faint razor line visible above ear

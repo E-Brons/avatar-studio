@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and slightly shiny
   hair_style: short, dyed green with black streaks
-  hair_note: visible
   face_shape: oval, slightly elongated
   eye_shape: oval, almond-shaped, partially obscured by sunglasses
   brows_style: thick, well-defined, slightly arched
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#FFA500'
     hex_pupil: '#000000'
+  hair_note: Dramatic neon lime-green dye over very short buzzcut, dark natural roots
+    visible beneath, sides nearly shaved

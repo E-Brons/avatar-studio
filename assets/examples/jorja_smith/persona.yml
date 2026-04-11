@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and dewy
   hair_style: braided updo with loose strands
-  hair_note: black
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with long lashes
   brows_style: thick and well-groomed
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#282828'
     hex_pupil: '#282828'
+  hair_note: Hair is fully styled into tight box braids; natural hairline visible
+    with soft baby hairs; braids are long, hanging past shoulders on both sides

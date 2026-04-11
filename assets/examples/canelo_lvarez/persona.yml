@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth with visible pores
   hair_style: short and neatly combed
-  hair_note: blonde
   face_shape: square with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-defined
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Very short cropped cut with reddish-auburn color; full thick beard matching
+    hair color

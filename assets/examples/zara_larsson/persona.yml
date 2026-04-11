@@ -22,4 +22,17 @@ appearance:
     top:
       style: pale yellow sleeveless top with ruffle detail and cutout at neckline
       color: '#F2D49B'
-  face_shape: oval
+  skin_texture: smooth luminous complexion with subtle natural sheen
+  hair_note: Long flowing wavy hair with visible lighter highlights blended through
+    golden-blonde base
+  face_shape: softly oval with gently wide cheekbones and a delicately tapered chin
+  eye_shape: medium almond-shaped eyes with a subtle upward tilt and visible upper
+    lash line definition
+  brows_style: medium-thickness brows with a natural soft arch and lightly groomed
+    shape
+  brows_color: '#7A5A30'
+  nose_shape: straight refined bridge narrowing to a softly rounded tip with subtle
+    nostrils
+  chin_shape: softly rounded chin with a delicate gently defined feminine jawline
+  cheeks_shape: gently prominent cheekbones with soft natural fullness and smooth
+    transitions

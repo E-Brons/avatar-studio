@@ -14,3 +14,28 @@ appearance:
     garment:
       style: dark navy high-collar button-up jacket or shirt
       color: '#1E2130'
+  skin_tone: '#A08878'
+  skin_texture: lined and weathered with prominent creasing
+  hair_style: medium-length swept-back waves with heavy salt-and-pepper texture and
+    side-swept volume
+  hair_note: Prominent silver-white streaks concentrated at the crown and temples,
+    contrasting strongly with darker base; hair falls loosely to jaw level on sides
+  face_shape: long angular face with sharply defined cheekbones, hollow cheeks, and
+    a lean tapered jaw
+  eye_shape: deep-set, narrow and slightly hooded with a horizontal set and intense
+    forward gaze
+  brows_style: medium-thin straight brows with sparse texture and a subtle natural
+    arch
+  brows_color: '#5A4636'
+  nose_shape: long straight bridge with a defined angular tip and moderately narrow
+    nostrils
+  chin_shape: strong squared chin with a firmly defined angular jawline and slight
+    cleft
+  cheeks_shape: strikingly prominent high cheekbones with deeply hollowed cheeks and
+    narrow angular jaw
+  hair_color:
+    hex_base: '#6A5444'
+    hex_shadow: '#2A1C12'
+  eye_color:
+    hex_iris: '#7A8884'
+    hex_pupil: '#1A1210'

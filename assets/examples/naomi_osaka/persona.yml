@@ -21,7 +21,6 @@ appearance:
   skin_tone: '#FFD700'
   skin_texture: smooth and youthful
   hair_style: curly and voluminous
-  hair_note: blonde
   face_shape: oval with defined jawline
   eye_shape: slightly almond-shaped
   brows_style: thick and well-defined
@@ -35,3 +34,5 @@ appearance:
   eye_color:
     hex_iris: '#000000'
     hex_pupil: '#000000'
+  hair_note: Extremely voluminous natural coily-curly texture, dyed golden blonde
+    throughout, pulled loosely back and cascading around shoulders

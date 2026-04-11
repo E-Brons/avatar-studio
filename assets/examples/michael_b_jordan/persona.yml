@@ -13,7 +13,6 @@ appearance:
   skin_tone: medium brown
   skin_texture: smooth and clear
   hair_style: short and neatly trimmed
-  hair_note: visible
   face_shape: square with defined jawline
   eye_shape: almond-shaped with dark irises
   brows_style: thick and well-defined
@@ -27,3 +26,4 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#222222'
+  hair_note: Extremely short, close-cropped coils with clean fade at sides and nape

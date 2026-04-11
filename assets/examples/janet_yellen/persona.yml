@@ -13,7 +13,6 @@ appearance:
   skin_tone: '#C0C0C0'
   skin_texture: smooth and slightly wrinkled
   hair_style: short and white, neatly styled
-  hair_note: visible
   face_shape: oval with defined jawline
   eye_shape: almond-shaped with light brown irises
   brows_style: thick and arched, light brown
@@ -27,3 +26,5 @@ appearance:
   eye_color:
     hex_iris: '#808080'
     hex_pupil: '#000000'
+  hair_note: Very short bowl cut with straight fringe; fully white/silver; fine-textured
+    and closely cropped at sides

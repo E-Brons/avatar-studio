@@ -20,7 +20,6 @@ appearance:
   skin_tone: '#262626'
   skin_texture: smooth and clear
   hair_style: short, neatly styled
-  hair_note: black
   face_shape: oval, symmetrical, youthful
   eye_shape: almond-shaped, expressive
   brows_style: thick, well-groomed, dark
@@ -34,3 +33,6 @@ appearance:
   eye_color:
     hex_iris: '#222222'
     hex_pupil: '#222222'
+  hair_note: Hair is heavily styled with gel or pomade, swept back from forehead;
+    full dense beard with defined cheek line and styled mustache with slight curl
+    at ends
