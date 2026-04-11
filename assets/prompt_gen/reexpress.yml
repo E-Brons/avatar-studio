@@ -1,0 +1,12 @@
+# Prompt Generator config for IPAdapter reexpress pipeline.
+# All fields are tunable by the REASON LLM via prompt_gen_patches.
+# Template variables: {expression_name}, {facs_au_codes} — filled from the expression entry at call time.
+prompt_template: "Same person, preserve face and appearance. {expression_name}, {facs_au_codes}."
+negative_prompt: "deformed, blurry, low quality, wrong expression, distorted face, unnatural mouth"
+width: 512
+height: 512
+num_inference_steps: 20
+cfg_scale: 7.0
+ip_adapter_scale: 0.6
+lora: null
+lora_weight: 1.0

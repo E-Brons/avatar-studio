@@ -5,15 +5,21 @@ All learning scripts accept the same core flags:
     --range A B              inclusive index range into the sorted example list
     --samples X              random sample count; mutually exclusive with --range
                              (default: 32 — prompts user to confirm if > 100)
-    --workers N              parallel render workers (default: 4)
+    --workers N              parallel render workers (default: 3)
     --stop-on-plateau /
-    --no-stop-on-plateau     plateau guard — stop when score delta < 1% for 2 consecutive iters
-    --max-iterations N       safety cap (default: 6)
+    --no-stop-on-plateau     plateau guard — stop when delta < improve_threshold for 2 consecutive iters
+    --max-iterations N       safety cap (default: 2)
     --optimize OPT           quality | normal | fast   (default: normal)
-    --component-threshold N  min acceptable score for each individual score component (default: 75)
-    --compound-threshold N   min acceptable score for compound/aggregate scores (default: 90)
+    --improve-threshold F    min score delta (0.0–1.0) between iterations to be considered meaningful
+                             progress; below this triggers the plateau exit-ramp (default: 0.03)
+    --component-threshold F  min acceptable score (0.0–1.0) for each individual score component
+                             (default: 0.75)
+    --compound-threshold F   min acceptable score (0.0–1.0) for compound/aggregate scores
+                             (default: 0.90)
     --gateway URL            LLM gateway base URL
     --log-dir DIR            where .ljson logs are written (default: logs/learn/)
+    --from-source PATH       source file relative to each example folder; examples missing this
+                             file are silently dropped from the candidate pool
 """
 
 from __future__ import annotations
@@ -49,8 +55,8 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--workers",
         type=int,
-        default=4,
-        help="Parallel render workers (default: 4)",
+        default=3,
+        help="Parallel render workers (default: 3)",
     )
 
     plateau = parser.add_mutually_exclusive_group()
@@ -59,7 +65,7 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
         dest="stop_on_plateau",
         action="store_true",
         default=True,
-        help="Stop when score delta < 1%% for 2 consecutive iterations (default: on)",
+        help="Stop when delta < improve_threshold for 2 consecutive iterations (default: on)",
     )
     plateau.add_argument(
         "--no-stop-on-plateau",
@@ -71,8 +77,8 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--max-iterations",
         type=int,
-        default=6,
-        help="Maximum number of learn iterations (default: 6)",
+        default=2,
+        help="Maximum number of learn iterations (default: 2)",
     )
 
     parser.add_argument(
@@ -83,19 +89,28 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     )
 
     parser.add_argument(
+        "--improve-threshold",
+        type=float,
+        default=0.03,
+        metavar="F",
+        help="Min score delta (0.0–1.0) for meaningful progress; below triggers plateau exit-ramp"
+        " (default: 0.03)",
+    )
+
+    parser.add_argument(
         "--component-threshold",
-        type=int,
-        default=75,
-        metavar="N",
-        help="Minimum acceptable score (0–100) for each individual score component (default: 75)",
+        type=float,
+        default=0.75,
+        metavar="F",
+        help="Minimum acceptable score (0.0–1.0) for each individual score component (default: 0.75)",
     )
 
     parser.add_argument(
         "--compound-threshold",
-        type=int,
-        default=90,
-        metavar="N",
-        help="Minimum acceptable score (0–100) for compound/aggregate scores (default: 90)",
+        type=float,
+        default=0.90,
+        metavar="F",
+        help="Minimum acceptable score (0.0–1.0) for compound/aggregate scores (default: 0.90)",
     )
 
     parser.add_argument(
@@ -109,6 +124,15 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
         type=Path,
         default=LOG_DIR,
         help=f"Directory for .ljson experiment logs (default: {LOG_DIR})",
+    )
+
+    parser.add_argument(
+        "--from-source",
+        type=str,
+        default=None,
+        metavar="PATH",
+        help="Source file path relative to each example folder (default: per-script default). "
+        "Examples missing this file are silently dropped from the candidate pool.",
     )
 
 

@@ -7,10 +7,16 @@ For each iteration:
   1. Sample examples (--samples / --range / full set)
   2. For each (example, expression) pair, call ipadapter_faceid with the target expression prompt
   3. Score: identity preservation (compare_side_by_side) + expression match (classify_image_expression)
-  4. Analyze failures, ask reasoning LLM for fixes (expression FACS, synonyms, IP-Adapter weight)
-  5. Repeat with worst-half + fresh examples until plateau or max-iterations
+  4. Decide: good improvement → grow N + REASON; below threshold → check plateau or REASON;
+     max iterations or plateau reached → FINAL
+  5. Repeat until plateau or max-iterations
 
-The source image for each example is taken from assets/examples/<name>/photorealistic.png.
+REASON (mid-iteration): uses client.reasoning() to explore new FACS/synonym fixes.
+FINAL (post-loop): uses client.general() to consolidate the best solution from existing ones.
+
+The source image for each example is resolved via --from-source (default: images/photorealistic.png).
+If --from-source resolves to a non-PNG file, it is converted to PNG in memory.
+Examples missing the from-source file are silently dropped from the candidate pool.
 
 Usage:
     python scripts/learn/learn_reexpress.py --samples 20
@@ -22,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import io
 import json
 import logging
 import re
@@ -34,6 +41,7 @@ from datetime import datetime
 from pathlib import Path
 
 import yaml
+from PIL import Image
 from tqdm import tqdm
 
 # ── project root on sys.path ──────────────────────────────────────────────────
@@ -44,11 +52,11 @@ sys.path.insert(0, str(ROOT / "scripts" / "examples"))
 from _cli import add_common_args, confirm_full_set  # noqa: E402
 from _example_utils import EXAMPLES_DIR, REPORTS_DIR, load_all_personas  # noqa: E402
 from _logger import make_logger  # noqa: E402
-from _sampler import initial_sample, iteration_schedule, next_sample, score_sample  # noqa: E402
+from _sampler import initial_sample, next_sample, score_sample  # noqa: E402
 
 from config.gateway import GatewayClient  # noqa: E402
 from pipeline.render.expression_resolver import resolve_expression  # noqa: E402
-from pipeline.render.llm.prompt_builder import build_clip_prompt_reexpress  # noqa: E402
+from pipeline.render.ipadapter.prompt_gen import build_reexpress_params  # noqa: E402
 from pipeline.render.style_resolver import STYLES_YML  # noqa: E402
 from tuning.classify_expression import classify_image_expression  # noqa: E402
 from tuning.classify_style import classify_image_style  # noqa: E402
@@ -60,8 +68,10 @@ logger = logging.getLogger(__name__)
 EXPRESSIONS_PATH = ROOT / "assets" / "expressions" / "expressions.yml"
 IDENTITY_PASS_THRESHOLD = 0.60
 EXPRESSION_PASS_THRESHOLD = 0.60
-PLATEAU_DELTA = 0.01
 PLATEAU_PATIENCE = 2
+MAX_N = 512
+
+DEFAULT_FROM_SOURCE = "images/photorealistic.png"
 
 
 # ---------------------------------------------------------------------------
@@ -88,22 +98,29 @@ def _atomic_write(path: Path, data: dict) -> None:
     tmp.rename(path)
 
 
-def _check_plateau(score_history: list[float]) -> bool:
+def _check_plateau(score_history: list[float], improve_threshold: float) -> bool:
+    """Return True if the last PLATEAU_PATIENCE deltas are all small positive (0 < d < threshold)."""
     if len(score_history) < PLATEAU_PATIENCE + 1:
         return False
-    deltas = [
-        abs(score_history[-i] - score_history[-i - 1]) for i in range(1, PLATEAU_PATIENCE + 1)
-    ]
-    return all(d < PLATEAU_DELTA for d in deltas)
+    deltas = [score_history[-i] - score_history[-i - 1] for i in range(1, PLATEAU_PATIENCE + 1)]
+    return all(0 < d < improve_threshold for d in deltas)
 
 
-def _source_image(example_dir: Path) -> bytes | None:
-    for fname in ("photorealistic.png", "photorealistic_benchmark_1.png"):
-        p = example_dir / fname
-        if p.exists():
-            with open(p, "rb") as f:
-                return f.read()
-    return None
+def _load_source_image(example_dir: Path, from_source: str) -> bytes | None:
+    """Load the source image for a given example, converting to PNG in memory if needed.
+
+    Returns None if the file does not exist (example will be silently dropped).
+    """
+    p = example_dir / from_source
+    if not p.exists():
+        return None
+    raw = p.read_bytes()
+    if p.suffix.lower() == ".png":
+        return raw
+    # Convert non-PNG to PNG in memory — no file written to disk
+    buf = io.BytesIO()
+    Image.open(io.BytesIO(raw)).convert("RGBA").save(buf, format="PNG")
+    return buf.getvalue()
 
 
 # ---------------------------------------------------------------------------
@@ -116,13 +133,14 @@ def _process_one(
     name: str,
     expression_id: str,
     example_dir: Path,
+    from_source: str,
     all_styles: list[dict],
     *,
     optimize: str,
 ) -> dict:
     result: dict = {"example": name, "expression_id": expression_id, "error": None}
 
-    source_bytes = _source_image(example_dir)
+    source_bytes = _load_source_image(example_dir, from_source)
     if source_bytes is None:
         result["error"] = "no source image"
         return result
@@ -139,16 +157,22 @@ def _process_one(
 
     # Build CLIP prompt
     expr_entry = resolve_expression(expression_id)
-    clip_prompt = build_clip_prompt_reexpress(expr_entry)
+    pg = build_reexpress_params(expr_entry)
 
     # Generate via IP-Adapter
     t0 = time.time()
     try:
         candidate_bytes = client.ipadapter_faceid(
-            clip_prompt,
-            [source_b64],
-            width=512,
-            height=512,
+            pg.prompt,
+            source_b64,
+            negative_prompt=pg.negative_prompt,
+            width=pg.width,
+            height=pg.height,
+            num_inference_steps=pg.num_inference_steps,
+            cfg_scale=pg.cfg_scale,
+            ip_adapter_scale=pg.ip_adapter_scale,
+            lora=pg.lora,
+            lora_weight=pg.lora_weight,
             optimize=optimize,
         )
     except Exception as exc:
@@ -191,17 +215,33 @@ def _process_one(
 
 
 # ---------------------------------------------------------------------------
-# LLM fix for reexpress
+# LLM fix schemas
 # ---------------------------------------------------------------------------
 
 _FIX_SCHEMA: dict = {
     "type": "object",
     "properties": {
+        "prompt_gen_patches": {
+            "description": "Updates to assets/prompt_gen/reexpress.yml — the diffusion generation params.",
+            "type": "object",
+            "properties": {
+                "prompt_template": {"type": ["string", "null"]},
+                "negative_prompt": {"type": ["string", "null"]},
+                "num_inference_steps": {"type": ["integer", "null"]},
+                "cfg_scale": {"type": ["number", "null"]},
+                "ip_adapter_scale": {"type": ["number", "null"]},
+                "lora": {"type": ["string", "null"]},
+                "lora_weight": {"type": ["number", "null"]},
+            },
+            "additionalProperties": False,
+        },
         "expression_synonym_additions": {
+            "description": "New classifier synonyms per expression name.",
             "type": "object",
             "additionalProperties": {"type": "array", "items": {"type": "string"}},
         },
         "facs_patches": {
+            "description": "Find/replace patches to facs_action_units strings in expressions.yml.",
             "type": "array",
             "items": {
                 "type": "object",
@@ -214,12 +254,93 @@ _FIX_SCHEMA: dict = {
                 "additionalProperties": False,
             },
         },
-        "weight_suggestion": {"type": "number"},
         "rationale": {"type": "string"},
     },
-    "required": ["expression_synonym_additions", "facs_patches", "weight_suggestion", "rationale"],
+    "required": ["prompt_gen_patches", "expression_synonym_additions", "facs_patches", "rationale"],
     "additionalProperties": False,
 }
+
+
+def _apply_expression_patches(fixes: dict) -> tuple[list[str], list[str]]:
+    """Apply expression synonym additions and FACS patches. Returns (applied, skipped)."""
+    applied: list[str] = []
+    skipped: list[str] = []
+
+    with open(EXPRESSIONS_PATH) as f:
+        expressions_data = yaml.safe_load(f)
+    expr_map = {e["expression"]: e for e in expressions_data.get("expressions", [])}
+
+    for expr_name, new_synonyms in fixes.get("expression_synonym_additions", {}).items():
+        if not new_synonyms:
+            continue
+        if expr_name not in expr_map:
+            skipped.append(f"expression not found: {expr_name}")
+            continue
+        existing = set(expr_map[expr_name].get("synonyms", []))
+        added = [s for s in new_synonyms if s not in existing]
+        expr_map[expr_name].setdefault("synonyms", []).extend(added)
+        if added:
+            applied.append(f"expression.{expr_name}.synonyms: +{len(added)}")
+
+    for patch in fixes.get("facs_patches", []):
+        expr_name = patch.get("expression", "")
+        find_str = patch.get("find", "")
+        replace_str = patch.get("replace", "")
+        if not find_str or expr_name not in expr_map:
+            skipped.append(f"facs_patch skipped: expression={expr_name}")
+            continue
+        current_facs = expr_map[expr_name].get("facs_action_units", "")
+        if find_str not in current_facs:
+            skipped.append(f"facs_patch find not found for {expr_name}")
+            continue
+        expr_map[expr_name]["facs_action_units"] = current_facs.replace(find_str, replace_str, 1)
+        applied.append(f"expression.{expr_name}.facs_action_units patched")
+
+    tmp = EXPRESSIONS_PATH.with_suffix(".tmp")
+    with open(tmp, "w") as f:
+        yaml.dump(
+            expressions_data, f, allow_unicode=True, default_flow_style=False, sort_keys=False
+        )
+    tmp.rename(EXPRESSIONS_PATH)
+
+    return applied, skipped
+
+
+def _parse_fixes_json(raw: str) -> dict:
+    text = raw.strip()
+    fence = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+    if fence:
+        text = fence.group(1).strip()
+    return json.loads(text)
+
+
+_REEXPRESS_CONFIG = ROOT / "assets" / "prompt_gen" / "reexpress.yml"
+
+
+def _apply_prompt_gen_patches(patches: dict) -> list[str]:
+    """Apply prompt_gen_patches to assets/prompt_gen/reexpress.yml. Returns list of applied changes."""
+    if not patches:
+        return []
+    cfg = yaml.safe_load(_REEXPRESS_CONFIG.read_text())
+    applied: list[str] = []
+    for key, value in patches.items():
+        if value is None:
+            continue
+        old = cfg.get(key)
+        cfg[key] = value
+        applied.append(f"reexpress.yml: {key} {old!r} → {value!r}")
+    if applied:
+        tmp = _REEXPRESS_CONFIG.with_suffix(".tmp")
+        tmp.write_text(
+            yaml.dump(cfg, default_flow_style=False, sort_keys=False, allow_unicode=True)
+        )
+        tmp.rename(_REEXPRESS_CONFIG)
+    return applied
+
+
+# ---------------------------------------------------------------------------
+# REASON: LLM fix for reexpress (mid-iteration — explore new solutions)
+# ---------------------------------------------------------------------------
 
 
 def _apply_reexpress_fixes(
@@ -228,7 +349,7 @@ def _apply_reexpress_fixes(
     fixes_path: Path,
     component_threshold: float = 0.75,
 ) -> dict:
-    """Ask reasoning LLM for reexpress improvements, apply expression FACS / synonym patches."""
+    """REASON step: uses client.reasoning() to explore new FACS/synonym fixes."""
     failures = [
         e
         for e in entries
@@ -251,6 +372,8 @@ def _apply_reexpress_fixes(
     with open(EXPRESSIONS_PATH) as f:
         expressions_content = f.read()
 
+    prompt_gen_content = _REEXPRESS_CONFIG.read_text()
+
     reasoning_prompt = textwrap.dedent(f"""
         You are improving the avatar-studio reexpress pipeline (IP-Adapter FaceID based).
         The reexpress pipeline changes the expression of an existing avatar.
@@ -258,16 +381,26 @@ def _apply_reexpress_fixes(
         ## Failures (expr score < {component_threshold:.0%} or identity score < {component_threshold:.0%})
         {failure_summary or "(none)"}
 
+        ## Current reexpress.yml (diffusion generation params — this is what drives generation)
+        {prompt_gen_content}
+
         ## Current expressions.yml
         {expressions_content}
+
+        Diffusion parameter effects:
+        - ip_adapter_scale: 0.4–0.9 — higher = stronger face identity, lower = more expression freedom
+        - cfg_scale: 5–12 — higher = more prompt-adherent, lower = more natural variation
+        - num_inference_steps: 15–50 — more steps = higher quality/detail but slower
+        - negative_prompt: what to suppress — directly reduces artifact rate
+        - prompt_template: CLIP text; {{expression_name}} and {{facs_au_codes}} filled per expression
 
         Analyze:
         1. Which expressions consistently fail? What top label does the classifier return instead?
         2. Are there synonyms missing that would help the classifier recognize the expression?
         3. Should any FACS action_units be adjusted for better visual signal?
-        4. What IP-Adapter weight (0.0–1.0) balances identity vs expression better?
+        4. Which reexpress.yml param changes would most improve expression accuracy or identity?
 
-        Be specific and reference exact strings from expressions.yml.
+        Be specific and reference exact strings from the configs shown above.
     """).strip()
 
     schema_json = json.dumps(_FIX_SCHEMA, indent=2)
@@ -281,18 +414,18 @@ def _apply_reexpress_fixes(
         {schema_json}
 
         Rules:
+        - prompt_gen_patches: fields to update in reexpress.yml; set a field to null to leave it unchanged
         - expression_synonym_additions: {{expression_name: [new_synonyms]}} — exact name from expressions.yml
-        - facs_patches: patches to facs_action_units strings in expressions.yml
-        - weight_suggestion: null if no change needed
-        - Leave arrays empty if no changes needed.
+        - facs_patches: find/replace patches to facs_action_units strings in expressions.yml
+        - Leave prompt_gen_patches fields null and arrays empty if no changes needed.
     """).strip()
 
     applied: list[str] = []
     skipped: list[str] = []
     fixes: dict = {
+        "prompt_gen_patches": {},
         "expression_synonym_additions": {},
         "facs_patches": [],
-        "weight_suggestion": None,
         "rationale": "",
     }
 
@@ -317,11 +450,7 @@ def _apply_reexpress_fixes(
             ],
             timeout=120,
         )
-        text = raw.strip()
-        fence = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
-        if fence:
-            text = fence.group(1).strip()
-        fixes = json.loads(text)
+        fixes = _parse_fixes_json(raw)
     except Exception as exc:
         logger.error("Format model failed: %s", exc)
         fixes["_error"] = str(exc)
@@ -332,51 +461,104 @@ def _apply_reexpress_fixes(
 
     fixes["_reasoning"] = reasoning_output[:2000]
 
-    # Apply to expressions.yml
-    with open(EXPRESSIONS_PATH) as f:
-        expressions_data = yaml.safe_load(f)
-    expr_map = {e["expression"]: e for e in expressions_data.get("expressions", [])}
-
-    # Synonym additions
-    for expr_name, new_synonyms in fixes.get("expression_synonym_additions", {}).items():
-        if not new_synonyms:
-            continue
-        if expr_name not in expr_map:
-            skipped.append(f"expression not found: {expr_name}")
-            continue
-        existing = set(expr_map[expr_name].get("synonyms", []))
-        added = [s for s in new_synonyms if s not in existing]
-        expr_map[expr_name].setdefault("synonyms", []).extend(added)
-        if added:
-            applied.append(f"expression.{expr_name}.synonyms: +{len(added)}")
-
-    # FACS patches
-    for patch in fixes.get("facs_patches", []):
-        expr_name = patch.get("expression", "")
-        find_str = patch.get("find", "")
-        replace_str = patch.get("replace", "")
-        if not find_str or expr_name not in expr_map:
-            skipped.append(f"facs_patch skipped: expression={expr_name}")
-            continue
-        current_facs = expr_map[expr_name].get("facs_action_units", "")
-        if find_str not in current_facs:
-            skipped.append(f"facs_patch find not found for {expr_name}")
-            continue
-        expr_map[expr_name]["facs_action_units"] = current_facs.replace(find_str, replace_str, 1)
-        applied.append(f"expression.{expr_name}.facs_action_units patched")
-
-    tmp = EXPRESSIONS_PATH.with_suffix(".tmp")
-    with open(tmp, "w") as f:
-        yaml.dump(
-            expressions_data, f, allow_unicode=True, default_flow_style=False, sort_keys=False
-        )
-    tmp.rename(EXPRESSIONS_PATH)
-
+    pg_applied = _apply_prompt_gen_patches(fixes.get("prompt_gen_patches") or {})
+    expr_applied, skipped = _apply_expression_patches(fixes)
+    applied = pg_applied + expr_applied
     fixes["_applied"] = applied
     fixes["_skipped"] = skipped
     _atomic_write(fixes_path, fixes)
 
     logger.info("Reexpress fixes applied: %d  Skipped: %d", len(applied), len(skipped))
+    for change in applied:
+        logger.info("  applied: %s", change)
+    return fixes
+
+
+# ---------------------------------------------------------------------------
+# FINAL: consolidation pass (post-loop — select from existing solutions)
+# ---------------------------------------------------------------------------
+
+
+def _apply_reexpress_final(
+    client: GatewayClient,
+    iteration_history: list[dict],
+    fixes_path: Path,
+) -> dict:
+    """FINAL step: uses client.general() only — consolidates best solution, does not explore."""
+    history_lines = []
+    for h in iteration_history:
+        impr = h.get("improvement")
+        impr_str = f"+{impr:.1%}" if impr is not None else "n/a (first)"
+        history_lines.append(
+            f"Iter {h['iteration']}: combined={h['score']:.1%}  delta={impr_str}  "
+            f"applied={h.get('applied', [])}\n  reasoning: {(h.get('reasoning') or '')[:400]}"
+        )
+    history_text = "\n\n".join(history_lines) if history_lines else "(no iterations completed)"
+
+    with open(EXPRESSIONS_PATH) as f:
+        expressions_content = f.read()
+
+    schema_json = json.dumps(_FIX_SCHEMA, indent=2)
+    prompt = textwrap.dedent(f"""
+        You are finalizing the avatar-studio reexpress pipeline after
+        {len(iteration_history)} improvement iteration(s).
+
+        ## Iteration history (all REASON steps applied so far)
+        {history_text}
+
+        ## Current expressions.yml (after all iterations)
+        {expressions_content}
+
+        ## Your task: CONSOLIDATE — do NOT explore new ideas
+        Review the trajectory. Your job is to select and lock in the best configuration
+        from what has already been tested.
+
+        - If combined scores improved consistently: current state is correct.
+          Leave ALL arrays empty and confirm the final state in rationale.
+        - If a specific iteration caused regression: suggest reverting ONLY those exact
+          FACS changes or synonym additions using the patch fields.
+        - Do NOT propose new FACS codes, synonyms, or weight values not already tested.
+
+        OUTPUT SCHEMA (single valid JSON object, no prose):
+        {schema_json}
+    """).strip()
+
+    logger.info(
+        "FINAL: general model consolidating %d iteration(s) for reexpress…",
+        len(iteration_history),
+    )
+
+    fixes: dict = {
+        "prompt_gen_patches": {},
+        "expression_synonym_additions": {},
+        "facs_patches": [],
+        "rationale": "",
+    }
+
+    try:
+        raw = client.general(
+            messages=[{"role": "user", "content": prompt}],
+            timeout=180,
+        )
+        fixes = _parse_fixes_json(raw)
+    except Exception as exc:
+        logger.error("FINAL general model failed: %s", exc)
+        fixes["_error"] = str(exc)
+        fixes["_applied"] = []
+        fixes["_skipped"] = []
+        _atomic_write(fixes_path, fixes)
+        return fixes
+
+    pg_applied = _apply_prompt_gen_patches(fixes.get("prompt_gen_patches") or {})
+    expr_applied, skipped = _apply_expression_patches(fixes)
+    applied = pg_applied + expr_applied
+    fixes["_applied"] = applied
+    fixes["_skipped"] = skipped
+    _atomic_write(fixes_path, fixes)
+
+    logger.info("FINAL complete — applied: %d  skipped: %d", len(applied), len(skipped))
+    for change in applied:
+        logger.info("  applied: %s", change)
     return fixes
 
 
@@ -389,6 +571,7 @@ def run_learn_reexpress(
     *,
     max_iterations: int,
     stop_on_plateau: bool,
+    improve_threshold: float,
     gateway_url: str,
     examples_dir: Path,
     workers: int,
@@ -396,23 +579,24 @@ def run_learn_reexpress(
     log_dir: Path,
     samples: int | None,
     range_: tuple[int, int] | None,
+    from_source: str = DEFAULT_FROM_SOURCE,
     component_threshold: float = 0.75,
     compound_threshold: float = 0.90,
 ) -> None:
     log = make_logger("learn_reexpress", log_dir)
 
     all_examples = load_all_personas(examples_dir)
-    all_examples = [(n, p) for n, p in all_examples if _source_image(examples_dir / n) is not None]
+    # Filter to examples that have the from_source file
+    all_examples = [(n, p) for n, p in all_examples if (examples_dir / n / from_source).exists()]
     if not all_examples:
-        logger.error("No examples with source avatar image found in %s", examples_dir)
+        logger.error("No examples with '%s' found in %s", from_source, examples_dir)
         sys.exit(1)
 
     if samples is None and range_ is None:
         confirm_full_set(len(all_examples))
 
     current_sample = initial_sample(all_examples, n=samples, range_=range_)
-    target_n = len(current_sample)
-    schedule = iteration_schedule(target_n, max_n=512, max_iterations=max_iterations)
+    current_n = len(current_sample)
 
     all_expressions = [e["expression"].lower() for e in _load_expressions()]
     all_styles = _load_styles()
@@ -425,26 +609,36 @@ def run_learn_reexpress(
         script="learn_reexpress",
         max_iterations=max_iterations,
         stop_on_plateau=stop_on_plateau,
+        improve_threshold=improve_threshold,
         workers=workers,
         optimize=optimize,
-        samples=target_n,
+        from_source=from_source,
+        samples=current_n,
         expressions=all_expressions,
         loop_dir=str(loop_dir),
     )
 
     logger.info(
-        "learn_reexpress: samples=%d  expressions=%s  max_iter=%d  optimize=%s  schedule=%s = total %d",
-        target_n,
+        "learn_reexpress: samples=%d  expressions=%s  max_iter=%d"
+        "  improve_threshold=%.0f%%  optimize=%s",
+        current_n,
         all_expressions,
         max_iterations,
+        improve_threshold * 100,
         optimize,
-        " → ".join(str(x) for x in schedule),
-        sum(schedule) * len(all_expressions),
     )
+    for expr_id in all_expressions:
+        expr_entry = resolve_expression(expr_id)
+        pg = build_reexpress_params(expr_entry)
+        logger.info("  [%s] prompt_gen params:", expr_id)
+        for line in pg.log_lines():
+            logger.info(line)
 
     client = GatewayClient(gateway_url)
     score_history: list[float] = []
+    iteration_history: list[dict] = []
     state: dict = {"loop_dir": str(loop_dir), "iterations": []}
+    prev_pg: dict | None = None  # previous iteration's prompt_gen params for diff
 
     for iteration in range(1, max_iterations + 1):
         prefix = f"iter_{iteration:02d}"
@@ -456,6 +650,33 @@ def run_learn_reexpress(
         entries: list[dict] = []
 
         logger.info("[iter %d/%d] Generating %d images…", iteration, max_iterations, len(work))
+        for expr_id in all_expressions:
+            expr_entry = resolve_expression(expr_id)
+            pg = build_reexpress_params(expr_entry)
+            pg_dict = {
+                "prompt_template": pg.prompt,
+                "negative_prompt": pg.negative_prompt,
+                "num_inference_steps": pg.num_inference_steps,
+                "cfg_scale": pg.cfg_scale,
+                "ip_adapter_scale": pg.ip_adapter_scale,
+                "lora": pg.lora,
+                "lora_weight": pg.lora_weight,
+            }
+            if prev_pg is None:
+                logger.info("  [%s] prompt_gen params:", expr_id)
+                for line in pg.log_lines():
+                    logger.info(line)
+            else:
+                changed = {
+                    k: (prev_pg.get(k), v) for k, v in pg_dict.items() if prev_pg.get(k) != v
+                }
+                if changed:
+                    logger.info("  [%s] prompt_gen CHANGED:", expr_id)
+                    for k, (old, new) in changed.items():
+                        logger.info("    %s: %r → %r", k, old, new)
+                else:
+                    logger.info("  [%s] prompt_gen unchanged", expr_id)
+            prev_pg = pg_dict
 
         running_expr = 0.0
         running_identity = 0.0
@@ -489,7 +710,13 @@ def run_learn_reexpress(
             for name, persona, expr_id in pbar:
                 pbar.set_postfix_str(f"{name} x {expr_id}")
                 entry = _process_one(
-                    client, name, expr_id, examples_dir / name, all_styles, optimize=optimize
+                    client,
+                    name,
+                    expr_id,
+                    examples_dir / name,
+                    from_source,
+                    all_styles,
+                    optimize=optimize,
                 )
                 _on_entry(entry, name, expr_id)
                 if n_ok:
@@ -506,6 +733,7 @@ def run_learn_reexpress(
                         name,
                         expr_id,
                         examples_dir / name,
+                        from_source,
                         all_styles,
                         optimize=optimize,
                     ): (name, expr_id)
@@ -577,9 +805,43 @@ def run_learn_reexpress(
                     w.get("sbs_reasoning", "")[:80],
                 )
 
-        # Plateau check
-        if stop_on_plateau and _check_plateau(score_history):
-            logger.info("Plateau detected — stopping")
+        # Scored sample for next iteration
+        example_scores = {e["example"]: e.get("expression_score", 0.0) for e in successful}
+        prev_scored = score_sample(current_sample, example_scores)
+
+        improvement = (
+            score_history[-1] - score_history[-2] if len(score_history) >= 2 else float("inf")
+        )
+
+        # ── FINAL: max iterations reached ────────────────────────────────
+        if iteration == max_iterations:
+            logger.info("[iter %d] Max iterations reached — running FINAL", iteration)
+            final_path = loop_dir / f"{prefix}_final.json"
+            final = _apply_reexpress_final(client, iteration_history, final_path)
+            for fix_desc in final.get("_applied", []):
+                log.fix(iteration=iteration, description=f"[FINAL] {fix_desc}")
+            log.done(reason="max_iterations", iteration=iteration)
+            state["iterations"].append(
+                {"iter": iteration, "combined": combined, "status": "MAX_ITERATIONS"}
+            )
+            _atomic_write(loop_dir / "state.json", state)
+            break
+
+        # ── FINAL: plateau reached ────────────────────────────────────────
+        if (
+            improvement < improve_threshold
+            and stop_on_plateau
+            and _check_plateau(score_history, improve_threshold)
+        ):
+            logger.info(
+                "[iter %d] Plateau detected (delta=%.1f%%) — running FINAL",
+                iteration,
+                improvement * 100,
+            )
+            final_path = loop_dir / f"{prefix}_final.json"
+            final = _apply_reexpress_final(client, iteration_history, final_path)
+            for fix_desc in final.get("_applied", []):
+                log.fix(iteration=iteration, description=f"[FINAL] {fix_desc}")
             log.plateau(iteration=iteration, score_history=score_history)
             log.done(reason="plateau", iteration=iteration)
             state["iterations"].append(
@@ -588,7 +850,7 @@ def run_learn_reexpress(
             _atomic_write(loop_dir / "state.json", state)
             break
 
-        # LLM fixes
+        # ── REASON ───────────────────────────────────────────────────────
         fixes_path = loop_dir / f"{prefix}_fixes.json"
         fixes = _apply_reexpress_fixes(
             client, entries, fixes_path, component_threshold=component_threshold
@@ -596,29 +858,51 @@ def run_learn_reexpress(
         for fix_desc in fixes.get("_applied", []):
             log.fix(iteration=iteration, description=fix_desc)
 
+        iteration_history.append(
+            {
+                "iteration": iteration,
+                "score": combined,
+                "improvement": improvement if improvement != float("inf") else None,
+                "reasoning": fixes.get("_reasoning", ""),
+                "applied": fixes.get("_applied", []),
+            }
+        )
+
+        # ── Next sample: grow N on good improvement, keep N otherwise ────
+        if improvement >= improve_threshold:
+            next_n = min(MAX_N, current_n * 2)
+            logger.info(
+                "[iter %d] Good improvement (%.1f%%) — growing N: %d → %d",
+                iteration,
+                improvement * 100,
+                current_n,
+                next_n,
+            )
+        else:
+            next_n = current_n
+            logger.info(
+                "[iter %d] Below threshold (%.1f%%) — keeping N=%d",
+                iteration,
+                improvement * 100,
+                current_n,
+            )
+
+        current_sample = next_sample(all_examples, prev_scored=prev_scored, target_n=next_n)
+        current_n = next_n
+
         state["iterations"].append(
             {
                 "iter": iteration,
                 "avg_expression": round(avg_expr, 3),
                 "avg_identity": round(avg_identity, 3),
+                "combined": round(combined, 3),
+                "improvement": round(improvement, 4) if improvement != float("inf") else None,
                 "fixes_applied": len(fixes.get("_applied", [])),
+                "next_n": next_n,
                 "status": "IMPROVING",
             }
         )
         _atomic_write(loop_dir / "state.json", state)
-
-        # Next sample
-        if iteration < max_iterations:
-            example_scores = {e["example"]: e.get("expression_score", 0.0) for e in successful}
-            prev_scored = score_sample(current_sample, example_scores)
-            next_target = schedule[iteration]
-            current_sample = next_sample(
-                all_examples, prev_scored=prev_scored, target_n=next_target
-            )
-
-    else:
-        logger.info("Reached max iterations (%d).", max_iterations)
-        log.done(reason="max_iterations", iterations=max_iterations)
 
     print(f"\n{'=' * 60}")
     print(f"learn_reexpress complete — {len(state['iterations'])} iterations")
@@ -649,6 +933,7 @@ if __name__ == "__main__":
     run_learn_reexpress(
         max_iterations=args.max_iterations,
         stop_on_plateau=args.stop_on_plateau,
+        improve_threshold=args.improve_threshold,
         gateway_url=args.gateway,
         examples_dir=args.examples_dir,
         workers=args.workers,
@@ -656,6 +941,7 @@ if __name__ == "__main__":
         log_dir=args.log_dir,
         samples=args.samples,
         range_=tuple(args.range) if args.range else None,
-        component_threshold=args.component_threshold / 100,
-        compound_threshold=args.compound_threshold / 100,
+        from_source=args.from_source or DEFAULT_FROM_SOURCE,
+        component_threshold=args.component_threshold,
+        compound_threshold=args.compound_threshold,
     )

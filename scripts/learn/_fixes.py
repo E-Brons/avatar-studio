@@ -1,8 +1,12 @@
 """LLM fix engine — reason about benchmark failures, produce structured asset patches.
 
-Two-step pipeline:
-  1. reasoning()  (claude-opus) — free-form analysis of failures
+Two-step pipeline (REASON/mid-iteration):
+  1. reasoning()  (claude-opus) — free-form exploration of failures; higher temperature
   2. general()    (claude-sonnet) — format reasoning into structured JSON
+
+One-step pipeline (FINAL/post-loop):
+  1. general()    (claude-sonnet) — consolidation only; lower temperature; selects from
+     existing solutions rather than proposing new ones
 
 Applies fixes to:
   - assets/persona/phenotype_settings.json
@@ -15,6 +19,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import textwrap
 from pathlib import Path
 
@@ -116,6 +121,109 @@ def _sanitizer_dicts_only() -> str:
         len(lines),
     )
     return "\n".join(lines[:cutoff]).strip()
+
+
+# ---------------------------------------------------------------------------
+# Patch application (shared between REASON and FINAL)
+# ---------------------------------------------------------------------------
+
+
+def _apply_patches(fixes: dict) -> tuple[list[str], list[str]]:
+    """Apply all patches in *fixes* to asset files. Returns (applied, skipped) lists."""
+    applied: list[str] = []
+    skipped: list[str] = []
+
+    # ── phenotype_additions ──────────────────────────────────────────────
+    phenotype = _load_json(PHENOTYPE_PATH)
+    for pool_key, new_values in fixes.get("phenotype_additions", {}).items():
+        if not new_values:
+            continue
+        if pool_key not in phenotype:
+            skipped.append(f"phenotype key not found: {pool_key}")
+            logger.warning("phenotype key not found: %s — skipping", pool_key)
+            continue
+        if isinstance(phenotype[pool_key], list):
+            existing = set(str(v) for v in phenotype[pool_key])
+            added = [v for v in new_values if str(v) not in existing]
+            phenotype[pool_key].extend(added)
+            if added:
+                applied.append(f"phenotype.{pool_key}: +{len(added)} values")
+        else:
+            skipped.append(f"phenotype.{pool_key} is not a list")
+    _atomic_write_json(PHENOTYPE_PATH, phenotype)
+
+    # ── presentation_additions ───────────────────────────────────────────
+    presentation = _load_json(PRESENTATION_PATH)
+    for dotted_key, new_values in fixes.get("presentation_additions", {}).items():
+        if not new_values:
+            continue
+        parts = dotted_key.split(".", 1)
+        if len(parts) != 2:
+            skipped.append(f"presentation key malformed: {dotted_key}")
+            logger.warning("presentation key malformed (expected key.gender): %s", dotted_key)
+            continue
+        pool_key, gender = parts
+        if pool_key not in presentation:
+            skipped.append(f"presentation key not found: {pool_key}")
+            logger.warning("presentation key not found: %s — skipping", pool_key)
+            continue
+        gender_pool = presentation[pool_key]
+        if not isinstance(gender_pool, dict) or gender not in gender_pool:
+            skipped.append(f"presentation.{pool_key} has no gender={gender}")
+            logger.warning("presentation.%s has no gender=%s — skipping", pool_key, gender)
+            continue
+        existing = set(str(v) for v in gender_pool[gender])
+        added = [v for v in new_values if str(v) not in existing]
+        gender_pool[gender].extend(added)
+        if added:
+            applied.append(f"presentation.{pool_key}.{gender}: +{len(added)} values")
+    _atomic_write_json(PRESENTATION_PATH, presentation)
+
+    # ── expression_synonym_additions ─────────────────────────────────────
+    with open(EXPRESSIONS_PATH) as f:
+        expressions_data = yaml.safe_load(f)
+    expr_map = {e["expression"]: e for e in expressions_data.get("expressions", [])}
+    for expr_name, new_synonyms in fixes.get("expression_synonym_additions", {}).items():
+        if not new_synonyms:
+            continue
+        if expr_name not in expr_map:
+            skipped.append(f"expression not found: {expr_name}")
+            logger.warning("expression not found: %s — skipping", expr_name)
+            continue
+        existing_syns = set(expr_map[expr_name].get("synonyms", []))
+        added_syns = [s for s in new_synonyms if s not in existing_syns]
+        expr_map[expr_name].setdefault("synonyms", []).extend(added_syns)
+        if added_syns:
+            applied.append(f"expression.{expr_name}.synonyms: +{len(added_syns)}")
+    tmp = EXPRESSIONS_PATH.with_suffix(".tmp")
+    with open(tmp, "w") as f:
+        yaml.dump(
+            expressions_data, f, allow_unicode=True, default_flow_style=False, sort_keys=False
+        )
+    tmp.rename(EXPRESSIONS_PATH)
+
+    # ── prompt_patches ───────────────────────────────────────────────────
+    for patch in fixes.get("prompt_patches", []):
+        find_str = patch.get("find", "")
+        replace_str = patch.get("replace", "")
+        if not find_str:
+            skipped.append(f"prompt_patch missing find string: {patch}")
+            continue
+        content = PERSONA_SANITIZER_PATH.read_text()
+        if find_str not in content:
+            skipped.append("patch find-string not in persona_sanitizer.py")
+            logger.warning("patch find-string not found in persona_sanitizer.py — skipping")
+            continue
+        PERSONA_SANITIZER_PATH.write_text(content.replace(find_str, replace_str, 1))
+        applied.append("prompt_patch: persona_sanitizer.py")
+
+    logger.info("Fixes applied: %d  Skipped: %d", len(applied), len(skipped))
+    for a in applied:
+        logger.info("  + %s", a)
+    for s in skipped:
+        logger.warning("  ! %s", s)
+
+    return applied, skipped
 
 
 # ---------------------------------------------------------------------------
@@ -237,8 +345,25 @@ def _build_format_prompt(reasoning: str) -> str:
     """).strip()
 
 
+def _format_iteration_history(iteration_history: list[dict]) -> str:
+    """Format iteration history for inclusion in the FINAL prompt."""
+    if not iteration_history:
+        return "(no iterations completed)"
+    lines = []
+    for h in iteration_history:
+        impr = h.get("improvement")
+        impr_str = f"+{impr:.1%}" if impr is not None else "n/a (first)"
+        applied = h.get("applied", [])
+        reasoning_snippet = (h.get("reasoning") or "")[:400]
+        lines.append(
+            f"Iter {h['iteration']}: score={h['score']:.1%}  delta={impr_str}  "
+            f"applied={applied}\n  reasoning: {reasoning_snippet}"
+        )
+    return "\n\n".join(lines)
+
+
 # ---------------------------------------------------------------------------
-# Main entry point
+# Main entry points
 # ---------------------------------------------------------------------------
 
 
@@ -247,9 +372,11 @@ def apply_llm_fixes(
     analysis: dict,
     fixes_path: Path,
 ) -> dict:
-    """Two-step LLM fix: reasoning model thinks creatively, general model formats to JSON."""
-    import re
+    """Two-step LLM fix (REASON/mid-iteration): reasoning model explores, general model formats.
 
+    Uses client.reasoning() for free-form exploration (higher temperature) followed by
+    client.general() to format the output into a structured JSON patch.
+    """
     # ── Step 1: reasoning model ───────────────────────────────────────────
     reasoning_prompt = _build_reasoning_prompt(analysis)
     logger.info("Step 1: reasoning model (claude-opus) analyzing failures…")
@@ -297,101 +424,96 @@ def apply_llm_fixes(
 
     fixes["_reasoning"] = reasoning_output[:2000]
 
-    applied: list[str] = []
-    skipped: list[str] = []
-
-    # ── phenotype_additions ──────────────────────────────────────────────
-    phenotype = _load_json(PHENOTYPE_PATH)
-    for pool_key, new_values in fixes.get("phenotype_additions", {}).items():
-        if not new_values:
-            continue
-        if pool_key not in phenotype:
-            skipped.append(f"phenotype key not found: {pool_key}")
-            logger.warning("phenotype key not found: %s — skipping", pool_key)
-            continue
-        if isinstance(phenotype[pool_key], list):
-            existing = set(str(v) for v in phenotype[pool_key])
-            added = [v for v in new_values if str(v) not in existing]
-            phenotype[pool_key].extend(added)
-            if added:
-                applied.append(f"phenotype.{pool_key}: +{len(added)} values")
-        else:
-            skipped.append(f"phenotype.{pool_key} is not a list")
-    _atomic_write_json(PHENOTYPE_PATH, phenotype)
-
-    # ── presentation_additions ───────────────────────────────────────────
-    presentation = _load_json(PRESENTATION_PATH)
-    for dotted_key, new_values in fixes.get("presentation_additions", {}).items():
-        if not new_values:
-            continue
-        parts = dotted_key.split(".", 1)
-        if len(parts) != 2:
-            skipped.append(f"presentation key malformed: {dotted_key}")
-            logger.warning("presentation key malformed (expected key.gender): %s", dotted_key)
-            continue
-        pool_key, gender = parts
-        if pool_key not in presentation:
-            skipped.append(f"presentation key not found: {pool_key}")
-            logger.warning("presentation key not found: %s — skipping", pool_key)
-            continue
-        gender_pool = presentation[pool_key]
-        if not isinstance(gender_pool, dict) or gender not in gender_pool:
-            skipped.append(f"presentation.{pool_key} has no gender={gender}")
-            logger.warning("presentation.%s has no gender=%s — skipping", pool_key, gender)
-            continue
-        existing = set(str(v) for v in gender_pool[gender])
-        added = [v for v in new_values if str(v) not in existing]
-        gender_pool[gender].extend(added)
-        if added:
-            applied.append(f"presentation.{pool_key}.{gender}: +{len(added)} values")
-    _atomic_write_json(PRESENTATION_PATH, presentation)
-
-    # ── expression_synonym_additions ─────────────────────────────────────
-    with open(EXPRESSIONS_PATH) as f:
-        expressions_data = yaml.safe_load(f)
-    expr_map = {e["expression"]: e for e in expressions_data.get("expressions", [])}
-    for expr_name, new_synonyms in fixes.get("expression_synonym_additions", {}).items():
-        if not new_synonyms:
-            continue
-        if expr_name not in expr_map:
-            skipped.append(f"expression not found: {expr_name}")
-            logger.warning("expression not found: %s — skipping", expr_name)
-            continue
-        existing_syns = set(expr_map[expr_name].get("synonyms", []))
-        added_syns = [s for s in new_synonyms if s not in existing_syns]
-        expr_map[expr_name].setdefault("synonyms", []).extend(added_syns)
-        if added_syns:
-            applied.append(f"expression.{expr_name}.synonyms: +{len(added_syns)}")
-    tmp = EXPRESSIONS_PATH.with_suffix(".tmp")
-    with open(tmp, "w") as f:
-        yaml.dump(
-            expressions_data, f, allow_unicode=True, default_flow_style=False, sort_keys=False
-        )
-    tmp.rename(EXPRESSIONS_PATH)
-
-    # ── prompt_patches ───────────────────────────────────────────────────
-    for patch in fixes.get("prompt_patches", []):
-        find_str = patch.get("find", "")
-        replace_str = patch.get("replace", "")
-        if not find_str:
-            skipped.append(f"prompt_patch missing find string: {patch}")
-            continue
-        content = PERSONA_SANITIZER_PATH.read_text()
-        if find_str not in content:
-            skipped.append("patch find-string not in persona_sanitizer.py")
-            logger.warning("patch find-string not found in persona_sanitizer.py — skipping")
-            continue
-        PERSONA_SANITIZER_PATH.write_text(content.replace(find_str, replace_str, 1))
-        applied.append("prompt_patch: persona_sanitizer.py")
-
+    applied, skipped = _apply_patches(fixes)
     fixes["_applied"] = applied
     fixes["_skipped"] = skipped
     _atomic_write_json(fixes_path, fixes)
 
-    logger.info("Fixes applied: %d  Skipped: %d", len(applied), len(skipped))
-    for a in applied:
-        logger.info("  + %s", a)
-    for s in skipped:
-        logger.warning("  ! %s", s)
+    return fixes
 
+
+def apply_llm_final(
+    client: object,  # GatewayClient
+    iteration_history: list[dict],
+    fixes_path: Path,
+) -> dict:
+    """Final consolidation pass (FINAL/post-loop): uses client.general() only.
+
+    Does NOT call client.reasoning() — this step selects from solutions already produced
+    rather than exploring new ones. Lower temperature / deterministic by design.
+
+    Parameters
+    ----------
+    iteration_history:
+        List of dicts from previous REASON iterations, each containing:
+        ``iteration``, ``score``, ``improvement``, ``reasoning``, ``applied``.
+    fixes_path:
+        Path to write the final fixes JSON.
+    """
+    history_text = _format_iteration_history(iteration_history)
+    phenotype_json = _compact_phenotype()
+    presentation_json = _compact_presentation()
+    synonyms_text = _load_synonyms_section()
+    sanitizer_content = _sanitizer_dicts_only()
+    schema_json = json.dumps(_FIX_SCHEMA, indent=2)
+
+    prompt = textwrap.dedent(f"""
+        You are finalizing the avatar-studio create pipeline after
+        {len(iteration_history)} improvement iteration(s).
+
+        ## Iteration history (all REASON steps applied so far)
+        {history_text}
+
+        ## Current state of config files (after all iterations)
+        phenotype_settings.json (palette excluded): {phenotype_json}
+        presentation_settings.json: {presentation_json}
+        expression synonyms: {synonyms_text}
+        persona_sanitizer.py (dicts only): {sanitizer_content}
+
+        ## Your task: CONSOLIDATE — do NOT explore new ideas
+        Review the trajectory above. Your job is to select and lock in the best configuration
+        from what has already been tested, not to propose new experimental changes.
+
+        - If scores improved consistently across iterations: the current state is correct.
+          Leave ALL arrays empty and write a rationale confirming the final state.
+        - If a specific iteration caused regression (score went down after its changes):
+          suggest reverting ONLY those exact changes using find/replace patches.
+        - Do NOT add phenotype values, synonyms, or prompt patches that were not already
+          proposed in the iteration history above.
+
+        OUTPUT SCHEMA (single valid JSON object, no prose):
+        {schema_json}
+    """).strip()
+
+    logger.info("FINAL: general model consolidating %d iteration(s)…", len(iteration_history))
+    try:
+        raw = client.general(  # type: ignore[attr-defined]
+            messages=[{"role": "user", "content": prompt}],
+            output_config=_FIX_OUTPUT_CONFIG,
+            timeout=180,
+        )
+    except Exception as exc:
+        logger.error("FINAL general model failed (%s)", exc)
+        result = {"_error": str(exc), "_applied": [], "_skipped": []}
+        _atomic_write_json(fixes_path, result)
+        return result
+
+    try:
+        text = raw.strip()
+        fence = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+        if fence:
+            text = fence.group(1).strip()
+        fixes: dict = json.loads(text)
+    except Exception as exc:
+        logger.error("FINAL failed to parse JSON (%s)", exc)
+        result = {"_error": str(exc), "_applied": [], "_skipped": []}
+        _atomic_write_json(fixes_path, result)
+        return result
+
+    applied, skipped = _apply_patches(fixes)
+    fixes["_applied"] = applied
+    fixes["_skipped"] = skipped
+    _atomic_write_json(fixes_path, fixes)
+
+    logger.info("FINAL complete — applied: %d  skipped: %d", len(applied), len(skipped))
     return fixes
