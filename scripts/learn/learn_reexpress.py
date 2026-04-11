@@ -34,6 +34,7 @@ from datetime import datetime
 from pathlib import Path
 
 import yaml
+from tqdm import tqdm
 
 # ── project root on sys.path ──────────────────────────────────────────────────
 ROOT = Path(__file__).resolve().parents[2]
@@ -43,12 +44,12 @@ sys.path.insert(0, str(ROOT / "scripts" / "examples"))
 from _cli import add_common_args, confirm_full_set  # noqa: E402
 from _example_utils import EXAMPLES_DIR, REPORTS_DIR, load_all_personas  # noqa: E402
 from _logger import make_logger  # noqa: E402
-from _sampler import initial_sample, iteration_schedule, next_sample  # noqa: E402
+from _sampler import initial_sample, iteration_schedule, next_sample, score_sample  # noqa: E402
 
 from config.gateway import GatewayClient  # noqa: E402
 from pipeline.render.expression_resolver import resolve_expression  # noqa: E402
-from pipeline.render.llm.prompt_builder import build_prompt  # noqa: E402
-from pipeline.render.style_resolver import STYLES_YML, resolve_style  # noqa: E402
+from pipeline.render.llm.prompt_builder import build_clip_prompt_reexpress  # noqa: E402
+from pipeline.render.style_resolver import STYLES_YML  # noqa: E402
 from tuning.classify_expression import classify_image_expression  # noqa: E402
 from tuning.classify_style import classify_image_style  # noqa: E402
 from tuning.compare_side_by_side import compare_side_by_side  # noqa: E402
@@ -136,19 +137,15 @@ def _process_one(
         style_id = "photorealistic"
     result["style_id"] = style_id
 
-    # Build prompt
-    try:
-        _, style_directive = resolve_style(style_id)
-    except Exception:
-        style_directive = ""
+    # Build CLIP prompt
     expr_entry = resolve_expression(expression_id)
-    prompt = build_prompt({}, expr_entry, style_directive, reference_mode="avatar_portrait")
+    clip_prompt = build_clip_prompt_reexpress(expr_entry)
 
     # Generate via IP-Adapter
     t0 = time.time()
     try:
         candidate_bytes = client.ipadapter_faceid(
-            prompt,
+            clip_prompt,
             [source_b64],
             width=512,
             height=512,
@@ -311,6 +308,8 @@ def _apply_reexpress_fixes(
         _atomic_write(fixes_path, fixes)
         return fixes
 
+    logger.info("Reasoning: %s", reasoning_output[:500])
+
     try:
         raw = client.general(
             messages=[
@@ -434,11 +433,13 @@ def run_learn_reexpress(
     )
 
     logger.info(
-        "learn_reexpress: samples=%d  expressions=%s  max_iter=%d  optimize=%s",
+        "learn_reexpress: samples=%d  expressions=%s  max_iter=%d  optimize=%s  schedule=%s = total %d",
         target_n,
         all_expressions,
         max_iterations,
         optimize,
+        " → ".join(str(x) for x in schedule),
+        sum(schedule) * len(all_expressions),
     )
 
     client = GatewayClient(gateway_url)
@@ -456,22 +457,45 @@ def run_learn_reexpress(
 
         logger.info("[iter %d/%d] Generating %d images…", iteration, max_iterations, len(work))
 
+        running_expr = 0.0
+        running_identity = 0.0
+        n_ok = 0
+        n_errors = 0
+        pbar_desc = f"iter {iteration}/{max_iterations}"
+
+        def _on_entry(entry: dict, name: str, expr_id: str) -> None:
+            nonlocal running_expr, running_identity, n_ok, n_errors
+            entries.append(entry)
+            log.render(
+                iteration=iteration, example=name, expression=expr_id, error=entry.get("error")
+            )
+            if entry.get("error"):
+                n_errors += 1
+                logger.warning("  failed: %s x %s — %s", name, expr_id, entry["error"])
+            else:
+                n_ok += 1
+                running_expr += entry.get("expression_score", 0.0)
+                running_identity += entry.get("identity_score", 0.0)
+                log.score(
+                    iteration=iteration,
+                    example=name,
+                    expression=expr_id,
+                    expression_score=entry.get("expression_score"),
+                    identity_score=entry.get("identity_score"),
+                )
+
         if workers <= 1:
-            for name, persona, expr_id in work:
+            pbar = tqdm(work, desc=pbar_desc, unit="img")
+            for name, persona, expr_id in pbar:
+                pbar.set_postfix_str(f"{name} x {expr_id}")
                 entry = _process_one(
                     client, name, expr_id, examples_dir / name, all_styles, optimize=optimize
                 )
-                entries.append(entry)
-                log.render(
-                    iteration=iteration, example=name, expression=expr_id, error=entry.get("error")
-                )
-                if not entry.get("error"):
-                    log.score(
-                        iteration=iteration,
-                        example=name,
-                        expression=expr_id,
-                        expression_score=entry.get("expression_score"),
-                        identity_score=entry.get("identity_score"),
+                _on_entry(entry, name, expr_id)
+                if n_ok:
+                    pbar.set_postfix_str(
+                        f"expr={running_expr / n_ok:.0%} id={running_identity / n_ok:.0%}"
+                        + (f" err={n_errors}" if n_errors else "")
                     )
         else:
             with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -487,26 +511,18 @@ def run_learn_reexpress(
                     ): (name, expr_id)
                     for name, persona, expr_id in work
                 }
-                for future in as_completed(futures):
+                pbar = tqdm(as_completed(futures), total=len(futures), desc=pbar_desc, unit="img")
+                for future in pbar:
                     name, expr_id = futures[future]
                     try:
                         entry = future.result()
                     except Exception as exc:
                         entry = {"example": name, "expression_id": expr_id, "error": str(exc)}
-                    entries.append(entry)
-                    log.render(
-                        iteration=iteration,
-                        example=name,
-                        expression=expr_id,
-                        error=entry.get("error"),
-                    )
-                    if not entry.get("error"):
-                        log.score(
-                            iteration=iteration,
-                            example=name,
-                            expression=expr_id,
-                            expression_score=entry.get("expression_score"),
-                            identity_score=entry.get("identity_score"),
+                    _on_entry(entry, name, expr_id)
+                    if n_ok:
+                        pbar.set_postfix_str(
+                            f"expr={running_expr / n_ok:.0%} id={running_identity / n_ok:.0%}"
+                            + (f" err={n_errors}" if n_errors else "")
                         )
 
         # Summarize
@@ -549,6 +565,18 @@ def run_learn_reexpress(
         for expr_id, avg in sorted(expr_breakdown.items()):
             logger.info("  %s: %.0f%%", expr_id, avg * 100)
 
+        # Log worst examples to surface persistent failures
+        if successful:
+            worst = sorted(successful, key=lambda e: e.get("identity_score", 0))[:5]
+            for w in worst:
+                logger.info(
+                    "  low: %-24s  expr=%.0f%%  id=%.0f%%  %s",
+                    w["example"],
+                    w.get("expression_score", 0) * 100,
+                    w.get("identity_score", 0) * 100,
+                    w.get("sbs_reasoning", "")[:80],
+                )
+
         # Plateau check
         if stop_on_plateau and _check_plateau(score_history):
             logger.info("Plateau detected — stopping")
@@ -582,7 +610,7 @@ def run_learn_reexpress(
         # Next sample
         if iteration < max_iterations:
             example_scores = {e["example"]: e.get("expression_score", 0.0) for e in successful}
-            prev_scored = [(ex, example_scores.get(name, 0.0)) for name, ex in current_sample]
+            prev_scored = score_sample(current_sample, example_scores)
             next_target = schedule[iteration]
             current_sample = next_sample(
                 all_examples, prev_scored=prev_scored, target_n=next_target
