@@ -55,6 +55,18 @@ def initial_sample(
     return list(examples)
 
 
+def score_sample(
+    current_sample: list[T],
+    scores: dict[str, float],
+) -> list[tuple[T, float]]:
+    """Build the prev_scored list expected by next_sample.
+
+    Pairs each item in *current_sample* with its score looked up by name
+    (item[0]), defaulting to 0.0 when not found.
+    """
+    return [(item, scores.get(item[0], 0.0)) for item in current_sample]
+
+
 def next_sample(
     examples: list[T],
     prev_scored: list[tuple[T, float]],

@@ -37,7 +37,7 @@ from _cli import add_common_args, confirm_full_set  # noqa: E402
 from _example_utils import EXAMPLES_DIR, load_all_personas  # noqa: E402
 from _fixes import apply_llm_fixes  # noqa: E402
 from _logger import make_logger  # noqa: E402
-from _sampler import initial_sample, iteration_schedule, next_sample  # noqa: E402
+from _sampler import initial_sample, iteration_schedule, next_sample, score_sample  # noqa: E402
 
 from config.gateway import GatewayClient  # noqa: E402
 
@@ -245,7 +245,7 @@ def run_learn_create(
         except Exception:
             entry_scores = {}
 
-        prev_scored = [(item, entry_scores.get(item[0], 0.0)) for item in current_sample]
+        prev_scored = score_sample(current_sample, entry_scores)
 
         if iteration < max_iterations:
             next_target = schedule[iteration]
