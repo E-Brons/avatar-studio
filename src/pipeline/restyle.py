@@ -12,7 +12,7 @@ import logging
 
 from config.gateway import GatewayClient
 from pipeline.render.expression_resolver import resolve_expression
-from pipeline.render.llm.prompt_builder import build_prompt
+from pipeline.render.llm.prompt_builder import build_clip_prompt_restyle
 from pipeline.render.style_resolver import resolve_style
 from tuning.compare_side_by_side import compare_side_by_side
 
@@ -61,9 +61,9 @@ def restyle_avatar(
     bytes
         Raw PNG bytes of the best candidate (highest identity score).
     """
-    _, style_directive = resolve_style(style_id)
+    style_entry, _ = resolve_style(style_id)
     expr_entry = resolve_expression(expression_id)
-    prompt = build_prompt({}, expr_entry, style_directive, reference_mode="style_transfer")
+    clip_prompt = build_clip_prompt_restyle(style_entry, expr_entry)
 
     client = GatewayClient(gateway_url)
     source_bytes = base64.b64decode(images_b64[0])
@@ -73,7 +73,7 @@ def restyle_avatar(
 
     for i in range(candidates):
         candidate_bytes = client.ipadapter_faceid(
-            prompt,
+            clip_prompt,
             images_b64,
             seed=_vary_seed(seed, i),
             width=width,

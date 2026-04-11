@@ -1,9 +1,9 @@
 """Reexpress pipeline — apply a new expression to an existing avatar.
 
-The source style is auto-detected via the style classifier so the prompt
-stays consistent with the original rendering style.
-Identity is anchored via IP-Adapter FaceID; candidates are ranked by
-side-by-side compound score with expression classification as a tiebreaker.
+Identity is anchored via IP-Adapter FaceID; the CLIP prompt is built from the
+target expression and its FACS action units only (style identity comes from the
+reference image). Candidates are ranked by side-by-side compound score with
+expression classification as a tiebreaker.
 """
 
 from __future__ import annotations
@@ -11,14 +11,10 @@ from __future__ import annotations
 import base64
 import logging
 
-import yaml
-
 from config.gateway import GatewayClient
 from pipeline.render.expression_resolver import resolve_expression
-from pipeline.render.llm.prompt_builder import build_prompt
-from pipeline.render.style_resolver import STYLES_YML, resolve_style
+from pipeline.render.llm.prompt_builder import build_clip_prompt_reexpress
 from tuning.classify_expression import classify_image_expression
-from tuning.classify_style import classify_image_style
 from tuning.compare_side_by_side import compare_side_by_side
 
 logger = logging.getLogger(__name__)
@@ -26,11 +22,6 @@ logger = logging.getLogger(__name__)
 
 def _vary_seed(base: int | None, i: int) -> int:
     return (base if base is not None else 42) + i * 1000
-
-
-def _load_styles() -> list[dict]:
-    with open(STYLES_YML) as f:
-        return yaml.safe_load(f).get("styles", [])
 
 
 def reexpress_avatar(
@@ -45,9 +36,6 @@ def reexpress_avatar(
     seed: int | None = None,
 ) -> bytes:
     """Apply *expression_id* to the avatar in *images_b64*.
-
-    The source style is detected automatically; the same style is preserved
-    in the output.
 
     Parameters
     ----------
@@ -72,14 +60,9 @@ def reexpress_avatar(
         Raw PNG bytes of the best candidate.
     """
     source_bytes = base64.b64decode(images_b64[0])
-    styles = _load_styles()
 
-    style_result = classify_image_style(source_bytes, styles, gateway_url=gateway_url)
-    style_id = style_result.top_style
-
-    _, style_directive = resolve_style(style_id)
     expr_entry = resolve_expression(expression_id)
-    prompt = build_prompt({}, expr_entry, style_directive, reference_mode="avatar_portrait")
+    clip_prompt = build_clip_prompt_reexpress(expr_entry)
 
     client = GatewayClient(gateway_url)
 
@@ -87,7 +70,7 @@ def reexpress_avatar(
 
     for i in range(candidates):
         candidate_bytes = client.ipadapter_faceid(
-            prompt,
+            clip_prompt,
             images_b64,
             seed=_vary_seed(seed, i),
             width=width,
