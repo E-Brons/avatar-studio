@@ -15,9 +15,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - run: pip install ruff
+      - run: pip install -e ".[lint]"
       - run: ruff check src/ tests/ scripts/
       - run: ruff format --check src/ tests/ scripts/
+      - run: python scripts/check_yaml_format.py
 
   backend-avatar:
     name: Backend · Avatar Studio (unit)

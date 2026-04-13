@@ -45,6 +45,19 @@ from PIL import Image
 from ruamel.yaml import YAML
 from tqdm import tqdm
 
+
+def _yaml_rt() -> YAML:
+    """Return a ruamel YAML instance configured for round-trip writes that preserve formatting."""
+    y = YAML()
+    y.preserve_quotes = True
+    y.indent(mapping=2, sequence=4, offset=2)
+    y.width = 2**16
+    y.Representer.add_representer(
+        type(None), lambda self, _: self.represent_scalar("tag:yaml.org,2002:null", "null")
+    )
+    return y
+
+
 # ── project root on sys.path ──────────────────────────────────────────────────
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
@@ -228,8 +241,7 @@ def _apply_prompt_gen_patches(patches: dict, style_ids: list[str]) -> list[str]:
     """Apply prompt_gen_patches to restyle.llm_params for each target style in styles.yml."""
     if not patches or not style_ids:
         return []
-    yaml_rt = YAML()
-    yaml_rt.preserve_quotes = True
+    yaml_rt = _yaml_rt()
     with open(STYLES_YML) as f:
         data = yaml_rt.load(f)
     style_map = {s.get("id"): s for s in data.get("styles", [])}

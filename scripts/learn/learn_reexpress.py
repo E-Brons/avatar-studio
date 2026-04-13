@@ -45,6 +45,19 @@ from PIL import Image
 from ruamel.yaml import YAML
 from tqdm import tqdm
 
+
+def _yaml_rt() -> YAML:
+    """Return a ruamel YAML instance configured for round-trip writes that preserve formatting."""
+    y = YAML()
+    y.preserve_quotes = True
+    y.indent(mapping=2, sequence=4, offset=2)
+    y.width = 2**16
+    y.Representer.add_representer(
+        type(None), lambda self, _: self.represent_scalar("tag:yaml.org,2002:null", "null")
+    )
+    return y
+
+
 # ── project root on sys.path ──────────────────────────────────────────────────
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
@@ -267,8 +280,7 @@ def _apply_expression_patches(fixes: dict) -> tuple[list[str], list[str]]:
     applied: list[str] = []
     skipped: list[str] = []
 
-    yaml_rt = YAML()
-    yaml_rt.preserve_quotes = True
+    yaml_rt = _yaml_rt()
     with open(EXPRESSIONS_PATH) as f:
         expressions_data = yaml_rt.load(f)
     expr_map = {e["expression"]: e for e in expressions_data.get("expressions", [])}
@@ -335,8 +347,7 @@ def _apply_prompt_gen_patches(patches: dict) -> list[str]:
     """Apply prompt_gen_patches to reexpress.llm_params for ALL expressions in expressions.yml."""
     if not patches:
         return []
-    yaml_rt = YAML()
-    yaml_rt.preserve_quotes = True
+    yaml_rt = _yaml_rt()
     with open(EXPRESSIONS_PATH) as f:
         data = yaml_rt.load(f)
     applied: list[str] = []

@@ -26,6 +26,19 @@ from pathlib import Path
 import yaml
 from ruamel.yaml import YAML
 
+
+def _yaml_rt() -> YAML:
+    """Return a ruamel YAML instance configured for round-trip writes that preserve formatting."""
+    y = YAML()
+    y.preserve_quotes = True
+    y.indent(mapping=2, sequence=4, offset=2)
+    y.width = 2**16
+    y.Representer.add_representer(
+        type(None), lambda self, _: self.represent_scalar("tag:yaml.org,2002:null", "null")
+    )
+    return y
+
+
 logger = logging.getLogger(__name__)
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -181,8 +194,7 @@ def _apply_patches(fixes: dict) -> tuple[list[str], list[str]]:
     _atomic_write_json(PRESENTATION_PATH, presentation)
 
     # ── expression_synonym_additions ─────────────────────────────────────
-    yaml_rt = YAML()
-    yaml_rt.preserve_quotes = True
+    yaml_rt = _yaml_rt()
     with open(EXPRESSIONS_PATH) as f:
         expressions_data = yaml_rt.load(f)
     expr_map = {e["expression"]: e for e in expressions_data.get("expressions", [])}
