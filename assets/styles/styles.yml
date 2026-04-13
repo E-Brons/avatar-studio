@@ -118,7 +118,7 @@ styles:
         engine: image-gen
         system_prompt_template: |
           3D rendered portrait avatar, high-quality CG animation style, physically-based rendering.
-          Subsurface scattering on skin. Head-to-body ratio 1.5:1. Large rounded expressive eyes with multi-point specular catchlights and detailed iris.
+          Subsurface scattering on skin. Exaggerated head-to-body ratio 1.5:1. Large rounded expressive eyes with multi-point specular catchlights and detailed iris.
           Volumetric hair in distinct curved clusters with ambient occlusion and visible strand-level sheen. Smooth glossy skin with soft specular on forehead and cheekbones.
           Rich tonal range: skin uses 5+ tones (base, light shadow, deep shadow in creases, soft highlight, bright specular); hair uses 4+ tones (base, AO shadow, mid sheen, bright specular strip).
           Soft three-point lighting: warm key from front-above, cool fill from opposite side, subtle rim on hair.
@@ -127,18 +127,19 @@ styles:
       method: llm
       llm_params:
         engine: IP-Adapter-FaceID
-        prompt_template: "Portrait photograph of the exact same person shown in the reference.\
-          \ Preserve face structure, skin tone, age, gender, hair, and all identifying features\
-          \ precisely. {style_description}."
-        negative_prompt: "cartoon, anime, painting, illustration, drawing, sketch, watercolor,\
-          \ oil paint, wrong face, different person, distorted face, face artifacts, face warp,\
-          \ wrong gender, different gender, bald head, shaved head, wrong skin tone, different\
-          \ ethnicity, different age, androgynous, feminized, masculinized"
+        prompt_template: |
+          {style_description}.
+          Portrait of the exact same person.
+          Preserve precisely face structure, skin tone, age, gender, hair, and identifying features
+        negative_prompt: |
+          anime, painting, photorealistic, 2D, drawing, sketch, watercolor, oil paint.
+          different face, different person, different gender, different age.
+          distorted face, face warp.
         width: 512
         height: 512
-        num_inference_steps: 35
-        cfg_scale: 5.5
-        ip_adapter_scale: 1.0
+        num_inference_steps: 20
+        cfg_scale: 7.0
+        ip_adapter_scale: 0.8
         lora: null
         lora_weight: 1.0
     example_images:
@@ -176,18 +177,19 @@ styles:
       method: llm
       llm_params:
         engine: IP-Adapter-FaceID
-        prompt_template: "Portrait photograph of the exact same person shown in the reference.\
-          \ Preserve face structure, skin tone, age, gender, hair, and all identifying features\
-          \ precisely. {style_description}."
-        negative_prompt: "cartoon, anime, painting, illustration, drawing, sketch, watercolor,\
-          \ oil paint, wrong face, different person, distorted face, face artifacts, face warp,\
-          \ wrong gender, different gender, bald head, shaved head, wrong skin tone, different\
-          \ ethnicity, different age, androgynous, feminized, masculinized"
+        prompt_template: |
+          {style_description}.
+          Portrait of the exact same person.
+          Preserve precisely face structure, skin tone, age, gender, hair, and identifying features
+        negative_prompt: |
+          3D render, photorealistic, flat illustration, watercolor, oil paint.
+          different face, different person, different gender, different age.
+          distorted face, face warp.
         width: 512
         height: 512
-        num_inference_steps: 35
-        cfg_scale: 5.5
-        ip_adapter_scale: 1.0
+        num_inference_steps: 20
+        cfg_scale: 7.0
+        ip_adapter_scale: 0.8
         lora: null
         lora_weight: 1.0
     example_images:
@@ -221,20 +223,22 @@ styles:
       method: llm
       llm_params:
         engine: IP-Adapter-FaceID
-        prompt_template: "Portrait photograph of the exact same person shown in the reference.\
-          \ Preserve face structure, skin tone, age, gender, hair, and all identifying features\
-          \ precisely. {style_description}."
-        negative_prompt: "cartoon, anime, painting, illustration, drawing, sketch, watercolor,\
-          \ oil paint, wrong face, different person, distorted face, face artifacts, face warp,\
-          \ wrong gender, different gender, bald head, shaved head, wrong skin tone, different\
-          \ ethnicity, different age, androgynous, feminized, masculinized"
+        prompt_template: |
+          {style_description}.
+          Portrait of the exact same person.
+          Preserve precisely face structure, skin tone, age, gender, hair, and identifying features.
+        negative_prompt: |
+          painting, illustration, drawing, sketch, watercolor, oil paint, CGI, 3D render, cartoon, anime.
+          different face, different person, different gender, different age.
+          distorted face, face warp.
         width: 512
         height: 512
-        num_inference_steps: 35
-        cfg_scale: 5.5
-        ip_adapter_scale: 1.0
+        num_inference_steps: 30
+        cfg_scale: 8.0
+        ip_adapter_scale: 0.8
         lora: null
         lora_weight: 1.0
+
     example_images:
       - assets/styles/avatar_style_photorealistic_male.png
       - assets/styles/avatar_style_photorealistic_female.png
@@ -270,20 +274,22 @@ styles:
       method: llm
       llm_params:
         engine: IP-Adapter-FaceID
-        prompt_template: "Portrait photograph of the exact same person shown in the reference.\
-          \ Preserve face structure, skin tone, age, gender, hair, and all identifying features\
-          \ precisely. {style_description}."
-        negative_prompt: "cartoon, anime, painting, illustration, drawing, sketch, watercolor,\
-          \ oil paint, wrong face, different person, distorted face, face artifacts, face warp,\
-          \ wrong gender, different gender, bald head, shaved head, wrong skin tone, different\
-          \ ethnicity, different age, androgynous, feminized, masculinized"
+        prompt_template: |
+          {style_description}.
+          Portrait of the exact same person.
+          Preserve precisely face structure, skin tone, age, gender, hair, and identifying features
+        negative_prompt: |
+          3D render, photorealistic, anime, cartoon, charcoal sketch, watercolor, oil paint.
+          different face, different person, different gender, different age.
+          distorted face, face warp.
         width: 512
         height: 512
-        num_inference_steps: 35
-        cfg_scale: 5.5
-        ip_adapter_scale: 1.0
+        num_inference_steps: 20
+        cfg_scale: 7.0
+        ip_adapter_scale: 0.8
         lora: null
         lora_weight: 1.0
+
     example_images:
       - assets/styles/avatar_style_lineart_male.png
       - assets/styles/avatar_style_lineart_female.png
@@ -323,20 +329,22 @@ styles:
       method: llm
       llm_params:
         engine: IP-Adapter-FaceID
-        prompt_template: "Portrait photograph of the exact same person shown in the reference.\
-          \ Preserve face structure, skin tone, age, gender, hair, and all identifying features\
-          \ precisely. {style_description}."
-        negative_prompt: "cartoon, anime, painting, illustration, drawing, sketch, watercolor,\
-          \ oil paint, wrong face, different person, distorted face, face artifacts, face warp,\
-          \ wrong gender, different gender, bald head, shaved head, wrong skin tone, different\
-          \ ethnicity, different age, androgynous, feminized, masculinized"
+        prompt_template: |
+          {style_description}.
+          Portrait of the exact same person.
+          Preserve precisely face structure, skin tone, age, gender, hair, and identifying features
+        negative_prompt: |
+          photorealistic, 2D illustration, anime, cartoon, sketch, watercolor, oil paint.
+          different face, different person, different gender, different age.
+          distorted face, face warp.
         width: 512
         height: 512
-        num_inference_steps: 35
-        cfg_scale: 5.5
-        ip_adapter_scale: 1.0
+        num_inference_steps: 20
+        cfg_scale: 7.0
+        ip_adapter_scale: 0.8
         lora: null
         lora_weight: 1.0
+
     example_images:
       - assets/styles/avatar_style_clay_male.png
       - assets/styles/avatar_style_clay_female.png

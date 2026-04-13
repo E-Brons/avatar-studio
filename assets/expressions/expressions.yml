@@ -1,157 +1,152 @@
 expressions:
-- expression: Happiness
-  synonyms:
-  - Joy
-  - Enjoyment
-  - Happy
-  - Joyful
-  - Cheerful
-  - Elated
-  - Pleased
-  facs_action_units: AU6 (marked), AU12 (marked)
-  description: 'The Duchenne smile. Cheeks lift strongly, pushing up the lower eyelids
-    and producing visible crow''s-feet at the outer eye corners. Lip corners pull
-    firmly upward and outward. The eye narrowing from the cheek lift distinguishes
-    genuine happiness from a polite smile.
-
-    '
-  reexpress:
-    method: llm
-    llm_params:
-      engine: IP-Adapter-FaceID
-      prompt_template: "Same person, preserve face and appearance. {expression_name},\
-        \ {facs_au_codes}."
-      negative_prompt: "deformed, blurry, low quality, wrong expression, distorted\
-        \ face, unnatural mouth"
-      width: 512
-      height: 512
-      num_inference_steps: 20
-      cfg_scale: 7.0
-      ip_adapter_scale: 0.6
-      lora: null
-      lora_weight: 1.0
-- expression: Surprise
-  synonyms:
-  - Amazement
-  - Astonishment
-  - Surprised
-  - Shocked
-  - Alert
-  - Startled
-  facs_action_units: AU1 (marked), AU2 (marked), AU5 (moderate), AU26 (moderate)
-  description: 'Full brow arch — both inner and outer brows raised high, creating
-    horizontal forehead lines. Upper lids raised wide. Jaw drops, mouth open. No tension
-    anywhere in the face — pure open, unguarded reaction.
-
-    '
-  reexpress:
-    method: llm
-    llm_params:
-      engine: IP-Adapter-FaceID
-      prompt_template: "Same person, preserve face and appearance. {expression_name},\
-        \ {facs_au_codes}."
-      negative_prompt: "deformed, blurry, low quality, wrong expression, distorted\
-        \ face, unnatural mouth"
-      width: 512
-      height: 512
-      num_inference_steps: 20
-      cfg_scale: 7.0
-      ip_adapter_scale: 0.6
-      lora: null
-      lora_weight: 1.0
-- expression: Anger
-  synonyms:
-  - Rage
-  - Fury
-  - Angry
-  - Furious
-  - Stern
-  - Hostile
-  - Grumpy
-  - Stressed
-  - Menacing
-  facs_action_units: AU4 (marked), AU7 (moderate), AU23 (moderate)
-  description: 'Brows pulled hard down and together, forming a deep V-furrow between
-    them. Lids tighten into an intense fixed stare. Lips press firmly together, compressed
-    and thinned. Controlled, focused aggression directed at the viewer.
-
-    '
-  reexpress:
-    method: llm
-    llm_params:
-      engine: IP-Adapter-FaceID
-      prompt_template: "Same person, preserve face and appearance. {expression_name},\
-        \ {facs_au_codes}."
-      negative_prompt: "deformed, blurry, low quality, wrong expression, distorted\
-        \ face, unnatural mouth"
-      width: 512
-      height: 512
-      num_inference_steps: 20
-      cfg_scale: 7.0
-      ip_adapter_scale: 0.6
-      lora: null
-      lora_weight: 1.0
-- expression: Sadness
-  synonyms:
-  - Sorrow
-  - Grief
-  - Sad
-  - Sorrowful
-  - Melancholy
-  - Gloomy
-  - Dejected
-  facs_action_units: AU1 (moderate), AU4 (slight), AU15 (slight), AU17 (trace)
-  description: 'The oblique brow: inner corners raised (AU1), overall brow drawn slightly
-    down (AU4), producing a triangular upward-slanted inner brow shape. Lip corners
-    pulled gently downward. Chin slightly puckered. The face is heavy and still —
-    no tension, just weight.
-
-    '
-  reexpress:
-    method: llm
-    llm_params:
-      engine: IP-Adapter-FaceID
-      prompt_template: "Same person, preserve face and appearance. {expression_name},\
-        \ {facs_au_codes}."
-      negative_prompt: "deformed, blurry, low quality, wrong expression, distorted\
-        \ face, unnatural mouth"
-      width: 512
-      height: 512
-      num_inference_steps: 20
-      cfg_scale: 7.0
-      ip_adapter_scale: 0.6
-      lora: null
-      lora_weight: 1.0
-- expression: Contempt
-  synonyms:
-  - Scorn
-  - Disdain
-  - Contemptuous
-  - Scornful
-  - Disdainful
-  - Skeptical
-  - Smug
-  - Sly
-  - Dismissive
-  - Sarcastic
-  facs_action_units: AU14x (moderate), AU12x (trace)
-  description: 'Strictly unilateral — one side of the face only. A single dimple appears
-    at one cheek corner; that lip corner lifts very slightly. The opposite side of
-    the face remains completely flat and neutral. The asymmetry is the entire signal.
-
-    '
-  reexpress:
-    method: llm
-    llm_params:
-      engine: IP-Adapter-FaceID
-      prompt_template: "Same person, preserve face and appearance. {expression_name},\
-        \ {facs_au_codes}."
-      negative_prompt: "deformed, blurry, low quality, wrong expression, distorted\
-        \ face, unnatural mouth"
-      width: 512
-      height: 512
-      num_inference_steps: 20
-      cfg_scale: 7.0
-      ip_adapter_scale: 0.6
-      lora: null
-      lora_weight: 1.0
+  - expression: Happiness
+    synonyms:
+      - Joy
+      - Enjoyment
+      - Happy
+      - Joyful
+      - Cheerful
+      - Elated
+      - Pleased
+    facs_action_units: AU6 (marked), AU12 (marked)
+    description: |
+      The Duchenne smile. Cheeks lift strongly, pushing up the lower eyelids
+      and producing visible crow's-feet at the outer eye corners. Lip corners pull
+      firmly upward and outward. The eye narrowing from the cheek lift distinguishes
+      genuine happiness from a polite smile.
+    reexpress:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: |
+          Exact same person, Preserve face and appearance. Expressing {expression_name}.
+        negative_prompt: |
+          Deformed, blurry, low quality, wrong expression, distorted face, unnatural mouth.
+        width: 512
+        height: 512
+        num_inference_steps: 20
+        cfg_scale: 9.0
+        ip_adapter_scale: 0.78
+        lora: null
+        lora_weight: 1.0
+  - expression: Surprise
+    synonyms:
+      - Amazement
+      - Astonishment
+      - Surprised
+      - Shocked
+      - Alert
+      - Startled
+    facs_action_units: AU1 (marked), AU2 (marked), AU5 (moderate), AU26 (moderate)
+    description: |
+      Full brow arch — both inner and outer brows raised high, creating
+      horizontal forehead lines. Upper lids raised wide. Jaw drops, mouth open. No tension
+      anywhere in the face — pure open, unguarded reaction.
+    reexpress:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: |
+          Exact same person, Preserve face and appearance. Expressing {expression_name}.
+        negative_prompt: |
+          Deformed, blurry, low quality, wrong expression, distorted face, unnatural mouth.
+        width: 512
+        height: 512
+        num_inference_steps: 20
+        cfg_scale: 9.0
+        ip_adapter_scale: 0.78
+        lora: null
+        lora_weight: 1.0
+  - expression: Anger
+    synonyms:
+      - Rage
+      - Fury
+      - Angry
+      - Furious
+      - Stern
+      - Hostile
+      - Grumpy
+      - Stressed
+      - Menacing
+    facs_action_units: AU4 (marked), AU7 (moderate), AU23 (moderate)
+    description: |
+      Brows pulled hard down and together, forming a deep V-furrow between
+      them. Lids tighten into an intense fixed stare. Lips press firmly together, compressed
+      and thinned. Controlled, focused aggression directed at the viewer.
+    reexpress:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: |
+          Exact same person, Preserve face and appearance. Expressing {expression_name}.
+        negative_prompt: |
+          Deformed, blurry, low quality, wrong expression, distorted face, unnatural mouth.
+        width: 512
+        height: 512
+        num_inference_steps: 20
+        cfg_scale: 9.0
+        ip_adapter_scale: 0.78
+        lora: null
+        lora_weight: 1.0
+  - expression: Sadness
+    synonyms:
+      - Sorrow
+      - Grief
+      - Sad
+      - Sorrowful
+      - Melancholy
+      - Gloomy
+      - Dejected
+    facs_action_units: AU1 (moderate), AU4 (slight), AU15 (slight), AU17 (trace)
+    description: |
+      The oblique brow: inner corners raised (AU1), overall brow drawn slightly
+      down (AU4), producing a triangular upward-slanted inner brow shape. Lip corners
+      pulled gently downward. Chin slightly puckered. The face is heavy and still —
+      no tension, just weight.
+    reexpress:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: |
+          Exact same person, Preserve face and appearance. Expressing {expression_name}.
+        negative_prompt: |
+          Deformed, blurry, low quality, wrong expression, distorted face, unnatural mouth.
+        width: 512
+        height: 512
+        num_inference_steps: 20
+        cfg_scale: 9.0
+        ip_adapter_scale: 0.78
+        lora: null
+        lora_weight: 1.0
+  - expression: Contempt
+    synonyms:
+      - Scorn
+      - Disdain
+      - Contemptuous
+      - Scornful
+      - Disdainful
+      - Skeptical
+      - Smug
+      - Sly
+      - Dismissive
+      - Sarcastic
+    facs_action_units: AU14x (moderate), AU12x (trace)
+    description: |
+      Strictly unilateral — one side of the face only. A single dimple appears
+      at one cheek corner; that lip corner lifts very slightly. The opposite side of
+      the face remains completely flat and neutral. The asymmetry is the entire signal.
+    reexpress:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: |
+          Exact same person, Preserve face and appearance. Expressing {expression_name}.
+        negative_prompt: |
+          Deformed, blurry, low quality, wrong expression, distorted face, unnatural mouth.
+        width: 512
+        height: 512
+        num_inference_steps: 20
+        cfg_scale: 9.0
+        ip_adapter_scale: 0.78
+        lora: null
+        lora_weight: 1.0
