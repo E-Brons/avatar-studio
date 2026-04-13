@@ -38,6 +38,7 @@ from pipeline.persona.aggregator_llm import select_features
 from pipeline.persona.generator import build_avatar_charachter, pick_demographics
 from pipeline.render.expression_resolver import EXPRESSION_IDS, EXPRESSIONS_YML
 from pipeline.render.llm.orchestrator import generate_avatar_image
+from pipeline.render.llm.style_directive import get_system_prompt
 from pipeline.render.style_resolver import STYLES_YML
 from tuning.classify_expression import (
     classify_image_expression,
@@ -841,7 +842,7 @@ def main() -> None:
             args.style,
             all_styles,
             key="id",
-            predicate=lambda s: s["id"] != "random" and s.get("system_prompt"),
+            predicate=lambda s: s["id"] != "random" and get_system_prompt(s),
         )
         genders, random_gender = _resolve_options(args.gender, _GENDERS)
         expressions, random_expression = _resolve_options(args.expression, EXPRESSION_IDS)

@@ -9,13 +9,19 @@ from pipeline.render.llm.style_directive import build_style_directive
 
 
 class TestBuildStyleDirective:
+    def _entry(self, tmpl: str | None) -> dict:
+        """Build a style entry with the new create.llm_params.system_prompt_template structure."""
+        if tmpl is None:
+            return {}
+        return {"create": {"llm_params": {"system_prompt_template": tmpl}}}
+
     def test_substitutes_bg_color(self):
-        entry = {"system_prompt": "Background: [BG_COLOR] style."}
+        entry = self._entry("Background: [BG_COLOR] style.")
         result = build_style_directive(entry, bg_color="#FF0000")
         assert result == "Background: #FF0000 style."
 
     def test_no_placeholder_returns_as_is(self):
-        entry = {"system_prompt": "Photorealistic portrait."}
+        entry = self._entry("Photorealistic portrait.")
         result = build_style_directive(entry)
         assert result == "Photorealistic portrait."
 
@@ -24,11 +30,11 @@ class TestBuildStyleDirective:
         assert result == ""
 
     def test_none_system_prompt_returns_empty(self):
-        result = build_style_directive({"system_prompt": None})
+        result = build_style_directive({"create": None})
         assert result == ""
 
     def test_multiple_placeholders_all_replaced(self):
-        entry = {"system_prompt": "[BG_COLOR] and [BG_COLOR]"}
+        entry = self._entry("[BG_COLOR] and [BG_COLOR]")
         result = build_style_directive(entry, bg_color="#ABCDEF")
         assert result == "#ABCDEF and #ABCDEF"
 

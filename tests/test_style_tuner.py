@@ -23,8 +23,16 @@ _FAKE_AVATAR = {
     }
 }
 
-_FAKE_STYLE = {"id": "photorealistic", "system_prompt": "photo portrait", "name": "Photo"}
-_FAKE_STYLE_CLAY = {"id": "clay", "system_prompt": "clay style", "name": "Clay"}
+_FAKE_STYLE = {
+    "id": "photorealistic",
+    "create": {"llm_params": {"system_prompt_template": "photo portrait"}},
+    "name": "Photo",
+}
+_FAKE_STYLE_CLAY = {
+    "id": "clay",
+    "create": {"llm_params": {"system_prompt_template": "clay style"}},
+    "name": "Clay",
+}
 _ALL_STYLES = [_FAKE_STYLE, _FAKE_STYLE_CLAY]
 
 
@@ -1264,7 +1272,13 @@ class TestMainCli:
             if len(sleep_calls) >= 2:
                 raise KeyboardInterrupt
 
-        mock_styles = [{"id": "photorealistic", "system_prompt": "photo", "name": "Photo"}]
+        mock_styles = [
+            {
+                "id": "photorealistic",
+                "create": {"llm_params": {"system_prompt_template": "photo"}},
+                "name": "Photo",
+            }
+        ]
 
         with (
             patch(

@@ -222,7 +222,7 @@ _FIX_SCHEMA: dict = {
     "type": "object",
     "properties": {
         "prompt_gen_patches": {
-            "description": "Updates to assets/prompt_gen/reexpress.yml — the diffusion generation params.",
+            "description": "Updates to the reexpress.llm_params section in expressions.yml — the diffusion generation params.",
             "type": "object",
             "properties": {
                 "prompt_template": {"type": ["string", "null"]},
@@ -314,7 +314,7 @@ def _parse_fixes_json(raw: str) -> dict:
     return json.loads(text)
 
 
-_REEXPRESS_CONFIG = ROOT / "assets" / "prompt_gen" / "reexpress.yml"
+_REEXPRESS_YML_PARAMS_KEY = ("reexpress", "llm_params")  # path into each expression entry
 
 # CLIP hard limit is 77 tokens. Target for both prompt_template and negative_prompt is 70
 # tokens; 75 is the absolute ceiling (the tokeniser used at runtime may differ slightly from
@@ -331,36 +331,48 @@ def _clip_tokens_approx(text: str) -> int:
 
 
 def _apply_prompt_gen_patches(patches: dict) -> list[str]:
-    """Apply prompt_gen_patches to assets/prompt_gen/reexpress.yml. Returns list of applied changes."""
+    """Apply prompt_gen_patches to reexpress.llm_params for ALL expressions in expressions.yml."""
     if not patches:
         return []
-    cfg = yaml.safe_load(_REEXPRESS_CONFIG.read_text())
+    with open(EXPRESSIONS_PATH) as f:
+        data = yaml.safe_load(f)
     applied: list[str] = []
-    for key, value in patches.items():
-        if value is None:
+    for expr in data.get("expressions", []):
+        expr_name = expr.get("expression", "?")
+        llm_params = (expr.get("reexpress") or {}).get("llm_params")
+        if llm_params is None:
             continue
-        # Validate CLIP token budget for text fields before writing
-        if key in ("prompt_template", "negative_prompt") and isinstance(value, str):
-            approx = _clip_tokens_approx(value)
-            if approx > _CLIP_MAX:
-                logger.warning(
-                    "Skipping %s patch — estimated %d tokens exceeds hard limit %d "
-                    "(target is %d). Shorten and retry.",
-                    key,
-                    approx,
-                    _CLIP_MAX,
-                    _CLIP_TARGET,
-                )
+        for key, value in patches.items():
+            if value is None:
                 continue
-        old = cfg.get(key)
-        cfg[key] = value
-        applied.append(f"reexpress.yml: {key} {old!r} → {value!r}")
+            # Validate CLIP token budget for text fields before writing
+            if key in ("prompt_template", "negative_prompt") and isinstance(value, str):
+                approx = _clip_tokens_approx(value)
+                if approx > _CLIP_MAX:
+                    logger.warning(
+                        "Skipping %s patch — estimated %d tokens exceeds hard limit %d "
+                        "(target is %d). Shorten and retry.",
+                        key,
+                        approx,
+                        _CLIP_MAX,
+                        _CLIP_TARGET,
+                    )
+                    continue
+            old = llm_params.get(key)
+            llm_params[key] = value
+            applied.append(
+                f"expressions.yml[{expr_name}].reexpress.llm_params.{key}: {old!r} → {value!r}"
+            )
     if applied:
-        tmp = _REEXPRESS_CONFIG.with_suffix(".tmp")
-        tmp.write_text(
-            yaml.dump(cfg, default_flow_style=False, sort_keys=False, allow_unicode=True)
-        )
-        tmp.rename(_REEXPRESS_CONFIG)
+        candidate = yaml.dump(data, default_flow_style=False, sort_keys=False, allow_unicode=True)
+        try:
+            yaml.safe_load(candidate)
+        except yaml.YAMLError as exc:
+            logger.warning("Skipping prompt_gen patches — YAML validation failed: %s", exc)
+            return []
+        tmp = EXPRESSIONS_PATH.with_suffix(".tmp")
+        tmp.write_text(candidate)
+        tmp.rename(EXPRESSIONS_PATH)
     return applied
 
 
@@ -399,7 +411,13 @@ def _apply_reexpress_fixes(
     with open(EXPRESSIONS_PATH) as f:
         expressions_content = f.read()
 
-    prompt_gen_content = _REEXPRESS_CONFIG.read_text()
+    # Show the current reexpress.llm_params (shared across all expressions — first entry is representative)
+    exprs_data = yaml.safe_load(expressions_content)
+    first_expr = (exprs_data.get("expressions") or [{}])[0]
+    reexpress_lp = (first_expr.get("reexpress") or {}).get("llm_params") or {}
+    prompt_gen_content = yaml.dump(
+        reexpress_lp, default_flow_style=False, sort_keys=False, allow_unicode=True
+    )
 
     reasoning_prompt = textwrap.dedent(f"""
         You are improving the avatar-studio reexpress pipeline (IP-Adapter FaceID based).
@@ -408,7 +426,7 @@ def _apply_reexpress_fixes(
         ## Failures (expr score < {component_threshold:.0%} or identity score < {component_threshold:.0%})
         {failure_summary or "(none)"}
 
-        ## Current reexpress.yml (diffusion generation params — this is what drives generation)
+        ## Current reexpress.llm_params (diffusion generation params — shared across all expressions)
         {prompt_gen_content}
 
         ## Current expressions.yml
@@ -447,7 +465,7 @@ def _apply_reexpress_fixes(
         {schema_json}
 
         Rules:
-        - prompt_gen_patches: fields to update in reexpress.yml; set a field to null to leave it unchanged
+        - prompt_gen_patches: fields to update in reexpress.llm_params (in expressions.yml); set a field to null to leave it unchanged
         - expression_synonym_additions: {{expression_name: [new_synonyms]}} — exact name from expressions.yml
         - facs_patches: find/replace patches to facs_action_units strings in expressions.yml
         - Leave prompt_gen_patches fields null and arrays empty if no changes needed.

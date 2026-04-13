@@ -311,7 +311,11 @@ class TestRunGenExamples:
     def test_image_gen_failure_continues(self, tmp_path, capsys):
         """generate_avatar_image raises → error printed, loop continues."""
         styles = [
-            {"id": "photorealistic", "system_prompt": "photo", "name": "Photo"},
+            {
+                "id": "photorealistic",
+                "create": {"llm_params": {"system_prompt_template": "photo"}},
+                "name": "Photo",
+            },
         ]
         with (
             patch("api.cli._load_styles", return_value=styles),
@@ -329,7 +333,7 @@ class TestRunGenExamples:
         assert "gpu down" in out
 
     def test_no_style_flag_uses_all_prompt_styles(self, tmp_path, capsys):
-        """Line 132: no --style flag → filter all styles with system_prompt."""
+        """Line 132: no --style flag → filter all styles with system_prompt_template."""
         import io as _io
 
         from PIL import Image as PILImage
@@ -345,8 +349,12 @@ class TestRunGenExamples:
             gen_calls.append(out_path.name)
 
         styles = [
-            {"id": "photorealistic", "system_prompt": "photo portrait", "name": "Photo"},
-            {"id": "random", "system_prompt": None, "name": "Random"},  # excluded
+            {
+                "id": "photorealistic",
+                "create": {"llm_params": {"system_prompt_template": "photo portrait"}},
+                "name": "Photo",
+            },
+            {"id": "random", "create": None, "name": "Random"},  # excluded
         ]
         with (
             patch("api.cli._load_styles", return_value=styles),
@@ -357,7 +365,7 @@ class TestRunGenExamples:
         ):
             code = _run_main(["gen-examples", "--gender", "female"])
         assert code == 0
-        # Only photorealistic generated (random excluded as no system_prompt)
+        # Only photorealistic generated (random excluded as no system_prompt_template)
         assert any("photorealistic" in n for n in gen_calls)
         assert not any("random" in n for n in gen_calls)
 

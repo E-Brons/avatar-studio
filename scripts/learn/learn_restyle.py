@@ -81,7 +81,7 @@ _FIX_SCHEMA: dict = {
     "type": "object",
     "properties": {
         "prompt_gen_patches": {
-            "description": "Updates to assets/prompt_gen/restyle.yml — the diffusion generation params.",
+            "description": "Updates to the restyle.llm_params section in styles.yml — the diffusion generation params.",
             "type": "object",
             "properties": {
                 "prompt_template": {"type": ["string", "null"]},
@@ -206,7 +206,7 @@ def _apply_style_patches(fixes: dict) -> tuple[list[str], list[str]]:
     return applied, skipped
 
 
-_RESTYLE_CONFIG = ROOT / "assets" / "prompt_gen" / "restyle.yml"
+_RESTYLE_YML_PARAMS_KEY = ("restyle", "llm_params")  # path into each style entry
 
 # CLIP hard limit is 77 tokens. Target for both prompt_template and negative_prompt is 70
 # tokens; 75 is the absolute ceiling (the tokeniser used at runtime may differ slightly from
@@ -223,37 +223,52 @@ def _clip_tokens_approx(text: str) -> int:
     return int(len(text.split()) * 1.3) + 1
 
 
-def _apply_prompt_gen_patches(patches: dict) -> list[str]:
-    """Apply prompt_gen_patches to assets/prompt_gen/restyle.yml. Returns list of applied changes."""
-    if not patches:
+def _apply_prompt_gen_patches(patches: dict, style_ids: list[str]) -> list[str]:
+    """Apply prompt_gen_patches to restyle.llm_params for each target style in styles.yml."""
+    if not patches or not style_ids:
         return []
-    cfg = yaml.safe_load(_RESTYLE_CONFIG.read_text())
+    with open(STYLES_YML) as f:
+        data = yaml.safe_load(f)
+    style_map = {s.get("id"): s for s in data.get("styles", [])}
     applied: list[str] = []
-    for key, value in patches.items():
-        if value is None:
+    for sid in style_ids:
+        target = style_map.get(sid)
+        if target is None:
+            logger.warning("style %s not found in styles.yml — skipping prompt_gen patches", sid)
             continue
-        # Validate CLIP token budget for text fields before writing
-        if key in ("prompt_template", "negative_prompt") and isinstance(value, str):
-            approx = _clip_tokens_approx(value)
-            if approx > _CLIP_MAX:
-                logger.warning(
-                    "Skipping %s patch — estimated %d tokens exceeds hard limit %d "
-                    "(target is %d). Shorten and retry.",
-                    key,
-                    approx,
-                    _CLIP_MAX,
-                    _CLIP_TARGET,
-                )
+        llm_params = (target.get("restyle") or {}).get("llm_params")
+        if llm_params is None:
+            logger.warning("style %s has no restyle.llm_params — skipping", sid)
+            continue
+        for key, value in patches.items():
+            if value is None:
                 continue
-        old = cfg.get(key)
-        cfg[key] = value
-        applied.append(f"restyle.yml: {key} {old!r} → {value!r}")
+            # Validate CLIP token budget for text fields before writing
+            if key in ("prompt_template", "negative_prompt") and isinstance(value, str):
+                approx = _clip_tokens_approx(value)
+                if approx > _CLIP_MAX:
+                    logger.warning(
+                        "Skipping %s patch — estimated %d tokens exceeds hard limit %d "
+                        "(target is %d). Shorten and retry.",
+                        key,
+                        approx,
+                        _CLIP_MAX,
+                        _CLIP_TARGET,
+                    )
+                    continue
+            old = llm_params.get(key)
+            llm_params[key] = value
+            applied.append(f"styles.yml[{sid}].restyle.llm_params.{key}: {old!r} → {value!r}")
     if applied:
-        tmp = _RESTYLE_CONFIG.with_suffix(".tmp")
-        tmp.write_text(
-            yaml.dump(cfg, default_flow_style=False, sort_keys=False, allow_unicode=True)
-        )
-        tmp.rename(_RESTYLE_CONFIG)
+        candidate = yaml.dump(data, default_flow_style=False, sort_keys=False, allow_unicode=True)
+        try:
+            yaml.safe_load(candidate)
+        except yaml.YAMLError as exc:
+            logger.warning("Skipping prompt_gen patches — YAML validation failed: %s", exc)
+            return []
+        tmp = STYLES_YML.with_suffix(".tmp")
+        tmp.write_text(candidate)
+        tmp.rename(STYLES_YML)
     return applied
 
 
@@ -384,7 +399,17 @@ def _apply_restyle_fixes(
         else "You are tuning all styles."
     )
 
-    prompt_gen_content = _RESTYLE_CONFIG.read_text()
+    # Show the current restyle.llm_params for the scoped style(s) only
+    restyle_params_lines = []
+    for s in scoped_styles.get("styles", []):
+        sid = s.get("id", "?")
+        lp = (s.get("restyle") or {}).get("llm_params") or {}
+        if lp:
+            restyle_params_lines.append(
+                f"[{sid}] restyle.llm_params:\n"
+                + yaml.dump(lp, default_flow_style=False, sort_keys=False, allow_unicode=True)
+            )
+    prompt_gen_content = "\n".join(restyle_params_lines) if restyle_params_lines else "(none)"
 
     reasoning_prompt = textwrap.dedent(f"""
         You are improving the avatar-studio restyle pipeline (IP-Adapter FaceID based).
@@ -395,10 +420,10 @@ def _apply_restyle_fixes(
         ## Failures (style score < {component_threshold:.0%} or identity score < {component_threshold:.0%})
         {failure_summary or "(none)"}
 
-        ## Current restyle.yml (diffusion generation params — this is what drives generation)
+        ## Current restyle.llm_params (diffusion generation params — this is what drives generation)
         {prompt_gen_content}
 
-        ## Current styles.yml (scoped to target style only — used by classifier)
+        ## Current styles.yml (scoped to target style only — system_prompt_template used by classifier)
         {styles_content}
 
         Diffusion parameter effects:
@@ -435,8 +460,8 @@ def _apply_restyle_fixes(
         {schema_json}
 
         Rules:
-        - prompt_gen_patches: fields to update in restyle.yml; set a field to null to leave it unchanged
-        - style_prompt_patches: find/replace patches to system_prompt strings in styles.yml
+        - prompt_gen_patches: fields to update in restyle.llm_params (in styles.yml); set a field to null to leave it unchanged
+        - style_prompt_patches: find/replace patches to system_prompt_template strings in styles.yml
         - Leave prompt_gen_patches fields null and style_prompt_patches empty if no changes needed.
         - CLIP token limit: each prompt (positive and negative) must be ≤ 70 tokens.
             75 is the absolute hard crash limit; the runtime tokeniser may differ slightly.
@@ -510,7 +535,9 @@ def _apply_restyle_fixes(
         fixes["prompt_gen_patches"] = pg_patches
         fixes["style_prompt_patches"] = allowed_style
 
-    pg_applied = _apply_prompt_gen_patches(fixes.get("prompt_gen_patches") or {})
+    pg_applied = _apply_prompt_gen_patches(
+        fixes.get("prompt_gen_patches") or {}, style_filter or []
+    )
     style_applied, skipped = _apply_style_patches(fixes)
     applied = pg_applied + style_applied
     fixes["_applied"] = applied
@@ -532,6 +559,7 @@ def _apply_restyle_final(
     client: GatewayClient,
     iteration_history: list[dict],
     fixes_path: Path,
+    style_ids: list[str] | None = None,
 ) -> dict:
     """FINAL step: uses client.general() only — consolidates best solution, does not explore."""
     history_lines = []
@@ -593,7 +621,7 @@ def _apply_restyle_final(
         _atomic_write(fixes_path, fixes)
         return fixes
 
-    pg_applied = _apply_prompt_gen_patches(fixes.get("prompt_gen_patches") or {})
+    pg_applied = _apply_prompt_gen_patches(fixes.get("prompt_gen_patches") or {}, style_ids or [])
     style_applied, skipped = _apply_style_patches(fixes)
     applied = pg_applied + style_applied
     fixes["_applied"] = applied
@@ -861,7 +889,9 @@ def run_learn_restyle(
         if iteration == max_iterations:
             logger.info("[iter %d] Max iterations reached — running FINAL", iteration)
             final_path = loop_dir / f"{prefix}_final.json"
-            final = _apply_restyle_final(client, iteration_history, final_path)
+            final = _apply_restyle_final(
+                client, iteration_history, final_path, style_ids=style_filter
+            )
             for fix_desc in final.get("_applied", []):
                 log.fix(iteration=iteration, description=f"[FINAL] {fix_desc}")
             log.done(reason="max_iterations", iteration=iteration)
@@ -883,7 +913,9 @@ def run_learn_restyle(
                 improvement * 100,
             )
             final_path = loop_dir / f"{prefix}_final.json"
-            final = _apply_restyle_final(client, iteration_history, final_path)
+            final = _apply_restyle_final(
+                client, iteration_history, final_path, style_ids=style_filter
+            )
             for fix_desc in final.get("_applied", []):
                 log.fix(iteration=iteration, description=f"[FINAL] {fix_desc}")
             log.plateau(iteration=iteration, score_history=score_history)

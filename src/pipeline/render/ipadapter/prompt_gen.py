@@ -1,7 +1,7 @@
 """IPAdapter Prompt Generator — config-driven generation parameter builder.
 
-Reads assets/prompt_gen/restyle.yml or reexpress.yml on every call so that
-mid-run REASON patches are picked up immediately in the next iteration.
+Reads the restyle or reexpress config from styles.yml / expressions.yml on every call so
+that mid-run REASON patches are picked up immediately in the next iteration.
 """
 
 from __future__ import annotations
@@ -14,9 +14,8 @@ import yaml
 
 from pipeline.render.llm.facs_resolver import resolve_unilateral
 
-_ASSETS_DIR = Path(__file__).parents[4] / "assets" / "prompt_gen"
-_RESTYLE_CONFIG = _ASSETS_DIR / "restyle.yml"
-_REEXPRESS_CONFIG = _ASSETS_DIR / "reexpress.yml"
+_STYLES_YML = Path(__file__).parents[4] / "assets" / "styles" / "styles.yml"
+_EXPRESSIONS_YML = Path(__file__).parents[4] / "assets" / "expressions" / "expressions.yml"
 
 
 @dataclass
@@ -46,48 +45,59 @@ class IPAdapterGenParams:
 
 
 def build_restyle_params(style_entry: dict) -> IPAdapterGenParams:
-    """Load restyle.yml config and fill {style_description} from style_entry.
+    """Read restyle config from styles.yml for the given style and build generation params.
 
     Re-reads the YAML on every call so REASON patches take effect immediately.
     """
-    cfg = yaml.safe_load(_RESTYLE_CONFIG.read_text())
+    style_id = style_entry.get("id")
+    styles_data = yaml.safe_load(_STYLES_YML.read_text())
+    live_entry = next(
+        (s for s in styles_data.get("styles", []) if s.get("id") == style_id),
+        style_entry,
+    )
+    llm_params = (live_entry.get("restyle") or {}).get("llm_params") or {}
     description = (style_entry.get("description") or "portrait").rstrip(".")
-    prompt = cfg["prompt_template"].format(style_description=description)
+    prompt = llm_params["prompt_template"].format(style_description=description)
     return IPAdapterGenParams(
         prompt=prompt,
-        negative_prompt=cfg["negative_prompt"],
-        width=int(cfg["width"]),
-        height=int(cfg["height"]),
-        num_inference_steps=int(cfg["num_inference_steps"]),
-        cfg_scale=float(cfg["cfg_scale"]),
-        ip_adapter_scale=float(cfg["ip_adapter_scale"]),
-        lora=cfg.get("lora") or None,
-        lora_weight=float(cfg.get("lora_weight", 1.0)),
+        negative_prompt=llm_params["negative_prompt"],
+        width=int(llm_params["width"]),
+        height=int(llm_params["height"]),
+        num_inference_steps=int(llm_params["num_inference_steps"]),
+        cfg_scale=float(llm_params["cfg_scale"]),
+        ip_adapter_scale=float(llm_params["ip_adapter_scale"]),
+        lora=llm_params.get("lora") or None,
+        lora_weight=float(llm_params.get("lora_weight", 1.0)),
     )
 
 
 def build_reexpress_params(expr_entry: dict) -> IPAdapterGenParams:
-    """Load reexpress.yml config and fill {expression_name} / {facs_au_codes}.
+    """Read reexpress config from expressions.yml for the given expression and build generation params.
 
     Re-reads the YAML on every call so REASON patches take effect immediately.
     {facs_au_codes}: resolved via resolve_unilateral, intensity labels stripped.
     """
-    cfg = yaml.safe_load(_REEXPRESS_CONFIG.read_text())
     expr_name = expr_entry.get("expression", expr_entry.get("id", "neutral"))
+    exprs_data = yaml.safe_load(_EXPRESSIONS_YML.read_text())
+    live_entry = next(
+        (e for e in exprs_data.get("expressions", []) if e.get("expression") == expr_name),
+        expr_entry,
+    )
+    llm_params = (live_entry.get("reexpress") or {}).get("llm_params") or {}
     facs_raw = resolve_unilateral(expr_entry.get("facs_action_units", ""))
     facs_clean = re.sub(r"\s*\([^)]+\)", "", facs_raw).strip(", ")
-    prompt = cfg["prompt_template"].format(
+    prompt = llm_params["prompt_template"].format(
         expression_name=expr_name,
         facs_au_codes=facs_clean,
     )
     return IPAdapterGenParams(
         prompt=prompt,
-        negative_prompt=cfg["negative_prompt"],
-        width=int(cfg["width"]),
-        height=int(cfg["height"]),
-        num_inference_steps=int(cfg["num_inference_steps"]),
-        cfg_scale=float(cfg["cfg_scale"]),
-        ip_adapter_scale=float(cfg["ip_adapter_scale"]),
-        lora=cfg.get("lora") or None,
-        lora_weight=float(cfg.get("lora_weight", 1.0)),
+        negative_prompt=llm_params["negative_prompt"],
+        width=int(llm_params["width"]),
+        height=int(llm_params["height"]),
+        num_inference_steps=int(llm_params["num_inference_steps"]),
+        cfg_scale=float(llm_params["cfg_scale"]),
+        ip_adapter_scale=float(llm_params["ip_adapter_scale"]),
+        lora=llm_params.get("lora") or None,
+        lora_weight=float(llm_params.get("lora_weight", 1.0)),
     )

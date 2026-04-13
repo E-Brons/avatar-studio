@@ -28,10 +28,13 @@ def _write_styles_yml(path: Path, style_id: str = "photorealistic") -> None:
             {
                 "id": style_id,
                 "name": "Photorealistic",
-                "system_prompt": "photorealistic portrait [BG_COLOR]",
+                "create": {
+                    "llm_params": {"system_prompt_template": "photorealistic portrait [BG_COLOR]"}
+                },
             }
         ]
     }
+
     path.write_text(yaml.dump(data))
 
 

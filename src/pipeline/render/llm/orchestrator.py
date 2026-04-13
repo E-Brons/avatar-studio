@@ -16,6 +16,7 @@ from config.gateway import GatewayClient
 from pipeline.render.expression_resolver import EXPRESSIONS_YML
 from pipeline.render.llm.persona_sanitizer import sanitize_persona
 from pipeline.render.llm.prompt_builder import ReferenceMode, build_prompt
+from pipeline.render.llm.style_directive import get_system_prompt
 from pipeline.render.style_resolver import STYLES_YML
 
 _DEFAULT_IMAGE_SIZE: int = _SETTINGS["default_image_size"]
@@ -94,7 +95,7 @@ def generate_avatar_image(
     with open(style["styles_yml"]) as f:
         styles_data = yaml.safe_load(f)
     style_entry = {s["id"]: s for s in styles_data["styles"]}.get(style_name) or {}
-    style_directive = (style_entry.get("system_prompt") or "").replace(
+    style_directive = get_system_prompt(style_entry).replace(
         "[BG_COLOR]", style.get("bg_color", "#F5F0E8")
     )
 

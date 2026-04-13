@@ -27,6 +27,7 @@ from pipeline.persona.aggregator_llm import select_features
 from pipeline.persona.generator import build_avatar_charachter, pick_demographics
 from pipeline.persona.marshal import marshal_avatar_persona
 from pipeline.render.expression_resolver import EXPRESSIONS_YML
+from pipeline.render.llm.style_directive import get_system_prompt
 from pipeline.render.style_resolver import STYLES_YML
 
 logger = logging.getLogger(__name__)
@@ -122,7 +123,7 @@ def _run_gen_examples(args) -> None:
         requested = set(args.style)
         styles = [s for s in styles if s["id"] in requested]
     else:
-        styles = [s for s in styles if s["id"] != "random" and s.get("system_prompt")]
+        styles = [s for s in styles if s["id"] != "random" and get_system_prompt(s)]
 
     if not styles:
         print("No matching styles found.", file=sys.stderr)
