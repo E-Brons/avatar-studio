@@ -116,6 +116,24 @@ styles:
       Rich tonal range: skin uses 5+ tones (base, light shadow, deep shadow in creases, soft highlight, bright specular); hair uses 4+ tones (base, AO shadow, mid sheen, bright specular strip).
       Soft three-point lighting: warm key from front-above, cool fill from opposite side, subtle rim on hair.
       Render the facial expression exactly as described in the expression section. Do not add or amplify toward smiling, raised brows, or any positive emotion by default.
+    restyle:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: "{style_description}. Portrait of the exact same person as\
+          \ the reference — preserve their face structure, skin tone, age, gender,\
+          \ and hair faithfully."
+        negative_prompt: "flat illustration, 2D, cel shading, wrong face, different\
+          \ person, distorted face, face artifacts, face warp, wrong gender, different\
+          \ gender, bald head, shaved head, wrong skin tone, different ethnicity, different\
+          \ age, androgynous, feminized, masculinized"
+        width: 512
+        height: 512
+        num_inference_steps: 40
+        cfg_scale: 7.0
+        ip_adapter_scale: 0.80
+        lora: null
+        lora_weight: 1.0
     example_images:
       - assets/styles/avatar_style_studio_3d_male.png
       - assets/styles/avatar_style_studio_3d_female.png
@@ -143,6 +161,24 @@ styles:
       Pale or light-toned skin — faint delicate complexion, not heavily saturated. Shiny glossy hair with a strong specular highlight strip along the top; shiny bright catchlights on eyes.
       Render the facial expression exactly as described in the expression section. Faithfully reproduce the brow configuration (raised, furrowed, or oblique as specified) and the iris/pupil position (gaze direction offset) using the fine eye and brow detail this style supports. Do not amplify toward smiling or open mouth by default.
       Clean white or very light background for easy separation.
+    restyle:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: "{style_description}. Portrait of the exact same person as\
+          \ the reference — preserve their face structure, skin tone, age, gender,\
+          \ and hair faithfully."
+        negative_prompt: "3D render, photorealistic, watercolor, oil paint, wrong face,\
+          \ different person, distorted face, face artifacts, face warp, wrong gender,\
+          \ different gender, bald head, shaved head, wrong skin tone, different ethnicity,\
+          \ different age, androgynous, feminized, masculinized"
+        width: 512
+        height: 512
+        num_inference_steps: 40
+        cfg_scale: 7.0
+        ip_adapter_scale: 0.80
+        lora: null
+        lora_weight: 1.0
     example_images:
       - assets/styles/avatar_style_korean_male.png
       - assets/styles/avatar_style_korean_female.png
@@ -166,6 +202,25 @@ styles:
       Anatomically correct facial proportions. Shallow depth of field — sharp focus on eyes, soft bokeh behind subject.
       85mm f/1.8 full-frame DSLR equivalent. Professional corporate headshot quality.
       Neutral medium gray background, sharp contrast with subject.
+    restyle:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: "{style_description}. Portrait of the exact same person as\
+          \ the reference — preserve their face structure, skin tone, age, gender,\
+          \ and hair faithfully."
+        negative_prompt: "painting, illustration, drawing, sketch, watercolor, oil\
+          \ paint, CGI, 3D render, cartoon, anime, wrong face, different person, distorted\
+          \ face, face artifacts, face warp, wrong gender, different gender, bald head,\
+          \ shaved head, wrong skin tone, different ethnicity, different age, androgynous,\
+          \ feminized, masculinized"
+        width: 512
+        height: 512
+        num_inference_steps: 40
+        cfg_scale: 7.0
+        ip_adapter_scale: 0.80
+        lora: null
+        lora_weight: 1.0
     example_images:
       - assets/styles/avatar_style_photorealistic_male.png
       - assets/styles/avatar_style_photorealistic_female.png
@@ -193,6 +248,24 @@ styles:
       Render the facial expression exactly as described in the expression section. The brow shape (raised, furrowed, or oblique), iris/pupil gaze direction, and mouth position must be clearly visible as distinct shapes even in simplified flat form.
       Casual clothing in flat solid colors.
       Warm solid-color background for contrast.
+    restyle:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: "{style_description}. Portrait of the exact same person as\
+          \ the reference — preserve their face structure, skin tone, age, gender,\
+          \ and hair faithfully."
+        negative_prompt: "photorealistic, 3D render, wrong face, different person,\
+          \ distorted face, face artifacts, face warp, wrong gender, different gender,\
+          \ bald head, shaved head, wrong skin tone, different ethnicity, different\
+          \ age, androgynous, feminized, masculinized"
+        width: 512
+        height: 512
+        num_inference_steps: 40
+        cfg_scale: 7.0
+        ip_adapter_scale: 0.80
+        lora: null
+        lora_weight: 1.0
     example_images:
       - assets/styles/avatar_style_lineart_male.png
       - assets/styles/avatar_style_lineart_female.png
@@ -224,6 +297,24 @@ styles:
       Simplified large-scale facial features only — no eyelashes, no skin pores, no fine detail.
       Understated expression — face near rest, emotion soft and subtle.
       Solid-color clothing with minimal texture. Neutral light gray or beige background.
+    restyle:
+      method: llm
+      llm_params:
+        engine: IP-Adapter-FaceID
+        prompt_template: "{style_description}. Portrait of the exact same person as\
+          \ the reference — preserve their face structure, skin tone, age, gender,\
+          \ and hair faithfully."
+        negative_prompt: "photorealistic, sharp skin detail, glossy skin, wrong face,\
+          \ different person, distorted face, face artifacts, face warp, wrong gender,\
+          \ different gender, bald head, shaved head, wrong skin tone, different ethnicity,\
+          \ different age, androgynous, feminized, masculinized"
+        width: 512
+        height: 512
+        num_inference_steps: 40
+        cfg_scale: 7.0
+        ip_adapter_scale: 0.80
+        lora: null
+        lora_weight: 1.0
     example_images:
       - assets/styles/avatar_style_clay_male.png
       - assets/styles/avatar_style_clay_female.png

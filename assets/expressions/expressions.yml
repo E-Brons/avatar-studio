@@ -15,6 +15,21 @@ expressions:
     genuine happiness from a polite smile.
 
     '
+  reexpress:
+    method: llm
+    llm_params:
+      engine: IP-Adapter-FaceID
+      prompt_template: "Same person, preserve face structure, skin tone, and all identifying\
+        \ features precisely. {expression_description}. FACS: {facs_au_codes}."
+      negative_prompt: "deformed, blurry, low quality, distorted face, face artifacts,\
+        \ different person, frowning, sad, angry, neutral, flat expression"
+      width: 512
+      height: 512
+      num_inference_steps: 30
+      cfg_scale: 6.5
+      ip_adapter_scale: 0.78
+      lora: null
+      lora_weight: 1.0
 - expression: Surprise
   synonyms:
   - Amazement
@@ -29,6 +44,21 @@ expressions:
     anywhere in the face — pure open, unguarded reaction.
 
     '
+  reexpress:
+    method: llm
+    llm_params:
+      engine: IP-Adapter-FaceID
+      prompt_template: "Same person, preserve face structure, skin tone, and all identifying\
+        \ features precisely. {expression_description}. FACS: {facs_au_codes}."
+      negative_prompt: "deformed, blurry, low quality, distorted face, face artifacts,\
+        \ different person, smiling, angry, neutral, closed mouth, low brows"
+      width: 512
+      height: 512
+      num_inference_steps: 30
+      cfg_scale: 6.5
+      ip_adapter_scale: 0.78
+      lora: null
+      lora_weight: 1.0
 - expression: Anger
   synonyms:
   - Rage
@@ -46,6 +76,21 @@ expressions:
     and thinned. Controlled, focused aggression directed at the viewer.
 
     '
+  reexpress:
+    method: llm
+    llm_params:
+      engine: IP-Adapter-FaceID
+      prompt_template: "Same person, preserve face structure, skin tone, and all identifying\
+        \ features precisely. {expression_description}. FACS: {facs_au_codes}."
+      negative_prompt: "deformed, blurry, low quality, distorted face, face artifacts,\
+        \ different person, smiling, happy, raised brows, open mouth, relaxed"
+      width: 512
+      height: 512
+      num_inference_steps: 30
+      cfg_scale: 6.5
+      ip_adapter_scale: 0.78
+      lora: null
+      lora_weight: 1.0
 - expression: Sadness
   synonyms:
   - Sorrow
@@ -62,6 +107,21 @@ expressions:
     no tension, just weight.
 
     '
+  reexpress:
+    method: llm
+    llm_params:
+      engine: IP-Adapter-FaceID
+      prompt_template: "Same person, preserve face structure, skin tone, and all identifying\
+        \ features precisely. {expression_description}. FACS: {facs_au_codes}."
+      negative_prompt: "deformed, blurry, low quality, distorted face, face artifacts,\
+        \ different person, smiling, happy, raised cheeks, wide eyes"
+      width: 512
+      height: 512
+      num_inference_steps: 30
+      cfg_scale: 6.5
+      ip_adapter_scale: 0.78
+      lora: null
+      lora_weight: 1.0
 - expression: Contempt
   synonyms:
   - Scorn
@@ -80,3 +140,18 @@ expressions:
     the face remains completely flat and neutral. The asymmetry is the entire signal.
 
     '
+  reexpress:
+    method: llm
+    llm_params:
+      engine: IP-Adapter-FaceID
+      prompt_template: "Same person, preserve face structure, skin tone, and all identifying\
+        \ features precisely. {expression_description}. FACS: {facs_au_codes}."
+      negative_prompt: "deformed, blurry, low quality, distorted face, face artifacts,\
+        \ different person, bilateral expression, symmetrical face, big smile"
+      width: 512
+      height: 512
+      num_inference_steps: 30
+      cfg_scale: 6.5
+      ip_adapter_scale: 0.78
+      lora: null
+      lora_weight: 1.0
