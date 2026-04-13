@@ -24,6 +24,7 @@ import textwrap
 from pathlib import Path
 
 import yaml
+from ruamel.yaml import YAML
 
 logger = logging.getLogger(__name__)
 
@@ -180,8 +181,10 @@ def _apply_patches(fixes: dict) -> tuple[list[str], list[str]]:
     _atomic_write_json(PRESENTATION_PATH, presentation)
 
     # ── expression_synonym_additions ─────────────────────────────────────
+    yaml_rt = YAML()
+    yaml_rt.preserve_quotes = True
     with open(EXPRESSIONS_PATH) as f:
-        expressions_data = yaml.safe_load(f)
+        expressions_data = yaml_rt.load(f)
     expr_map = {e["expression"]: e for e in expressions_data.get("expressions", [])}
     for expr_name, new_synonyms in fixes.get("expression_synonym_additions", {}).items():
         if not new_synonyms:
@@ -197,9 +200,7 @@ def _apply_patches(fixes: dict) -> tuple[list[str], list[str]]:
             applied.append(f"expression.{expr_name}.synonyms: +{len(added_syns)}")
     tmp = EXPRESSIONS_PATH.with_suffix(".tmp")
     with open(tmp, "w") as f:
-        yaml.dump(
-            expressions_data, f, allow_unicode=True, default_flow_style=False, sort_keys=False
-        )
+        yaml_rt.dump(expressions_data, f)
     tmp.rename(EXPRESSIONS_PATH)
 
     # ── prompt_patches ───────────────────────────────────────────────────

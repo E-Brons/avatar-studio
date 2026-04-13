@@ -42,6 +42,7 @@ from pathlib import Path
 
 import yaml
 from PIL import Image
+from ruamel.yaml import YAML
 from tqdm import tqdm
 
 # ── project root on sys.path ──────────────────────────────────────────────────
@@ -227,8 +228,10 @@ def _apply_prompt_gen_patches(patches: dict, style_ids: list[str]) -> list[str]:
     """Apply prompt_gen_patches to restyle.llm_params for each target style in styles.yml."""
     if not patches or not style_ids:
         return []
+    yaml_rt = YAML()
+    yaml_rt.preserve_quotes = True
     with open(STYLES_YML) as f:
-        data = yaml.safe_load(f)
+        data = yaml_rt.load(f)
     style_map = {s.get("id"): s for s in data.get("styles", [])}
     applied: list[str] = []
     for sid in style_ids:
@@ -260,14 +263,15 @@ def _apply_prompt_gen_patches(patches: dict, style_ids: list[str]) -> list[str]:
             llm_params[key] = value
             applied.append(f"styles.yml[{sid}].restyle.llm_params.{key}: {old!r} → {value!r}")
     if applied:
-        candidate = yaml.dump(data, default_flow_style=False, sort_keys=False, allow_unicode=True)
+        tmp = STYLES_YML.with_suffix(".tmp")
+        with open(tmp, "w") as f:
+            yaml_rt.dump(data, f)
         try:
-            yaml.safe_load(candidate)
+            yaml.safe_load(tmp.read_text())
         except yaml.YAMLError as exc:
+            tmp.unlink(missing_ok=True)
             logger.warning("Skipping prompt_gen patches — YAML validation failed: %s", exc)
             return []
-        tmp = STYLES_YML.with_suffix(".tmp")
-        tmp.write_text(candidate)
         tmp.rename(STYLES_YML)
     return applied
 

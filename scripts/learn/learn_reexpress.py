@@ -42,6 +42,7 @@ from pathlib import Path
 
 import yaml
 from PIL import Image
+from ruamel.yaml import YAML
 from tqdm import tqdm
 
 # ── project root on sys.path ──────────────────────────────────────────────────
@@ -266,8 +267,10 @@ def _apply_expression_patches(fixes: dict) -> tuple[list[str], list[str]]:
     applied: list[str] = []
     skipped: list[str] = []
 
+    yaml_rt = YAML()
+    yaml_rt.preserve_quotes = True
     with open(EXPRESSIONS_PATH) as f:
-        expressions_data = yaml.safe_load(f)
+        expressions_data = yaml_rt.load(f)
     expr_map = {e["expression"]: e for e in expressions_data.get("expressions", [])}
 
     for expr_name, new_synonyms in fixes.get("expression_synonym_additions", {}).items():
@@ -298,9 +301,7 @@ def _apply_expression_patches(fixes: dict) -> tuple[list[str], list[str]]:
 
     tmp = EXPRESSIONS_PATH.with_suffix(".tmp")
     with open(tmp, "w") as f:
-        yaml.dump(
-            expressions_data, f, allow_unicode=True, default_flow_style=False, sort_keys=False
-        )
+        yaml_rt.dump(expressions_data, f)
     tmp.rename(EXPRESSIONS_PATH)
 
     return applied, skipped
@@ -334,8 +335,10 @@ def _apply_prompt_gen_patches(patches: dict) -> list[str]:
     """Apply prompt_gen_patches to reexpress.llm_params for ALL expressions in expressions.yml."""
     if not patches:
         return []
+    yaml_rt = YAML()
+    yaml_rt.preserve_quotes = True
     with open(EXPRESSIONS_PATH) as f:
-        data = yaml.safe_load(f)
+        data = yaml_rt.load(f)
     applied: list[str] = []
     for expr in data.get("expressions", []):
         expr_name = expr.get("expression", "?")
@@ -364,14 +367,15 @@ def _apply_prompt_gen_patches(patches: dict) -> list[str]:
                 f"expressions.yml[{expr_name}].reexpress.llm_params.{key}: {old!r} → {value!r}"
             )
     if applied:
-        candidate = yaml.dump(data, default_flow_style=False, sort_keys=False, allow_unicode=True)
+        tmp = EXPRESSIONS_PATH.with_suffix(".tmp")
+        with open(tmp, "w") as f:
+            yaml_rt.dump(data, f)
         try:
-            yaml.safe_load(candidate)
+            yaml.safe_load(tmp.read_text())
         except yaml.YAMLError as exc:
+            tmp.unlink(missing_ok=True)
             logger.warning("Skipping prompt_gen patches — YAML validation failed: %s", exc)
             return []
-        tmp = EXPRESSIONS_PATH.with_suffix(".tmp")
-        tmp.write_text(candidate)
         tmp.rename(EXPRESSIONS_PATH)
     return applied
 
