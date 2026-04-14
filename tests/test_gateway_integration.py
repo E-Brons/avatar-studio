@@ -170,7 +170,7 @@ class TestGatewaySchema:
 
 _FACE_IMAGE_PATH = (
     # Use one of the checked-in example portraits; any of these will do.
-    "assets/examples/zendaya/images/best.jpg"
+    "assets/examples/adele/images/best.jpg"
 )
 
 _PROJECT_ROOT = __file__  # tests/test_gateway_integration.py
