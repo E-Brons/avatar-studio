@@ -95,6 +95,19 @@ attributes:
         label: Select
     default_mode: random
 
+  - id: ethnicity
+    label: Ethnicity
+    category: demographics
+    type: choice
+    source: "ethnicities.yml:ethnicities"
+    depends_on: nationality
+    selection_modes:
+      - id: random
+        label: Random
+      - id: select
+        label: Select
+    default_mode: random
+
   - id: religion
     label: Religion
     category: demographics
@@ -125,7 +138,7 @@ attributes:
     label: Skin Tone
     category: phenotype
     type: color
-    source: "phenotype_settings.json:skin_tones"
+    source: "skin_tones.yml:skin_tones"
     selection_modes:
       - id: random
         label: Random
@@ -134,6 +147,29 @@ attributes:
       - id: select
         label: Select
     default_mode: llm
+
+  - id: fitzpatrick_type
+    label: Fitzpatrick Type
+    category: phenotype
+    type: choice
+    options:
+      - id: I
+        label: Type I
+      - id: II
+        label: Type II
+      - id: III
+        label: Type III
+      - id: IV
+        label: Type IV
+      - id: V
+        label: Type V
+      - id: VI
+        label: Type VI
+    depends_on: skin_tone
+    selection_modes:
+      - id: random
+        label: Random
+    default_mode: random
 
   - id: hair_color
     label: Hair Color

@@ -18,6 +18,8 @@ _PHENOTYPE_SETTINGS = _PROJECT_ROOT / "assets" / "persona" / "phenotype_settings
 _PRESENTATION_SETTINGS = _PROJECT_ROOT / "assets" / "persona" / "presentation_settings.json"
 _DEMOGRAPHICS_YML = _PROJECT_ROOT / "assets" / "persona" / "demographics.yml"
 _STYLES_YML = _PROJECT_ROOT / "assets" / "styles" / "styles.yml"
+_SKIN_TONES_YML = _PROJECT_ROOT / "assets" / "persona" / "skin_tones.yml"
+_ETHNICITIES_YML = _PROJECT_ROOT / "assets" / "persona" / "ethnicities.yml"
 
 
 # ─── Data models (plain dicts for JSON serialisation) ────────────────────────
@@ -68,6 +70,12 @@ class ConfigLoader:
         with open(_STYLES_YML) as f:
             self._styles_data: dict = yaml.safe_load(f)
 
+        with open(_SKIN_TONES_YML) as f:
+            self._skin_tones_data: dict = yaml.safe_load(f)
+
+        with open(_ETHNICITIES_YML) as f:
+            self._ethnicities_data: dict = yaml.safe_load(f)
+
     # ── Public ────────────────────────────────────────────────────────────────
 
     def load(self) -> dict:
@@ -93,6 +101,12 @@ class ConfigLoader:
 
         if filename == "styles.yml":
             return self._load_styles_options()
+
+        if filename == "skin_tones.yml":
+            return self._load_skin_tones_options()
+
+        if filename == "ethnicities.yml":
+            return self._load_ethnicities_options(key_path)
 
         # Load from JSON settings file
         if filename == "phenotype_settings.json":
@@ -190,4 +204,31 @@ class ConfigLoader:
                 "example_images": style.get("example_images", []),
             }
             options.append(_option(style["id"], style["name"], extra))
+        return options
+
+    def _load_skin_tones_options(self) -> list[dict]:
+        """Return skin tone options from skin_tones.yml.
+
+        Option ID is the composite 'tone-name/undertone-name' string (unique).
+        Extra carries the hex colour for rendering.
+        """
+        options = []
+        for entry in self._skin_tones_data.get("skin_tones", []):
+            tone_id = f"{entry['tone-name']}/{entry['undertone-name']}"
+            extra = {"hex": entry["tone"], "fitzpatrick": entry["fitzpatrick-scale"]}
+            options.append(_option(tone_id, tone_id, extra))
+        return options
+
+    def _load_ethnicities_options(self, key_path: str) -> list[dict]:
+        """Return ethnicity options from ethnicities.yml.
+
+        key_path is expected to be 'ethnicities' — returns all ethnicity IDs
+        with their label and race as extra.
+        """
+        ethnicities: dict = self._ethnicities_data.get(key_path, {})
+        options = []
+        for eth_id, eth_data in ethnicities.items():
+            label = eth_data.get("label", eth_id)
+            extra = {"race": eth_data.get("race", "")}
+            options.append(_option(eth_id, label, extra))
         return options

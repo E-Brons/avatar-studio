@@ -45,10 +45,30 @@ attributes:
     default_selector: from_inherited
     default_value: first_names
 
+  nationality:
+    selector_types: [random_from_list, fallthrough]
+    default_selector: random_from_list
+    default_value: nationalities
+
+  ethnicity:
+    selector_types: [random_from_probability, fallthrough]
+    default_selector: random_from_probability
+    default_value: null
+
   SKIN_TONE:
     selector_types: [random_from_list, fallthrough]
     default_selector: random_from_list
     default_value: skin_tones
+
+  SKIN_TONE_ID:
+    selector_types: [fallthrough]
+    default_selector: fallthrough
+    default_value: null
+
+  FITZPATRICK_TYPE:
+    selector_types: [fallthrough]
+    default_selector: fallthrough
+    default_value: null
 
   HAIR_COLOR:
     selector_types: [random_from_list, fallthrough]

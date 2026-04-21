@@ -75,7 +75,7 @@ class TestConfigLoaderLoad:
         self.attrs = {a["id"]: a for a in self.config["attributes"]}
 
     def test_returns_20_attributes(self):
-        assert len(self.config["attributes"]) == 20
+        assert len(self.config["attributes"]) == 22
 
     def test_all_attrs_have_required_keys(self):
         required = {"id", "label", "category", "type", "selection_modes", "default_mode", "options"}
@@ -124,11 +124,12 @@ class TestConfigLoaderLoad:
         assert self.attrs["skin_tone"]["type"] == "color"
 
     def test_skin_tone_has_28_options(self):
-        assert len(self.attrs["skin_tone"]["options"]) == 28
+        assert len(self.attrs["skin_tone"]["options"]) == 120
 
     def test_skin_tone_option_ids_are_hex(self):
         for opt in self.attrs["skin_tone"]["options"]:
-            assert opt["id"].startswith("#"), f"Not a hex: {opt['id']}"
+            assert "/" in opt["id"], f"Not a composite ID: {opt['id']}"
+            assert opt["extra"]["hex"].startswith("#"), f"Missing hex extra: {opt['id']}"
 
     # ── hair_color ───────────────────────────────────────────────────────────
 
