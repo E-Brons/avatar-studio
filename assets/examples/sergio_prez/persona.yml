@@ -1,0 +1,44 @@
+personal:
+  name: Sergio Pérez
+  gender: male
+  pronouns: he/him
+  age: 34
+  nationality: Mexican
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#B2825A'
+  skin_texture: smooth warm olive with light stubble
+  hair_style: short dark curly hair visible at sides and nape below cap brim
+  hair_note: Hair mostly hidden under cap; short dark curly locks visible at sides
+    and rear edges
+  face_shape: rounded oval with full cheeks, moderate jaw definition, and compact
+    proportions
+  eye_shape: medium-sized with slightly hooded upper lids, gently downward outer corners,
+    and a calm steady gaze
+  brows_style: medium-thickness straight brows with a subtle arch and dense natural
+    dark hair
+  brows_color: '#231408'
+  nose_shape: medium-width bridge, softly rounded tip, and moderately sized nostrils
+  chin_shape: gently rounded chin with light stubble and a softly defined jaw angle
+  cheeks_shape: full rounded cheeks with low-set cheekbones and a moderately wide
+    face
+  hair_color:
+    hex_base: '#1A0F08'
+    hex_shadow: '#0D0805'
+  eye_color:
+    hex_iris: '#3B2010'
+    hex_pupil: '#0A0705'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.91
+  - file: images/003.jpg
+    quality_score: 0.91

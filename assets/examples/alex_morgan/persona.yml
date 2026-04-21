@@ -10,20 +10,25 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#FFD700'
-  skin_texture: smooth and youthful
-  hair_style: ponytail, dark brown
-  hair_note: dark brown, neatly tied back
-  face_shape: oval, symmetrical, youthful
-  eye_shape: almond, expressive, brown
-  brows_style: thick, well-groomed, dark brown
-  brows_color: '#333333'
-  nose_shape: straight, well-defined
-  chin_shape: rounded, firm, youthful
-  cheeks_shape: full, smooth, youthful
+  skin_tone: '#C07A52'
+  skin_texture: warm sun-kissed with a healthy luminous sheen
+  hair_style: long dark hair sleekly pulled back into a low ponytail with smooth crown
+  hair_note: Hair is tightly slicked back from the face with loose ends falling over
+    the right shoulder; no visible part or texture at the crown
+  face_shape: softly oval with full cheeks, moderate cheekbone prominence, and a gently
+    rounded jaw
+  eye_shape: almond-shaped with a subtle upward tilt, moderately deep-set beneath
+    defined brows
+  brows_style: thick, well-defined dark brows with a soft natural arch and dense fill
+  brows_color: '#2A1208'
+  nose_shape: medium-width bridge tapering to a softly rounded tip with moderately
+    flared nostrils
+  chin_shape: softly rounded chin with a smooth and gently defined jawline
+  cheeks_shape: full rounded cheeks with moderate bone prominence and a wide warm
+    jaw
   hair_color:
-    hex_base: '#333333'
-    hex_shadow: '#4B0000'
+    hex_base: '#241208'
+    hex_shadow: '#130806'
   eye_color:
-    hex_iris: '#8B4513'
-    hex_pupil: '#000000'
+    hex_iris: '#6E8D8B'
+    hex_pupil: '#1C1010'

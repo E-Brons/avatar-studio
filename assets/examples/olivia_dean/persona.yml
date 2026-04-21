@@ -1,0 +1,45 @@
+personal:
+  name: Olivia Dean
+  gender: female
+  pronouns: she/her
+  age: 27
+  nationality: British
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C2895F'
+  skin_texture: smooth warm glow with even tone and subtle luminosity
+  hair_style: long voluminous natural curls cascading past shoulders with wild, free-flowing
+    texture and significant root lift
+  hair_note: Very voluminous, densely curly natural hair with high-lift volume at
+    the crown and loose curl pattern throughout
+  face_shape: oval with softly defined cheekbones and a gently tapered chin
+  eye_shape: almond-shaped with a slight upward tilt, partially narrowed from wide
+    joyful smile expression
+  brows_style: medium-thickness arched brows with a natural ungroomed softness and
+    defined arch
+  brows_color: '#2A1508'
+  nose_shape: medium-width bridge, softly rounded tip, gently flared nostrils with
+    natural proportion
+  chin_shape: softly pointed chin with a smooth and lightly defined jawline
+  cheeks_shape: full rounded cheeks with prominent lift and visible dimpling when
+    smiling broadly
+  hair_color:
+    hex_base: '#1E1008'
+    hex_shadow: '#0E0704'
+  eye_color:
+    hex_iris: '#3D2210'
+    hex_pupil: '#150A02'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9729
+  - file: images/002.jpg
+    quality_score: 0.91
+  - file: images/003.jpg
+    quality_score: 0.91

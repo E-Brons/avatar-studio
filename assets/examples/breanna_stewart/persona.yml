@@ -1,0 +1,47 @@
+personal:
+  name: Breanna Stewart
+  gender: female
+  pronouns: she/her
+  age: 30
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#DDBBA8'
+  skin_texture: smooth and even with subtle rosy warmth
+  hair_style: long straight dark hair falling past shoulders with a loose centre part
+    and minimal volume
+  hair_note: Very long, pin-straight, and uniformly dark from root to tip with no
+    visible layering
+  face_shape: elongated oval with a broad forehead, gently tapered jaw, and moderate
+    length
+  eye_shape: almond-shaped with a slight downward outer tilt, medium-set with visible
+    lid crease and dark mascara-framed lashes
+  brows_style: dark arched brows with a defined peak, medium thickness and neatly
+    groomed sparse tail
+  brows_color: '#2A1A14'
+  nose_shape: straight medium-width bridge, softly rounded tip with lightly defined
+    nostrils
+  chin_shape: slightly pointed chin with a gently defined angular jawline and minimal
+    softness
+  cheeks_shape: moderately prominent cheekbones with fleshy cheek apples lifted by
+    a wide open smile
+  hair_color:
+    hex_base: '#1C1310'
+    hex_shadow: '#0E0B08'
+  eye_color:
+    hex_iris: '#7A96A6'
+    hex_pupil: '#1A1212'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9658
+  - file: images/002.jpg
+    quality_score: 0.91
+  - file: images/003.jpg
+    quality_score: 0.8353

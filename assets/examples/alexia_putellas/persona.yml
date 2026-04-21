@@ -1,0 +1,44 @@
+personal:
+  name: Alexia Putellas
+  gender: female
+  pronouns: she/her
+  age: 31
+  nationality: Spanish
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C49070'
+  skin_texture: smooth and luminous with fine natural texture
+  hair_style: long straight hair falling past shoulders, worn down with a slight centre
+    parting and flyaways
+  hair_note: Long straight hair reaching well past shoulders, fine and sleek with
+    slight separation around the face
+  face_shape: softly oval with defined cheekbones and a gently tapered chin
+  eye_shape: almond-shaped with a subtle upward tilt, medium-set and framed by long
+    fine lashes
+  brows_style: medium-thickness natural brows with a soft subtle arch and tidy grooming
+  brows_color: '#5C4428'
+  nose_shape: medium-width straight bridge, refined rounded tip, naturally proportioned
+    nostrils
+  chin_shape: softly pointed chin with a clean and gently defined jawline
+  cheeks_shape: moderately high cheekbones with a lean sculpted midface and narrow
+    jaw
+  hair_color:
+    hex_base: '#8A7252'
+    hex_shadow: '#5C4830'
+  eye_color:
+    hex_iris: '#6B7535'
+    hex_pupil: '#1A1208'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.9953
+  - file: images/003.jpg
+    quality_score: 0.9709

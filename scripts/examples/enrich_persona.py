@@ -41,7 +41,9 @@ from config.gateway import GatewayClient  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _appearance import extract_appearance, flat_to_persona_appearance  # noqa: E402
+from _cv_scoring import compute_quality_score  # noqa: E402
 from _example_utils import find_best_image  # noqa: E402
+from _portrait_crop import crop_portrait_file  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -345,6 +347,7 @@ def run_enrich(
     dry_run: bool = False,
     overwrite: bool = False,
     skip_personal: bool = False,
+    crop_portraits: bool = True,
     workers: int = 3,
     examples_dir: Path | None = None,
 ) -> dict:
@@ -362,6 +365,51 @@ def run_enrich(
 
     logger.info("Found %d persona files under %s", len(persona_paths), examples_dir)
 
+    # ── Portrait crop pass ────────────────────────────────────────────────────
+    if crop_portraits:
+        crop_counts: dict[str, int] = {
+            "cropped_face": 0,
+            "cropped_fallback": 0,
+            "skipped": 0,
+            "error": 0,
+        }
+        example_dirs = sorted({p.parent for p in persona_paths})
+        with tqdm(example_dirs, unit="image", desc="Cropping portraits") as pbar:
+            for folder in pbar:
+                best = find_best_image(folder)
+                if best is None:
+                    continue
+                # Always source from 001.jpg (original download) when available so that
+                # re-running enrich after a prior crop always starts from full resolution.
+                original = folder / "images" / "001.jpg"
+                source = original if original.exists() and original != best else None
+                dest = folder / "images" / "best.jpg"
+                status = crop_portrait_file(
+                    dest, source=source, dry_run=dry_run, overwrite=overwrite
+                )
+                crop_counts[status] = crop_counts.get(status, 0) + 1
+
+                # Re-score the cropped best.jpg and store in metadata.json.
+                # Scoring on the crop is more reliable: the face is larger and
+                # properly framed, so quality/blur/resolution scores reflect the
+                # image actually used by the pipeline.
+                if status.startswith("cropped") and not dry_run and dest.exists():
+                    meta_path = folder / "images" / "metadata.json"
+                    if meta_path.exists():
+                        try:
+                            meta = json.loads(meta_path.read_text())
+                            q = compute_quality_score(dest.read_bytes())
+                            meta["best_score"] = round(q["composite_score"], 4)
+                            meta_path.write_text(json.dumps(meta, indent=2))
+                        except Exception as exc:
+                            logger.debug("Could not re-score %s: %s", dest, exc)
+        logger.info(
+            "Portraits: cropped_face=%d  cropped_fallback=%d  skipped=%d  errors=%d",
+            crop_counts["cropped_face"],
+            crop_counts["cropped_fallback"],
+            crop_counts["skipped"],
+            crop_counts.get("error", 0),
+        )
     PersonaWork = dict  # keys: path, persona, personal, appearance, name, futs
 
     work: list[PersonaWork] = []
@@ -505,12 +553,27 @@ def main() -> None:
         action="store_true",
         help="Skip zodiac/religion enrichment (appearance only)",
     )
+    crop_group = parser.add_mutually_exclusive_group()
+    crop_group.add_argument(
+        "--crop-portraits",
+        dest="crop_portraits",
+        action="store_true",
+        default=True,
+        help="Crop best.jpg to a square portrait (waist → top of head) before enriching (default: on)",
+    )
+    crop_group.add_argument(
+        "--no-crop-portraits",
+        dest="crop_portraits",
+        action="store_false",
+        help="Skip portrait cropping",
+    )
     args = parser.parse_args()
     run_enrich(
         gateway_url=args.gateway_url,
         dry_run=args.dry_run,
         overwrite=args.overwrite,
         skip_personal=args.skip_personal,
+        crop_portraits=args.crop_portraits,
         workers=args.workers,
     )
 

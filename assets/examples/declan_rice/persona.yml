@@ -1,0 +1,42 @@
+personal:
+  name: Declan Rice
+  gender: male
+  pronouns: he/him
+  age: 26
+  nationality: British
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956A'
+  skin_texture: slightly textured with faint stubble shadow
+  hair_style: short back and sides with fuller textured top swept slightly back
+  hair_note: Closely cropped sides fading into fuller, textured top with natural wave
+  face_shape: broad rectangular face with strong wide jaw and flat forehead
+  eye_shape: moderately wide-set, round-almond shape with light pale iris and visible
+    upper lid crease
+  brows_style: medium-thickness straight brows with subtle arch, naturally groomed
+    and slightly sparse
+  brows_color: '#2E1E12'
+  nose_shape: medium-width straight bridge, rounded tip, moderately flared natural
+    nostrils
+  chin_shape: broad squared chin with prominent jawline and short stubble coverage
+  cheeks_shape: flat wide cheekbones with minimal hollowing and full lower cheeks
+  hair_color:
+    hex_base: '#2C2218'
+    hex_shadow: '#1A1510'
+  eye_color:
+    hex_iris: '#7CA8A0'
+    hex_pupil: '#1A1210'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.96
+  - file: images/003.jpg
+    quality_score: 0.91

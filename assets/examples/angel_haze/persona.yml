@@ -1,0 +1,45 @@
+personal:
+  name: Angel Haze
+  gender: non-binary
+  pronouns: they/them
+  age: 34
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#7A4828'
+  skin_texture: smooth luminous skin with glossy highlight sheen on cheekbones and
+    forehead
+  hair_style: long straight jet-black hair swept loosely to one side with soft ends,
+    mostly loose under backward cap
+  hair_note: Very long straight black hair, largely hidden under backward cap but
+    cascading freely past shoulders on one side
+  face_shape: elongated oval with angular high cheekbones and a defined tapering jawline
+  eye_shape: medium almond-shaped eyes with a slight downward pull at outer corners,
+    framed by full mascara-coated lashes
+  brows_style: thin arched brows with clean defined edges and a subtle natural peak
+  brows_color: '#1A0E08'
+  nose_shape: medium-width bridge with a slightly broad base, gently flared nostrils
+    and rounded tip
+  chin_shape: slightly pointed chin with a lean angular jawline and clean definition
+  cheeks_shape: prominent sculpted cheekbones with visible contoured hollows and a
+    narrow angular jaw
+  hair_color:
+    hex_base: '#120C08'
+    hex_shadow: '#080508'
+  eye_color:
+    hex_iris: '#2E1A0A'
+    hex_pupil: '#0A0606'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.96
+  - file: images/002.jpg
+    quality_score: 0.8915
+  - file: images/003.jpg
+    quality_score: 0.8644

@@ -1,0 +1,45 @@
+personal:
+  name: Vivianne Miedema
+  gender: female
+  pronouns: she/her
+  age: 28
+  nationality: Dutch
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D9AA8E'
+  skin_texture: smooth and youthful with rosy undertones
+  hair_style: medium-length hair pulled back into a loose bun with wispy strands framing
+    the face
+  hair_note: Hair fully pulled back in an updo; loose flyaway strands visible around
+    forehead and temples
+  face_shape: broadly oval with a wide forehead, defined cheekbones, and a moderately
+    squared jaw
+  eye_shape: wide-set, moderately rounded with a subtle almond tilt and open, alert
+    expression
+  brows_style: thick, full, and naturally straight with a subtle arch and dense ungroomed
+    hair
+  brows_color: '#7A5C3A'
+  nose_shape: medium-width bridge, softly rounded tip, and moderately wide nostrils
+  chin_shape: gently rounded chin with a moderately defined and slightly squared jawline
+  cheeks_shape: full, rounded cheeks with moderate cheekbone prominence and a wide
+    mid-face
+  hair_color:
+    hex_base: '#C2956A'
+    hex_shadow: '#8B6540'
+  eye_color:
+    hex_iris: '#7A9EAD'
+    hex_pupil: '#1C1C1C'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9504
+  - file: images/002.jpg
+    quality_score: 0.91
+  - file: images/003.jpg
+    quality_score: 0.8866

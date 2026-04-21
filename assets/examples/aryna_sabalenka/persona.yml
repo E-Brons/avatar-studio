@@ -1,0 +1,47 @@
+personal:
+  name: Aryna Sabalenka
+  gender: female
+  pronouns: she/her
+  age: 27
+  nationality: Belarusian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4926A'
+  skin_texture: warm sun-kissed with light freckles and natural glow
+  hair_style: medium-length hair pulled into a loose, slightly messy top bun with
+    flyaway tendrils framing the face
+  hair_note: Hair worn up in casual athletic bun; darker roots contrast with golden
+    blonde lengths; loose curling strands at nape and temples
+  face_shape: broad and rounded with wide cheekbones, full cheeks, and a gently tapered
+    soft jawline
+  eye_shape: medium-sized with a soft hooded lid, slight downward outer tilt, set
+    moderately wide apart
+  brows_style: medium-thick natural brows with a gentle arch, lightly groomed and
+    slightly tapered at the tail
+  brows_color: '#7A5428'
+  nose_shape: medium-width bridge, slightly rounded tip with moderately broad and
+    soft nostrils
+  chin_shape: softly rounded chin with a broad, gently defined jaw and full lower
+    face
+  cheeks_shape: very full and rounded cheeks with minimal hollow, wide through the
+    mid-face creating an apple-cheeked appearance
+  hair_color:
+    hex_base: '#C8A04A'
+    hex_shadow: '#5C3A18'
+  eye_color:
+    hex_iris: '#7A8468'
+    hex_pupil: '#1A1208'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9724
+  - file: images/002.jpg
+    quality_score: 0.9711
+  - file: images/003.jpg
+    quality_score: 0.91

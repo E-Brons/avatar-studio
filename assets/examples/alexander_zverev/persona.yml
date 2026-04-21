@@ -10,25 +10,26 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#F5F5F5'
+  skin_tone: '#BF8A48'
   hair_color:
-    hex_base: '#D3D3D3'
-    hex_shadow: '#A9A9A9'
+    hex_base: '#2E1A08'
+    hex_shadow: '#180D04'
   eye_color:
-    hex_iris: '#000000'
-    hex_pupil: '#000000'
-  brows_color: '#000000'
-  hair_style: partially tied back
-  skin_texture: smooth and slightly shiny
-  hair_note: wet and slightly disheveled
-  face_shape: broad angular face with strong jaw and wide forehead tapering slightly
-    at chin
-  eye_shape: moderately deep-set, slightly hooded with a calm horizontal orientation
-    and light-colored iris
-  brows_style: medium thickness, slightly arched, naturally groomed with sparse fine
-    hairs
-  nose_shape: straight medium bridge, slightly broad rounded tip with naturally wide
-    nostrils
-  chin_shape: square and prominent chin with a strong defined angular jawline
-  cheeks_shape: moderately full cheeks with subtle bone structure and a wide facial
-    base
+    hex_iris: '#3A4E38'
+    hex_pupil: '#14100A'
+  brows_color: '#251508'
+  hair_style: medium-length dark wavy hair tousled and disheveled above headband
+  skin_texture: warm sun-tanned olive with visible sweat sheen
+  hair_note: Hair pulled back and partially restrained by headband; loose wild strands
+    swept above and around band, medium length
+  face_shape: strong angular face with broad forehead, defined square jaw and prominent
+    bone structure
+  eye_shape: deep-set eyes with heavy upper lids, slightly narrowed with focused intense
+    gaze
+  brows_style: thick dense brows with natural arch, slightly unkempt and strongly
+    defined
+  nose_shape: broad medium bridge with rounded bulbous tip and slightly wide nostrils
+  chin_shape: strong square chin with light salt-and-pepper stubble and firm defined
+    jawline
+  cheeks_shape: broad high cheekbones with slightly hollow cheeks and strong wide
+    jaw structure

@@ -1,0 +1,43 @@
+personal:
+  name: Nikola Jokić
+  gender: male
+  pronouns: he/him
+  age: 29
+  nationality: Serbian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8A882'
+  skin_texture: light with visible pores and minor blemishes
+  hair_style: extremely short uniform buzz cut with near-shaved close-cropped sides
+    and top
+  hair_note: Very short buzz cut, nearly shaved all over with minimal length; scalp
+    clearly visible through hair
+  face_shape: very large broad rounded face with full heavy cheeks and substantial
+    wide jaw
+  eye_shape: small slightly deep-set eyes with heavy upper lids and a neutral horizontal
+    angle
+  brows_style: light sparse thin brows with a gentle arch and soft natural appearance
+  brows_color: '#9A8060'
+  nose_shape: broad wide bridge with a bulbous rounded tip and wide flared nostrils
+  chin_shape: strong broad rounded chin with heavy full jawline and wide lower face
+  cheeks_shape: very full rounded prominent apple cheeks with wide face and soft hollows
+  hair_color:
+    hex_base: '#B0A088'
+    hex_shadow: '#7A6A58'
+  eye_color:
+    hex_iris: '#7A8E9C'
+    hex_pupil: '#1C1C1C'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.91
+  - file: images/003.jpg
+    quality_score: 0.91

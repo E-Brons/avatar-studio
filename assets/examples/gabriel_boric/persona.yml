@@ -1,0 +1,43 @@
+personal:
+  name: Gabriel Boric
+  gender: male
+  pronouns: he/him
+  age: 40
+  nationality: Chilean
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C4956A'
+  skin_texture: warm olive with visible beard shadow
+  hair_style: short dark hair, neatly combed back with slight natural wave
+  hair_note: full thick beard covering lower face and chin; short sides
+  face_shape: rounded oval with full cheeks and a broad forehead tapering gently to
+    chin
+  eye_shape: medium-sized eyes with heavy upper lids, slightly deep-set beneath prominent
+    brow ridge
+  brows_style: thick arched brows with dense natural hair, moderately groomed and
+    expressive
+  brows_color: '#2A1A10'
+  nose_shape: medium-width bridge with a slightly bulbous rounded tip and average
+    nostrils
+  chin_shape: rounded chin fully covered by full dense beard obscuring jaw definition
+  cheeks_shape: full rounded cheeks with soft contours and a wide mid-face
+  hair_color:
+    hex_base: '#2A1F1A'
+    hex_shadow: '#1A120E'
+  eye_color:
+    hex_iris: '#4A3728'
+    hex_pupil: '#1A0E08'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.9784
+  - file: images/003.jpg
+    quality_score: 0.91

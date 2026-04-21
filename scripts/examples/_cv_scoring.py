@@ -11,6 +11,8 @@ from __future__ import annotations
 import colorsys
 import io
 import math
+import os
+from pathlib import Path
 
 import cv2
 import imagehash
@@ -43,15 +45,41 @@ _DUPLICATE_THRESHOLD: int = 12  # Hamming distance
 # Face detection
 # ---------------------------------------------------------------------------
 
-_cascade: cv2.CascadeClassifier | None = None
+
+def _cascade_xml() -> str:
+    """Return the absolute path to haarcascade_frontalface_default.xml.
+
+    Same multi-location search as _portrait_crop._cascade_xml().
+    """
+    filename = "haarcascade_frontalface_default.xml"
+    if hasattr(cv2, "data") and hasattr(cv2.data, "haarcascades"):
+        return cv2.data.haarcascades + filename
+    cv2_dir = os.path.dirname(cv2.__file__)
+    candidate = os.path.join(cv2_dir, "data", filename)
+    if os.path.exists(candidate):
+        return candidate
+    venv_lib = Path(__file__).resolve().parents[2] / ".venv" / "lib"
+    for p in venv_lib.glob(f"*/site-packages/cv2/data/{filename}"):
+        if p.exists():
+            return str(p)
+    raise RuntimeError(
+        f"Cannot find {filename} (cv2 dir: {cv2_dir}). "
+        "Run scripts/install.sh to install opencv-python-headless into .venv."
+    )
 
 
-def _get_cascade() -> cv2.CascadeClassifier:
-    global _cascade
-    if _cascade is None:
-        path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-        _cascade = cv2.CascadeClassifier(path)
-    return _cascade
+# Resolved once at import time (single-threaded), reused read-only afterwards.
+_CASCADE_XML: str = _cascade_xml()
+
+
+def _new_cascade() -> cv2.CascadeClassifier:
+    """Return a fresh CascadeClassifier.
+
+    A new object is created per call so that concurrent threads never share
+    the same classifier instance — OpenCV's detectMultiScale is not safe when
+    the same CascadeClassifier is called from multiple threads simultaneously.
+    """
+    return cv2.CascadeClassifier(_CASCADE_XML)
 
 
 def detect_faces(image_bytes: bytes) -> list[dict]:
@@ -68,7 +96,7 @@ def detect_faces(image_bytes: bytes) -> list[dict]:
         return []
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    cascade = _get_cascade()
+    cascade = _new_cascade()
 
     # Run at three strictness levels; more detections = higher confidence
     detections_by_level: list[list] = []

@@ -11,25 +11,27 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   hair_color:
-    hex_base: '#4B0082'
-    hex_shadow: '#330066'
+    hex_base: '#1E1108'
+    hex_shadow: '#0C0804'
   eye_color:
-    hex_iris: '#000000'
-    hex_pupil: '#000000'
-  brows_color: '#4B0082'
-  skin_texture: smooth and youthful
-  hair_note: dark brown, reaching past shoulders
-  skin_tone: '#C8947A'
-  hair_style: long straight dark hair falling past shoulders with subtle layering
-    and slight movement
-  face_shape: softly oval with gently defined cheekbones and a moderately tapered
-    jaw
-  eye_shape: medium almond-shaped eyes with a slight upward gaze and naturally framed
-    lash line
-  brows_style: medium-thickness arched brows with a natural taper and soft defined
-    shape
-  nose_shape: straight medium bridge with a softly rounded tip and moderately proportioned
-    nostrils
-  chin_shape: softly rounded chin with a gently defined and moderately angular jawline
-  cheeks_shape: moderately prominent cheekbones with subtle fullness and a slightly
-    narrow lower jaw
+    hex_iris: '#7E9080'
+    hex_pupil: '#1A0F08'
+  brows_color: '#231208'
+  skin_texture: light freckled skin with warm peachy undertones
+  hair_note: Very long, sleek dark hair worn fully down with subtle mid-shaft wave;
+    no visible layers or shave pattern
+  skin_tone: '#C9906A'
+  hair_style: long straight dark hair falling past shoulders with slight natural wave
+    and loose center part
+  face_shape: softly oval face with gently defined cheekbones and a smoothly tapered
+    jawline
+  eye_shape: almond-shaped eyes with a slight upward tilt, medium-set with visible
+    light-colored irises and defined upper lash line
+  brows_style: medium-thickness natural brows with a gentle arch and slightly tapered
+    tail, neatly groomed
+  nose_shape: medium narrow bridge tapering to a softly rounded tip with naturally
+    proportioned nostrils
+  chin_shape: softly rounded chin with a clean, gently defined jawline and smooth
+    contour
+  cheeks_shape: lightly full cheeks with subtle natural roundness and scattered freckles
+    across the apples

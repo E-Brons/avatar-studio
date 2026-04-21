@@ -1,0 +1,42 @@
+personal:
+  name: Summer McIntosh
+  gender: female
+  pronouns: she/her
+  age: 19
+  nationality: Canadian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8956A'
+  skin_texture: moist athletic skin with water droplets
+  hair_style: not visible, fully covered by black swim cap
+  hair_note: Hair completely hidden under black Speedo swim cap; true hair length
+    and texture unknown
+  face_shape: softly rounded face with full cheeks and gently defined jaw
+  eye_shape: moderately wide almond-shaped eyes with a neutral horizontal set and
+    light upper lids
+  brows_style: moderately arched natural brows of medium thickness lightly groomed
+  brows_color: '#5C3D20'
+  nose_shape: medium-width straight bridge with a softly rounded tip and natural nostrils
+  chin_shape: softly rounded chin with a gently curved and youthful jawline
+  cheeks_shape: full rounded cheeks with slight natural flush and minimal angular
+    definition
+  hair_color:
+    hex_base: '#333333'
+    hex_shadow: '#1A1A1A'
+  eye_color:
+    hex_iris: '#8B5E3C'
+    hex_pupil: '#1A0E08'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9961
+  - file: images/002.jpg
+    quality_score: 0.9379
+  - file: images/003.jpg
+    quality_score: 0.91

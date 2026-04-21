@@ -15,25 +15,27 @@ appearance:
       style: Black crew-neck knit sweater
       color: '#1A1A1A'
   hair_color:
-    hex_base: '#808080'
-    hex_shadow: '#666666'
+    hex_base: '#6A5C52'
+    hex_shadow: '#3A3030'
   eye_color:
-    hex_iris: '#000000'
-    hex_pupil: '#000000'
-  brows_color: '#000000'
-  skin_texture: smooth and slightly aged
-  skin_tone: '#C2A882'
-  hair_style: short cropped sides with slightly longer textured top swept loosely
-    forward
-  hair_note: Very short on sides and back, slightly longer on top with a natural unstyled
-    texture; salt-and-pepper tones visible at temples
-  face_shape: long and angular with strong prominent jaw and wide forehead tapering
-    slightly at chin
-  eye_shape: deep-set and slightly narrowed with heavy orbital brow ridge and a direct
-    intense gaze
-  brows_style: medium-thick straight brows with subtle arch and natural sparse texture
-  nose_shape: straight prominent bridge with a broad slightly bulbous tip and wide
-    nostrils
-  chin_shape: strong square chin with a well-defined angular jawline and slight cleft
-  cheeks_shape: wide angular cheekbones with subtle hollowing beneath and a broad
-    strong jaw
+    hex_iris: '#8A7E72'
+    hex_pupil: '#1C1A18'
+  brows_color: '#4E4238'
+  skin_texture: smooth with fine forehead lines and subtle pore texture
+  skin_tone: '#C2B4A6'
+  hair_style: short cropped sides with slightly longer textured top, brushed loosely
+    upward with natural flow
+  hair_note: Visibly lighter or graying strands concentrated at the crown and front
+    of the scalp
+  face_shape: strong angular face with broad forehead, prominent cheekbones, and defined
+    tapering jaw
+  eye_shape: deep-set medium-sized eyes with a slight hooded upper lid and direct,
+    intense forward gaze
+  brows_style: medium-thickness brows with a subtle natural arch and slightly sparse
+    outer tail
+  nose_shape: straight prominent bridge, well-defined rounded tip, medium-width nostrils
+    with slight flare
+  chin_shape: strong squared chin covered in short stubble with a firmly angular and
+    defined jawline
+  cheeks_shape: high prominent cheekbones with subtly sculpted hollows beneath and
+    a moderately wide jaw

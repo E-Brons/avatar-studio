@@ -1,0 +1,46 @@
+personal:
+  name: Christina Koch
+  gender: female
+  pronouns: she/her
+  age: 47
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C49A78'
+  skin_texture: smooth with fine natural lines and warm luminosity
+  hair_style: dark hair pulled back and largely concealed beneath headset cap, a few
+    strands visible at temples
+  hair_note: Hair almost entirely hidden under black communications headset and skull
+    cap; only minimal dark strands visible at sides
+  face_shape: softly oval with gently defined cheekbones and a moderately tapered
+    jaw
+  eye_shape: almond-shaped with a subtle upward outer tilt, medium depth, framed by
+    light lashes
+  brows_style: medium-thickness naturally arched brows with a gentle peak and softly
+    tapered tails
+  brows_color: '#3A2518'
+  nose_shape: medium-width straight bridge, softly rounded tip, proportionate and
+    gently flared nostrils
+  chin_shape: softly rounded chin with a gently defined and moderately narrow jawline
+  cheeks_shape: moderate cheekbone prominence with natural fullness and a softly contoured
+    midface
+  hair_color:
+    hex_base: '#2A1A0E'
+    hex_shadow: '#1A0F08'
+  eye_color:
+    hex_iris: '#7A6B48'
+    hex_pupil: '#1C1208'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9957
+  - file: images/002.jpg
+    quality_score: 0.91
+  - file: images/003.jpg
+    quality_score: 0.9022

@@ -1,0 +1,43 @@
+personal:
+  name: Elina Svitolina
+  gender: female
+  pronouns: she/her
+  age: 30
+  nationality: Ukrainian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#E8C9A8'
+  skin_texture: smooth and luminous with subtle warmth
+  hair_style: long straight hair falling past shoulders with centre part and blonde
+    highlights throughout
+  hair_note: Long straight hair with prominent bright blonde highlights over a darker
+    blonde base
+  face_shape: softly rounded oval with gentle cheekbones and a smoothly tapered chin
+  eye_shape: medium almond-shaped eyes with slight downward outer corners and visible
+    upper lash line
+  brows_style: medium-thickness natural brows with a gentle arch and soft tapered
+    ends
+  brows_color: '#8B6840'
+  nose_shape: medium-width bridge, softly rounded tip with gently defined nostrils
+  chin_shape: softly rounded chin with a gently smooth and understated jawline
+  cheeks_shape: full rounded cheeks with subtle natural fullness and gentle jaw width
+  hair_color:
+    hex_base: '#C8A86A'
+    hex_shadow: '#8B6840'
+  eye_color:
+    hex_iris: '#7A8A4A'
+    hex_pupil: '#1A1A10'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.9951
+  - file: images/003.jpg
+    quality_score: 0.9496

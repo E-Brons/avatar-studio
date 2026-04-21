@@ -10,26 +10,27 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: '#E5D9C4'
+  skin_tone: '#CF9078'
   hair_color:
-    hex_base: '#F5A623'
-    hex_shadow: '#D2991E'
+    hex_base: '#A0623A'
+    hex_shadow: '#6B3A1E'
   eye_color:
-    hex_iris: '#666666'
-    hex_pupil: '#000000'
-  brows_color: '#666666'
-  skin_texture: smooth and slightly shiny
-  hair_style: very short crop, close-tapered sides, slightly longer textured top swept
-    forward
-  hair_note: Very short all over with tightly tapered sides and back; reddish-golden
-    strawberry blonde color.
-  face_shape: broad rounded face with wide forehead and full, square-ish jaw
-  eye_shape: moderately wide-set, slightly hooded with rounded outer corners and flat
-    upper lids
-  brows_style: short, sparse, lightly arched brows with fine reddish-golden hairs
-    and minimal grooming
-  nose_shape: medium-width bridge with a broad, softly rounded tip and moderately
-    flared nostrils
-  chin_shape: rounded, full chin with a wide and moderately defined jawline
-  cheeks_shape: full, round cheeks with rosy flush and wide prominent cheekbones sitting
-    high
+    hex_iris: '#7A8FA8'
+    hex_pupil: '#1A1A1A'
+  brows_color: '#8B6B45'
+  skin_texture: fair with rosy flushed undertones
+  hair_style: short back and sides with textured finger-combed volume on top swept
+    slightly forward
+  hair_note: Closely cropped sides fading to skin; noticeably more length and texture
+    on the crown
+  face_shape: broad round face with wide forehead and full fleshy cheeks tapering
+    slightly at jaw
+  eye_shape: small hooded eyes set wide apart with a slight downward outer corner
+    and minimal visible lid crease
+  brows_style: thin sparse light-colored brows with a nearly flat arc and minimal
+    grooming
+  nose_shape: medium-width bridge widening to a rounded bulbous tip with broad flared
+    nostrils
+  chin_shape: softly rounded broad chin with a full square jaw and minimal definition
+  cheeks_shape: very full and fleshy cheeks with high rosy flush and wide flat cheekbone
+    structure

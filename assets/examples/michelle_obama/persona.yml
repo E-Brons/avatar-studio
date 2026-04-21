@@ -1,0 +1,44 @@
+personal:
+  name: Michelle Obama
+  gender: female
+  pronouns: she/her
+  age: 62
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#7D4A28'
+  skin_texture: smooth warm deep tone with subtle luminosity
+  hair_style: shoulder-length loose waves with a centre part, voluminous body and
+    soft layered ends
+  hair_note: rich warm auburn-brown tones with lighter highlights throughout the mid-lengths
+  face_shape: broad oval with strong prominent cheekbones and a gently rounded full
+    jaw
+  eye_shape: medium almond-shaped eyes with heavy smoky liner, slightly wide-set and
+    framed by full lashes
+  brows_style: medium-thickness arched brows with a defined peak and well-groomed
+    tapered tails
+  brows_color: '#2A1206'
+  nose_shape: medium-width bridge with a broad rounded tip and naturally flared nostrils
+  chin_shape: softly rounded full chin with a broad and moderately defined lower jawline
+  cheeks_shape: high prominent cheekbones with full rounded cheeks and subtle contouring
+    shadows
+  hair_color:
+    hex_base: '#6B3318'
+    hex_shadow: '#361508'
+  eye_color:
+    hex_iris: '#3B1E0A'
+    hex_pupil: '#150800'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.96
+  - file: images/002.jpg
+    quality_score: 0.904
+  - file: images/003.jpg
+    quality_score: 0.9001

@@ -65,15 +65,17 @@ def load_image_metadata(folder: Path) -> dict | None:
 def load_all_personas(
     examples_dir: Path | None = None,
     *,
-    max_examples: int | None = 512,
+    max_examples: int | None = 256,
 ) -> list[tuple[str, dict]]:
     """Return sorted list of (folder_name, persona_dict) for dirs with persona.yml.
 
     Skips dirs where appearance is empty or missing.
 
-    When *max_examples* is set (default: 512), retains only the top-N examples
-    ranked by best image quality score from images/metadata.json.  Examples
-    without metadata are sorted to the bottom.
+    When *max_examples* is set (default: 256), retains only the top-N examples
+    ranked by quality score from images/metadata.json.  The ranking key is
+    ``best_score`` (post-crop quality, written by enrich_persona) when present,
+    falling back to the maximum pre-crop ``quality_score`` across all images.
+    Examples without metadata are sorted to the bottom.
     """
     examples_dir = examples_dir or EXAMPLES_DIR
     results: list[tuple[str, dict]] = []
@@ -91,11 +93,15 @@ def load_all_personas(
         results.append((d.name, persona))
 
     if max_examples is not None and len(results) > max_examples:
-        # Rank by best quality_score across all images in metadata.json
+
         def _best_quality(item: tuple[str, dict]) -> float:
             meta = load_image_metadata(examples_dir / item[0])
             if not meta:
                 return -1.0
+            # Prefer post-crop score (set by enrich_persona after cropping best.jpg).
+            if "best_score" in meta:
+                return float(meta["best_score"])
+            # Fallback: max pre-crop score across original downloads.
             scores = [img.get("quality_score", 0.0) for img in meta.get("images", [])]
             return max(scores) if scores else -1.0
 

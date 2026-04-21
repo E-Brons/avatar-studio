@@ -1,0 +1,46 @@
+personal:
+  name: Tyler, the Creator
+  gender: male
+  pronouns: he/him
+  age: 35
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#6B3822'
+  skin_texture: smooth deep skin with subtle forehead sheen
+  hair_style: very short natural coils barely visible at temples and sideburn area
+    beneath cap
+  hair_note: Hair almost entirely concealed by cap; only short-cropped natural coils
+    visible at the sides and temples.
+  face_shape: broad oval with wide forehead, full cheeks, and a moderately defined
+    squared jaw
+  eye_shape: medium wide-set eyes with subtle hooding on the upper lid and a calm,
+    level gaze
+  brows_style: sparse, naturally thin brows with a low flat arch and minimal grooming
+  brows_color: '#1C0E08'
+  nose_shape: broad flat bridge widening toward a rounded bulbous tip with noticeably
+    wide flared nostrils
+  chin_shape: softly rounded chin with a wide, gently squared jawline and minimal
+    angular definition
+  cheeks_shape: moderately full cheeks with subtle cheekbone definition, wide across
+    the mid-face and broad at the jaw
+  hair_color:
+    hex_base: '#1A0C08'
+    hex_shadow: '#0D0604'
+  eye_color:
+    hex_iris: '#2E1A0E'
+    hex_pupil: '#0A0604'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.9649
+  - file: images/003.jpg
+    quality_score: 0.96

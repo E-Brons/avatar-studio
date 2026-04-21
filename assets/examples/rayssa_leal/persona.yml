@@ -1,0 +1,42 @@
+personal:
+  name: Rayssa Leal
+  gender: female
+  pronouns: she/her
+  age: 18
+  nationality: Brazilian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#BC8A5F'
+  skin_texture: smooth youthful with warm golden undertones
+  hair_style: long straight dark hair flowing past shoulders, tucked partially under
+    helmet with strands framing face
+  hair_note: Long straight hair reaching well past shoulders; top and crown fully
+    covered by helmet, dark brown strands visible on sides
+  face_shape: softly rounded with full youthful cheeks and gently tapered chin
+  eye_shape: medium-sized with slightly hooded lids, set wide apart with a subtle
+    downward tilt at outer corners
+  brows_style: moderately thick natural brows with a soft low arch and even density
+  brows_color: '#2C1608'
+  nose_shape: medium-width bridge with a rounded tip and slightly broad nostrils
+  chin_shape: softly rounded chin with a gentle jaw and minimal angularity
+  cheeks_shape: full and rounded cheeks with youthful volume and subtle natural definition
+  hair_color:
+    hex_base: '#3A1E0E'
+    hex_shadow: '#22100A'
+  eye_color:
+    hex_iris: '#4A2A14'
+    hex_pupil: '#180A04'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9834
+  - file: images/002.jpg
+    quality_score: 0.9031
+  - file: images/003.jpg
+    quality_score: 0.8809

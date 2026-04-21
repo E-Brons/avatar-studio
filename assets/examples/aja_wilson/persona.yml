@@ -10,26 +10,27 @@ style:
   bg_color: '#4A90D9'
   fg_color: '#FFFFFF'
 appearance:
-  skin_tone: medium brown
+  skin_tone: '#7A4428'
   hair_color:
-    hex_base: '#4B4B4B'
-    hex_shadow: '#333333'
+    hex_base: '#1A0C07'
+    hex_shadow: '#0D0604'
   eye_color:
-    hex_iris: '#000000'
-    hex_pupil: '#FFFFFF'
-  brows_color: '#4B4B4B'
-  hair_style: pulled back
-  skin_texture: smooth and tanned
-  hair_note: Hair is scraped tightly back from the forehead and secured in a compact
-    bun at the nape; no loose strands visible.
-  face_shape: elongated oval with high defined cheekbones and a gently tapered refined
+    hex_iris: '#3B1E0A'
+    hex_pupil: '#0A0604'
+  brows_color: '#1C0E06'
+  hair_style: hair tightly slicked back and gathered into a low compact bun at the
+    nape
+  skin_texture: smooth deep brown with slight perspiration sheen
+  hair_note: All hair pulled severely back from face into a tight low bun; no hair
+    visible on sides or crown beyond sleek pulled-back surface
+  face_shape: strong oval with a broad forehead, defined angular jaw, and slightly
+    squared lower face
+  eye_shape: moderately wide almond-shaped eyes, level set with a subtle downward
+    outer corner and calm steady gaze
+  brows_style: medium-thickness arched brows with a clean defined edge and natural
+    dense hair
+  nose_shape: medium-width bridge broadening to a rounded tip with slightly wide nostrils
+  chin_shape: moderately rounded chin with a firm, well-defined and somewhat broad
     jawline
-  eye_shape: medium almond-shaped eyes with a direct forward gaze and a subtle upward
-    tilt at the outer corners
-  brows_style: medium-thickness slightly arched brows with a clean defined line and
-    natural density
-  nose_shape: medium bridge, moderately broad base, rounded tip with slightly wide
-    nostrils
-  chin_shape: gently rounded chin with a smooth and moderately defined strong jawline
-  cheeks_shape: high prominent cheekbones with subtle sculpted hollows and a moderately
-    wide jaw
+  cheeks_shape: full high cheekbones with gently sculpted hollows below and a wide
+    strong jaw

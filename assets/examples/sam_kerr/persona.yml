@@ -1,0 +1,45 @@
+personal:
+  name: Sam Kerr
+  gender: female
+  pronouns: she/her
+  age: 31
+  nationality: Australian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#BE8F65'
+  skin_texture: warm olive with natural pores and minor blemishes
+  hair_style: long dark hair slicked tightly back from face into low rear ponytail
+  hair_note: Hair is completely pulled back, wet and flat against skull, revealing
+    full forehead; ponytail tail visible at lower right
+  face_shape: broad rounded oval with wide flat cheekbones and a moderately squared
+    compact jaw
+  eye_shape: moderately small almond-shaped eyes set slightly close together with
+    minimal lid crease and a subtle downward outer corner
+  brows_style: medium-thickness slightly arched natural brows with tapered ends and
+    moderate density
+  brows_color: '#1C1008'
+  nose_shape: medium-width bridge widening to a rounded broad tip with slightly flared
+    nostrils
+  chin_shape: softly rounded compact chin with a gently defined moderately wide jawline
+  cheeks_shape: moderately full cheeks with flat broad cheekbones and wide jaw creating
+    a rounded lower face
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0805'
+  eye_color:
+    hex_iris: '#2A1508'
+    hex_pupil: '#0A0604'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9669
+  - file: images/002.jpg
+    quality_score: 0.9143
+  - file: images/003.jpg
+    quality_score: 0.91

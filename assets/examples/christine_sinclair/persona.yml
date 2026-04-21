@@ -1,0 +1,44 @@
+personal:
+  name: Christine Sinclair
+  gender: female
+  pronouns: she/her
+  age: 41
+  nationality: Canadian
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C9896A'
+  skin_texture: smooth with fine smile lines and subtle warmth
+  hair_style: tightly slicked-back pulled into a bun or ponytail, wet-styled with
+    no loose strands
+  hair_note: Hair entirely pulled back and flattened against the head; no visible
+    volume or loose hair framing the face
+  face_shape: gently oval with a slightly wider forehead and softly tapered chin
+  eye_shape: moderately wide-set, slightly almond-shaped with a subtle upward tilt
+    at the outer corners
+  brows_style: thin, lightly arched brows with sparse natural hair and minimal grooming
+  brows_color: '#7A5535'
+  nose_shape: medium-width bridge with a softly rounded tip and naturally proportioned
+    nostrils
+  chin_shape: gently pointed chin with a lightly defined and moderately narrow jawline
+  cheeks_shape: moderately prominent cheekbones with full apple cheeks lifted by a
+    wide smile
+  hair_color:
+    hex_base: '#6B4228'
+    hex_shadow: '#3E2210'
+  eye_color:
+    hex_iris: '#6A9E96'
+    hex_pupil: '#1A0C08'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9602
+  - file: images/002.jpg
+    quality_score: 0.9191
+  - file: images/003.jpg
+    quality_score: 0.8822

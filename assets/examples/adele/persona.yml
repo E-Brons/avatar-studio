@@ -11,29 +11,29 @@ style:
   fg_color: '#FFFFFF'
 appearance:
   hair_color:
-    hex_base: '#D2B48C'
-    hex_shadow: '#A88254'
+    hex_base: '#C8A456'
+    hex_shadow: '#8B6B30'
   eye_color:
-    hex_iris: '#808080'
-    hex_pupil: '#000000'
+    hex_iris: '#6E9488'
+    hex_pupil: '#1A1008'
   clothing:
     top:
       style: black lace high-neck top
       color: '#0A0A0A'
-  brows_color: '#808080'
-  skin_texture: smooth and flawless
-  hair_note: blonde with subtle highlights
-  skin_tone: '#DBA882'
-  hair_style: long straight-to-wavy blonde hair swept to one side with soft volume
-    and gentle curl at ends
-  face_shape: softly rounded face with a broad forehead and full, gently tapered lower
+  brows_color: '#7A5E28'
+  skin_texture: smooth porcelain with warm luminous glow
+  hair_note: Hair is sleekly parted deep on left side, voluminous body sweep away
+    from face with soft wave at lower lengths
+  skin_tone: '#DEBA96'
+  hair_style: long straight-to-wavy blonde hair swept dramatically to one side with
+    gentle curl at ends
+  face_shape: softly rounded with full cheeks, gently tapered chin, and broad forehead
+  eye_shape: almond-shaped with elongated cat-eye flick at outer corners, heavy upper
+    liner creating dramatic emphasis
+  brows_style: medium-thickness brows with a gentle natural arch, well-groomed and
+    defined
+  nose_shape: medium-width bridge with softly rounded tip and subtly defined nostrils
+  chin_shape: gently rounded chin with a soft, subtly defined jawline and full lower
     face
-  eye_shape: wide almond-shaped eyes with heavy winged liner extending at outer corners,
-    intensely framed
-  brows_style: medium-thickness arched brows with a defined peak and neatly groomed
-    natural fill
-  nose_shape: medium straight bridge, subtly rounded tip, with moderately proportioned
-    nostrils
-  chin_shape: softly rounded chin with a full, gently defined and smooth jawline
-  cheeks_shape: full and rounded cheeks with soft contour flush and modest cheekbone
-    definition
+  cheeks_shape: full rounded cheeks with soft natural fullness and warm flush at the
+    apples

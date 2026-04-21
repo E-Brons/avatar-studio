@@ -1,0 +1,45 @@
+personal:
+  name: Lena Oberdorf
+  gender: female
+  pronouns: she/her
+  age: 23
+  nationality: German
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#D4A882'
+  skin_texture: smooth and clear with subtle warmth
+  hair_style: medium-length auburn hair swept up into a loose, slightly dishevelled
+    bun at the crown
+  hair_note: Hair is fully pulled back into an updo bun, with short face-framing strands
+    at the temples and forehead visible
+  face_shape: softly rounded face with full cheeks, balanced proportions and a gently
+    tapered chin
+  eye_shape: rounded almond-shaped eyes set wide apart with a subtle downward outer
+    tilt and natural lashes
+  brows_style: medium-thickness slightly arched brows with a natural ungroomed appearance
+    and tapered ends
+  brows_color: '#5C3010'
+  nose_shape: medium-width bridge with a gently rounded tip and softly defined nostrils
+  chin_shape: rounded soft chin with a gentle jawline and no strong angular definition
+  cheeks_shape: full rounded cheeks with a wide set and soft natural volume across
+    the midface
+  hair_color:
+    hex_base: '#8B4A22'
+    hex_shadow: '#5C2D0E'
+  eye_color:
+    hex_iris: '#4A2C1A'
+    hex_pupil: '#1A0A05'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9804
+  - file: images/002.jpg
+    quality_score: 0.91
+  - file: images/003.jpg
+    quality_score: 0.8742

@@ -1,0 +1,41 @@
+personal:
+  name: Zhou Guanyu
+  gender: male
+  pronouns: he/him
+  age: 25
+  nationality: Chinese
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8A882'
+  skin_texture: smooth with subtle warm sheen
+  hair_style: medium-length swept-back with soft volume at crown and side part
+  hair_note: hair swept back and to the side with natural volume; short on sides
+  face_shape: gently oval with moderately wide cheekbones and softly tapered jaw
+  eye_shape: slightly hooded monolid with subtle inner corner fold and horizontal
+    set
+  brows_style: medium-thickness straight brows with minimal arch and natural density
+  brows_color: '#1A1008'
+  nose_shape: medium-width bridge with rounded tip and moderately wide nostrils
+  chin_shape: softly rounded chin with a clean and gently defined jawline
+  cheeks_shape: moderately prominent cheekbones with soft fullness and medium jaw
+    width
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  eye_color:
+    hex_iris: '#2A1E10'
+    hex_pupil: '#0A0604'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9639
+  - file: images/002.jpg
+    quality_score: 0.91
+  - file: images/003.jpg
+    quality_score: 0.91

@@ -1,0 +1,42 @@
+personal:
+  name: Suni Lee
+  gender: female
+  pronouns: she/her
+  age: 22
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8956A'
+  skin_texture: smooth warm golden with subtle luminosity
+  hair_style: sleek hair pulled back tightly into a neat high bun at crown
+  hair_note: All hair pulled back severely into high bun; no loose strands; very sleek
+    and tight
+  face_shape: softly rounded with full cheeks, broad forehead, and gently tapered
+    chin
+  eye_shape: monolid almond shape with dramatic extended false lashes and subtle upward
+    tilt
+  brows_style: thin slightly arched brows with defined tail and sparse natural fill
+  brows_color: '#2A1A08'
+  nose_shape: medium low bridge, softly rounded wide tip, gently flared nostrils
+  chin_shape: softly rounded chin with full jawline and gentle curve
+  cheeks_shape: full rounded cheeks with subtle warmth and broad flat cheekbones
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  eye_color:
+    hex_iris: '#4A2E1A'
+    hex_pupil: '#1A0C06'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.9773
+  - file: images/003.jpg
+    quality_score: 0.9336

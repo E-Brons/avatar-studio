@@ -1,0 +1,47 @@
+personal:
+  name: Markéta Vondroušová
+  gender: female
+  pronouns: she/her
+  age: 25
+  nationality: Czech
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C9957A'
+  skin_texture: smooth and lightly sun-kissed with warm undertones
+  hair_style: hair pulled tightly back into a neat high bun atop the head with a few
+    loose strands escaping near the ears
+  hair_note: All hair pulled up into a high bun, largely concealed beneath a white
+    visor cap; golden blonde color visible at crown
+  face_shape: oval with gently defined cheekbones, a slightly elongated mid-face,
+    and a softly tapered jaw
+  eye_shape: eyes closed in image; naturally proportioned lids with a soft horizontal
+    set and medium spacing between eyes
+  brows_style: medium-thickness natural brows with a soft subtle arch and well-groomed
+    sparse density
+  brows_color: '#7A5530'
+  nose_shape: medium-width straight bridge, softly rounded tip, naturally proportioned
+    slightly flared nostrils
+  chin_shape: softly rounded chin with a gently defined smooth jawline and minimal
+    angularity
+  cheeks_shape: subtly prominent cheekbones with lean slightly angular structure and
+    a narrow tapered jaw
+  hair_color:
+    hex_base: '#C49B38'
+    hex_shadow: '#8B6B22'
+  eye_color:
+    hex_iris: '#6B4E2A'
+    hex_pupil: '#1A0E08'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 0.9717
+  - file: images/002.jpg
+    quality_score: 0.9046
+  - file: images/003.jpg
+    quality_score: 0.8883

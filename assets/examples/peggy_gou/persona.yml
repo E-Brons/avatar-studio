@@ -1,0 +1,42 @@
+personal:
+  name: Peggy Gou
+  gender: female
+  pronouns: she/her
+  age: 34
+  nationality: South Korean
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C8855A'
+  skin_texture: smooth warm tones with highlighted sheen
+  hair_style: long straight hair parted slightly off-center, falling past shoulders
+    with glossy highlights
+  hair_note: Long straight hair with bright white highlight streaks on right side,
+    very sleek and smooth
+  face_shape: softly oval with gently tapered jaw and smooth rounded proportions
+  eye_shape: almond-shaped with slight downward outer corners, moderately set with
+    subtle upper lid crease
+  brows_style: medium-thickness brows with gentle natural arch and tapered ends
+  brows_color: '#2A1510'
+  nose_shape: medium narrow bridge with softly rounded tip and refined nostrils
+  chin_shape: softly rounded chin with a smooth and gently defined jawline
+  cheeks_shape: moderately full cheeks with subtle contouring and soft jaw width
+  hair_color:
+    hex_base: '#2A1510'
+    hex_shadow: '#1A0C08'
+  eye_color:
+    hex_iris: '#3D1F10'
+    hex_pupil: '#1A0A06'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.9989
+  - file: images/003.jpg
+    quality_score: 0.91

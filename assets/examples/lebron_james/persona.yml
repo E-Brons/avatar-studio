@@ -1,0 +1,41 @@
+personal:
+  name: LeBron James
+  gender: male
+  pronouns: he/him
+  age: 41
+  nationality: American
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#7B4A2D'
+  skin_texture: smooth with visible perspiration sheen
+  hair_style: very short cropped hair almost entirely hidden under headband
+  hair_note: Hair nearly fully covered by NBA headband; only short cropped edges visible
+    at sides
+  face_shape: broad and wide with strong prominent jaw and full rounded cheeks
+  eye_shape: moderately sized round eyes with slightly hooded lids and dark prominent
+    irises
+  brows_style: medium thickness slightly arched brows with natural sparse grooming
+  brows_color: '#1A0E08'
+  nose_shape: broad wide bridge with rounded bulbous tip and wide flared nostrils
+  chin_shape: broad rounded chin with strong wide jawline and full lower face
+  cheeks_shape: very full and wide cheeks with rounded prominence and broad jaw width
+  hair_color:
+    hex_base: '#1A1008'
+    hex_shadow: '#0D0804'
+  eye_color:
+    hex_iris: '#3D2010'
+    hex_pupil: '#0A0604'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 0.9777
+  - file: images/003.jpg
+    quality_score: 0.91

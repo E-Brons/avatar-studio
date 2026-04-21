@@ -1,0 +1,45 @@
+personal:
+  name: Antoine Griezmann
+  gender: male
+  pronouns: he/him
+  age: 35
+  nationality: French
+  religion: unknown
+  zodiac: unknown
+style:
+  bg_color: '#4A90D9'
+  fg_color: '#FFFFFF'
+appearance:
+  skin_tone: '#C9A88A'
+  skin_texture: smooth with faint redness and minor blemishes
+  hair_style: short bleached-platinum top swept forward over very closely cropped
+    dark natural sides
+  hair_note: 'Distinctive two-tone undercut: platinum blonde bleached top contrasts
+    sharply with near-shaved dark brown sides and back'
+  face_shape: angular rectangular face with a strong defined jaw and moderate forehead
+    width
+  eye_shape: medium-sized slightly hooded eyes with a subtle downward outer corner
+    and calm direct gaze
+  brows_style: sparse light-brown brows with a gentle arch and fine natural hair growth
+  brows_color: '#7A6450'
+  nose_shape: medium-width straight bridge, slightly bulbous rounded tip, moderately
+    flared nostrils
+  chin_shape: gently squared chin with a firm angular jawline and subtle dimple
+  cheeks_shape: flat cheekbones with lean angular hollows and a relatively narrow
+    defined jaw
+  hair_color:
+    hex_base: '#EDE898'
+    hex_shadow: '#4A3C34'
+  eye_color:
+    hex_iris: '#6E8E70'
+    hex_pupil: '#1A1818'
+images:
+  count: 3
+  best: images/best.jpg
+  sources:
+  - file: images/001.jpg
+    quality_score: 1.0
+  - file: images/002.jpg
+    quality_score: 1.0
+  - file: images/003.jpg
+    quality_score: 0.91
