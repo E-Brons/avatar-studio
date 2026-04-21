@@ -1,0 +1,1840 @@
+# Ethnicity taxonomy for avatar diversity generation
+#
+# Structure:
+#   races        — thin validation buckets used ONLY for DeepFace alignment
+#   ethnicities  — the real diversity unit (~45 specific groups)
+#   nationality_map   — specific nationality → ethnicity probability distribution
+#   regional_defaults — regional group → ethnicity probability distribution (fallback)
+#
+# Skin tone IDs reference assets/persona/skin_tones.yml  (tone-name/undertone-name)
+# Feature weights must reference valid values from phenotype_settings.json
+
+# ── Races (DeepFace validation mapping only) ───────────────────────────────────
+races:
+  white:
+    deepface_race_id: white
+  black:
+    deepface_race_id: black
+  south_asian:
+    deepface_race_id: indian
+  east_asian:
+    deepface_race_id: asian
+  southeast_asian:
+    deepface_race_id: asian
+  middle_eastern:
+    deepface_race_id: middle eastern
+  latino_hispanic:
+    deepface_race_id: latino hispanic
+
+# ── Ethnicities ────────────────────────────────────────────────────────────────
+ethnicities:
+
+  # ── White / European ────────────────────────────────────────────────────────
+
+  scandinavian:
+    label: Scandinavian (Swedish/Norwegian/Danish/Finnish/Icelandic)
+    race: white
+    skin_tones:
+      porcelain/cool pink: 0.20
+      porcelain/neutral: 0.15
+      alabaster/cool pink: 0.15
+      snow/cool pink: 0.10
+      ivory/cool pink: 0.10
+      cream/cool pink: 0.15
+      cream/neutral: 0.10
+      linen/cool pink: 0.05
+    eye_shape_weights:
+      deep-set: 0.25
+      round: 0.20
+      hooded: 0.20
+      almond: 0.15
+      wide-set: 0.10
+      downturned: 0.10
+    nose_shape_weights:
+      long straight: 0.30
+      narrow bridge shadow: 0.25
+      concave ski slope: 0.15
+      subtle vertical line: 0.15
+      narrow nostrils: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  celtic:
+    label: Celtic (Irish/Scottish/Welsh)
+    race: white
+    skin_tones:
+      porcelain/cool pink: 0.25
+      alabaster/cool pink: 0.20
+      snow/cool pink: 0.15
+      ivory/cool pink: 0.15
+      cream/cool pink: 0.15
+      fair rose/cool pink: 0.10
+    eye_shape_weights:
+      round: 0.30
+      deep-set: 0.25
+      hooded: 0.20
+      almond: 0.15
+      downturned: 0.10
+    nose_shape_weights:
+      snubbed upturned: 0.20
+      gentle button: 0.20
+      narrow bridge shadow: 0.20
+      concave ski slope: 0.20
+      long straight: 0.20
+    hair_texture_group:
+      - wavy
+      - curly
+    face_shape_tendency:
+      - round
+      - oval
+
+  northern_european:
+    label: Northern European (British/Dutch/German/Belgian/Swiss/Austrian)
+    race: white
+    skin_tones:
+      porcelain/cool pink: 0.15
+      porcelain/neutral: 0.10
+      ivory/cool pink: 0.10
+      ivory/neutral: 0.10
+      cream/cool pink: 0.15
+      cream/neutral: 0.15
+      linen/cool pink: 0.10
+      peach/neutral: 0.10
+      shell/neutral: 0.05
+    eye_shape_weights:
+      deep-set: 0.25
+      hooded: 0.20
+      almond: 0.20
+      round: 0.20
+      downturned: 0.15
+    nose_shape_weights:
+      long straight: 0.25
+      narrow bridge shadow: 0.25
+      subtle vertical line: 0.20
+      concave ski slope: 0.15
+      narrow nostrils: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - square
+
+  slavic:
+    label: Slavic (Russian/Ukrainian/Polish/Czech/Slovak/Bulgarian)
+    race: white
+    skin_tones:
+      porcelain/neutral: 0.12
+      ivory/cool pink: 0.12
+      ivory/neutral: 0.12
+      cream/cool pink: 0.14
+      cream/neutral: 0.14
+      linen/cool pink: 0.12
+      fair rose/cool pink: 0.12
+      peach/neutral: 0.12
+    eye_shape_weights:
+      deep-set: 0.30
+      almond: 0.25
+      round: 0.20
+      hooded: 0.15
+      wide-set: 0.10
+    nose_shape_weights:
+      long straight: 0.25
+      narrow bridge shadow: 0.25
+      subtle vertical line: 0.20
+      snubbed upturned: 0.15
+      narrow nostrils: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - heart
+
+  mediterranean:
+    label: Mediterranean (Italian/Spanish/Portuguese/Greek/Cypriot/Maltese)
+    race: white
+    skin_tones:
+      warm beige/warm golden: 0.12
+      natural/warm golden: 0.12
+      buff/warm golden: 0.12
+      warm sand/warm golden: 0.10
+      golden beige/warm golden: 0.10
+      peach/neutral: 0.08
+      cream/warm golden: 0.10
+      rose beige/neutral: 0.08
+      linen/warm golden: 0.10
+      shell/warm golden: 0.08
+    eye_shape_weights:
+      almond: 0.30
+      deep-set: 0.25
+      hooded: 0.20
+      round: 0.15
+      downturned: 0.10
+    nose_shape_weights:
+      strong aquiline: 0.20
+      hawk curved: 0.15
+      long straight: 0.20
+      narrow bridge shadow: 0.20
+      bulbous tip: 0.15
+      narrow nostrils: 0.10
+    hair_texture_group:
+      - wavy
+      - curly
+    face_shape_tendency:
+      - oval
+      - square
+
+  balkan:
+    label: Balkan (Serbian/Croatian/Bosnian/Montenegrin/Albanian/Macedonian)
+    race: white
+    skin_tones:
+      warm beige/neutral: 0.15
+      natural/neutral: 0.15
+      buff/neutral: 0.12
+      peach/neutral: 0.12
+      linen/neutral: 0.12
+      cream/neutral: 0.12
+      fair rose/neutral: 0.12
+      rose beige/neutral: 0.10
+    eye_shape_weights:
+      deep-set: 0.30
+      almond: 0.25
+      hooded: 0.20
+      round: 0.15
+      downturned: 0.10
+    nose_shape_weights:
+      strong aquiline: 0.25
+      long straight: 0.25
+      hawk curved: 0.15
+      narrow bridge shadow: 0.20
+      bulbous tip: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - square
+      - oval
+
+  eastern_european:
+    label: Eastern European (Romanian/Hungarian/Moldovan/Georgian/Armenian/Azerbaijani)
+    race: white
+    skin_tones:
+      warm beige/neutral: 0.14
+      natural/neutral: 0.12
+      buff/neutral: 0.12
+      cream/neutral: 0.14
+      peach/neutral: 0.12
+      linen/neutral: 0.12
+      ivory/neutral: 0.12
+      rose beige/neutral: 0.12
+    eye_shape_weights:
+      almond: 0.30
+      deep-set: 0.25
+      round: 0.20
+      hooded: 0.15
+      close-set: 0.10
+    nose_shape_weights:
+      long straight: 0.25
+      strong aquiline: 0.20
+      narrow bridge shadow: 0.20
+      subtle vertical line: 0.20
+      bulbous tip: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - round
+
+  # ── Black / African ──────────────────────────────────────────────────────────
+
+  west_african:
+    label: West African (Nigerian/Ghanaian/Senegalese/Ivorian/Malian)
+    race: black
+    skin_tones:
+      espresso/warm golden: 0.10
+      espresso/neutral: 0.08
+      umber/warm golden: 0.10
+      sable/warm golden: 0.08
+      obsidian/warm golden: 0.08
+      obsidian/neutral: 0.06
+      onyx/warm golden: 0.06
+      cocoa/warm golden: 0.10
+      mahogany/warm golden: 0.08
+      dark oak/warm golden: 0.08
+      walnut/warm golden: 0.08
+      bronze/warm golden: 0.06
+      mocha/warm golden: 0.04
+    eye_shape_weights:
+      large and soft: 0.30
+      round: 0.25
+      almond: 0.20
+      wide-set: 0.15
+      protruding: 0.10
+    nose_shape_weights:
+      wide bridge shadow: 0.25
+      broad flat: 0.25
+      wide nostrils: 0.25
+      soft undefined: 0.15
+      gentle button: 0.10
+    hair_texture_group:
+      - coily
+      - kinky
+    face_shape_tendency:
+      - round
+      - oval
+
+  east_african:
+    label: East African (Ethiopian/Kenyan/Somali/Eritrean/Tanzanian)
+    race: black
+    skin_tones:
+      mocha/warm golden: 0.12
+      mocha/neutral: 0.10
+      teak/warm golden: 0.10
+      chestnut/warm golden: 0.10
+      walnut/neutral: 0.08
+      mahogany/neutral: 0.08
+      sienna/warm golden: 0.08
+      cocoa/neutral: 0.08
+      amber/warm golden: 0.08
+      dark oak/neutral: 0.08
+      espresso/warm golden: 0.05
+      bronze/neutral: 0.05
+    eye_shape_weights:
+      almond: 0.35
+      deep-set: 0.25
+      large and soft: 0.20
+      round: 0.15
+      close-set: 0.05
+    nose_shape_weights:
+      narrow bridge shadow: 0.25
+      subtle vertical line: 0.20
+      narrow nostrils: 0.20
+      long straight: 0.20
+      wide nostrils: 0.15
+    hair_texture_group:
+      - coily
+      - kinky
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  central_african:
+    label: Central African (Congolese/Cameroonian/Chadian/Gabonese)
+    race: black
+    skin_tones:
+      espresso/warm golden: 0.12
+      obsidian/warm golden: 0.10
+      onyx/warm golden: 0.10
+      sable/warm golden: 0.08
+      umber/warm golden: 0.08
+      cocoa/warm golden: 0.10
+      walnut/warm golden: 0.10
+      mahogany/warm golden: 0.10
+      dark oak/warm golden: 0.10
+      bronze/warm golden: 0.08
+      jet/warm golden: 0.04
+    eye_shape_weights:
+      large and soft: 0.30
+      round: 0.25
+      wide-set: 0.20
+      almond: 0.15
+      protruding: 0.10
+    nose_shape_weights:
+      broad flat: 0.30
+      wide nostrils: 0.25
+      wide bridge shadow: 0.25
+      soft undefined: 0.15
+      gentle button: 0.05
+    hair_texture_group:
+      - coily
+      - kinky
+    face_shape_tendency:
+      - round
+      - square
+
+  southern_african:
+    label: Southern African (Zulu/Xhosa/Sotho/Tswana/Shona)
+    race: black
+    skin_tones:
+      mocha/warm golden: 0.10
+      walnut/warm golden: 0.10
+      mahogany/warm golden: 0.10
+      cocoa/warm golden: 0.10
+      bronze/warm golden: 0.10
+      dark oak/warm golden: 0.10
+      espresso/warm golden: 0.08
+      teak/warm golden: 0.08
+      chestnut/warm golden: 0.08
+      amber/warm golden: 0.08
+      sienna/warm golden: 0.08
+    eye_shape_weights:
+      large and soft: 0.30
+      round: 0.25
+      almond: 0.20
+      wide-set: 0.15
+      deep-set: 0.10
+    nose_shape_weights:
+      wide nostrils: 0.30
+      broad flat: 0.25
+      wide bridge shadow: 0.20
+      soft undefined: 0.15
+      bulbous tip: 0.10
+    hair_texture_group:
+      - coily
+      - kinky
+    face_shape_tendency:
+      - round
+      - oval
+
+  afro_caribbean:
+    label: Afro-Caribbean (Jamaican/Barbadian/Trinidadian/Haitian)
+    race: black
+    skin_tones:
+      mocha/warm golden: 0.10
+      chestnut/warm golden: 0.10
+      sienna/warm golden: 0.08
+      amber/warm golden: 0.08
+      walnut/warm golden: 0.10
+      mahogany/warm golden: 0.10
+      cocoa/warm golden: 0.10
+      bronze/warm golden: 0.08
+      dark oak/warm golden: 0.08
+      espresso/warm golden: 0.08
+      teak/warm golden: 0.10
+    eye_shape_weights:
+      almond: 0.30
+      large and soft: 0.25
+      round: 0.20
+      wide-set: 0.15
+      deep-set: 0.10
+    nose_shape_weights:
+      wide nostrils: 0.25
+      broad flat: 0.25
+      wide bridge shadow: 0.20
+      bulbous tip: 0.15
+      soft undefined: 0.15
+    hair_texture_group:
+      - coily
+      - kinky
+      - wavy
+    face_shape_tendency:
+      - oval
+      - round
+
+  afro_american:
+    label: African-American
+    race: black
+    skin_tones:
+      chestnut/warm golden: 0.08
+      sienna/warm golden: 0.08
+      amber/warm golden: 0.08
+      walnut/warm golden: 0.09
+      mahogany/warm golden: 0.09
+      cocoa/warm golden: 0.09
+      bronze/warm golden: 0.09
+      mocha/warm golden: 0.08
+      teak/warm golden: 0.08
+      dark oak/warm golden: 0.07
+      espresso/warm golden: 0.07
+      caramel/warm golden: 0.06
+      honey/warm golden: 0.04
+    eye_shape_weights:
+      almond: 0.30
+      large and soft: 0.25
+      round: 0.20
+      deep-set: 0.15
+      wide-set: 0.10
+    nose_shape_weights:
+      wide nostrils: 0.25
+      broad flat: 0.20
+      wide bridge shadow: 0.20
+      bulbous tip: 0.15
+      subtle vertical line: 0.10
+      narrow bridge shadow: 0.10
+    hair_texture_group:
+      - coily
+      - kinky
+      - wavy
+    face_shape_tendency:
+      - oval
+      - round
+      - heart
+
+  # ── South Asian ──────────────────────────────────────────────────────────────
+
+  north_indian:
+    label: North Indian (Punjabi/UP/Rajasthani/Haryanvi)
+    race: south_asian
+    skin_tones:
+      warm beige/warm golden: 0.12
+      natural/warm golden: 0.12
+      buff/warm golden: 0.12
+      warm sand/warm golden: 0.10
+      golden beige/warm golden: 0.10
+      honey/warm golden: 0.08
+      caramel/warm golden: 0.08
+      sienna/warm golden: 0.06
+      amber/warm golden: 0.06
+      tawny/warm golden: 0.08
+      olive medium/warm olive: 0.08
+    eye_shape_weights:
+      almond: 0.35
+      deep-set: 0.25
+      round: 0.20
+      heavy-lidded: 0.15
+      close-set: 0.05
+    nose_shape_weights:
+      long straight: 0.25
+      bulbous tip: 0.20
+      narrow bridge shadow: 0.20
+      subtle vertical line: 0.20
+      narrow nostrils: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  south_indian:
+    label: South Indian (Tamil/Telugu/Kannada/Malayali)
+    race: south_asian
+    skin_tones:
+      honey/warm golden: 0.08
+      caramel/warm golden: 0.10
+      sienna/warm golden: 0.10
+      amber/warm golden: 0.10
+      chestnut/warm golden: 0.10
+      mocha/warm golden: 0.10
+      teak/warm golden: 0.10
+      walnut/warm golden: 0.08
+      mahogany/warm golden: 0.08
+      cocoa/warm golden: 0.08
+      bronze/warm golden: 0.08
+    eye_shape_weights:
+      almond: 0.30
+      large and soft: 0.25
+      round: 0.20
+      deep-set: 0.15
+      heavy-lidded: 0.10
+    nose_shape_weights:
+      bulbous tip: 0.25
+      wide nostrils: 0.20
+      wide bridge shadow: 0.20
+      broad flat: 0.15
+      subtle vertical line: 0.20
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - round
+
+  bengali:
+    label: Bengali (Bangladeshi/West Bengali)
+    race: south_asian
+    skin_tones:
+      warm beige/warm golden: 0.10
+      natural/warm golden: 0.10
+      buff/warm golden: 0.10
+      warm sand/warm golden: 0.10
+      golden beige/warm golden: 0.10
+      honey/warm golden: 0.10
+      caramel/warm golden: 0.10
+      tawny/warm golden: 0.10
+      olive medium/warm olive: 0.10
+      sienna/warm golden: 0.10
+    eye_shape_weights:
+      almond: 0.35
+      round: 0.25
+      deep-set: 0.20
+      heavy-lidded: 0.15
+      large and soft: 0.05
+    nose_shape_weights:
+      bulbous tip: 0.25
+      subtle vertical line: 0.25
+      narrow bridge shadow: 0.20
+      long straight: 0.15
+      gentle button: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - round
+      - oval
+
+  sri_lankan:
+    label: Sri Lankan (Sinhalese/Tamil)
+    race: south_asian
+    skin_tones:
+      honey/warm golden: 0.10
+      caramel/warm golden: 0.12
+      sienna/warm golden: 0.12
+      amber/warm golden: 0.12
+      chestnut/warm golden: 0.12
+      mocha/warm golden: 0.10
+      teak/warm golden: 0.10
+      walnut/warm golden: 0.08
+      warm sand/warm golden: 0.08
+      golden beige/warm golden: 0.06
+    eye_shape_weights:
+      almond: 0.30
+      round: 0.25
+      large and soft: 0.20
+      deep-set: 0.15
+      heavy-lidded: 0.10
+    nose_shape_weights:
+      bulbous tip: 0.25
+      wide nostrils: 0.25
+      wide bridge shadow: 0.20
+      subtle vertical line: 0.20
+      broad flat: 0.10
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - round
+
+  pashtun:
+    label: Pashtun (Afghan/Pakistani-Pashtun)
+    race: south_asian
+    skin_tones:
+      warm beige/neutral: 0.15
+      natural/neutral: 0.15
+      buff/neutral: 0.12
+      warm sand/warm golden: 0.12
+      peach/neutral: 0.12
+      rose beige/neutral: 0.10
+      linen/neutral: 0.10
+      tawny/neutral: 0.08
+      olive medium/warm olive: 0.06
+    eye_shape_weights:
+      deep-set: 0.30
+      almond: 0.25
+      round: 0.20
+      hooded: 0.15
+      wide-set: 0.10
+    nose_shape_weights:
+      strong aquiline: 0.25
+      long straight: 0.25
+      hawk curved: 0.20
+      narrow bridge shadow: 0.20
+      narrow nostrils: 0.10
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - square
+
+  nepali:
+    label: Nepali/Bhutanese (Mix South Asian + East Asian)
+    race: south_asian
+    skin_tones:
+      warm sand/warm golden: 0.15
+      golden beige/warm golden: 0.12
+      honey/warm golden: 0.12
+      caramel/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      tawny/warm golden: 0.10
+      warm beige/warm golden: 0.10
+      buff/warm golden: 0.10
+      sienna/warm golden: 0.07
+    eye_shape_weights:
+      almond: 0.25
+      monolid: 0.20
+      heavy-lidded: 0.20
+      round: 0.20
+      deep-set: 0.15
+    nose_shape_weights:
+      gentle button: 0.25
+      subtle vertical line: 0.25
+      bulbous tip: 0.20
+      narrow bridge shadow: 0.20
+      small rounded shadow: 0.10
+    hair_texture_group:
+      - straight
+    face_shape_tendency:
+      - round
+      - oval
+
+  # ── East Asian ────────────────────────────────────────────────────────────────
+
+  han_chinese:
+    label: Han Chinese
+    race: east_asian
+    skin_tones:
+      warm beige/neutral: 0.12
+      natural/neutral: 0.12
+      warm beige/warm golden: 0.10
+      buff/neutral: 0.10
+      warm sand/neutral: 0.10
+      golden beige/neutral: 0.10
+      ivory/neutral: 0.10
+      cream/neutral: 0.10
+      peach/neutral: 0.08
+      tawny/neutral: 0.08
+    eye_shape_weights:
+      monolid: 0.35
+      heavy-lidded: 0.25
+      almond: 0.20
+      round: 0.10
+      upturned: 0.10
+    nose_shape_weights:
+      small rounded shadow: 0.25
+      gentle button: 0.25
+      subtle vertical line: 0.20
+      snubbed upturned: 0.15
+      narrow bridge shadow: 0.15
+    hair_texture_group:
+      - straight
+    face_shape_tendency:
+      - oval
+      - round
+
+  japanese:
+    label: Japanese
+    race: east_asian
+    skin_tones:
+      ivory/neutral: 0.12
+      cream/neutral: 0.12
+      warm beige/neutral: 0.12
+      natural/neutral: 0.12
+      buff/neutral: 0.10
+      peach/neutral: 0.10
+      shell/neutral: 0.10
+      warm sand/neutral: 0.10
+      porcelain/neutral: 0.06
+      linen/neutral: 0.06
+    eye_shape_weights:
+      monolid: 0.30
+      almond: 0.25
+      heavy-lidded: 0.20
+      upturned: 0.15
+      round: 0.10
+    nose_shape_weights:
+      gentle button: 0.30
+      small rounded shadow: 0.25
+      subtle vertical line: 0.20
+      snubbed upturned: 0.15
+      narrow bridge shadow: 0.10
+    hair_texture_group:
+      - straight
+    face_shape_tendency:
+      - oval
+      - heart
+
+  korean:
+    label: Korean
+    race: east_asian
+    skin_tones:
+      ivory/neutral: 0.12
+      cream/cool pink: 0.12
+      cream/neutral: 0.12
+      warm beige/neutral: 0.12
+      natural/neutral: 0.10
+      peach/cool pink: 0.10
+      shell/neutral: 0.10
+      porcelain/neutral: 0.08
+      linen/cool pink: 0.08
+      buff/neutral: 0.06
+    eye_shape_weights:
+      monolid: 0.30
+      almond: 0.25
+      upturned: 0.20
+      heavy-lidded: 0.15
+      round: 0.10
+    nose_shape_weights:
+      gentle button: 0.30
+      small rounded shadow: 0.25
+      snubbed upturned: 0.20
+      subtle vertical line: 0.15
+      narrow bridge shadow: 0.10
+    hair_texture_group:
+      - straight
+    face_shape_tendency:
+      - oval
+      - heart
+
+  mongolian:
+    label: Mongolian
+    race: east_asian
+    skin_tones:
+      natural/warm golden: 0.15
+      buff/warm golden: 0.15
+      warm sand/warm golden: 0.15
+      golden beige/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      tawny/warm golden: 0.12
+      honey/warm golden: 0.10
+      caramel/warm golden: 0.09
+    eye_shape_weights:
+      monolid: 0.35
+      heavy-lidded: 0.25
+      almond: 0.20
+      close-set: 0.10
+      upturned: 0.10
+    nose_shape_weights:
+      broad flat: 0.25
+      wide bridge shadow: 0.20
+      gentle button: 0.20
+      small rounded shadow: 0.20
+      subtle vertical line: 0.15
+    hair_texture_group:
+      - straight
+    face_shape_tendency:
+      - round
+      - square
+
+  tibetan:
+    label: Tibetan
+    race: east_asian
+    skin_tones:
+      natural/warm golden: 0.12
+      buff/warm golden: 0.12
+      warm sand/warm golden: 0.12
+      golden beige/warm golden: 0.12
+      honey/warm golden: 0.12
+      tawny/warm golden: 0.12
+      caramel/warm golden: 0.12
+      olive medium/warm olive: 0.10
+      sienna/warm golden: 0.06
+    eye_shape_weights:
+      monolid: 0.30
+      almond: 0.25
+      heavy-lidded: 0.25
+      deep-set: 0.10
+      upturned: 0.10
+    nose_shape_weights:
+      broad flat: 0.25
+      wide bridge shadow: 0.20
+      gentle button: 0.20
+      subtle vertical line: 0.20
+      small rounded shadow: 0.15
+    hair_texture_group:
+      - straight
+    face_shape_tendency:
+      - round
+      - square
+
+  # ── Southeast Asian ───────────────────────────────────────────────────────────
+
+  mainland_se_asian:
+    label: Mainland Southeast Asian (Thai/Burmese/Cambodian/Lao)
+    race: southeast_asian
+    skin_tones:
+      natural/warm golden: 0.10
+      buff/warm golden: 0.10
+      warm sand/warm golden: 0.12
+      golden beige/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      honey/warm golden: 0.12
+      tawny/warm golden: 0.10
+      caramel/warm golden: 0.10
+      sienna/warm golden: 0.07
+      amber/warm golden: 0.05
+    eye_shape_weights:
+      monolid: 0.25
+      almond: 0.25
+      heavy-lidded: 0.20
+      round: 0.15
+      upturned: 0.15
+    nose_shape_weights:
+      gentle button: 0.25
+      broad flat: 0.20
+      wide nostrils: 0.20
+      small rounded shadow: 0.20
+      subtle vertical line: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - round
+      - oval
+
+  maritime_se_asian:
+    label: Maritime Southeast Asian (Indonesian/Malaysian/Bruneian)
+    race: southeast_asian
+    skin_tones:
+      warm sand/warm golden: 0.12
+      golden beige/warm golden: 0.12
+      honey/warm golden: 0.12
+      caramel/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      tawny/warm golden: 0.10
+      sienna/warm golden: 0.10
+      buff/warm golden: 0.10
+      natural/warm golden: 0.08
+      amber/warm golden: 0.02
+    eye_shape_weights:
+      almond: 0.30
+      monolid: 0.20
+      round: 0.20
+      heavy-lidded: 0.20
+      upturned: 0.10
+    nose_shape_weights:
+      gentle button: 0.25
+      small rounded shadow: 0.20
+      wide nostrils: 0.20
+      broad flat: 0.20
+      subtle vertical line: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - round
+
+  vietnamese:
+    label: Vietnamese
+    race: southeast_asian
+    skin_tones:
+      ivory/neutral: 0.08
+      warm beige/neutral: 0.10
+      natural/neutral: 0.10
+      buff/neutral: 0.10
+      warm sand/warm golden: 0.12
+      golden beige/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      tawny/warm golden: 0.10
+      honey/warm golden: 0.08
+      caramel/warm golden: 0.08
+    eye_shape_weights:
+      monolid: 0.30
+      almond: 0.25
+      heavy-lidded: 0.20
+      upturned: 0.15
+      round: 0.10
+    nose_shape_weights:
+      small rounded shadow: 0.25
+      gentle button: 0.25
+      subtle vertical line: 0.20
+      snubbed upturned: 0.15
+      wide nostrils: 0.15
+    hair_texture_group:
+      - straight
+    face_shape_tendency:
+      - oval
+      - round
+
+  filipino:
+    label: Filipino (Malay/Chinese/Spanish mix)
+    race: southeast_asian
+    skin_tones:
+      warm beige/warm golden: 0.10
+      natural/warm golden: 0.10
+      buff/warm golden: 0.10
+      warm sand/warm golden: 0.12
+      golden beige/warm golden: 0.12
+      honey/warm golden: 0.12
+      caramel/warm golden: 0.10
+      tawny/warm golden: 0.10
+      sienna/warm golden: 0.08
+      olive medium/warm olive: 0.06
+    eye_shape_weights:
+      almond: 0.30
+      monolid: 0.20
+      round: 0.20
+      heavy-lidded: 0.20
+      upturned: 0.10
+    nose_shape_weights:
+      gentle button: 0.25
+      wide nostrils: 0.20
+      broad flat: 0.20
+      small rounded shadow: 0.20
+      subtle vertical line: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - round
+
+  # ── Middle Eastern ────────────────────────────────────────────────────────────
+
+  levantine:
+    label: Levantine (Lebanese/Syrian/Palestinian/Jordanian)
+    race: middle_eastern
+    skin_tones:
+      warm beige/warm golden: 0.12
+      natural/warm golden: 0.12
+      buff/warm golden: 0.10
+      warm sand/warm golden: 0.10
+      olive medium/warm olive: 0.12
+      golden beige/warm golden: 0.10
+      tawny/warm golden: 0.10
+      honey/warm golden: 0.08
+      caramel/warm golden: 0.08
+      sienna/warm golden: 0.08
+    eye_shape_weights:
+      almond: 0.30
+      deep-set: 0.25
+      hooded: 0.20
+      large and soft: 0.15
+      close-set: 0.10
+    nose_shape_weights:
+      strong aquiline: 0.25
+      hawk curved: 0.20
+      long straight: 0.20
+      narrow bridge shadow: 0.20
+      bulbous tip: 0.15
+    hair_texture_group:
+      - wavy
+      - curly
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  gulf_arab:
+    label: Gulf Arab (Saudi/Emirati/Kuwaiti/Qatari/Omani)
+    race: middle_eastern
+    skin_tones:
+      warm sand/warm golden: 0.12
+      golden beige/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      honey/warm golden: 0.10
+      tawny/warm golden: 0.10
+      caramel/warm golden: 0.10
+      natural/warm golden: 0.10
+      buff/warm golden: 0.10
+      sienna/warm golden: 0.08
+      amber/warm golden: 0.06
+    eye_shape_weights:
+      almond: 0.35
+      deep-set: 0.25
+      large and soft: 0.20
+      hooded: 0.15
+      heavy-lidded: 0.05
+    nose_shape_weights:
+      strong aquiline: 0.30
+      hawk curved: 0.25
+      long straight: 0.20
+      narrow bridge shadow: 0.15
+      bulbous tip: 0.10
+    hair_texture_group:
+      - wavy
+      - curly
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  persian:
+    label: Persian (Iranian)
+    race: middle_eastern
+    skin_tones:
+      warm beige/neutral: 0.12
+      natural/warm golden: 0.12
+      buff/warm golden: 0.10
+      warm sand/warm golden: 0.10
+      olive medium/warm olive: 0.12
+      golden beige/warm golden: 0.10
+      tawny/warm golden: 0.10
+      honey/warm golden: 0.10
+      caramel/warm golden: 0.08
+      peach/neutral: 0.06
+    eye_shape_weights:
+      almond: 0.35
+      deep-set: 0.30
+      hooded: 0.20
+      close-set: 0.10
+      large and soft: 0.05
+    nose_shape_weights:
+      strong aquiline: 0.25
+      hawk curved: 0.20
+      long straight: 0.25
+      narrow bridge shadow: 0.20
+      bulbous tip: 0.10
+    hair_texture_group:
+      - wavy
+      - straight
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  turkish:
+    label: Turkish
+    race: middle_eastern
+    skin_tones:
+      warm beige/neutral: 0.12
+      natural/neutral: 0.12
+      buff/neutral: 0.10
+      natural/warm golden: 0.10
+      olive medium/warm olive: 0.12
+      warm sand/warm golden: 0.10
+      peach/neutral: 0.10
+      linen/neutral: 0.08
+      tawny/neutral: 0.08
+      honey/warm golden: 0.08
+    eye_shape_weights:
+      almond: 0.30
+      deep-set: 0.25
+      hooded: 0.20
+      round: 0.15
+      close-set: 0.10
+    nose_shape_weights:
+      long straight: 0.25
+      strong aquiline: 0.20
+      hawk curved: 0.15
+      narrow bridge shadow: 0.20
+      bulbous tip: 0.20
+    hair_texture_group:
+      - wavy
+      - straight
+      - curly
+    face_shape_tendency:
+      - oval
+      - square
+
+  kurdish:
+    label: Kurdish
+    race: middle_eastern
+    skin_tones:
+      warm beige/neutral: 0.12
+      natural/neutral: 0.12
+      buff/neutral: 0.12
+      olive medium/warm olive: 0.12
+      natural/warm golden: 0.12
+      warm sand/warm golden: 0.10
+      tawny/neutral: 0.10
+      honey/warm golden: 0.10
+      peach/neutral: 0.10
+    eye_shape_weights:
+      deep-set: 0.30
+      almond: 0.25
+      hooded: 0.25
+      round: 0.10
+      close-set: 0.10
+    nose_shape_weights:
+      strong aquiline: 0.30
+      hawk curved: 0.25
+      long straight: 0.20
+      narrow bridge shadow: 0.15
+      bulbous tip: 0.10
+    hair_texture_group:
+      - wavy
+      - curly
+    face_shape_tendency:
+      - oval
+      - square
+
+  north_african_arab:
+    label: North African Arab (Moroccan/Algerian/Tunisian/Libyan/Egyptian)
+    race: middle_eastern
+    skin_tones:
+      warm beige/warm golden: 0.10
+      natural/warm golden: 0.10
+      buff/warm golden: 0.10
+      warm sand/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      golden beige/warm golden: 0.10
+      honey/warm golden: 0.10
+      tawny/warm golden: 0.10
+      caramel/warm golden: 0.08
+      sienna/warm golden: 0.08
+    eye_shape_weights:
+      almond: 0.35
+      deep-set: 0.25
+      large and soft: 0.20
+      hooded: 0.10
+      round: 0.10
+    nose_shape_weights:
+      strong aquiline: 0.25
+      hawk curved: 0.20
+      long straight: 0.20
+      broad flat: 0.15
+      wide nostrils: 0.10
+      bulbous tip: 0.10
+    hair_texture_group:
+      - wavy
+      - curly
+      - coily
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  berber:
+    label: Berber (Amazigh)
+    race: middle_eastern
+    skin_tones:
+      warm beige/warm golden: 0.12
+      natural/warm golden: 0.12
+      buff/warm golden: 0.12
+      warm sand/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      golden beige/warm golden: 0.10
+      honey/warm golden: 0.10
+      tawny/warm golden: 0.10
+      caramel/warm golden: 0.08
+    eye_shape_weights:
+      almond: 0.30
+      deep-set: 0.25
+      large and soft: 0.25
+      hooded: 0.10
+      round: 0.10
+    nose_shape_weights:
+      strong aquiline: 0.20
+      hawk curved: 0.15
+      long straight: 0.20
+      narrow bridge shadow: 0.20
+      broad flat: 0.15
+      bulbous tip: 0.10
+    hair_texture_group:
+      - wavy
+      - curly
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  # ── Latino / Hispanic ─────────────────────────────────────────────────────────
+
+  mestizo:
+    label: Mestizo (Indigenous + European mix)
+    race: latino_hispanic
+    skin_tones:
+      warm beige/warm golden: 0.10
+      natural/warm golden: 0.10
+      buff/warm golden: 0.10
+      warm sand/warm golden: 0.12
+      golden beige/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      honey/warm golden: 0.10
+      tawny/warm golden: 0.10
+      caramel/warm golden: 0.08
+      sienna/warm golden: 0.06
+    eye_shape_weights:
+      almond: 0.30
+      round: 0.20
+      heavy-lidded: 0.20
+      monolid: 0.15
+      deep-set: 0.15
+    nose_shape_weights:
+      gentle button: 0.20
+      broad flat: 0.20
+      wide nostrils: 0.20
+      subtle vertical line: 0.20
+      bulbous tip: 0.20
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - round
+      - oval
+
+  afro_latino:
+    label: Afro-Latino (Afro-Brazilian/Afro-Caribbean/Afro-Colombian)
+    race: latino_hispanic
+    skin_tones:
+      mocha/warm golden: 0.10
+      teak/warm golden: 0.10
+      chestnut/warm golden: 0.10
+      sienna/warm golden: 0.10
+      amber/warm golden: 0.10
+      walnut/warm golden: 0.10
+      mahogany/warm golden: 0.08
+      cocoa/warm golden: 0.08
+      bronze/warm golden: 0.08
+      honey/warm golden: 0.08
+      caramel/warm golden: 0.08
+    eye_shape_weights:
+      almond: 0.30
+      large and soft: 0.25
+      round: 0.20
+      deep-set: 0.15
+      wide-set: 0.10
+    nose_shape_weights:
+      wide nostrils: 0.25
+      broad flat: 0.25
+      wide bridge shadow: 0.20
+      bulbous tip: 0.15
+      subtle vertical line: 0.15
+    hair_texture_group:
+      - coily
+      - kinky
+      - wavy
+    face_shape_tendency:
+      - oval
+      - round
+
+  euro_latino:
+    label: Euro-Latino (Argentine/Uruguayan/Chilean of European descent)
+    race: latino_hispanic
+    skin_tones:
+      warm beige/warm golden: 0.12
+      natural/warm golden: 0.12
+      cream/warm golden: 0.10
+      linen/warm golden: 0.10
+      buff/warm golden: 0.10
+      peach/neutral: 0.10
+      ivory/neutral: 0.08
+      rose beige/neutral: 0.10
+      shell/neutral: 0.10
+      fair rose/warm golden: 0.08
+    eye_shape_weights:
+      almond: 0.30
+      deep-set: 0.25
+      round: 0.20
+      hooded: 0.15
+      downturned: 0.10
+    nose_shape_weights:
+      long straight: 0.25
+      narrow bridge shadow: 0.25
+      strong aquiline: 0.20
+      subtle vertical line: 0.15
+      bulbous tip: 0.15
+    hair_texture_group:
+      - straight
+      - wavy
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  indigenous_american:
+    label: Indigenous American (Maya/Aztec/Andean/North American tribes)
+    race: latino_hispanic
+    skin_tones:
+      warm sand/warm golden: 0.12
+      golden beige/warm golden: 0.12
+      honey/warm golden: 0.12
+      olive medium/warm olive: 0.12
+      tawny/warm golden: 0.10
+      caramel/warm golden: 0.10
+      natural/warm golden: 0.10
+      buff/warm golden: 0.10
+      sienna/warm golden: 0.08
+      amber/warm golden: 0.04
+    eye_shape_weights:
+      monolid: 0.25
+      heavy-lidded: 0.25
+      almond: 0.25
+      round: 0.15
+      close-set: 0.10
+    nose_shape_weights:
+      broad flat: 0.25
+      wide nostrils: 0.25
+      wide bridge shadow: 0.20
+      gentle button: 0.15
+      bulbous tip: 0.15
+    hair_texture_group:
+      - straight
+    face_shape_tendency:
+      - round
+      - square
+
+  # ── Additional / Unique ───────────────────────────────────────────────────────
+
+  aboriginal_australian:
+    label: Aboriginal Australian
+    race: black
+    skin_tones:
+      mocha/warm golden: 0.08
+      teak/warm golden: 0.08
+      walnut/warm golden: 0.10
+      mahogany/warm golden: 0.10
+      cocoa/warm golden: 0.10
+      bronze/warm golden: 0.10
+      dark oak/warm golden: 0.10
+      espresso/warm golden: 0.10
+      umber/warm golden: 0.08
+      sable/warm golden: 0.08
+      obsidian/warm golden: 0.08
+    eye_shape_weights:
+      deep-set: 0.35
+      almond: 0.25
+      large and soft: 0.20
+      round: 0.15
+      heavy-lidded: 0.05
+    nose_shape_weights:
+      broad flat: 0.30
+      wide nostrils: 0.30
+      wide bridge shadow: 0.25
+      bulbous tip: 0.10
+      soft undefined: 0.05
+    hair_texture_group:
+      - wavy
+      - curly
+      - coily
+    face_shape_tendency:
+      - oval
+      - oblong
+
+  polynesian:
+    label: Polynesian (Samoan/Tongan/Maori/Hawaiian)
+    race: latino_hispanic
+    skin_tones:
+      honey/warm golden: 0.10
+      caramel/warm golden: 0.12
+      sienna/warm golden: 0.12
+      amber/warm golden: 0.12
+      tawny/warm golden: 0.10
+      chestnut/warm golden: 0.10
+      mocha/warm golden: 0.10
+      warm sand/warm golden: 0.08
+      golden beige/warm golden: 0.08
+      bronze/warm golden: 0.08
+    eye_shape_weights:
+      almond: 0.30
+      round: 0.25
+      large and soft: 0.25
+      wide-set: 0.10
+      deep-set: 0.10
+    nose_shape_weights:
+      broad flat: 0.25
+      wide nostrils: 0.25
+      wide bridge shadow: 0.20
+      bulbous tip: 0.20
+      gentle button: 0.10
+    hair_texture_group:
+      - wavy
+      - straight
+    face_shape_tendency:
+      - round
+      - square
+
+  melanesian:
+    label: Melanesian (Papua New Guinean/Solomon Islander/Fijian/Vanuatuan)
+    race: black
+    skin_tones:
+      espresso/warm golden: 0.10
+      obsidian/warm golden: 0.10
+      onyx/warm golden: 0.10
+      sable/warm golden: 0.10
+      umber/warm golden: 0.10
+      cocoa/warm golden: 0.10
+      mahogany/warm golden: 0.10
+      dark oak/warm golden: 0.10
+      walnut/warm golden: 0.10
+      bronze/warm golden: 0.10
+    eye_shape_weights:
+      deep-set: 0.30
+      large and soft: 0.25
+      round: 0.20
+      almond: 0.15
+      wide-set: 0.10
+    nose_shape_weights:
+      broad flat: 0.30
+      wide nostrils: 0.30
+      wide bridge shadow: 0.20
+      bulbous tip: 0.10
+      soft undefined: 0.10
+    hair_texture_group:
+      - coily
+      - kinky
+      - wavy
+    face_shape_tendency:
+      - round
+      - oval
+
+# ── Nationality map ────────────────────────────────────────────────────────────
+# Maps specific nationality IDs (from demographics.yml) to ethnicity probability dicts.
+# Fallback: regional_defaults → universal uniform.
+
+nationality_map:
+  # ── European ────────────────────────────────────────────────────────────────
+  albanian:        {balkan: 1.0}
+  armenian:        {eastern_european: 1.0}
+  azerbaijani:     {eastern_european: 0.70, turkish: 0.30}
+  basque:          {mediterranean: 0.60, northern_european: 0.40}
+  belarusian:      {slavic: 1.0}
+  belgian:         {northern_european: 0.80, mediterranean: 0.20}
+  bosnian:         {balkan: 0.70, slavic: 0.30}
+  british:         {northern_european: 0.70, celtic: 0.20, north_indian: 0.05, afro_caribbean: 0.05}
+  bulgarian:       {slavic: 0.70, balkan: 0.30}
+  corsican:        {mediterranean: 1.0}
+  croatian:        {balkan: 0.60, slavic: 0.40}
+  cypriot:         {mediterranean: 0.70, levantine: 0.30}
+  czech:           {slavic: 1.0}
+  danish:          {scandinavian: 1.0}
+  dutch:           {northern_european: 1.0}
+  english:         {northern_european: 0.80, celtic: 0.20}
+  estonian:        {scandinavian: 0.60, slavic: 0.40}
+  finnish:         {scandinavian: 1.0}
+  french:          {northern_european: 0.60, mediterranean: 0.30, north_african_arab: 0.10}
+  georgian:        {eastern_european: 1.0}
+  german:          {northern_european: 1.0}
+  greek:           {mediterranean: 1.0}
+  hungarian:       {eastern_european: 1.0}
+  icelandic:       {scandinavian: 1.0}
+  irish:           {celtic: 1.0}
+  italian:         {mediterranean: 1.0}
+  kosovar:         {balkan: 1.0}
+  latvian:         {scandinavian: 0.50, slavic: 0.50}
+  lithuanian:      {slavic: 0.70, scandinavian: 0.30}
+  luxembourgish:   {northern_european: 1.0}
+  maltese:         {mediterranean: 1.0}
+  moldovan:        {slavic: 0.70, eastern_european: 0.30}
+  montenegrin:     {balkan: 1.0}
+  north_macedonian: {balkan: 0.70, slavic: 0.30}
+  norwegian:       {scandinavian: 1.0}
+  polish:          {slavic: 1.0}
+  portuguese:      {mediterranean: 1.0}
+  romanian:        {eastern_european: 0.70, slavic: 0.30}
+  russian:         {slavic: 1.0}
+  scottish:        {celtic: 1.0}
+  serbian:         {balkan: 0.60, slavic: 0.40}
+  slovak:          {slavic: 1.0}
+  slovenian:       {slavic: 0.70, balkan: 0.30}
+  spanish:         {mediterranean: 1.0}
+  swedish:         {scandinavian: 1.0}
+  swiss:           {northern_european: 1.0}
+  ukrainian:       {slavic: 1.0}
+  welsh:           {celtic: 1.0}
+  catalan:         {mediterranean: 1.0}
+  quebecois:       {northern_european: 0.90, afro_caribbean: 0.10}
+  roma:            {balkan: 0.50, eastern_european: 0.50}
+  andorran:        {mediterranean: 1.0}
+  monegasque:      {mediterranean: 1.0}
+  san_marinese:    {mediterranean: 1.0}
+  liechtensteiner: {northern_european: 1.0}
+
+  # ── North American ──────────────────────────────────────────────────────────
+  american:        {northern_european: 0.35, afro_american: 0.13, mestizo: 0.18, han_chinese: 0.05, north_indian: 0.05, mediterranean: 0.08, slavic: 0.06, levantine: 0.04, korean: 0.03, indigenous_american: 0.03}
+  canadian:        {northern_european: 0.55, afro_american: 0.05, mestizo: 0.10, han_chinese: 0.06, north_indian: 0.08, celtic: 0.10, east_african: 0.03, indigenous_american: 0.03}
+  mexican:         {mestizo: 0.60, indigenous_american: 0.20, euro_latino: 0.10, afro_latino: 0.10}
+  greenlandic:     {indigenous_american: 0.60, scandinavian: 0.40}
+
+  # ── Central American ────────────────────────────────────────────────────────
+  guatemalan:      {mestizo: 0.50, indigenous_american: 0.40, euro_latino: 0.10}
+  belizean:        {mestizo: 0.50, afro_caribbean: 0.30, indigenous_american: 0.20}
+  honduran:        {mestizo: 0.60, afro_latino: 0.15, indigenous_american: 0.25}
+  salvadoran:      {mestizo: 0.65, indigenous_american: 0.25, euro_latino: 0.10}
+  nicaraguan:      {mestizo: 0.60, afro_latino: 0.10, indigenous_american: 0.30}
+  costa_rican:     {euro_latino: 0.50, mestizo: 0.40, afro_caribbean: 0.10}
+  panamanian:      {mestizo: 0.50, afro_latino: 0.30, indigenous_american: 0.20}
+
+  # ── Caribbean ───────────────────────────────────────────────────────────────
+  antiguian_barbudan: {afro_caribbean: 0.90, euro_latino: 0.10}
+  bahamian:        {afro_caribbean: 0.85, euro_latino: 0.15}
+  barbadian:       {afro_caribbean: 0.90, euro_latino: 0.10}
+  cuban:           {afro_caribbean: 0.40, euro_latino: 0.40, mestizo: 0.20}
+  dominica_commonwealth: {afro_caribbean: 0.90, euro_latino: 0.10}
+  dominican_republic: {afro_caribbean: 0.55, mestizo: 0.30, euro_latino: 0.15}
+  grenadian:       {afro_caribbean: 0.90, euro_latino: 0.10}
+  haitian:         {afro_caribbean: 0.95, euro_latino: 0.05}
+  jamaican:        {afro_caribbean: 0.90, mestizo: 0.05, euro_latino: 0.05}
+  puerto_rican:    {afro_caribbean: 0.40, mestizo: 0.35, euro_latino: 0.25}
+  st_kitts_nevis:  {afro_caribbean: 0.90, euro_latino: 0.10}
+  st_lucian:       {afro_caribbean: 0.85, euro_latino: 0.15}
+  st_vincent_grenadines: {afro_caribbean: 0.85, euro_latino: 0.15}
+  trinidadian:     {afro_caribbean: 0.40, south_indian: 0.40, euro_latino: 0.20}
+
+  # ── Latin American ──────────────────────────────────────────────────────────
+  brazilian:       {mestizo: 0.40, afro_latino: 0.30, euro_latino: 0.25, han_chinese: 0.05}
+  argentine:       {euro_latino: 0.60, mestizo: 0.30, afro_latino: 0.10}
+  chilean:         {mestizo: 0.55, euro_latino: 0.35, indigenous_american: 0.10}
+  colombian:       {mestizo: 0.55, afro_latino: 0.25, indigenous_american: 0.10, euro_latino: 0.10}
+  venezuelan:      {mestizo: 0.55, afro_latino: 0.25, euro_latino: 0.15, indigenous_american: 0.05}
+  peruvian:        {mestizo: 0.45, indigenous_american: 0.30, euro_latino: 0.15, afro_latino: 0.10}
+  ecuadorian:      {mestizo: 0.45, indigenous_american: 0.35, afro_latino: 0.10, euro_latino: 0.10}
+  bolivian:        {indigenous_american: 0.50, mestizo: 0.40, euro_latino: 0.10}
+  paraguayan:      {mestizo: 0.70, indigenous_american: 0.20, euro_latino: 0.10}
+  uruguayan:       {euro_latino: 0.65, mestizo: 0.25, afro_latino: 0.10}
+  guyanese:        {afro_caribbean: 0.35, south_indian: 0.35, mestizo: 0.20, euro_latino: 0.10}
+  surinamese:      {afro_caribbean: 0.40, south_indian: 0.30, han_chinese: 0.15, mestizo: 0.15}
+  french_guianese: {afro_caribbean: 0.50, mestizo: 0.30, euro_latino: 0.20}
+
+  # ── Middle Eastern & Arab ───────────────────────────────────────────────────
+  israeli:         {levantine: 0.40, mediterranean: 0.30, eastern_european: 0.20, north_african_arab: 0.10}
+  palestinian:     {levantine: 1.0}
+  pashtun:         {pashtun: 1.0}
+  persian:         {persian: 1.0}
+  kurdish:         {kurdish: 1.0}
+  jordanian:       {levantine: 1.0}
+  lebanese:        {levantine: 0.80, mediterranean: 0.20}
+  syrian:          {levantine: 1.0}
+  iraqi:           {levantine: 0.50, gulf_arab: 0.30, kurdish: 0.20}
+  iranian:         {persian: 1.0}
+  saudi:           {gulf_arab: 1.0}
+  emirati:         {gulf_arab: 0.80, south_indian: 0.10, east_african: 0.10}
+  kuwaiti:         {gulf_arab: 1.0}
+  qatari:          {gulf_arab: 1.0}
+  bahraini:        {gulf_arab: 0.80, south_indian: 0.20}
+  omani:           {gulf_arab: 0.70, east_african: 0.20, south_indian: 0.10}
+  yemeni:          {gulf_arab: 0.70, east_african: 0.20, levantine: 0.10}
+  turkish:         {turkish: 1.0}
+  assyrian:        {levantine: 1.0}
+  druze:           {levantine: 1.0}
+
+  # ── North African ───────────────────────────────────────────────────────────
+  coptic:          {north_african_arab: 0.70, east_african: 0.30}
+  egyptian:        {north_african_arab: 0.80, east_african: 0.20}
+  libyan:          {north_african_arab: 0.80, berber: 0.20}
+  tunisian:        {north_african_arab: 0.70, berber: 0.30}
+  algerian:        {north_african_arab: 0.60, berber: 0.40}
+  moroccan:        {north_african_arab: 0.50, berber: 0.50}
+  sudanese:        {north_african_arab: 0.50, east_african: 0.50}
+  saharawi:        {berber: 0.60, north_african_arab: 0.40}
+  berber:          {berber: 1.0}
+
+  # ── West African ────────────────────────────────────────────────────────────
+  nigerian:        {west_african: 1.0}
+  ghanaian:        {west_african: 1.0}
+  senegalese:      {west_african: 1.0}
+  ivorian:         {west_african: 1.0}
+  malian:          {west_african: 1.0}
+  guinean:         {west_african: 1.0}
+  burkinabe:       {west_african: 1.0}
+  beninese:        {west_african: 1.0}
+  togolese:        {west_african: 1.0}
+  sierra_leonean:  {west_african: 1.0}
+  liberian:        {west_african: 1.0}
+  gambian:         {west_african: 1.0}
+  cape_verdean:    {west_african: 0.70, euro_latino: 0.30}
+  nigerien:        {west_african: 1.0}
+  mauritanian:     {west_african: 0.60, north_african_arab: 0.40}
+  bissau_guinean:  {west_african: 1.0}
+
+  # ── East African ────────────────────────────────────────────────────────────
+  ethiopian:       {east_african: 1.0}
+  kenyan:          {east_african: 0.85, south_indian: 0.10, central_african: 0.05}
+  tanzanian:       {east_african: 0.85, southern_african: 0.10, central_african: 0.05}
+  ugandan:         {east_african: 0.90, central_african: 0.10}
+  rwandan:         {east_african: 0.80, central_african: 0.20}
+  somali:          {east_african: 1.0}
+  djiboutian:      {east_african: 1.0}
+  eritrean:        {east_african: 1.0}
+  south_sudanese:  {east_african: 0.60, west_african: 0.40}
+  burundian:       {east_african: 0.70, central_african: 0.30}
+  malagasy:        {east_african: 0.50, maritime_se_asian: 0.50}
+  mozambican:      {east_african: 0.80, southern_african: 0.20}
+  zambian:         {east_african: 0.60, southern_african: 0.40}
+  malawian:        {east_african: 0.60, southern_african: 0.40}
+  seychellois:     {east_african: 0.50, south_indian: 0.30, euro_latino: 0.20}
+  comorian:        {east_african: 0.60, north_african_arab: 0.40}
+
+  # ── Central African ─────────────────────────────────────────────────────────
+  cameroonian:     {central_african: 0.70, west_african: 0.30}
+  congolese_drc:   {central_african: 0.80, west_african: 0.10, east_african: 0.10}
+  congolese_republic: {central_african: 0.80, west_african: 0.20}
+  chadian:         {central_african: 0.60, west_african: 0.30, north_african_arab: 0.10}
+  central_african: {central_african: 1.0}
+  gabonese:        {central_african: 0.80, west_african: 0.20}
+  equatorial_guinean: {central_african: 1.0}
+  sao_tomean:      {west_african: 0.80, euro_latino: 0.20}
+
+  # ── Southern African ────────────────────────────────────────────────────────
+  south_african:   {southern_african: 0.75, euro_latino: 0.15, south_indian: 0.10}
+  zimbabwean:      {southern_african: 0.90, east_african: 0.10}
+  botswanan:       {southern_african: 1.0}
+  namibian:        {southern_african: 0.80, euro_latino: 0.20}
+  lesothan:        {southern_african: 1.0}
+  swazi:           {southern_african: 1.0}
+  angolan:         {southern_african: 0.60, central_african: 0.30, euro_latino: 0.10}
+  mauritian:       {south_indian: 0.65, east_african: 0.20, han_chinese: 0.10, euro_latino: 0.05}
+
+  # ── South Asian ─────────────────────────────────────────────────────────────
+  indian:          {north_indian: 0.35, south_indian: 0.30, bengali: 0.15, pashtun: 0.05, nepali: 0.05, sri_lankan: 0.10}
+  pakistani:       {pashtun: 0.30, north_indian: 0.50, north_african_arab: 0.10, eastern_european: 0.10}
+  bangladeshi:     {bengali: 1.0}
+  sri_lankan:      {sri_lankan: 1.0}
+  nepali:          {nepali: 1.0}
+  bhutanese:       {nepali: 0.70, tibetan: 0.30}
+  maldivian:       {south_indian: 0.60, levantine: 0.20, maritime_se_asian: 0.20}
+  afghan:          {pashtun: 0.60, persian: 0.30, mongolian: 0.10}
+
+  # ── Central Asian ───────────────────────────────────────────────────────────
+  kazakhstani:     {mongolian: 0.50, persian: 0.25, turkish: 0.25}
+  uzbekistani:     {persian: 0.40, mongolian: 0.35, turkish: 0.25}
+  turkmen:         {turkish: 0.50, mongolian: 0.30, persian: 0.20}
+  kyrgyz:          {mongolian: 0.60, turkish: 0.30, persian: 0.10}
+  tajik:           {persian: 0.70, mongolian: 0.20, turkish: 0.10}
+  uyghur:          {mongolian: 0.40, persian: 0.30, han_chinese: 0.30}
+
+  # ── East Asian ──────────────────────────────────────────────────────────────
+  chinese:         {han_chinese: 0.90, mongolian: 0.05, tibetan: 0.05}
+  japanese:        {japanese: 1.0}
+  south_korean:    {korean: 1.0}
+  north_korean:    {korean: 1.0}
+  mongolian:       {mongolian: 1.0}
+  taiwanese:       {han_chinese: 0.95, mongolian: 0.05}
+  hong_konger:     {han_chinese: 0.95, korean: 0.05}
+  macanese:        {han_chinese: 0.80, mediterranean: 0.20}
+  tibetan:         {tibetan: 1.0}
+  rohingya:        {bengali: 0.70, maritime_se_asian: 0.30}
+
+  # ── Southeast Asian ─────────────────────────────────────────────────────────
+  indonesian:      {maritime_se_asian: 0.70, han_chinese: 0.15, mainland_se_asian: 0.15}
+  filipino:        {filipino: 0.80, han_chinese: 0.15, mediterranean: 0.05}
+  vietnamese:      {vietnamese: 1.0}
+  thai:            {mainland_se_asian: 0.90, han_chinese: 0.10}
+  burmese:         {mainland_se_asian: 0.70, han_chinese: 0.15, nepali: 0.15}
+  malaysian:       {maritime_se_asian: 0.55, han_chinese: 0.30, south_indian: 0.15}
+  singaporean:     {han_chinese: 0.70, south_indian: 0.15, maritime_se_asian: 0.15}
+  cambodian:       {mainland_se_asian: 0.90, han_chinese: 0.10}
+  laotian:         {mainland_se_asian: 0.90, han_chinese: 0.10}
+  bruneian:        {maritime_se_asian: 0.60, han_chinese: 0.30, south_indian: 0.10}
+  timorese:        {maritime_se_asian: 0.80, melanesian: 0.20}
+
+  # ── Oceanian ────────────────────────────────────────────────────────────────
+  australian:      {northern_european: 0.60, celtic: 0.15, aboriginal_australian: 0.10, east_african: 0.05, south_indian: 0.05, han_chinese: 0.05}
+  new_zealander:   {northern_european: 0.65, celtic: 0.15, polynesian: 0.15, east_african: 0.05}
+  samoan:          {polynesian: 1.0}
+  tongan:          {polynesian: 1.0}
+  fijian:          {melanesian: 0.50, south_indian: 0.40, polynesian: 0.10}
+  i_kiribati:      {polynesian: 0.70, melanesian: 0.30}
+  tuvaluan:        {polynesian: 1.0}
+  marshallese:     {polynesian: 0.80, melanesian: 0.20}
+  palauan:         {maritime_se_asian: 0.60, melanesian: 0.40}
+  maori:           {polynesian: 1.0}
+  micronesian:     {polynesian: 0.60, melanesian: 0.40}
+  nauruan:         {melanesian: 0.60, polynesian: 0.40}
+  vanuatuan:       {melanesian: 1.0}
+  solomon_islander: {melanesian: 1.0}
+  papua_new_guinean: {melanesian: 0.90, aboriginal_australian: 0.10}
+  guamanian:       {maritime_se_asian: 0.40, polynesian: 0.40, mediterranean: 0.20}
+  tahitian:        {polynesian: 0.80, euro_latino: 0.20}
+  new_caledonian:  {melanesian: 0.60, euro_latino: 0.40}
+  cook_islander:   {polynesian: 1.0}
+  niuean:          {polynesian: 1.0}
+  tokelauan:       {polynesian: 1.0}
+
+  # ── Special ─────────────────────────────────────────────────────────────────
+  other:           {}
+
+# ── Regional defaults ──────────────────────────────────────────────────────────
+# Fallback when a nationality has no entry in nationality_map.
+# Maps regional group IDs (from demographics.yml) to ethnicity probability dicts.
+
+regional_defaults:
+  universal:
+    # Even split across all main ethnicity families
+    northern_european: 0.06
+    mediterranean: 0.06
+    slavic: 0.06
+    west_african: 0.06
+    east_african: 0.05
+    north_indian: 0.06
+    south_indian: 0.05
+    han_chinese: 0.06
+    japanese: 0.04
+    korean: 0.04
+    mainland_se_asian: 0.04
+    maritime_se_asian: 0.04
+    levantine: 0.05
+    gulf_arab: 0.04
+    persian: 0.04
+    mestizo: 0.06
+    afro_latino: 0.04
+    polynesian: 0.03
+    balkan: 0.03
+    celtic: 0.02
+    central_african: 0.03
+    southern_african: 0.03
+
+  indigenous:
+    indigenous_american: 0.40
+    aboriginal_australian: 0.20
+    melanesian: 0.20
+    polynesian: 0.20
+
+  european:
+    northern_european: 0.30
+    mediterranean: 0.25
+    slavic: 0.20
+    balkan: 0.10
+    eastern_european: 0.10
+    celtic: 0.05
+
+  north_american:
+    northern_european: 0.35
+    afro_american: 0.13
+    mestizo: 0.18
+    han_chinese: 0.06
+    north_indian: 0.05
+    mediterranean: 0.08
+    slavic: 0.06
+    levantine: 0.04
+    korean: 0.03
+    indigenous_american: 0.02
+
+  central_american:
+    mestizo: 0.55
+    indigenous_american: 0.25
+    euro_latino: 0.10
+    afro_latino: 0.10
+
+  caribbean:
+    afro_caribbean: 0.55
+    mestizo: 0.20
+    euro_latino: 0.15
+    south_indian: 0.10
+
+  latin_american:
+    mestizo: 0.45
+    afro_latino: 0.20
+    euro_latino: 0.20
+    indigenous_american: 0.15
+
+  middle_eastern:
+    levantine: 0.25
+    gulf_arab: 0.20
+    persian: 0.20
+    turkish: 0.15
+    kurdish: 0.10
+    north_african_arab: 0.10
+
+  arab:
+    gulf_arab: 0.35
+    levantine: 0.30
+    north_african_arab: 0.25
+    east_african: 0.10
+
+  north_african:
+    north_african_arab: 0.60
+    berber: 0.30
+    east_african: 0.10
+
+  west_african:
+    west_african: 1.0
+
+  east_african:
+    east_african: 1.0
+
+  central_african_region:
+    central_african: 1.0
+
+  southern_african:
+    southern_african: 0.85
+    euro_latino: 0.10
+    south_indian: 0.05
+
+  south_asian:
+    north_indian: 0.40
+    south_indian: 0.25
+    bengali: 0.15
+    sri_lankan: 0.08
+    pashtun: 0.07
+    nepali: 0.05
+
+  central_asian:
+    persian: 0.30
+    turkish: 0.25
+    mongolian: 0.30
+    pashtun: 0.15
+
+  east_asian:
+    han_chinese: 0.50
+    japanese: 0.20
+    korean: 0.20
+    mongolian: 0.05
+    tibetan: 0.05
+
+  southeast_asian:
+    mainland_se_asian: 0.30
+    maritime_se_asian: 0.25
+    vietnamese: 0.15
+    filipino: 0.20
+    han_chinese: 0.10
+
+  oceanian:
+    northern_european: 0.35
+    polynesian: 0.25
+    melanesian: 0.20
+    aboriginal_australian: 0.10
+    maritime_se_asian: 0.10
