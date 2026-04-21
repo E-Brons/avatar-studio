@@ -51,9 +51,20 @@ def load_skin_tones() -> dict[str, dict]:
     result: dict[str, dict] = {}
     for entry in entries:
         tid = skin_tone_id(entry)
-        result[tid] = dict(entry)  # convert ruamel CommentedMap → plain dict
+        result[tid] = _to_plain(entry)
 
     return result
+
+
+def _to_plain(obj):  # type: ignore[return]
+    """Recursively convert ruamel objects to plain Python dicts/lists/strings."""
+    if isinstance(obj, dict):
+        return {k: _to_plain(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_to_plain(v) for v in obj]
+    if type(obj).__module__.startswith("ruamel"):
+        return str(obj)
+    return obj
 
 
 def tones_by_fitzpatrick(fitz: str) -> dict[str, dict]:

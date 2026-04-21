@@ -169,8 +169,8 @@ class TestGatewaySchema:
 # ---------------------------------------------------------------------------
 
 _FACE_IMAGE_PATH = (
-    # Use one of the checked-in example portraits; any of these will do.
-    "assets/examples/adele/images/best.jpg"
+    # Photorealistic portrait — required so the diffusion server's face detector fires.
+    "tests/assets/sanity_face.jpg"
 )
 
 _PROJECT_ROOT = __file__  # tests/test_gateway_integration.py
