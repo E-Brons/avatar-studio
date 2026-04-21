@@ -223,19 +223,15 @@ styles:
       method: llm
       llm_params:
         engine: IP-Adapter-FaceID
-        prompt_template: |
-          {style_description}.
-          Portrait of the exact same person.
-          Preserve precisely face structure, skin tone, age, gender, hair, and identifying features.
-        negative_prompt: |
-          painting, illustration, drawing, sketch, watercolor, oil paint, CGI, 3D render, cartoon, anime.
-          different face, different person, different gender, different age.
-          distorted face, face warp.
+        prompt_template: |-
+          identical face, skin tone, ethnicity, gender, age, hair, {style_description}
+        negative_prompt: |-
+          skin tone change, wrong ethnicity, different hair, different age, wrong gender, deformed, blurry, low quality
         width: 512
         height: 512
         num_inference_steps: 30
-        cfg_scale: 8.0
-        ip_adapter_scale: 0.8
+        cfg_scale: 6.5
+        ip_adapter_scale: 0.9
         lora: null
         lora_weight: 1.0
 
