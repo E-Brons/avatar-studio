@@ -144,6 +144,13 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
         " (default: 3). Fewer changes = more controlled experiments.",
     )
 
+    parser.add_argument(
+        "--keep-pngs",
+        action="store_true",
+        default=False,
+        help="Save candidate and SBS images to reports/learn_{script}_{ts}/iter_NN/ (default: off)",
+    )
+
 
 def confirm_full_set(n: int) -> None:
     """Prompt user for confirmation when running the entire example set (> threshold)."""

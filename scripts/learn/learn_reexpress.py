@@ -74,7 +74,7 @@ from pipeline.render.ipadapter.prompt_gen import build_reexpress_params  # noqa:
 from pipeline.render.style_resolver import STYLES_YML  # noqa: E402
 from tuning.classify_expression import classify_image_expression  # noqa: E402
 from tuning.classify_style import classify_image_style  # noqa: E402
-from tuning.compare_side_by_side import compare_side_by_side  # noqa: E402
+from tuning.compare_side_by_side import _stitch_images, compare_side_by_side  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -151,6 +151,7 @@ def _process_one(
     all_styles: list[dict],
     *,
     optimize: str,
+    save_dir: Path | None = None,
 ) -> dict:
     result: dict = {"example": name, "expression_id": expression_id, "error": None}
 
@@ -224,6 +225,13 @@ def _process_one(
         logger.warning("SBS failed %s: %s", name, exc)
         result["identity_score"] = 0.0
         result["compound_score"] = 0.0
+
+    if save_dir is not None:
+        save_dir.mkdir(parents=True, exist_ok=True)
+        stem = f"{name}_{expression_id}"
+        (save_dir / f"{stem}.png").write_bytes(candidate_bytes)
+        sbs_bytes = _stitch_images(source_bytes, candidate_bytes, "source", "reexpressed")
+        (save_dir / f"{stem}_sbs.png").write_bytes(sbs_bytes)
 
     return result
 
@@ -692,6 +700,7 @@ def run_learn_reexpress(
     component_threshold: float = 0.75,
     compound_threshold: float = 0.90,
     max_reason_changes: int = 3,
+    keep_pngs: bool = False,
 ) -> None:
     log = make_logger("learn_reexpress", log_dir)
 
@@ -753,6 +762,7 @@ def run_learn_reexpress(
 
     for iteration in range(1, max_iterations + 1):
         prefix = f"iter_{iteration:02d}"
+        iter_dir = loop_dir / prefix if keep_pngs else None
         work = [
             (name, persona, expr_id)
             for name, persona in current_sample
@@ -828,6 +838,7 @@ def run_learn_reexpress(
                     from_source,
                     all_styles,
                     optimize=optimize,
+                    save_dir=iter_dir,
                 )
                 _on_entry(entry, name, expr_id)
                 if n_ok:
@@ -847,6 +858,7 @@ def run_learn_reexpress(
                         from_source,
                         all_styles,
                         optimize=optimize,
+                        save_dir=iter_dir,
                     ): (name, expr_id)
                     for name, persona, expr_id in work
                 }
@@ -1087,4 +1099,5 @@ if __name__ == "__main__":
         component_threshold=args.component_threshold,
         compound_threshold=args.compound_threshold,
         max_reason_changes=args.max_reason_changes,
+        keep_pngs=args.keep_pngs,
     )

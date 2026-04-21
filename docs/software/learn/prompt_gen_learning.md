@@ -40,6 +40,9 @@ All three scripts share the same flags:
 --gateway URL             LLM gateway base URL
 --log-dir DIR             experiment log directory
 --from-source PATH        source file, relative to each example's folder
+--keep-pngs               save candidate + SBS images to
+                          reports/learn_{script}_{ts}/iter_NN/
+                          (default: off; applies to learn_restyle and learn_reexpress)
 ```
 
 ### parameter defaults per script
@@ -59,6 +62,7 @@ All three scripts share the same flags:
 |`--from-source`| `learn_create.py` | `persona.yml` | Persona YAML used as generation input |
 | | `learn_restyle.py`[^source_img] | `images/photorealistic.png` | Must resolve to an image |
 | | `learn_reexpress.py`[^source_img] | `images/photorealistic.png` | Must resolve to an image |
+|`--keep-pngs`| `learn_restyle.py`, `learn_reexpress.py` | `false` | Saves `{name}_{id}.png` + `{name}_{id}_sbs.png` to `reports/…/iter_NN/` |
 
 > All scores are in the range 0.0–1.0. Threshold flags use the same scale (e.g. `0.75`, not `75`).
 
@@ -155,7 +159,7 @@ The scores it is trying to maximize [are](../pipeline/create_from_persona.md#4-v
 |---|---|---|---|
 | Persona Categorizer | Phenotype fidelity | 🌕🌕🌕 |Verifies the output reflects the persona attributes that were used to generate it |
 | Style Classifier | Style fidelity | 🌕🌗🌚| Verifies the output matches the requested `style_id` |
-| Expression Classifier | Expression accuracy | 🌕🌚🌚| Verifies the rendered expression matches the requested `expression_id` |
+| Expression Classifier | Expression accuracy | 🌗🌚🌚| Verifies the rendered expression matches the requested `expression_id` |
 
 ```mermaid
 flowchart LR
@@ -222,11 +226,11 @@ The scores it is trying to maximize are [restyle](../pipeline/create_from_person
 
 | Scorer | Signal | **ReStyle** Weights | **ReExpress** Weights |
 |---|---|---|---|
-| Side-by-Side Comparison (`identity_score`) | Likeness to source images | 🌕🌕🌕 primary | 🌕🌕🌕 primary |
-| Final product (`quality_score`) | Render quality | 🌕🌕🌚 important| 🌕🌕🌚 important|
-| Style Classifier | Target style fidelity | 🌕🌕🌗 target| 🌕🌚🌚 secondary|
-| Expression Classifier | Expression accuracy | 🌕🌚🌚 secondary| 🌕🌕🌗 target|
-| Persona Categorizer | Attribute match vs extracted spec | 🌗🌚🌚 tiebreaker | 🌗🌚🌚 tiebreaker |
+| Side-by-Side Comparison (`identity_score`) | Likeness to source images | 🌕🌕🌕🌕 primary | 🌕🌕🌕🌕 primary |
+| Final product (`quality_score`) | Render quality | 🌕🌗🌚🌚 important| 🌕🌕🌚🌚 important|
+| Style Classifier | Target style fidelity | 🌕🌕🌕🌚 target| 🌕🌚🌚🌚 secondary|
+| Expression Classifier | Expression accuracy | 🌕🌚🌚🌚 secondary| 🌕🌕🌗 target|
+| Persona Categorizer | Attribute match vs extracted spec | 🌗🌚🌚🌚 tiebreaker | 🌗🌚🌚🌚 tiebreaker |
 
 ```mermaid
 flowchart LR

@@ -72,7 +72,7 @@ from config.gateway import GatewayClient  # noqa: E402
 from pipeline.render.ipadapter.prompt_gen import build_restyle_params  # noqa: E402
 from pipeline.render.style_resolver import resolve_style  # noqa: E402
 from tuning.classify_style import classify_image_style  # noqa: E402
-from tuning.compare_side_by_side import compare_side_by_side  # noqa: E402
+from tuning.compare_side_by_side import _stitch_images, compare_side_by_side  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -297,6 +297,7 @@ def _process_one(
     all_styles: list[dict],
     *,
     optimize: str,
+    save_dir: Path | None = None,
 ) -> dict:
     style_id = style_entry["id"]
     result: dict = {"example": name, "style_id": style_id, "error": None}
@@ -355,12 +356,21 @@ def _process_one(
             gateway_url=client.base_url,
         )
         result["identity_score"] = round(sbs.identity_score, 3)
+        result["quality_score"] = round(sbs.quality_score, 3)
         result["compound_score"] = round(sbs.compound_score, 3)
         result["sbs_reasoning"] = (sbs.reasoning or "")[:200]
     except Exception as exc:
         logger.warning("SBS failed %s: %s", name, exc)
         result["identity_score"] = 0.0
+        result["quality_score"] = 0.0
         result["compound_score"] = 0.0
+
+    if save_dir is not None:
+        save_dir.mkdir(parents=True, exist_ok=True)
+        stem = f"{name}_{style_id}"
+        (save_dir / f"{stem}.png").write_bytes(candidate_bytes)
+        sbs_bytes = _stitch_images(source_bytes, candidate_bytes, "source", "restyled")
+        (save_dir / f"{stem}_sbs.png").write_bytes(sbs_bytes)
 
     return result
 
@@ -386,12 +396,14 @@ def _apply_restyle_fixes(
         and (
             e.get("style_score", 0) < component_threshold
             or e.get("identity_score", 0) < component_threshold
+            or e.get("quality_score", 0) < component_threshold
         )
     ]
 
     failure_summary = "\n".join(
         f"  {e['example']} x {e['style_id']}: "
         f"style={e.get('style_score', 0):.0%}  identity={e.get('identity_score', 0):.0%}  "
+        f"quality={e.get('quality_score', 0):.0%}  "
         f'"{e.get("sbs_reasoning", "")[:100]}"'
         for e in failures[:20]
     )
@@ -433,7 +445,7 @@ def _apply_restyle_fixes(
 
         SCOPE: {style_scope_note}
 
-        ## Failures (style score < {component_threshold:.0%} or identity score < {component_threshold:.0%})
+        ## Failures (style < {component_threshold:.0%} or identity < {component_threshold:.0%} or quality < {component_threshold:.0%})
         {failure_summary or "(none)"}
 
         ## Current restyle.llm_params (diffusion generation params — this is what drives generation)
@@ -672,6 +684,7 @@ def run_learn_restyle(
     component_threshold: float = 0.75,
     compound_threshold: float = 0.90,
     max_reason_changes: int = 3,
+    keep_pngs: bool = False,
 ) -> None:
     log = make_logger("learn_restyle", log_dir)
 
@@ -738,6 +751,7 @@ def run_learn_restyle(
 
     for iteration in range(1, max_iterations + 1):
         prefix = f"iter_{iteration:02d}"
+        iter_dir = loop_dir / prefix if keep_pngs else None
         sample_names = {name for name, _ in current_sample}
 
         work = [
@@ -779,12 +793,13 @@ def run_learn_restyle(
 
         running_style = 0.0
         running_identity = 0.0
+        running_quality = 0.0
         n_ok = 0
         n_errors = 0
         pbar_desc = f"iter {iteration}/{max_iterations}"
 
         def _on_entry(entry: dict, name: str, style_id: str) -> None:
-            nonlocal running_style, running_identity, n_ok, n_errors
+            nonlocal running_style, running_identity, running_quality, n_ok, n_errors
             entries.append(entry)
             log.render(iteration=iteration, example=name, style=style_id, error=entry.get("error"))
             if entry.get("error"):
@@ -794,12 +809,15 @@ def run_learn_restyle(
                 n_ok += 1
                 running_style += entry.get("style_score", 0.0)
                 running_identity += entry.get("identity_score", 0.0)
+                running_quality += entry.get("quality_score", 0.0)
                 log.score(
                     iteration=iteration,
                     example=name,
                     style=style_id,
                     style_score=entry.get("style_score"),
                     identity_score=entry.get("identity_score"),
+                    quality_score=entry.get("quality_score"),
+                    sbs_reasoning=entry.get("sbs_reasoning"),
                 )
 
         if workers <= 1:
@@ -814,12 +832,13 @@ def run_learn_restyle(
                     from_source,
                     all_styles,
                     optimize=optimize,
+                    save_dir=iter_dir,
                 )
                 _on_entry(entry, name, style_entry["id"])
                 if n_ok:
                     pbar.set_postfix_str(
-                        f"style={running_style / n_ok:.0%} id={running_identity / n_ok:.0%}"
-                        + (f" err={n_errors}" if n_errors else "")
+                        f"id={running_identity / n_ok:.0%} q={running_quality / n_ok:.0%} "
+                        f"s={running_style / n_ok:.0%}" + (f" err={n_errors}" if n_errors else "")
                     )
         else:
             with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -833,6 +852,7 @@ def run_learn_restyle(
                         from_source,
                         all_styles,
                         optimize=optimize,
+                        save_dir=iter_dir,
                     ): (name, style_entry["id"])
                     for name, persona, style_entry in work
                 }
@@ -846,7 +866,8 @@ def run_learn_restyle(
                     _on_entry(entry, name, style_id)
                     if n_ok:
                         pbar.set_postfix_str(
-                            f"style={running_style / n_ok:.0%} id={running_identity / n_ok:.0%}"
+                            f"id={running_identity / n_ok:.0%} q={running_quality / n_ok:.0%} "
+                            f"s={running_style / n_ok:.0%}"
                             + (f" err={n_errors}" if n_errors else "")
                         )
 
@@ -862,22 +883,30 @@ def run_learn_restyle(
             if successful
             else 0.0
         )
-        combined = (avg_style + avg_identity) / 2
+        avg_quality = (
+            sum(e.get("quality_score", 0) for e in successful) / len(successful)
+            if successful
+            else 0.0
+        )
+        # Identity is primary (🌕🌕🌕🌕), style is target (🌕🌕🌕🌚), quality is important (🌕🌗🌚🌚)
+        combined = 0.6 * avg_identity + 0.25 * avg_style + 0.15 * avg_quality
         score_history.append(combined)
 
         log.summary(
             iteration=iteration,
             avg_style=round(avg_style, 3),
             avg_identity=round(avg_identity, 3),
+            avg_quality=round(avg_quality, 3),
             combined=round(combined, 3),
             n_successful=len(successful),
             n_failed=len(entries) - len(successful),
         )
         logger.info(
-            "[iter %d] style=%.0f%%  identity=%.0f%%  combined=%.0f%%",
+            "[iter %d] identity=%.0f%%  quality=%.0f%%  style=%.0f%%  combined=%.0f%%",
             iteration,
-            avg_style * 100,
             avg_identity * 100,
+            avg_quality * 100,
+            avg_style * 100,
             combined * 100,
         )
 
@@ -886,10 +915,11 @@ def run_learn_restyle(
             worst = sorted(successful, key=lambda e: e.get("identity_score", 0))[:5]
             for w in worst:
                 logger.info(
-                    "  low: %-24s  style=%.0f%%  id=%.0f%%  %s",
+                    "  low: %-24s  id=%.0f%%  q=%.0f%%  style=%.0f%%  %s",
                     w["example"],
-                    w.get("style_score", 0) * 100,
                     w.get("identity_score", 0) * 100,
+                    w.get("quality_score", 0) * 100,
+                    w.get("style_score", 0) * 100,
                     w.get("sbs_reasoning", "")[:80],
                 )
 
@@ -1074,4 +1104,5 @@ if __name__ == "__main__":
         component_threshold=args.component_threshold,
         compound_threshold=args.compound_threshold,
         max_reason_changes=args.max_reason_changes,
+        keep_pngs=args.keep_pngs,
     )
