@@ -1,0 +1,8 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tensorflow"
+version = "2.99.0"
+description = "Stub satisfying deepface's tensorflow metadata requirement. DeepFace uses the PyTorch backend at runtime."
