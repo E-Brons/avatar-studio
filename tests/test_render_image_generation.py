@@ -313,18 +313,6 @@ class TestPickDiverseDemographicsWhileLoops:
         finally:
             monkeypatch.setattr(mod, "_AGE_GROUPS", real_groups)
 
-    def test_skin_tone_fill_loop_fires(self, monkeypatch):
-        """Force skin_tone while loop by making _SKIN_TONES tiny."""
-        import pipeline.persona.generator as mod
-
-        real_tones = mod._SKIN_TONES
-        monkeypatch.setattr(mod, "_SKIN_TONES", ["#FFFFFF"])  # only 1 tone
-        try:
-            result = mod._pick_diverse_demographics(count=3)
-            assert len(result) == 3
-        finally:
-            monkeypatch.setattr(mod, "_SKIN_TONES", real_tones)
-
 
 # ---------------------------------------------------------------------------
 # svg_generator — _vendor_dir raises FileNotFoundError (line 87)

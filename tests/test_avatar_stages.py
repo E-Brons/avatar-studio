@@ -35,13 +35,13 @@ from pipeline.persona.generator import (
     _GENDERS,
     _HAIR_COLORS,
     _LAST_NAMES,
-    _SKIN_TONES,
     _pick_colors,
     _pick_name,
 )
 from pipeline.persona.generator import (
     pick_demographics as _pick_demographics,
 )
+from pipeline.persona.skin_tones import load_skin_tones
 from pipeline.render.postprocess.compositor import apply_circle_frame
 from pipeline.render.programmatic.svg_generator import create_programmatic_avatar
 from pipeline.render.renderer import create_abbreviation_avatar, create_face_avatar
@@ -264,7 +264,9 @@ def test_pick_colors_returns_required_keys():
 
 def test_pick_colors_skin_tone_from_list():
     result = _pick_colors()
-    assert result["SKIN_TONE"] in _SKIN_TONES
+    all_tones = load_skin_tones()
+    all_hex = {entry["tone"] for entry in all_tones.values()}
+    assert result["SKIN_TONE"] in all_hex
 
 
 def test_pick_colors_hair_color_from_list():
